@@ -1,293 +1,206 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>题目1 - 正方形ABCD旋转</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090d16">
+<title>旋转中的中点 · 正方形几何动画</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    display: flex; flex-direction: column;
-    justify-content: center; align-items: center;
-    min-height: 100vh;
-    background: #0d1117;
-    color: #c9d1d9;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    overflow: hidden;
+  :root {
+    color-scheme: dark;
+    --bg:#090d16; --panel:#101725; --panel2:#0d1420; --line:#253249;
+    --text:#edf3ff; --muted:#8c9ab2; --blue:#73a7ff; --orange:#ffb454;
+    --green:#58dfb0; --red:#ff7285; --grid:rgba(117,151,202,.055);
   }
-  .top-bar {
-    position: fixed; top: 0; left: 0; right: 0;
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px 20px; z-index: 10;
-  }
-  .top-bar a {
-    color: #58a6ff; text-decoration: none; font-size: 14px;
-    display: flex; align-items: center; gap: 4px;
-    padding: 4px 10px; border-radius: 6px;
-    background: #21262d; transition: background 0.2s;
-  }
-  .top-bar a:hover { background: #30363d; }
-  h1 { font-size: 20px; font-weight: 500; color: #e6edf3; margin-bottom: 10px; }
-  .problem {
-    font-size: 13px; color: #8b949e; margin-bottom: 14px;
-    max-width: 600px; text-align: center; line-height: 1.6;
-  }
-  svg { border-radius: 8px; }
-  .controls {
-    margin-top: 14px; display: flex; gap: 14px; align-items: center;
-    flex-wrap: wrap; justify-content: center;
-  }
-  button {
-    background: #238636; color: white; border: none;
-    padding: 7px 18px; border-radius: 6px; cursor: pointer;
-    font-size: 14px; font-weight: 600; transition: background 0.2s;
-  }
-  button:hover { background: #2ea043; }
-  button.sec { background: #30363d; }
-  button.sec:hover { background: #484f58; }
-  input[type="range"] { width: 220px; accent-color: #238636; }
-  .angle-display {
-    font-size: 16px; font-variant-numeric: tabular-nums;
-    min-width: 100px; text-align: center; color: #f0883e; font-weight: 600;
-  }
-  .legend {
-    margin-top: 10px; display: flex; gap: 14px; flex-wrap: wrap;
-    justify-content: center; font-size: 12px;
-  }
-  .legend-item { display: flex; align-items: center; gap: 5px; }
-  .legend-bar { width: 14px; height: 3px; border-radius: 1px; }
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif}
+  body{min-height:100vh;background-image:radial-gradient(ellipse at 52% 38%,rgba(39,78,129,.17),transparent 52%),linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:auto,32px 32px,32px 32px}
+  .app{max-width:1440px;margin:auto;padding:24px clamp(16px,3vw,42px) 22px}
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+  .back{display:inline-flex;align-items:center;gap:9px;color:#a8bad5;text-decoration:none;font-size:13px;letter-spacing:.02em;transition:color .2s}
+  .back:hover{color:#fff}.back-icon{display:grid;place-items:center;width:30px;height:30px;border:1px solid var(--line);border-radius:9px;background:#101725;font-size:17px}
+  .brand{display:flex;align-items:center;gap:9px;color:#71809b;font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+  .brand-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px #58dfb088}
+  .heading{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin:0 0 18px}
+  .eyebrow{margin:0 0 8px;color:var(--blue);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+  h1{margin:0;color:var(--text);font-size:clamp(25px,3vw,38px);line-height:1.15;letter-spacing:-.045em;font-weight:670}
+  .subtitle{margin:9px 0 0;max-width:720px;color:var(--muted);font-size:14px;line-height:1.7}
+  .result-chip{flex:none;display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid rgba(88,223,176,.22);border-radius:12px;background:rgba(25,80,72,.17);color:#a6f4d8;font-size:12px}
+  .result-chip strong{font-size:17px;font-weight:650}
+  .workspace{display:grid;grid-template-columns:minmax(0,1fr) 296px;gap:16px;align-items:stretch}
+  .canvas-card,.info-card{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(17,26,41,.96),rgba(11,17,28,.98));box-shadow:0 22px 70px rgba(0,0,0,.26)}
+  .canvas-card{overflow:hidden;min-width:0}
+  .canvas-head{height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid rgba(37,50,73,.78);color:#8e9db5;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+  .live{display:flex;align-items:center;gap:7px;color:#a7b7ce;letter-spacing:0;text-transform:none;font-size:11px}.live i{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 9px #58dfb099}
+  .scene{display:block;width:100%;height:auto;aspect-ratio:1.42;min-height:390px;max-height:680px;background:radial-gradient(ellipse at 50% 48%,rgba(38,63,101,.18),transparent 63%)}
+  #geo{width:100%;height:100%;display:block}
+  .controls{padding:16px 18px 17px;border-top:1px solid rgba(37,50,73,.78);background:rgba(8,13,22,.45)}
+  .transport{display:flex;align-items:center;gap:12px}
+  button{font:inherit;color:inherit;border:0;cursor:pointer}
+  .play{display:flex;align-items:center;justify-content:center;gap:9px;min-width:112px;height:40px;padding:0 15px;border:1px solid rgba(115,167,255,.25);border-radius:11px;background:rgba(66,116,192,.18);color:#d8e7ff;font-size:12px;font-weight:650;transition:background .2s,border-color .2s,transform .2s}
+  .play:hover{background:rgba(66,116,192,.3);border-color:rgba(115,167,255,.5);transform:translateY(-1px)}
+  .play-icon{font-size:13px;color:var(--blue)}
+  .reset{width:40px;height:40px;border:1px solid var(--line);border-radius:11px;background:#111a29;color:#9eacc2;font-size:16px;transition:.2s}
+  .reset:hover{color:#fff;border-color:#526887}
+  .slider-wrap{flex:1;min-width:30px;padding:0 8px}
+  input[type=range]{width:100%;height:4px;margin:0;appearance:none;border-radius:99px;background:linear-gradient(90deg,var(--blue) 0%,#30405a 0%);outline:none;cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{appearance:none;width:14px;height:14px;border:3px solid #d9e8ff;border-radius:50%;background:#6ea4ff;box-shadow:0 0 0 4px rgba(115,167,255,.15)}
+  input[type=range]::-moz-range-thumb{width:10px;height:10px;border:3px solid #d9e8ff;border-radius:50%;background:#6ea4ff;box-shadow:0 0 0 4px rgba(115,167,255,.15)}
+  .angle{min-width:82px;text-align:right;color:#f3c27e;font:600 14px/1 ui-monospace,SFMono-Regular,Consolas,monospace}
+  .control-foot{display:flex;justify-content:space-between;margin:11px 0 0 156px;color:#63728a;font-size:10px;letter-spacing:.04em}
+  .legend{display:flex;flex-wrap:wrap;gap:15px;padding:12px 18px 14px;border-top:1px solid rgba(37,50,73,.55)}
+  .legend-item{display:flex;align-items:center;gap:7px;color:#94a2b9;font-size:11px}
+  .swatch{width:16px;height:3px;border-radius:3px;background:var(--blue)}.swatch.orange{background:var(--orange)}.swatch.green{background:var(--green)}.swatch.red{background:var(--red)}.swatch.dash{height:0;border-top:2px dashed #67daa7;background:none}
+  .side{display:flex;flex-direction:column;gap:14px}
+  .info-card{padding:18px 18px 17px}
+  .card-kicker{margin:0 0 13px;color:#73839d;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+  .metric{display:flex;align-items:baseline;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(37,50,73,.64)}
+  .metric:last-child{border-bottom:0;padding-bottom:0}.metric-label{color:#8e9db5;font-size:12px}.metric-value{color:#e9f0fb;font:600 13px ui-monospace,SFMono-Regular,Consolas,monospace}.metric-value.accent{color:var(--green)}
+  .proof-card{flex:1}.proof{display:flex;gap:11px;margin:0 0 16px}.proof:last-child{margin-bottom:0}.step{flex:none;display:grid;place-items:center;width:23px;height:23px;border:1px solid #31425d;border-radius:7px;background:#162238;color:#91baff;font:600 11px ui-monospace,monospace}.proof p{margin:1px 0 0;color:#a8b5ca;font-size:12px;line-height:1.65}.proof strong{color:#eaf1fb;font-weight:600}
+  .formula{padding:13px 14px;border:1px solid rgba(88,223,176,.18);border-radius:12px;background:rgba(36,92,77,.1)}.formula-label{margin:0 0 7px;color:#78cdb0;font-size:10px;letter-spacing:.12em;text-transform:uppercase}.formula-main{margin:0;color:#e1fff4;font:600 16px ui-monospace,SFMono-Regular,Consolas,monospace}.formula-note{margin:7px 0 0;color:#92abac;font-size:11px;line-height:1.55}
+  .footnote{display:flex;justify-content:space-between;gap:12px;padding:16px 3px 0;color:#52617a;font-size:10px;letter-spacing:.035em}.footnote span:last-child{text-align:right}
+  @media(max-width:960px){.workspace{grid-template-columns:minmax(0,1fr) 260px;gap:12px}.scene{min-height:350px}.info-card{padding:15px}}
+  @media(max-width:760px){.app{padding:16px 14px 20px}.topbar{margin-bottom:20px}.heading{align-items:flex-start;flex-direction:column;margin-bottom:14px}.result-chip{padding:8px 11px}.workspace{grid-template-columns:1fr}.scene{min-height:300px;aspect-ratio:1.18}.side{display:grid;grid-template-columns:1fr 1fr}.proof-card{grid-column:1/-1}.footnote{flex-direction:column}.footnote span:last-child{text-align:left}}
+  @media(max-width:480px){.brand{font-size:9px}.scene{min-height:260px;aspect-ratio:1}.controls{padding:13px 12px}.transport{gap:8px}.play{min-width:92px;padding:0 10px}.angle{min-width:68px;font-size:12px}.control-foot{margin-left:112px}.legend{gap:10px;padding:11px 12px}.legend-item{font-size:10px}.side{grid-template-columns:1fr}.proof-card{grid-column:auto}.subtitle{font-size:13px}}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
 <body>
-<div class="top-bar">
-  <a href="../index.html">← 返回题目列表</a>
+<div class="app">
+  <header class="topbar">
+    <a class="back" href="../index.html"><span class="back-icon">←</span><span>返回题库</span></a>
+    <div class="brand"><span class="brand-dot"></span>SVG Geometry Lab</div>
+  </header>
+
+  <section class="heading">
+    <div>
+      <p class="eyebrow">几何动态演示 · 01 / 03</p>
+      <h1>旋转中的中点</h1>
+      <p class="subtitle">直角三角形绕正方形顶点旋转。跟随点 N 与中点 E，观察线段如何运动，以及一个隐藏的圆轨迹。</p>
+    </div>
+    <div class="result-chip"><span>轨迹结论</span><strong>E 是圆</strong></div>
+  </section>
+
+  <main class="workspace">
+    <section class="canvas-card" aria-label="几何动画画布与控制器">
+      <div class="canvas-head"><span>动态几何构造</span><span class="live"><i></i>实时演示</span></div>
+      <div class="scene"><svg id="geo" viewBox="-1.45 -1.15 7.15 7.15" role="img" aria-label="正方形内旋转三角形和中点轨迹"></svg></div>
+      <div class="controls">
+        <div class="transport">
+          <button id="playBtn" class="play" type="button"><span class="play-icon" id="playIcon">Ⅱ</span><span id="playText">暂停动画</span></button>
+          <button id="resetBtn" class="reset" type="button" aria-label="重置动画" title="重置">↺</button>
+          <div class="slider-wrap"><input type="range" id="slider" min="0" max="360" value="0" step="0.5" aria-label="旋转角度"></div>
+          <output class="angle" id="angleDisp">0.0°</output>
+        </div>
+        <div class="control-foot"><span>0°</span><span>拖动滑块探索旋转过程</span><span>360°</span></div>
+      </div>
+      <div class="legend" aria-label="图例">
+        <span class="legend-item"><i class="swatch"></i>初始 △BPQ</span>
+        <span class="legend-item"><i class="swatch orange"></i>旋转 △BMN</span>
+        <span class="legend-item"><i class="swatch red"></i>线段 ND</span>
+        <span class="legend-item"><i class="swatch green"></i>线段 CE</span>
+        <span class="legend-item"><i class="swatch dash"></i>E 的轨迹</span>
+      </div>
+    </section>
+
+    <aside class="side">
+      <section class="info-card">
+        <p class="card-kicker">当前状态</p>
+        <div class="metric"><span class="metric-label">旋转角 n</span><span class="metric-value" id="angleMetric">0.0°</span></div>
+        <div class="metric"><span class="metric-label">点 N 到 B</span><span class="metric-value" id="bnMetric">√2</span></div>
+        <div class="metric"><span class="metric-label">中点 E 到圆心 O</span><span class="metric-value accent" id="oeMetric">0.707</span></div>
+      </section>
+      <section class="info-card proof-card">
+        <p class="card-kicker">为什么 E 是圆？</p>
+        <div class="proof"><span class="step">01</span><p>点 <strong>N</strong> 绕 B 旋转，始终满足 <strong>BN = √2</strong>。</p></div>
+        <div class="proof"><span class="step">02</span><p>正方形中心 O 是 <strong>BD 的中点</strong>；E 又是 ND 的中点。</p></div>
+        <div class="proof"><span class="step">03</span><p>△NBD 的中位线定理：<strong>OE = BN / 2</strong>，长度恒定。</p></div>
+      </section>
+      <section class="info-card formula">
+        <p class="formula-label">轨迹方程</p>
+        <p class="formula-main">OE = √2 / 2</p>
+        <p class="formula-note">所以 E 的轨迹是以正方形中心 O 为圆心、半径 √2/2 的圆。</p>
+      </section>
+    </aside>
+  </main>
+  <footer class="footnote"><span>正方形 ABCD · 对角线 BD = 6 · BP = 1 · ∠BPQ = 90°</span><span>键盘：Space 播放/暂停 · ← → 单步</span></footer>
 </div>
-<h1>题目1 · 正方形ABCD旋转</h1>
-<p class="problem">
-  正方形ABCD，BD是对角线(BD=6)。P、Q分别为线段BD、BC上的点，BP=1，∠BPQ=90°。
-  将△BPQ绕点B顺时针旋转n°至△BMN，连接ND，取ND中点E，连接CE。
-</p>
-<svg id="geo" width="640" height="640" viewBox="-2.5 -1.5 9 9"
-     shape-rendering="geometricPrecision"></svg>
-<div class="controls">
-  <button id="playBtn">暂停</button>
-  <button id="resetBtn" class="sec">重置</button>
-  <input type="range" id="slider" min="0" max="360" value="0" step="0.5">
-  <span class="angle-display" id="angleDisp">n = 0.0°</span>
-</div>
-<div class="legend">
-  <span class="legend-item"><span class="legend-bar" style="background:#58a6ff"></span>△BPQ</span>
-  <span class="legend-item"><span class="legend-bar" style="background:#f0883e"></span>△BMN</span>
-  <span class="legend-item"><span class="legend-bar" style="background:#f85149"></span>ND</span>
-  <span class="legend-item"><span class="legend-bar" style="background:#3fb950"></span>CE / E轨迹</span>
-</div>
+
 <script>
 (() => {
   const $ = id => document.getElementById(id);
-  const svg = $('geo'), slider = $('slider'), disp = $('angleDisp');
-  const playBtn = $('playBtn'), resetBtn = $('resetBtn');
+  const svg = $('geo'), slider = $('slider');
+  const playBtn = $('playBtn'), playIcon = $('playIcon'), playText = $('playText');
+  const S2 = Math.SQRT2, s = 3 * S2, O = {x:s/2,y:s/2};
+  const A={x:0,y:0}, B={x:0,y:s}, C={x:s,y:s}, D={x:s,y:0};
+  const P={x:1/S2,y:s-1/S2}, Q={x:S2,y:s};
+  const el=(tag,attrs={})=>{const e=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const[k,v]of Object.entries(attrs))e.setAttribute(k,v);return e;};
+  const rot=(p,c,degrees)=>{const r=degrees*Math.PI/180,dx=p.x-c.x,dy=p.y-c.y;return{x:c.x+dx*Math.cos(r)-dy*Math.sin(r),y:c.y+dx*Math.sin(r)+dy*Math.cos(r)};};
+  const mid=(a,b)=>({x:(a.x+b.x)/2,y:(a.y+b.y)/2});
+  const line=(a,b,stroke,width,attrs={})=>el('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y,stroke,'stroke-width':width,'stroke-linecap':'round',...attrs});
+  const point=(p,color,r=.045)=>el('circle',{cx:p.x,cy:p.y,r,fill:color,stroke:'#0b111c','stroke-width':.022});
+  const text=(label,p,color='#cbd6e7',size=.19,anchor='middle')=>{const t=el('text',{x:p.x,y:p.y,fill:color,'font-size':size,'font-weight':650,'font-family':'Inter,Arial,sans-serif','text-anchor':anchor,'dominant-baseline':'central',stroke:'#0b111c','stroke-width':.055,'paint-order':'stroke'});t.textContent=label;return t;};
 
-  const S2 = Math.SQRT2, s = 3 * S2; // side ≈ 4.2426, BD = 6
+  // Quiet coordinate grid, square and measured diagonal.
+  const grid=el('g',{stroke:'#213149','stroke-width':.009,opacity:.48});
+  for(let i=-1;i<=6;i++){grid.appendChild(el('line',{x1:i,y1:-1,x2:i,y2:6}));grid.appendChild(el('line',{x1:-1,y1:i,x2:6,y2:i}));}
+  svg.appendChild(grid);
+  const square=el('rect',{x:0,y:0,width:s,height:s,rx:.035,fill:'#111c2d',stroke:'#73a7ff','stroke-width':.035});svg.appendChild(square);
+  svg.appendChild(line(B,D,'#91a4c2',.018,{'stroke-dasharray':'.09 .09',opacity:.5}));
+  // The theorem's orbit is visible from the start; the brighter arc is traced as n advances.
+  svg.appendChild(el('circle',{cx:O.x,cy:O.y,r:S2/2,fill:'rgba(88,223,176,.025)',stroke:'#58dfb0','stroke-width':.018,'stroke-dasharray':'.035 .07',opacity:.56}));
+  svg.appendChild(el('circle',{cx:B.x,cy:B.y,r:S2,fill:'none',stroke:'#ffb454','stroke-width':.012,'stroke-dasharray':'.04 .09',opacity:.19}));
+  svg.appendChild(el('polygon',{points:`${B.x},${B.y} ${P.x},${P.y} ${Q.x},${Q.y}`,fill:'rgba(115,167,255,.07)',stroke:'#73a7ff','stroke-width':.023,'stroke-dasharray':'.075 .055'}));
+  // Right-angle marker at P.
+  const d=.13,dirBP={x:-1/S2,y:1/S2},dirPQ={x:1/S2,y:1/S2};
+  const c1={x:P.x+d*dirBP.x,y:P.y+d*dirBP.y},c2={x:c1.x+d*dirPQ.x,y:c1.y+d*dirPQ.y},c3={x:P.x+d*dirPQ.x,y:P.y+d*dirPQ.y};
+  svg.appendChild(el('path',{d:`M${c1.x} ${c1.y} L${c2.x} ${c2.y} L${c3.x} ${c3.y}`,fill:'none',stroke:'#73a7ff','stroke-width':.018,opacity:.8}));
 
-  // Square vertices (SVG coords, y-down)
-  const A = {x:0,y:0}, B = {x:0,y:s}, C = {x:s,y:s}, D = {x:s,y:0};
+  const trail=el('path',{fill:'none',stroke:'#58dfb0','stroke-width':.036,'stroke-linecap':'round',opacity:.9});svg.appendChild(trail);
+  const angleArc=el('path',{fill:'none',stroke:'#ffb454','stroke-width':.018,'stroke-linecap':'round',opacity:.76});svg.appendChild(angleArc);
+  const dynamic=el('g');svg.appendChild(dynamic);
+  const tri=el('polygon',{fill:'rgba(255,180,84,.13)',stroke:'#ffb454','stroke-width':.03,'stroke-linejoin':'round'});dynamic.appendChild(tri);
+  const nd=line({x:0,y:0},{x:0,y:0},'#ff7285',.023,{'stroke-dasharray':'.09 .055'});dynamic.appendChild(nd);
+  const ce=line({x:0,y:0},{x:0,y:0},'#58dfb0',.026);dynamic.appendChild(ce);
+  const pP=point(P,'#73a7ff',.052),pQ=point(Q,'#73a7ff',.052),pM=point(B,'#ffb454'),pN=point(B,'#ffb454'),pE=point(B,'#58dfb0',.06);
+  [pP,pQ,pM,pN,pE].forEach(e=>dynamic.appendChild(e));
+  const corners=[[A,'A',-.17,-.17],[B,'B',-.2,.18],[C,'C',.18,.19],[D,'D',.17,-.18],[P,'P',-.16,-.14],[Q,'Q',.03,.2]];
+  corners.forEach(([p,l,dx,dy])=>dynamic.appendChild(text(l,{x:p.x+dx,y:p.y+dy},(l==='P'||l==='Q')?'#9fc2ff':'#dce6f4',.17)));
+  const lm=text('M',B,'#ffd08a',.17),ln=text('N',B,'#ffd08a',.17),le=text('E',B,'#8ef0cf',.18);
+  [lm,ln,le].forEach(e=>dynamic.appendChild(e));
+  const center=point(O,'#d9e6fa',.038);dynamic.appendChild(center);dynamic.appendChild(text('O',{x:O.x+.14,y:O.y-.16},'#aabbd3',.15));
+  const nLabel=text('',B,'#ffca7d',.14);dynamic.appendChild(nLabel);
 
-  // P on BD (BP=1), Q on BC (∠BPQ=90°)
-  const P = {x:1/S2, y:s-1/S2};  // ≈ (0.707, 3.536)
-  const Q = {x:S2, y:s};          // ≈ (1.414, 4.243)
-
-  const rot = (p,c,d) => {
-    const r=d*Math.PI/180, dx=p.x-c.x, dy=p.y-c.y;
-    return {x:c.x+dx*Math.cos(r)-dy*Math.sin(r), y:c.y+dx*Math.sin(r)+dy*Math.cos(r)};
-  };
-  const mid = (a,b) => ({x:(a.x+b.x)/2, y:(a.y+b.y)/2});
-
-  const el = (tag,attrs) => {
-    const e = document.createElementNS('http://www.w3.org/2000/svg', tag);
-    for (const [k,v] of Object.entries(attrs)) e.setAttribute(k,v);
-    return e;
-  };
-
-  // ---- Static scene ----
-
-  // Square
-  svg.appendChild(el('rect',{x:0,y:0,width:s,height:s,
-    fill:'#161b22',stroke:'#58a6ff','stroke-width':0.04}));
-
-  // Diagonal BD
-  svg.appendChild(el('line',{x1:B.x,y1:B.y,x2:D.x,y2:D.y,
-    stroke:'#484f58','stroke-width':0.025,'stroke-dasharray':'0.15 0.08'}));
-
-  // E locus circle (center=O, r=√2/2)
-  svg.appendChild(el('circle',{cx:s/2,cy:s/2,r:S2/2,
-    fill:'none',stroke:'#3fb950','stroke-width':0.02,
-    'stroke-dasharray':'0.06 0.05',opacity:0.35}));
-
-  // N path circle (center=B, r=√2)
-  svg.appendChild(el('circle',{cx:B.x,cy:B.y,r:S2,
-    fill:'none',stroke:'#f0883e','stroke-width':0.015,
-    'stroke-dasharray':'0.04 0.06',opacity:0.2}));
-
-  // Original triangle BPQ
-  svg.appendChild(el('polygon',{
-    points:`${B.x},${B.y} ${P.x},${P.y} ${Q.x},${Q.y}`,
-    fill:'#58a6ff','fill-opacity':0.08,stroke:'#58a6ff',
-    'stroke-width':0.02,'stroke-dasharray':'0.08 0.04'}));
-
-  // Right-angle marker at P
-  const d = 0.13;
-  const dirBP = {x:-1/S2, y:1/S2}; // P→B direction
-  const dirPQ = {x:1/S2, y:1/S2};  // P→Q direction
-  const c1 = {x:P.x+d*dirBP.x, y:P.y+d*dirBP.y};
-  const c2 = {x:c1.x+d*dirPQ.x, y:c1.y+d*dirPQ.y};
-  const c3 = {x:P.x+d*dirPQ.x, y:P.y+d*dirPQ.y};
-  svg.appendChild(el('path',{
-    d:`M${c1.x},${c1.y} L${c2.x},${c2.y} L${c3.x},${c3.y}`,
-    fill:'none',stroke:'#58a6ff','stroke-width':0.02,opacity:0.6}));
-
-  // ---- Dynamic elements ----
-  const g = el('g',{}); svg.appendChild(g);
-
-  // E trail arc
-  const eTrail = el('path',{fill:'none',stroke:'#3fb950','stroke-width':0.03,opacity:0.5});
-  g.appendChild(eTrail);
-
-  // Triangle BMN
-  const triBMN = el('polygon',{
-    fill:'#f0883e','fill-opacity':0.18,stroke:'#f0883e','stroke-width':0.03});
-  g.appendChild(triBMN);
-
-  // Line ND
-  const lineND = el('line',{stroke:'#f85149','stroke-width':0.025,'stroke-dasharray':'0.12 0.06'});
-  g.appendChild(lineND);
-
-  // Line CE
-  const lineCE = el('line',{stroke:'#3fb950','stroke-width':0.035});
-  g.appendChild(lineCE);
-
-  // Angle arc at B
-  const angleArc = el('path',{fill:'none',stroke:'#f0883e','stroke-width':0.02,opacity:0.5});
-  g.appendChild(angleArc);
-
-  // Points
-  const mkPt = (color,r=0.06) => {
-    const c = el('circle',{r,fill:color,stroke:'#0d1117','stroke-width':0.018});
-    g.appendChild(c); return c;
-  };
-  const ptP = mkPt('#58a6ff',0.05);
-  const ptQ = mkPt('#58a6ff',0.05);
-  const ptM = mkPt('#f0883e',0.06);
-  const ptN = mkPt('#f0883e',0.06);
-  const ptE = mkPt('#3fb950',0.07);
-
-  // Position static points
-  ptP.setAttribute('cx',P.x); ptP.setAttribute('cy',P.y);
-  ptQ.setAttribute('cx',Q.x); ptQ.setAttribute('cy',Q.y);
-
-  // Labels
-  const mkLbl = (text,color='#c9d1d9',sz=0.2) => {
-    const t = el('text',{
-      fill:color,'font-size':sz,'font-weight':600,
-      'font-family':'sans-serif','text-anchor':'middle',
-      'dominant-baseline':'central',
-      stroke:'#0d1117','stroke-width':0.04,'paint-order':'stroke'});
-    t.textContent = text; g.appendChild(t); return t;
-  };
-
-  // Static labels
-  const O = 0.28; // offset
-  [[mkLbl('A'),A.x-O,A.y-O],[mkLbl('B'),B.x-O,B.y+O],
-   [mkLbl('C'),C.x+O,C.y+O],[mkLbl('D'),D.x+O,D.y-O],
-   [mkLbl('P','#58a6ff',0.17),P.x-O*1.4,P.y-O*0.4],
-   [mkLbl('Q','#58a6ff',0.17),Q.x,Q.y+O]].forEach(
-    ([l,x,y])=>{l.setAttribute('x',x);l.setAttribute('y',y);});
-
-  // Dynamic labels
-  const lblM = mkLbl('M','#f0883e',0.17);
-  const lblN = mkLbl('N','#f0883e',0.17);
-  const lblE = mkLbl('E','#3fb950',0.19);
-  const lblAngle = mkLbl('n°','#f0883e',0.15);
-
-  // ---- Animation loop ----
-  let n = 0, playing = true, speed = 0.4;
-
-  function update() {
-    const M = rot(P,B,n), N = rot(Q,B,n), E = mid(N,D);
-
-    triBMN.setAttribute('points',`${B.x},${B.y} ${M.x},${M.y} ${N.x},${N.y}`);
-    lineND.setAttribute('x1',N.x); lineND.setAttribute('y1',N.y);
-    lineND.setAttribute('x2',D.x); lineND.setAttribute('y2',D.y);
-    lineCE.setAttribute('x1',C.x); lineCE.setAttribute('y1',C.y);
-    lineCE.setAttribute('x2',E.x); lineCE.setAttribute('y2',E.y);
-
-    ptM.setAttribute('cx',M.x); ptM.setAttribute('cy',M.y);
-    ptN.setAttribute('cx',N.x); ptN.setAttribute('cy',N.y);
-    ptE.setAttribute('cx',E.x); ptE.setAttribute('cy',E.y);
-
-    // Dynamic labels offset away from B / center
-    const lblOff = (p,c,o) => {
-      const a = Math.atan2(p.y-c.y,p.x-c.x);
-      return {x:p.x+o*Math.cos(a), y:p.y+o*Math.sin(a)};
-    };
-    const mL = lblOff(M,B,O); lblM.setAttribute('x',mL.x); lblM.setAttribute('y',mL.y);
-    const nL = lblOff(N,B,O); lblN.setAttribute('x',nL.x); lblN.setAttribute('y',nL.y);
-    const eL = lblOff(E,{x:s/2,y:s/2},O); lblE.setAttribute('x',eL.x); lblE.setAttribute('y',eL.y);
-
-    // Angle arc
-    if (n > 1) {
-      const r = 0.7, rad = n*Math.PI/180;
-      const sx=B.x+r, sy=B.y;
-      const ex=B.x+r*Math.cos(rad), ey=B.y+r*Math.sin(rad);
-      const la = n>180?1:0;
-      angleArc.setAttribute('d',`M${sx} ${sy} A${r} ${r} 0 ${la} 1 ${ex} ${ey}`);
-      // "n°" label at arc midpoint
-      const ma = rad/2, lr = 1.05;
-      lblAngle.setAttribute('x', B.x+lr*Math.cos(ma));
-      lblAngle.setAttribute('y', B.y+lr*Math.sin(ma));
-      lblAngle.textContent = n.toFixed(0)+'°';
-    } else {
-      angleArc.setAttribute('d','');
-      lblAngle.textContent = '';
-    }
-
-    // E trail arc
-    if (n > 1) {
-      const cx=s/2,cy=s/2,r=S2/2, rad=n*Math.PI/180;
-      const sx=cx+r, sy=cy;
-      const ex=cx+r*Math.cos(rad), ey=cy+r*Math.sin(rad);
-      const la = n>180?1:0;
-      eTrail.setAttribute('d',`M${sx} ${sy} A${r} ${r} 0 ${la} 1 ${ex} ${ey}`);
-    } else {
-      eTrail.setAttribute('d','');
-    }
-
-    disp.textContent = `n = ${n.toFixed(1)}°`;
-    slider.value = n;
+  let n=0,playing=true,last=0,raf=0;
+  const setAttrs=(node,obj)=>Object.entries(obj).forEach(([k,v])=>node.setAttribute(k,v));
+  function update(){
+    n=Math.max(0,Math.min(360,n));
+    const M=rot(P,B,n),N=rot(Q,B,n),E=mid(N,D),rad=n*Math.PI/180;
+    tri.setAttribute('points',`${B.x},${B.y} ${M.x},${M.y} ${N.x},${N.y}`);
+    setAttrs(nd,{x1:N.x,y1:N.y,x2:D.x,y2:D.y});setAttrs(ce,{x1:C.x,y1:C.y,x2:E.x,y2:E.y});
+    setAttrs(pM,{cx:M.x,cy:M.y});setAttrs(pN,{cx:N.x,cy:N.y});setAttrs(pE,{cx:E.x,cy:E.y});
+    const labelAt=(p,c,offset)=>{const a=Math.atan2(p.y-c.y,p.x-c.x);return{x:p.x+offset*Math.cos(a),y:p.y+offset*Math.sin(a)};};
+    const mpos=labelAt(M,B,.25),npos=labelAt(N,B,.25),epos=labelAt(E,O,.23);
+    setAttrs(lm,mpos);setAttrs(ln,npos);setAttrs(le,epos);
+    if(n>.1){const r=.64,sx=B.x+r,sy=B.y,ex=B.x+r*Math.cos(rad),ey=B.y+r*Math.sin(rad),large=n>180?1:0;
+      angleArc.setAttribute('d',`M${sx} ${sy} A${r} ${r} 0 ${large} 1 ${ex} ${ey}`);
+      const mr=rad/2;nLabel.textContent=`${Math.round(n)}°`;setAttrs(nLabel,{x:B.x+.88*Math.cos(mr),y:B.y+.88*Math.sin(mr)});
+      const rr=S2/2,cx=O.x,cy=O.y,tx=cx+rr*Math.cos(rad),ty=cy+rr*Math.sin(rad),large2=n>180?1:0;
+      trail.setAttribute('d',`M${cx+rr} ${cy} A${rr} ${rr} 0 ${large2} 1 ${tx} ${ty}`);
+    }else{angleArc.setAttribute('d','');trail.setAttribute('d','');nLabel.textContent='';}
+    $('angleDisp').textContent=`${n.toFixed(1)}°`;$('angleMetric').textContent=`${n.toFixed(1)}°`;
+    $('bnMetric').textContent='√2';$('oeMetric').textContent=(S2/2).toFixed(3);
+    slider.value=n;slider.style.background=`linear-gradient(90deg,#73a7ff ${n/360*100}%,#30405a ${n/360*100}%)`;
   }
-
-  // External control API (for video rendering)
-  window.setProgress = (val) => { n = parseFloat(val); update(); };
-
-  function animate() {
-    if (playing) { n = (n + speed) % 360; update(); }
-    requestAnimationFrame(animate);
-  }
-
-  playBtn.addEventListener('click', () => {
-    playing = !playing;
-    playBtn.textContent = playing ? '暂停' : '播放';
-    playBtn.style.background = playing ? '#238636' : '#da3633';
-  });
-  resetBtn.addEventListener('click', () => { n = 0; update(); });
-  slider.addEventListener('input', () => { n = parseFloat(slider.value); update(); });
-  document.addEventListener('keydown', e => {
-    if (e.code==='Space'){e.preventDefault();playBtn.click();}
-    if (e.code==='ArrowRight'){n=Math.min(360,n+1);update();}
-    if (e.code==='ArrowLeft'){n=Math.max(0,n-1);update();}
-  });
-
-  update();
-  animate();
+  // Video renderer API: sets an exact angle in degrees and updates synchronously.
+  window.setProgress=(value)=>{n=parseFloat(value);update();};
+  function animate(ts){if(playing&&ts-last>26){n=(n+.42)%360;update();last=ts;}raf=requestAnimationFrame(animate);}
+  function setPlaying(value){playing=value;playIcon.textContent=playing?'Ⅱ':'▶';playText.textContent=playing?'暂停动画':'继续播放';playBtn.setAttribute('aria-label',playing?'暂停动画':'继续播放');}
+  playBtn.addEventListener('click',()=>setPlaying(!playing));
+  $('resetBtn').addEventListener('click',()=>{n=0;setPlaying(false);update();});
+  slider.addEventListener('input',()=>{n=parseFloat(slider.value);setPlaying(false);update();});
+  document.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();setPlaying(!playing);}else if(e.code==='ArrowRight'){n=Math.min(360,n+1);setPlaying(false);update();}else if(e.code==='ArrowLeft'){n=Math.max(0,n-1);setPlaying(false);update();}});
+  update();raf=requestAnimationFrame(animate);
 })();
 </script>
 </body>
