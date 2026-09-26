@@ -13,16 +13,16 @@
 | Scene IR | mathviz.scene/v1 | 27 原语；无数学坐标；binding 必填；27 键封闭 style；9 向 label_layout |
 | Timeline | mathviz.timeline/v1 | show/hide/highlight/dim/caption/camera/map_model_time；easing:linear |
 | Project | mathviz.project/v1 | manifest 版本戳（schema/engine/domain/adapter [+registry/problem]） |
-| 能力注册表 | 1.0.0 | 39 项，三域（geometry2d 26 / function2d 7 / motion1d 7…见 registry）两段式稳定 ID |
+| 能力注册表 | 1.0.0 | 40 项，三域（geometry2d 25 / function2d 8 / motion1d 7）两段式稳定 ID（P0.1 勘误：初版报告误记 39） |
 | 错误目录 | 1.0.0 | 10 码 / 9 族；目录外错误码 = harness bug（throw） |
 | Gate harness | — | G1 schema（含跨字段）/ G2 provenance / G3 capability / G6 binding / G9 determinism |
-| Fixtures | mathviz.fixtures/v1 | 20 valid + 20 invalid，覆盖 math/scene/timeline/project 四种 kind |
+| Fixtures | mathviz.fixtures/v1 | 20 valid + 24 invalid（P0.1 增 4 例），覆盖 math/scene/timeline/project 四种 kind |
 
 ## 硬验收对照（用户口径）
 
 1. 20 valid 全 PASS ✅（`npm run gates` 表格全部 OK PASS-EXP）
-2. 20 invalid 全 FAIL 且命中 expected_error_code ✅（期望错误码必须全部出现在实际发出的错误码中，允许多出额外错误码）
-3. serialize→deserialize→serialize 字节稳定 ✅（40 fixture 逐一断言 + 已知向量）
+2. 20 invalid 全 FAIL 且命中 expected_error_code ✅（期望错误码必须全部出现在实际发出的错误码中，允许多出额外错误码；P0.1 后为 24 例）
+3. serialize→deserialize→serialize 字节稳定 ✅（全部 fixture 逐一断言 + 已知向量）
 4. 未知 capability → E_CAPABILITY_UNSUPPORTED ✅（inv-unknown-capability / inv-capability-wrong-domain）
 5. source fact 无溯源 → FAIL ✅（inv-source-fact-no-provenance → E_PROVENANCE）
 6. Scene 引用缺失 math 绑定 → FAIL ✅（inv-project-scene-dangling-binding → E_BINDING）
@@ -42,6 +42,16 @@
 2. **G6 扩展到 math 内部引用**：原计划只查 scene/timeline；为满足“任何悬空引用 FAIL”的口径，把 math 内部引用也纳入 G6（错误族不变 E_BINDING）。
 3. **期望码子集判定**：invalid case 判定采用子集语义——每个期望错误码都必须出现，额外错误码允许（如缺 domain 同时触发 E_SCHEMA 与 E_CAPABILITY_UNSUPPORTED）。
 4. **tsc 仅作类型门**：运行走 tsx（dev），构建冻结留给 P1 编译产物阶段（adapter_versions 已预留 pin 位）。
+
+## P0.1 Contract Hardening（审计后追加，基线 b7fd79b 之上）
+
+审计反馈三项，全部落地：
+
+1. **A1 溯源回指原文**：G2 不再只查 span 结构，强制 `statement.slice(span.start, span.end) === span.text`；有 source_facts 但缺 statement 同样 E_PROVENANCE。全部 valid fixture 的 span 已重写为 statement 的真实切片（脚本对齐 + 抽查）。新增 invalid：inv-provenance-text-mismatch / inv-provenance-span-out-of-range / inv-source-fact-without-statement。
+2. **A2 capability 声明闭包**：derived provenance / constraints / assertions / events 实际使用的 capability 必须 ∈ math.capabilities（declared-but-unused 仍允许，parser 可预声明）。新增 invalid：inv-used-capability-not-declared；project-minimal fixture 补声明 motion1d.solve_position。
+3. **A3 统计勘误**：registry 实为 40 项（geometry2d 25 / function2d 8 / motion1d 7），初版报告的 39 为统计漂移，代码无改动、不删 capability。
+
+P0.1 后：gates 20 valid 全 PASS + 24 invalid 全命中；fixtures 总数 44。
 
 ## 复现
 

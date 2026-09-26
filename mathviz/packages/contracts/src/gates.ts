@@ -148,8 +148,15 @@ export function gateSchema(doc: any, kind: CaseKind): VizError[] {
 export function gateProvenance(math: any): VizError[] {
   const errs: VizError[] = [];
   const ids = collectMathIds(math);
+  const statement = math?.statement;
 
-  for (const f of math?.source_facts ?? []) {
+  // A1: source facts must be anchored in a verbatim statement slice.
+  const sourceFacts = math?.source_facts ?? [];
+  if (sourceFacts.length > 0 && typeof statement !== "string") {
+    errs.push(makeError("E_PROVENANCE", "math has source_facts but no statement to anchor provenance spans"));
+  }
+
+  for (const f of sourceFacts) {
     const fid = f?.fact_id ?? "<unnamed>";
     const p = f?.provenance;
     if (!p || typeof p !== "object" || Array.isArray(p)) {
@@ -166,6 +173,14 @@ export function gateProvenance(math: any): VizError[] {
     const endOk = span && Number.isInteger(span.end) && span.end > 0;
     if (!textOk || !startOk || !endOk || span.end <= span.start) {
       errs.push(makeError("E_PROVENANCE", `source fact '${fid}' has invalid span (need text + start>=0 + end>start)`, span, `/source_facts/${fid}`));
+      continue;
+    }
+    if (typeof statement === "string") {
+      if (span.end > statement.length) {
+        errs.push(makeError("E_PROVENANCE", `source fact '${fid}' span [${span.start},${span.end}) exceeds statement length ${statement.length}`, span, `/source_facts/${fid}`));
+      } else if (statement.slice(span.start, span.end) !== span.text) {
+        errs.push(makeError("E_PROVENANCE", `source fact '${fid}' span text does not match statement slice: expected ${JSON.stringify(statement.slice(span.start, span.end))}`, span, `/source_facts/${fid}`));
+      }
     }
   }
 
@@ -219,6 +234,21 @@ export function gateCapability(math: any): VizError[] {
       errs.push(makeError("E_CAPABILITY_UNSUPPORTED", `${where} cites capability not in frozen registry: '${id}'`));
     } else if (typeof domain === "string" && entry.domain !== domain) {
       errs.push(makeError("E_CAPABILITY_UNSUPPORTED", `${where} capability '${id}' belongs to ${entry.domain}, spec domain is ${domain}`));
+    }
+  }
+
+  // A2: capability declaration closure — every capability actually used by
+  // derived provenance / constraints / assertions / events must be declared in
+  // math.capabilities. Declared-but-unused stays allowed (parser may
+  // pre-declare capabilities for later steps).
+  const declared = new Set<string>(math?.capabilities ?? []);
+  const usedWhere: Array<[string, string]> = [
+    ...used,
+    ...(math?.derived_facts ?? []).map((f: any): [string, string] => [f?.provenance?.capability_id, `derived fact '${f?.fact_id ?? "<unnamed>"}'`])
+  ];
+  for (const [id, where] of usedWhere) {
+    if (typeof id === "string" && id.length > 0 && !declared.has(id)) {
+      errs.push(makeError("E_CAPABILITY_UNSUPPORTED", `${where} uses capability '${id}' which is not declared in math.capabilities`));
     }
   }
 

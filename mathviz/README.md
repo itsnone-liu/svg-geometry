@@ -19,11 +19,11 @@ mathviz/
       capability-registry.schema.json
       error-catalog.schema.json
       project.schema.json      # 编译产物：manifest 版本戳 + math/scene/timeline
-    registry/capabilities.v1.json   # 39 项能力，registry_version 1.0.0
+    registry/capabilities.v1.json   # 40 项能力（geometry2d 25 / function2d 8 / motion1d 7），registry_version 1.0.0
     errors/error-catalog.v1.json    # 10 错误码 / 9 族，catalog_version 1.0.0
     src/load.ts serialize.ts gates.ts run.ts
   fixtures/p0_cases.valid.json     # 20 例必须全 PASS
-  fixtures/p0_cases.invalid.json  # 20 例必须 FAIL 且命中 expected_error_codes
+  fixtures/p0_cases.invalid.json  # 24 例必须 FAIL 且命中 expected_error_codes
   tests/p0.test.ts                 # vitest：硬验收 + 目录/注册表完整性 + 规范化向量
   runs/p0/report.json              # gate 运行产物（.gitignore）
 ```
@@ -41,7 +41,7 @@ mathviz/
 ## 规范化序列化（canon）
 
 - 递归按 key 排序（UTF-16 码元序），数组保序，紧凑单行 `JSON.stringify`；
-- `serialize → deserialize → serialize` **字节稳定**（全部 40 个 fixture 断言通过）；
+- `serialize → deserialize → serialize` **字节稳定**（全部 44 个 fixture 断言通过）；
 - sha256 摘要进 `runs/p0/report.json`，供跨时间复现校验；
 - 已知向量：`{"b":1,"a":{"d":[2,1],"c":"x"}}` → `{"a":{"c":"x","d":[2,1]},"b":1}`。
 
@@ -50,8 +50,8 @@ mathviz/
 | code | family | 触发示例 |
 |---|---|---|
 | E_SCHEMA | SCHEMA | 坐标泄入 Scene、缺 binding、span 外任何结构违规、schemaVersion 不匹配 |
-| E_PROVENANCE | PROVENANCE | source_fact 无溯源、kind 用错、span end≤start、derived inputs 悬空 |
-| E_CAPABILITY_UNSUPPORTED | CAPABILITY | 未注册 ID、domain 段与 math.domain 不一致 |
+| E_PROVENANCE | PROVENANCE | source_fact 无溯源、kind 用错、span end≤start、span 与 statement 切片不一致、有 source_facts 但无 statement、derived inputs 悬空 |
+| E_CAPABILITY_UNSUPPORTED | CAPABILITY | 未注册 ID、domain 段与 math.domain 不一致、使用了未在 math.capabilities 声明的 capability |
 | E_MATH_CONSTRAINT | SOLVE | 参数 min>max、timeline to≤from、重复 track_id（跨字段检查） |
 | E_MATH_ASSERTION | ASSERTION | P1+ 数值验证失败（P0 仅定义） |
 | E_BINDING | BINDING | scene/timeline/math 内部引用不存在的实体、事实或对象 |
@@ -71,7 +71,7 @@ npx tsc --noEmit
 
 ## P0 验收口径（全部达成）
 
-- 20 valid 全 PASS / 20 invalid 全 FAIL，且每个期望错误码都出现在实际发出的错误码中（允许额外错误码）；
+- 20 valid 全 PASS / 24 invalid 全 FAIL，且每个期望错误码都出现在实际发出的错误码中（允许额外错误码）；
 - serialize→deserialize→serialize 字节稳定（逐 fixture）；
 - 未知 capability → E_CAPABILITY_UNSUPPORTED；
 - source fact 无溯源 → FAIL（E_PROVENANCE）；

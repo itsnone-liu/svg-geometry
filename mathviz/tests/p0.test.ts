@@ -8,9 +8,9 @@ const valid = cases.filter(c => c.expect === "pass");
 const invalid = cases.filter(c => c.expect === "fail");
 
 describe("P0 acceptance: fixture counts", () => {
-  it("has exactly 20 valid and 20 invalid fixtures", () => {
+  it("has exactly 20 valid and 24 invalid fixtures", () => {
     expect(valid.length).toBe(20);
-    expect(invalid.length).toBe(20);
+    expect(invalid.length).toBe(24);
   });
 
   it("covers all four document kinds", () => {
@@ -76,6 +76,25 @@ describe("P0 acceptance: named hard criteria", () => {
     const r = runCase(invalid.find(c => c.case_id === "inv-project-scene-dangling-binding")!);
     expect(r.ok).toBe(true);
     expect(r.emitted_error_codes).toContain("E_BINDING");
+  });
+});
+
+describe("P0.1 hardening: provenance slices + capability closure", () => {
+  it("provenance span must quote the statement verbatim (slice equality)", () => {
+    const r = runCase(invalid.find(c => c.case_id === "inv-provenance-text-mismatch")!);
+    expect(r.emitted_error_codes).toContain("E_PROVENANCE");
+    const r2 = runCase(invalid.find(c => c.case_id === "inv-provenance-span-out-of-range")!);
+    expect(r2.emitted_error_codes).toContain("E_PROVENANCE");
+  });
+
+  it("source facts without a statement to anchor against FAIL", () => {
+    const r = runCase(invalid.find(c => c.case_id === "inv-source-fact-without-statement")!);
+    expect(r.emitted_error_codes).toContain("E_PROVENANCE");
+  });
+
+  it("used-but-undeclared capability FAILS even when registry-valid", () => {
+    const r = runCase(invalid.find(c => c.case_id === "inv-used-capability-not-declared")!);
+    expect(r.emitted_error_codes).toContain("E_CAPABILITY_UNSUPPORTED");
   });
 });
 

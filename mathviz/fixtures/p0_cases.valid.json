@@ -14,52 +14,355 @@
         "parameters": [
           {
             "id": "theta",
-            "min": { "kind": "int", "value": "0" },
-            "max": { "kind": "symbolic", "expr": { "t": "app", "op": "/", "args": [ { "t": "sym", "name": "pi" }, { "t": "num", "v": { "kind": "int", "value": "2" } } ] } },
-            "default": { "kind": "int", "value": "0" },
+            "min": {
+              "kind": "int",
+              "value": "0"
+            },
+            "max": {
+              "kind": "symbolic",
+              "expr": {
+                "t": "app",
+                "op": "/",
+                "args": [
+                  {
+                    "t": "sym",
+                    "name": "pi"
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "2"
+                    }
+                  }
+                ]
+              }
+            },
+            "default": {
+              "kind": "int",
+              "value": "0"
+            },
             "unit": "rad"
           }
         ],
         "entities": [
-          { "id": "A", "kind": "point", "props": { "x": 0, "y": 0 }, "label": "A" },
-          { "id": "B", "kind": "point", "props": { "x": 0, "y": "3*sqrt(2)" }, "label": "B" },
-          { "id": "C", "kind": "point", "props": { "x": "3*sqrt(2)", "y": "3*sqrt(2)" }, "label": "C" },
-          { "id": "D", "kind": "point", "props": { "x": "3*sqrt(2)", "y": 0 }, "label": "D" },
-          { "id": "O_center", "kind": "point", "props": { "x": "3*sqrt(2)/2", "y": "3*sqrt(2)/2" }, "label": "O" },
-          { "id": "P", "kind": "point", "props": { "x": "sqrt(2)/2", "y": "3*sqrt(2)-sqrt(2)/2" }, "label": "P" },
-          { "id": "Q", "kind": "point", "props": { "x": "sqrt(2)", "y": "3*sqrt(2)" }, "label": "Q" },
-          { "id": "M", "kind": "transform_point", "props": { "capability_id": "geometry2d.rotate_point", "source": "entity:P", "center": "entity:B", "angle": "param:theta" }, "label": "M" },
-          { "id": "N", "kind": "transform_point", "props": { "capability_id": "geometry2d.rotate_point", "source": "entity:Q", "center": "entity:B", "angle": "param:theta" }, "label": "N" },
-          { "id": "E", "kind": "midpoint", "props": { "capability_id": "geometry2d.midpoint", "a": "entity:N", "b": "entity:D" }, "label": "E" },
-          { "id": "square_poly", "kind": "polygon", "props": { "vertices": ["entity:A", "entity:B", "entity:C", "entity:D"] } },
-          { "id": "seg_ND", "kind": "segment", "props": { "a": "entity:N", "b": "entity:D" } },
-          { "id": "seg_CE", "kind": "segment", "props": { "a": "entity:C", "b": "entity:E" } },
-          { "id": "tri_BMN", "kind": "polygon", "props": { "vertices": ["entity:B", "entity:M", "entity:N"] } },
-          { "id": "locus_circle", "kind": "circle", "props": { "center": "entity:O_center", "radius": "fact:oe_length" } }
+          {
+            "id": "A",
+            "kind": "point",
+            "props": {
+              "x": 0,
+              "y": 0
+            },
+            "label": "A"
+          },
+          {
+            "id": "B",
+            "kind": "point",
+            "props": {
+              "x": 0,
+              "y": "3*sqrt(2)"
+            },
+            "label": "B"
+          },
+          {
+            "id": "C",
+            "kind": "point",
+            "props": {
+              "x": "3*sqrt(2)",
+              "y": "3*sqrt(2)"
+            },
+            "label": "C"
+          },
+          {
+            "id": "D",
+            "kind": "point",
+            "props": {
+              "x": "3*sqrt(2)",
+              "y": 0
+            },
+            "label": "D"
+          },
+          {
+            "id": "O_center",
+            "kind": "point",
+            "props": {
+              "x": "3*sqrt(2)/2",
+              "y": "3*sqrt(2)/2"
+            },
+            "label": "O"
+          },
+          {
+            "id": "P",
+            "kind": "point",
+            "props": {
+              "x": "sqrt(2)/2",
+              "y": "3*sqrt(2)-sqrt(2)/2"
+            },
+            "label": "P"
+          },
+          {
+            "id": "Q",
+            "kind": "point",
+            "props": {
+              "x": "sqrt(2)",
+              "y": "3*sqrt(2)"
+            },
+            "label": "Q"
+          },
+          {
+            "id": "M",
+            "kind": "transform_point",
+            "props": {
+              "capability_id": "geometry2d.rotate_point",
+              "source": "entity:P",
+              "center": "entity:B",
+              "angle": "param:theta"
+            },
+            "label": "M"
+          },
+          {
+            "id": "N",
+            "kind": "transform_point",
+            "props": {
+              "capability_id": "geometry2d.rotate_point",
+              "source": "entity:Q",
+              "center": "entity:B",
+              "angle": "param:theta"
+            },
+            "label": "N"
+          },
+          {
+            "id": "E",
+            "kind": "midpoint",
+            "props": {
+              "capability_id": "geometry2d.midpoint",
+              "a": "entity:N",
+              "b": "entity:D"
+            },
+            "label": "E"
+          },
+          {
+            "id": "square_poly",
+            "kind": "polygon",
+            "props": {
+              "vertices": [
+                "entity:A",
+                "entity:B",
+                "entity:C",
+                "entity:D"
+              ]
+            }
+          },
+          {
+            "id": "seg_ND",
+            "kind": "segment",
+            "props": {
+              "a": "entity:N",
+              "b": "entity:D"
+            }
+          },
+          {
+            "id": "seg_CE",
+            "kind": "segment",
+            "props": {
+              "a": "entity:C",
+              "b": "entity:E"
+            }
+          },
+          {
+            "id": "tri_BMN",
+            "kind": "polygon",
+            "props": {
+              "vertices": [
+                "entity:B",
+                "entity:M",
+                "entity:N"
+              ]
+            }
+          },
+          {
+            "id": "locus_circle",
+            "kind": "circle",
+            "props": {
+              "center": "entity:O_center",
+              "radius": "fact:oe_length"
+            }
+          }
         ],
         "source_facts": [
-          { "fact_id": "bd_length", "name": "对角线BD长度", "value": 6, "unit": "长度", "provenance": { "kind": "problem_text", "span": { "text": "BD是对角线(BD=6)", "start": 8, "end": 16 } } },
-          { "fact_id": "bp_length", "name": "BP长度", "value": 1, "unit": "长度", "provenance": { "kind": "problem_text", "span": { "text": "BP=1", "start": 27, "end": 31 } } },
-          { "fact_id": "angle_bpq", "name": "BPQ夹角", "value": 90, "unit": "度", "provenance": { "kind": "problem_text", "span": { "text": "∠BPQ=90°", "start": 37, "end": 45 } } },
-          { "fact_id": "rotation_dir", "name": "旋转方向", "value": "顺时针", "provenance": { "kind": "problem_text", "span": { "text": "绕点B顺时针旋转", "start": 47, "end": 54 } } }
+          {
+            "fact_id": "bd_length",
+            "name": "对角线BD长度",
+            "value": 6,
+            "unit": "长度",
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "BD是对角线(BD=6)",
+                "start": 8,
+                "end": 20
+              }
+            }
+          },
+          {
+            "fact_id": "bp_length",
+            "name": "BP长度",
+            "value": 1,
+            "unit": "长度",
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "BP=1",
+                "start": 38,
+                "end": 42
+              }
+            }
+          },
+          {
+            "fact_id": "angle_bpq",
+            "name": "BPQ夹角",
+            "value": 90,
+            "unit": "度",
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "∠BPQ=90°",
+                "start": 43,
+                "end": 51
+              }
+            }
+          },
+          {
+            "fact_id": "rotation_dir",
+            "name": "旋转方向",
+            "value": "顺时针",
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "绕点B顺时针旋转",
+                "start": 57,
+                "end": 65
+              }
+            }
+          }
         ],
         "derived_facts": [
-          { "fact_id": "side_length", "name": "正方形边长", "value": { "exact": "3*sqrt(2)" }, "unit": "长度", "provenance": { "kind": "derived", "capability_id": "geometry2d.derive_length", "inputs": ["fact:bd_length"] } },
-          { "fact_id": "bn_length", "name": "BN长度", "value": { "exact": "sqrt(2)" }, "unit": "长度", "provenance": { "kind": "derived", "capability_id": "geometry2d.derive_length", "inputs": ["fact:bp_length", "fact:angle_bpq"] } },
-          { "fact_id": "oe_length", "name": "OE长度", "value": { "exact": "sqrt(2)/2" }, "unit": "长度", "provenance": { "kind": "derived", "capability_id": "geometry2d.derive_length", "inputs": ["fact:bn_length"] } }
+          {
+            "fact_id": "side_length",
+            "name": "正方形边长",
+            "value": {
+              "exact": "3*sqrt(2)"
+            },
+            "unit": "长度",
+            "provenance": {
+              "kind": "derived",
+              "capability_id": "geometry2d.derive_length",
+              "inputs": [
+                "fact:bd_length"
+              ]
+            }
+          },
+          {
+            "fact_id": "bn_length",
+            "name": "BN长度",
+            "value": {
+              "exact": "sqrt(2)"
+            },
+            "unit": "长度",
+            "provenance": {
+              "kind": "derived",
+              "capability_id": "geometry2d.derive_length",
+              "inputs": [
+                "fact:bp_length",
+                "fact:angle_bpq"
+              ]
+            }
+          },
+          {
+            "fact_id": "oe_length",
+            "name": "OE长度",
+            "value": {
+              "exact": "sqrt(2)/2"
+            },
+            "unit": "长度",
+            "provenance": {
+              "kind": "derived",
+              "capability_id": "geometry2d.derive_length",
+              "inputs": [
+                "fact:bn_length"
+              ]
+            }
+          }
         ],
         "runtime_values": [
-          { "id": "pos_E", "expr": { "t": "sym", "name": "E_pos" }, "unit": "坐标", "depends_on": ["param:theta"] }
+          {
+            "id": "pos_E",
+            "expr": {
+              "t": "sym",
+              "name": "E_pos"
+            },
+            "unit": "坐标",
+            "depends_on": [
+              "param:theta"
+            ]
+          }
         ],
         "constraints": [
-          { "capability_id": "geometry2d.perpendicular", "subject_refs": ["entity:P", "entity:Q", "entity:B"], "params": { "angle": "90" } },
-          { "capability_id": "geometry2d.equal_length", "subject_refs": ["entity:B", "entity:P", "entity:B", "entity:Q"] }
+          {
+            "capability_id": "geometry2d.perpendicular",
+            "subject_refs": [
+              "entity:P",
+              "entity:Q",
+              "entity:B"
+            ],
+            "params": {
+              "angle": "90"
+            }
+          },
+          {
+            "capability_id": "geometry2d.equal_length",
+            "subject_refs": [
+              "entity:B",
+              "entity:P",
+              "entity:B",
+              "entity:Q"
+            ]
+          }
         ],
         "assertions": [
-          { "assertion_id": "assert_oe_const", "capability_id": "geometry2d.distance_equal", "subject_refs": ["entity:E", "entity:O_center"], "params": { "value": "sqrt(2)/2" }, "expectation": "holds" },
-          { "assertion_id": "assert_e_on_circle", "capability_id": "geometry2d.on_circle", "subject_refs": ["entity:E"], "params": { "circle": "entity:locus_circle" }, "expectation": "holds" }
+          {
+            "assertion_id": "assert_oe_const",
+            "capability_id": "geometry2d.distance_equal",
+            "subject_refs": [
+              "entity:E",
+              "entity:O_center"
+            ],
+            "params": {
+              "value": "sqrt(2)/2"
+            },
+            "expectation": "holds"
+          },
+          {
+            "assertion_id": "assert_e_on_circle",
+            "capability_id": "geometry2d.on_circle",
+            "subject_refs": [
+              "entity:E"
+            ],
+            "params": {
+              "circle": "entity:locus_circle"
+            },
+            "expectation": "holds"
+          }
         ],
-        "capabilities": ["geometry2d.rotate_point", "geometry2d.midpoint", "geometry2d.perpendicular", "geometry2d.equal_length", "geometry2d.distance_equal", "geometry2d.on_circle", "geometry2d.derive_length"]
+        "capabilities": [
+          "geometry2d.rotate_point",
+          "geometry2d.midpoint",
+          "geometry2d.perpendicular",
+          "geometry2d.equal_length",
+          "geometry2d.distance_equal",
+          "geometry2d.on_circle",
+          "geometry2d.derive_length"
+        ]
       }
     },
     {
@@ -72,28 +375,133 @@
         "domain": "geometry2d",
         "statement": "在△ABC中，AB=AC=10，BC=12，作AD⊥BC于点D，求AD的长。",
         "entities": [
-          { "id": "T_A", "kind": "point", "props": { "label": "A" } },
-          { "id": "T_B", "kind": "point", "props": { "label": "B" } },
-          { "id": "T_C", "kind": "point", "props": { "label": "C" } },
-          { "id": "F", "kind": "projection_point", "props": { "capability_id": "geometry2d.projection_point", "point": "entity:T_A", "onto": "entity:seg_BC" }, "label": "D" },
-          { "id": "seg_BC", "kind": "segment", "props": { "a": "entity:T_B", "b": "entity:T_C" } }
+          {
+            "id": "T_A",
+            "kind": "point",
+            "props": {
+              "label": "A"
+            }
+          },
+          {
+            "id": "T_B",
+            "kind": "point",
+            "props": {
+              "label": "B"
+            }
+          },
+          {
+            "id": "T_C",
+            "kind": "point",
+            "props": {
+              "label": "C"
+            }
+          },
+          {
+            "id": "F",
+            "kind": "projection_point",
+            "props": {
+              "capability_id": "geometry2d.projection_point",
+              "point": "entity:T_A",
+              "onto": "entity:seg_BC"
+            },
+            "label": "D"
+          },
+          {
+            "id": "seg_BC",
+            "kind": "segment",
+            "props": {
+              "a": "entity:T_B",
+              "b": "entity:T_C"
+            }
+          }
         ],
         "source_facts": [
-          { "fact_id": "ab_len", "name": "AB长度", "value": 10, "unit": "长度", "provenance": { "kind": "problem_text", "span": { "text": "AB=AC=10", "start": 4, "end": 12 } } },
-          { "fact_id": "bc_len", "name": "BC长度", "value": 12, "unit": "长度", "provenance": { "kind": "problem_text", "span": { "text": "BC=12", "start": 13, "end": 18 } } }
+          {
+            "fact_id": "ab_len",
+            "name": "AB长度",
+            "value": 10,
+            "unit": "长度",
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "AB=AC=10",
+                "start": 7,
+                "end": 15
+              }
+            }
+          },
+          {
+            "fact_id": "bc_len",
+            "name": "BC长度",
+            "value": 12,
+            "unit": "长度",
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "BC=12",
+                "start": 16,
+                "end": 21
+              }
+            }
+          }
         ],
         "derived_facts": [
-          { "fact_id": "af_len", "name": "AD长度", "value": { "exact": "8" }, "unit": "长度", "provenance": { "kind": "derived", "capability_id": "geometry2d.derive_length", "inputs": ["fact:ab_len", "fact:bc_len"] } }
+          {
+            "fact_id": "af_len",
+            "name": "AD长度",
+            "value": {
+              "exact": "8"
+            },
+            "unit": "长度",
+            "provenance": {
+              "kind": "derived",
+              "capability_id": "geometry2d.derive_length",
+              "inputs": [
+                "fact:ab_len",
+                "fact:bc_len"
+              ]
+            }
+          }
         ],
         "runtime_values": [],
         "constraints": [
-          { "capability_id": "geometry2d.perpendicular", "subject_refs": ["entity:T_A", "entity:F"] },
-          { "capability_id": "geometry2d.collinear", "subject_refs": ["entity:F", "entity:T_B", "entity:T_C"] }
+          {
+            "capability_id": "geometry2d.perpendicular",
+            "subject_refs": [
+              "entity:T_A",
+              "entity:F"
+            ]
+          },
+          {
+            "capability_id": "geometry2d.collinear",
+            "subject_refs": [
+              "entity:F",
+              "entity:T_B",
+              "entity:T_C"
+            ]
+          }
         ],
         "assertions": [
-          { "assertion_id": "assert_af_len", "capability_id": "geometry2d.distance_equal", "subject_refs": ["entity:T_A", "entity:F"], "params": { "value": "8" }, "expectation": "holds" }
+          {
+            "assertion_id": "assert_af_len",
+            "capability_id": "geometry2d.distance_equal",
+            "subject_refs": [
+              "entity:T_A",
+              "entity:F"
+            ],
+            "params": {
+              "value": "8"
+            },
+            "expectation": "holds"
+          }
         ],
-        "capabilities": ["geometry2d.projection_point", "geometry2d.perpendicular", "geometry2d.collinear", "geometry2d.distance_equal", "geometry2d.derive_length"]
+        "capabilities": [
+          "geometry2d.projection_point",
+          "geometry2d.perpendicular",
+          "geometry2d.collinear",
+          "geometry2d.distance_equal",
+          "geometry2d.derive_length"
+        ]
       }
     },
     {
@@ -106,31 +514,151 @@
         "domain": "geometry2d",
         "statement": "四边形ABCD中，AB=8，CD=8，AB∥CD，M、N分别为AB、CD中点，连接MN。",
         "entities": [
-          { "id": "Q_A", "kind": "point", "props": { "label": "A" } },
-          { "id": "Q_B", "kind": "point", "props": { "label": "B" } },
-          { "id": "Q_C", "kind": "point", "props": { "label": "C" } },
-          { "id": "Q_D", "kind": "point", "props": { "label": "D" } },
-          { "id": "seg_AB", "kind": "segment", "props": { "a": "entity:Q_A", "b": "entity:Q_B" } },
-          { "id": "seg_CD", "kind": "segment", "props": { "a": "entity:Q_C", "b": "entity:Q_D" } },
-          { "id": "M_mid", "kind": "midpoint", "props": { "capability_id": "geometry2d.midpoint", "a": "entity:Q_A", "b": "entity:Q_B" }, "label": "M" },
-          { "id": "N_mid", "kind": "midpoint", "props": { "capability_id": "geometry2d.midpoint", "a": "entity:Q_C", "b": "entity:Q_D" }, "label": "N" }
+          {
+            "id": "Q_A",
+            "kind": "point",
+            "props": {
+              "label": "A"
+            }
+          },
+          {
+            "id": "Q_B",
+            "kind": "point",
+            "props": {
+              "label": "B"
+            }
+          },
+          {
+            "id": "Q_C",
+            "kind": "point",
+            "props": {
+              "label": "C"
+            }
+          },
+          {
+            "id": "Q_D",
+            "kind": "point",
+            "props": {
+              "label": "D"
+            }
+          },
+          {
+            "id": "seg_AB",
+            "kind": "segment",
+            "props": {
+              "a": "entity:Q_A",
+              "b": "entity:Q_B"
+            }
+          },
+          {
+            "id": "seg_CD",
+            "kind": "segment",
+            "props": {
+              "a": "entity:Q_C",
+              "b": "entity:Q_D"
+            }
+          },
+          {
+            "id": "M_mid",
+            "kind": "midpoint",
+            "props": {
+              "capability_id": "geometry2d.midpoint",
+              "a": "entity:Q_A",
+              "b": "entity:Q_B"
+            },
+            "label": "M"
+          },
+          {
+            "id": "N_mid",
+            "kind": "midpoint",
+            "props": {
+              "capability_id": "geometry2d.midpoint",
+              "a": "entity:Q_C",
+              "b": "entity:Q_D"
+            },
+            "label": "N"
+          }
         ],
         "source_facts": [
-          { "fact_id": "ab_len", "name": "AB长度", "value": 8, "unit": "长度", "provenance": { "kind": "problem_text", "span": { "text": "AB=8", "start": 5, "end": 9 } } },
-          { "fact_id": "parallel_fact", "name": "AB平行CD", "value": true, "provenance": { "kind": "problem_text", "span": { "text": "AB∥CD", "start": 15, "end": 20 } } }
+          {
+            "fact_id": "ab_len",
+            "name": "AB长度",
+            "value": 8,
+            "unit": "长度",
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "AB=8",
+                "start": 9,
+                "end": 13
+              }
+            }
+          },
+          {
+            "fact_id": "parallel_fact",
+            "name": "AB平行CD",
+            "value": true,
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "AB∥CD",
+                "start": 19,
+                "end": 24
+              }
+            }
+          }
         ],
         "derived_facts": [
-          { "fact_id": "mn_len", "name": "MN长度", "value": { "exact": "(AD+BC)/2" }, "unit": "长度", "provenance": { "kind": "derived", "capability_id": "geometry2d.derive_length", "inputs": ["fact:ab_len"] } }
+          {
+            "fact_id": "mn_len",
+            "name": "MN长度",
+            "value": {
+              "exact": "(AD+BC)/2"
+            },
+            "unit": "长度",
+            "provenance": {
+              "kind": "derived",
+              "capability_id": "geometry2d.derive_length",
+              "inputs": [
+                "fact:ab_len"
+              ]
+            }
+          }
         ],
         "runtime_values": [],
         "constraints": [
-          { "capability_id": "geometry2d.parallel", "subject_refs": ["entity:seg_AB", "entity:seg_CD"] },
-          { "capability_id": "geometry2d.equal_length", "subject_refs": ["entity:seg_AB", "entity:seg_CD"] }
+          {
+            "capability_id": "geometry2d.parallel",
+            "subject_refs": [
+              "entity:seg_AB",
+              "entity:seg_CD"
+            ]
+          },
+          {
+            "capability_id": "geometry2d.equal_length",
+            "subject_refs": [
+              "entity:seg_AB",
+              "entity:seg_CD"
+            ]
+          }
         ],
         "assertions": [
-          { "assertion_id": "assert_parallel", "capability_id": "geometry2d.parallel", "subject_refs": ["entity:seg_AB", "entity:seg_CD"], "expectation": "holds" }
+          {
+            "assertion_id": "assert_parallel",
+            "capability_id": "geometry2d.parallel",
+            "subject_refs": [
+              "entity:seg_AB",
+              "entity:seg_CD"
+            ],
+            "expectation": "holds"
+          }
         ],
-        "capabilities": ["geometry2d.parallel", "geometry2d.equal_length", "geometry2d.midpoint", "geometry2d.derive_length"]
+        "capabilities": [
+          "geometry2d.parallel",
+          "geometry2d.equal_length",
+          "geometry2d.midpoint",
+          "geometry2d.derive_length"
+        ]
       }
     },
     {
@@ -145,32 +673,132 @@
         "parameters": [
           {
             "id": "phi",
-            "min": { "kind": "int", "value": "0" },
-            "max": { "kind": "symbolic", "expr": { "t": "app", "op": "*", "args": [ { "t": "num", "v": { "kind": "int", "value": "2" } }, { "t": "sym", "name": "pi" } ] } },
-            "default": { "kind": "int", "value": "0" },
+            "min": {
+              "kind": "int",
+              "value": "0"
+            },
+            "max": {
+              "kind": "symbolic",
+              "expr": {
+                "t": "app",
+                "op": "*",
+                "args": [
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "2"
+                    }
+                  },
+                  {
+                    "t": "sym",
+                    "name": "pi"
+                  }
+                ]
+              }
+            },
+            "default": {
+              "kind": "int",
+              "value": "0"
+            },
             "unit": "rad"
           }
         ],
         "entities": [
-          { "id": "O_c", "kind": "point", "props": { "label": "O" } },
-          { "id": "P0", "kind": "point", "props": { "label": "P₀" } },
-          { "id": "P_rot", "kind": "transform_point", "props": { "capability_id": "geometry2d.rotate_point", "source": "entity:P0", "center": "entity:O_c", "angle": "param:phi" }, "label": "P" },
-          { "id": "locus_c", "kind": "circle", "props": { "center": "entity:O_c", "radius": "fact:radius_len" } }
+          {
+            "id": "O_c",
+            "kind": "point",
+            "props": {
+              "label": "O"
+            }
+          },
+          {
+            "id": "P0",
+            "kind": "point",
+            "props": {
+              "label": "P₀"
+            }
+          },
+          {
+            "id": "P_rot",
+            "kind": "transform_point",
+            "props": {
+              "capability_id": "geometry2d.rotate_point",
+              "source": "entity:P0",
+              "center": "entity:O_c",
+              "angle": "param:phi"
+            },
+            "label": "P"
+          },
+          {
+            "id": "locus_c",
+            "kind": "circle",
+            "props": {
+              "center": "entity:O_c",
+              "radius": "fact:radius_len"
+            }
+          }
         ],
         "source_facts": [
-          { "fact_id": "radius_len", "name": "半径", "value": 1, "unit": "长度", "provenance": { "kind": "problem_text", "span": { "text": "半径为1", "start": 2, "end": 6 } } }
+          {
+            "fact_id": "radius_len",
+            "name": "半径",
+            "value": 1,
+            "unit": "长度",
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "半径为1",
+                "start": 2,
+                "end": 6
+              }
+            }
+          }
         ],
         "derived_facts": [],
         "runtime_values": [
-          { "id": "trail_pos", "expr": { "t": "sym", "name": "P_pos" }, "depends_on": ["param:phi"] }
+          {
+            "id": "trail_pos",
+            "expr": {
+              "t": "sym",
+              "name": "P_pos"
+            },
+            "depends_on": [
+              "param:phi"
+            ]
+          }
         ],
         "constraints": [
-          { "capability_id": "geometry2d.distance_equal", "subject_refs": ["entity:P0", "entity:O_c"], "params": { "value": "1" } }
+          {
+            "capability_id": "geometry2d.distance_equal",
+            "subject_refs": [
+              "entity:P0",
+              "entity:O_c"
+            ],
+            "params": {
+              "value": "1"
+            }
+          }
         ],
         "assertions": [
-          { "assertion_id": "assert_p_on_circle", "capability_id": "geometry2d.on_circle", "subject_refs": ["entity:P_rot"], "params": { "circle": "entity:locus_c" }, "expectation": "holds" }
+          {
+            "assertion_id": "assert_p_on_circle",
+            "capability_id": "geometry2d.on_circle",
+            "subject_refs": [
+              "entity:P_rot"
+            ],
+            "params": {
+              "circle": "entity:locus_c"
+            },
+            "expectation": "holds"
+          }
         ],
-        "capabilities": ["geometry2d.rotate_point", "geometry2d.distance_equal", "geometry2d.on_circle", "geometry2d.locus"]
+        "capabilities": [
+          "geometry2d.rotate_point",
+          "geometry2d.distance_equal",
+          "geometry2d.on_circle",
+          "geometry2d.locus"
+        ]
       }
     },
     {
@@ -181,8 +809,12 @@
         "manifest": {
           "schema_version": "mathviz.project/v1",
           "engine_version": "0.1.0",
-          "domain_versions": { "geometry2d": "0.1.0" },
-          "adapter_versions": { "geometry-dsl": "pin:pending-P2" },
+          "domain_versions": {
+            "geometry2d": "0.1.0"
+          },
+          "adapter_versions": {
+            "geometry-dsl": "pin:pending-P2"
+          },
           "capability_registry_version": "1.0.0",
           "source_problem": "GEO-002",
           "problem_id": "geo-rot-mid"
@@ -195,66 +827,447 @@
           "parameters": [
             {
               "id": "theta",
-              "min": { "kind": "int", "value": "0" },
-              "max": { "kind": "symbolic", "expr": { "t": "app", "op": "/", "args": [ { "t": "sym", "name": "pi" }, { "t": "num", "v": { "kind": "int", "value": "2" } } ] } },
-              "default": { "kind": "int", "value": "0" },
+              "min": {
+                "kind": "int",
+                "value": "0"
+              },
+              "max": {
+                "kind": "symbolic",
+                "expr": {
+                  "t": "app",
+                  "op": "/",
+                  "args": [
+                    {
+                      "t": "sym",
+                      "name": "pi"
+                    },
+                    {
+                      "t": "num",
+                      "v": {
+                        "kind": "int",
+                        "value": "2"
+                      }
+                    }
+                  ]
+                }
+              },
+              "default": {
+                "kind": "int",
+                "value": "0"
+              },
               "unit": "rad"
             }
           ],
           "entities": [
-            { "id": "A", "kind": "point", "props": { "x": 0, "y": 0 } },
-            { "id": "B", "kind": "point", "props": { "x": 0, "y": "3*sqrt(2)" } },
-            { "id": "C", "kind": "point", "props": { "x": "3*sqrt(2)", "y": "3*sqrt(2)" } },
-            { "id": "D", "kind": "point", "props": { "x": "3*sqrt(2)", "y": 0 } },
-            { "id": "O_center", "kind": "point", "props": { "x": "3*sqrt(2)/2", "y": "3*sqrt(2)/2" } },
-            { "id": "P", "kind": "point", "props": { "x": "sqrt(2)/2", "y": "3*sqrt(2)-sqrt(2)/2" } },
-            { "id": "Q", "kind": "point", "props": { "x": "sqrt(2)", "y": "3*sqrt(2)" } },
-            { "id": "M", "kind": "transform_point", "props": { "capability_id": "geometry2d.rotate_point", "source": "entity:P", "center": "entity:B", "angle": "param:theta" } },
-            { "id": "N", "kind": "transform_point", "props": { "capability_id": "geometry2d.rotate_point", "source": "entity:Q", "center": "entity:B", "angle": "param:theta" } },
-            { "id": "E", "kind": "midpoint", "props": { "capability_id": "geometry2d.midpoint", "a": "entity:N", "b": "entity:D" } },
-            { "id": "square_poly", "kind": "polygon", "props": { "vertices": ["entity:A", "entity:B", "entity:C", "entity:D"] } },
-            { "id": "seg_ND", "kind": "segment", "props": { "a": "entity:N", "b": "entity:D" } },
-            { "id": "seg_CE", "kind": "segment", "props": { "a": "entity:C", "b": "entity:E" } },
-            { "id": "tri_BMN", "kind": "polygon", "props": { "vertices": ["entity:B", "entity:M", "entity:N"] } },
-            { "id": "locus_circle", "kind": "circle", "props": { "center": "entity:O_center", "radius": "fact:oe_length" } }
+            {
+              "id": "A",
+              "kind": "point",
+              "props": {
+                "x": 0,
+                "y": 0
+              }
+            },
+            {
+              "id": "B",
+              "kind": "point",
+              "props": {
+                "x": 0,
+                "y": "3*sqrt(2)"
+              }
+            },
+            {
+              "id": "C",
+              "kind": "point",
+              "props": {
+                "x": "3*sqrt(2)",
+                "y": "3*sqrt(2)"
+              }
+            },
+            {
+              "id": "D",
+              "kind": "point",
+              "props": {
+                "x": "3*sqrt(2)",
+                "y": 0
+              }
+            },
+            {
+              "id": "O_center",
+              "kind": "point",
+              "props": {
+                "x": "3*sqrt(2)/2",
+                "y": "3*sqrt(2)/2"
+              }
+            },
+            {
+              "id": "P",
+              "kind": "point",
+              "props": {
+                "x": "sqrt(2)/2",
+                "y": "3*sqrt(2)-sqrt(2)/2"
+              }
+            },
+            {
+              "id": "Q",
+              "kind": "point",
+              "props": {
+                "x": "sqrt(2)",
+                "y": "3*sqrt(2)"
+              }
+            },
+            {
+              "id": "M",
+              "kind": "transform_point",
+              "props": {
+                "capability_id": "geometry2d.rotate_point",
+                "source": "entity:P",
+                "center": "entity:B",
+                "angle": "param:theta"
+              }
+            },
+            {
+              "id": "N",
+              "kind": "transform_point",
+              "props": {
+                "capability_id": "geometry2d.rotate_point",
+                "source": "entity:Q",
+                "center": "entity:B",
+                "angle": "param:theta"
+              }
+            },
+            {
+              "id": "E",
+              "kind": "midpoint",
+              "props": {
+                "capability_id": "geometry2d.midpoint",
+                "a": "entity:N",
+                "b": "entity:D"
+              }
+            },
+            {
+              "id": "square_poly",
+              "kind": "polygon",
+              "props": {
+                "vertices": [
+                  "entity:A",
+                  "entity:B",
+                  "entity:C",
+                  "entity:D"
+                ]
+              }
+            },
+            {
+              "id": "seg_ND",
+              "kind": "segment",
+              "props": {
+                "a": "entity:N",
+                "b": "entity:D"
+              }
+            },
+            {
+              "id": "seg_CE",
+              "kind": "segment",
+              "props": {
+                "a": "entity:C",
+                "b": "entity:E"
+              }
+            },
+            {
+              "id": "tri_BMN",
+              "kind": "polygon",
+              "props": {
+                "vertices": [
+                  "entity:B",
+                  "entity:M",
+                  "entity:N"
+                ]
+              }
+            },
+            {
+              "id": "locus_circle",
+              "kind": "circle",
+              "props": {
+                "center": "entity:O_center",
+                "radius": "fact:oe_length"
+              }
+            }
           ],
           "source_facts": [
-            { "fact_id": "bd_length", "name": "对角线BD长度", "value": 6, "provenance": { "kind": "problem_text", "span": { "text": "BD=6", "start": 12, "end": 16 } } },
-            { "fact_id": "bp_length", "name": "BP长度", "value": 1, "provenance": { "kind": "problem_text", "span": { "text": "BP=1", "start": 27, "end": 31 } } },
-            { "fact_id": "angle_bpq", "name": "BPQ夹角", "value": 90, "provenance": { "kind": "problem_text", "span": { "text": "∠BPQ=90°", "start": 37, "end": 45 } } }
+            {
+              "fact_id": "bd_length",
+              "name": "对角线BD长度",
+              "value": 6,
+              "provenance": {
+                "kind": "problem_text",
+                "span": {
+                  "text": "BD=6",
+                  "start": 15,
+                  "end": 19
+                }
+              }
+            },
+            {
+              "fact_id": "bp_length",
+              "name": "BP长度",
+              "value": 1,
+              "provenance": {
+                "kind": "problem_text",
+                "span": {
+                  "text": "BP=1",
+                  "start": 38,
+                  "end": 42
+                }
+              }
+            },
+            {
+              "fact_id": "angle_bpq",
+              "name": "BPQ夹角",
+              "value": 90,
+              "provenance": {
+                "kind": "problem_text",
+                "span": {
+                  "text": "∠BPQ=90°",
+                  "start": 43,
+                  "end": 51
+                }
+              }
+            }
           ],
           "derived_facts": [
-            { "fact_id": "side_length", "name": "正方形边长", "value": { "exact": "3*sqrt(2)" }, "provenance": { "kind": "derived", "capability_id": "geometry2d.derive_length", "inputs": ["fact:bd_length"] } },
-            { "fact_id": "bn_length", "name": "BN长度", "value": { "exact": "sqrt(2)" }, "provenance": { "kind": "derived", "capability_id": "geometry2d.derive_length", "inputs": ["fact:bp_length", "fact:angle_bpq"] } },
-            { "fact_id": "oe_length", "name": "OE长度", "value": { "exact": "sqrt(2)/2" }, "provenance": { "kind": "derived", "capability_id": "geometry2d.derive_length", "inputs": ["fact:bn_length"] } }
+            {
+              "fact_id": "side_length",
+              "name": "正方形边长",
+              "value": {
+                "exact": "3*sqrt(2)"
+              },
+              "provenance": {
+                "kind": "derived",
+                "capability_id": "geometry2d.derive_length",
+                "inputs": [
+                  "fact:bd_length"
+                ]
+              }
+            },
+            {
+              "fact_id": "bn_length",
+              "name": "BN长度",
+              "value": {
+                "exact": "sqrt(2)"
+              },
+              "provenance": {
+                "kind": "derived",
+                "capability_id": "geometry2d.derive_length",
+                "inputs": [
+                  "fact:bp_length",
+                  "fact:angle_bpq"
+                ]
+              }
+            },
+            {
+              "fact_id": "oe_length",
+              "name": "OE长度",
+              "value": {
+                "exact": "sqrt(2)/2"
+              },
+              "provenance": {
+                "kind": "derived",
+                "capability_id": "geometry2d.derive_length",
+                "inputs": [
+                  "fact:bn_length"
+                ]
+              }
+            }
           ],
           "runtime_values": [
-            { "id": "pos_E", "expr": { "t": "sym", "name": "E_pos" }, "depends_on": ["param:theta"] }
+            {
+              "id": "pos_E",
+              "expr": {
+                "t": "sym",
+                "name": "E_pos"
+              },
+              "depends_on": [
+                "param:theta"
+              ]
+            }
           ],
           "constraints": [
-            { "capability_id": "geometry2d.perpendicular", "subject_refs": ["entity:P", "entity:Q", "entity:B"] }
+            {
+              "capability_id": "geometry2d.perpendicular",
+              "subject_refs": [
+                "entity:P",
+                "entity:Q",
+                "entity:B"
+              ]
+            }
           ],
           "assertions": [
-            { "assertion_id": "assert_oe_const", "capability_id": "geometry2d.distance_equal", "subject_refs": ["entity:E", "entity:O_center"], "params": { "value": "sqrt(2)/2" }, "expectation": "holds" }
+            {
+              "assertion_id": "assert_oe_const",
+              "capability_id": "geometry2d.distance_equal",
+              "subject_refs": [
+                "entity:E",
+                "entity:O_center"
+              ],
+              "params": {
+                "value": "sqrt(2)/2"
+              },
+              "expectation": "holds"
+            }
           ],
-          "capabilities": ["geometry2d.rotate_point", "geometry2d.midpoint", "geometry2d.perpendicular", "geometry2d.distance_equal", "geometry2d.derive_length"]
+          "capabilities": [
+            "geometry2d.rotate_point",
+            "geometry2d.midpoint",
+            "geometry2d.perpendicular",
+            "geometry2d.distance_equal",
+            "geometry2d.derive_length"
+          ]
         },
         "scene": {
           "schemaVersion": "mathviz.scene/v1",
           "sceneId": "scene-rot",
-          "viewport": { "width": 640, "height": 640, "margin": [24, 24, 24, 24] },
+          "viewport": {
+            "width": 640,
+            "height": 640,
+            "margin": [
+              24,
+              24,
+              24,
+              24
+            ]
+          },
           "objects": [
-            { "objectId": "obj_square", "primitive": "polygon", "binding": { "source": "math:entity:square_poly" }, "style": { "stroke": "#58a6ff", "fill": "#161b22", "stroke_width": 2, "z_index": 0 } },
-            { "objectId": "obj_BD", "primitive": "segment", "binding": { "source": "math:fact:bd_length" }, "style": { "dash": "4 4", "opacity": 0.5 } },
-            { "objectId": "obj_P", "primitive": "point", "binding": { "source": "math:entity:P" }, "label": "P", "style": { "fill": "#58a6ff" } },
-            { "objectId": "obj_Q", "primitive": "point", "binding": { "source": "math:entity:Q" }, "label": "Q", "style": { "fill": "#58a6ff" } },
-            { "objectId": "obj_tri", "primitive": "polygon", "binding": { "source": "math:entity:tri_BMN" }, "label": "△BMN", "style": { "stroke": "#f0883e", "fill": "#f0883e", "opacity": 0.2 } },
-            { "objectId": "obj_ND", "primitive": "segment", "binding": { "source": "math:entity:seg_ND" }, "style": { "stroke": "#f85149" } },
-            { "objectId": "obj_CE", "primitive": "segment", "binding": { "source": "math:entity:seg_CE" }, "style": { "stroke": "#3fb950" } },
-            { "objectId": "obj_E", "primitive": "point", "binding": { "source": "math:entity:E" }, "label": "E", "label_layout": { "anchor": "ne", "offset_px": [8, -8] }, "style": { "fill": "#3fb950" } },
-            { "objectId": "obj_locus", "primitive": "circle", "binding": { "source": "math:entity:locus_circle" }, "style": { "stroke": "#3fb950", "dash": "2 6", "opacity": 0.4 } },
-            { "objectId": "obj_mark_right", "primitive": "right_angle_mark", "binding": { "source": "math:fact:angle_bpq" }, "attach_to": ["obj_P", "obj_Q"] },
-            { "objectId": "obj_trail", "primitive": "trail", "binding": { "source": "math:runtime:pos_E" }, "style": { "stroke": "#3fb950", "stroke_width": 3, "opacity": 0.8 } }
+            {
+              "objectId": "obj_square",
+              "primitive": "polygon",
+              "binding": {
+                "source": "math:entity:square_poly"
+              },
+              "style": {
+                "stroke": "#58a6ff",
+                "fill": "#161b22",
+                "stroke_width": 2,
+                "z_index": 0
+              }
+            },
+            {
+              "objectId": "obj_BD",
+              "primitive": "segment",
+              "binding": {
+                "source": "math:fact:bd_length"
+              },
+              "style": {
+                "dash": "4 4",
+                "opacity": 0.5
+              }
+            },
+            {
+              "objectId": "obj_P",
+              "primitive": "point",
+              "binding": {
+                "source": "math:entity:P"
+              },
+              "label": "P",
+              "style": {
+                "fill": "#58a6ff"
+              }
+            },
+            {
+              "objectId": "obj_Q",
+              "primitive": "point",
+              "binding": {
+                "source": "math:entity:Q"
+              },
+              "label": "Q",
+              "style": {
+                "fill": "#58a6ff"
+              }
+            },
+            {
+              "objectId": "obj_tri",
+              "primitive": "polygon",
+              "binding": {
+                "source": "math:entity:tri_BMN"
+              },
+              "label": "△BMN",
+              "style": {
+                "stroke": "#f0883e",
+                "fill": "#f0883e",
+                "opacity": 0.2
+              }
+            },
+            {
+              "objectId": "obj_ND",
+              "primitive": "segment",
+              "binding": {
+                "source": "math:entity:seg_ND"
+              },
+              "style": {
+                "stroke": "#f85149"
+              }
+            },
+            {
+              "objectId": "obj_CE",
+              "primitive": "segment",
+              "binding": {
+                "source": "math:entity:seg_CE"
+              },
+              "style": {
+                "stroke": "#3fb950"
+              }
+            },
+            {
+              "objectId": "obj_E",
+              "primitive": "point",
+              "binding": {
+                "source": "math:entity:E"
+              },
+              "label": "E",
+              "label_layout": {
+                "anchor": "ne",
+                "offset_px": [
+                  8,
+                  -8
+                ]
+              },
+              "style": {
+                "fill": "#3fb950"
+              }
+            },
+            {
+              "objectId": "obj_locus",
+              "primitive": "circle",
+              "binding": {
+                "source": "math:entity:locus_circle"
+              },
+              "style": {
+                "stroke": "#3fb950",
+                "dash": "2 6",
+                "opacity": 0.4
+              }
+            },
+            {
+              "objectId": "obj_mark_right",
+              "primitive": "right_angle_mark",
+              "binding": {
+                "source": "math:fact:angle_bpq"
+              },
+              "attach_to": [
+                "obj_P",
+                "obj_Q"
+              ]
+            },
+            {
+              "objectId": "obj_trail",
+              "primitive": "trail",
+              "binding": {
+                "source": "math:runtime:pos_E"
+              },
+              "style": {
+                "stroke": "#3fb950",
+                "stroke_width": 3,
+                "opacity": 0.8
+              }
+            }
           ],
           "bindings": []
         },
@@ -267,15 +1280,58 @@
             {
               "track_id": "sweep",
               "actions": [
-                { "kind": "map_model_time", "from": 0, "to": 12, "model_from": { "t": "num", "v": { "kind": "int", "value": "0" } }, "model_to": { "t": "app", "op": "/", "args": [ { "t": "sym", "name": "pi" }, { "t": "num", "v": { "kind": "int", "value": "2" } } ] }, "easing": "linear" }
+                {
+                  "kind": "map_model_time",
+                  "from": 0,
+                  "to": 12,
+                  "model_from": {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "0"
+                    }
+                  },
+                  "model_to": {
+                    "t": "app",
+                    "op": "/",
+                    "args": [
+                      {
+                        "t": "sym",
+                        "name": "pi"
+                      },
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "2"
+                        }
+                      }
+                    ]
+                  },
+                  "easing": "linear"
+                }
               ]
             },
             {
               "track_id": "reveal",
               "actions": [
-                { "kind": "show", "target": "obj_trail", "at": 0.5 },
-                { "kind": "highlight", "target": "obj_E", "at": 6, "until": 12 },
-                { "kind": "caption", "at": 0, "text": "E 点轨迹是以 O 为圆心的圆", "until": 12 }
+                {
+                  "kind": "show",
+                  "target": "obj_trail",
+                  "at": 0.5
+                },
+                {
+                  "kind": "highlight",
+                  "target": "obj_E",
+                  "at": 6,
+                  "until": 12
+                },
+                {
+                  "kind": "caption",
+                  "at": 0,
+                  "text": "E 点轨迹是以 O 为圆心的圆",
+                  "until": 12
+                }
               ]
             }
           ]
@@ -292,35 +1348,208 @@
         "domain": "motion1d",
         "statement": "甲从O点出发以每秒5米的速度匀速前进，乙在甲后方100米处，延迟10秒以每秒8米的速度追甲。问何时相遇？",
         "entities": [
-          { "id": "body_A", "kind": "body", "props": { "segments": [ { "from": 0, "velocity": "fact:v_A" } ] }, "label": "甲" },
-          { "id": "body_B", "kind": "body", "props": { "segments": [ { "from": 10, "velocity": "fact:v_B", "start_offset": "-100" } ] }, "label": "乙" },
-          { "id": "track_line", "kind": "number_line", "props": { "axis_label": "m" } }
+          {
+            "id": "body_A",
+            "kind": "body",
+            "props": {
+              "segments": [
+                {
+                  "from": 0,
+                  "velocity": "fact:v_A"
+                }
+              ]
+            },
+            "label": "甲"
+          },
+          {
+            "id": "body_B",
+            "kind": "body",
+            "props": {
+              "segments": [
+                {
+                  "from": 10,
+                  "velocity": "fact:v_B",
+                  "start_offset": "-100"
+                }
+              ]
+            },
+            "label": "乙"
+          },
+          {
+            "id": "track_line",
+            "kind": "number_line",
+            "props": {
+              "axis_label": "m"
+            }
+          }
         ],
         "source_facts": [
-          { "fact_id": "gap", "name": "初始间距", "value": 100, "unit": "m", "provenance": { "kind": "problem_text", "span": { "text": "后方100米", "start": 16, "end": 22 } } },
-          { "fact_id": "v_A", "name": "甲速度", "value": 5, "unit": "m/s", "provenance": { "kind": "problem_text", "span": { "text": "每秒5米", "start": 6, "end": 10 } } },
-          { "fact_id": "v_B", "name": "乙速度", "value": 8, "unit": "m/s", "provenance": { "kind": "problem_text", "span": { "text": "每秒8米", "start": 33, "end": 37 } } },
-          { "fact_id": "delay_B", "name": "乙延迟", "value": 10, "unit": "s", "provenance": { "kind": "problem_text", "span": { "text": "延迟10秒", "start": 24, "end": 29 } } }
+          {
+            "fact_id": "gap",
+            "name": "初始间距",
+            "value": 100,
+            "unit": "m",
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "后方100米",
+                "start": 22,
+                "end": 28
+              }
+            }
+          },
+          {
+            "fact_id": "v_A",
+            "name": "甲速度",
+            "value": 5,
+            "unit": "m/s",
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "每秒5米",
+                "start": 7,
+                "end": 11
+              }
+            }
+          },
+          {
+            "fact_id": "v_B",
+            "name": "乙速度",
+            "value": 8,
+            "unit": "m/s",
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "每秒8米",
+                "start": 36,
+                "end": 40
+              }
+            }
+          },
+          {
+            "fact_id": "delay_B",
+            "name": "乙延迟",
+            "value": 10,
+            "unit": "s",
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "延迟10秒",
+                "start": 30,
+                "end": 35
+              }
+            }
+          }
         ],
         "derived_facts": [
-          { "fact_id": "meet_time", "name": "相遇时刻", "value": { "exact": "60" }, "unit": "s", "provenance": { "kind": "derived", "capability_id": "motion1d.meeting_event", "inputs": ["fact:v_A", "fact:v_B", "fact:gap", "fact:delay_B"] } },
-          { "fact_id": "meet_pos", "name": "相遇位置", "value": { "exact": "300" }, "unit": "m", "provenance": { "kind": "derived", "capability_id": "motion1d.solve_position", "inputs": ["fact:v_A", "fact:meet_time"] } }
+          {
+            "fact_id": "meet_time",
+            "name": "相遇时刻",
+            "value": {
+              "exact": "60"
+            },
+            "unit": "s",
+            "provenance": {
+              "kind": "derived",
+              "capability_id": "motion1d.meeting_event",
+              "inputs": [
+                "fact:v_A",
+                "fact:v_B",
+                "fact:gap",
+                "fact:delay_B"
+              ]
+            }
+          },
+          {
+            "fact_id": "meet_pos",
+            "name": "相遇位置",
+            "value": {
+              "exact": "300"
+            },
+            "unit": "m",
+            "provenance": {
+              "kind": "derived",
+              "capability_id": "motion1d.solve_position",
+              "inputs": [
+                "fact:v_A",
+                "fact:meet_time"
+              ]
+            }
+          }
         ],
         "runtime_values": [
-          { "id": "pos_A", "expr": { "t": "sym", "name": "x_A" }, "unit": "m", "depends_on": ["fact:v_A"] },
-          { "id": "pos_B", "expr": { "t": "sym", "name": "x_B" }, "unit": "m", "depends_on": ["fact:v_B", "fact:gap", "fact:delay_B"] }
+          {
+            "id": "pos_A",
+            "expr": {
+              "t": "sym",
+              "name": "x_A"
+            },
+            "unit": "m",
+            "depends_on": [
+              "fact:v_A"
+            ]
+          },
+          {
+            "id": "pos_B",
+            "expr": {
+              "t": "sym",
+              "name": "x_B"
+            },
+            "unit": "m",
+            "depends_on": [
+              "fact:v_B",
+              "fact:gap",
+              "fact:delay_B"
+            ]
+          }
         ],
         "constraints": [
-          { "capability_id": "motion1d.constant_velocity", "subject_refs": ["entity:body_A"] },
-          { "capability_id": "motion1d.constant_velocity", "subject_refs": ["entity:body_B"] }
+          {
+            "capability_id": "motion1d.constant_velocity",
+            "subject_refs": [
+              "entity:body_A"
+            ]
+          },
+          {
+            "capability_id": "motion1d.constant_velocity",
+            "subject_refs": [
+              "entity:body_B"
+            ]
+          }
         ],
         "events": [
-          { "event_id": "ev_meet", "capability_id": "motion1d.meeting_event", "participants": ["entity:body_A", "entity:body_B"], "at": { "kind": "int", "value": "60" } }
+          {
+            "event_id": "ev_meet",
+            "capability_id": "motion1d.meeting_event",
+            "participants": [
+              "entity:body_A",
+              "entity:body_B"
+            ],
+            "at": {
+              "kind": "int",
+              "value": "60"
+            }
+          }
         ],
         "assertions": [
-          { "assertion_id": "assert_meet_time", "capability_id": "motion1d.meeting_event", "subject_refs": ["entity:body_A", "entity:body_B"], "params": { "t": "fact:meet_time" }, "expectation": "holds" }
+          {
+            "assertion_id": "assert_meet_time",
+            "capability_id": "motion1d.meeting_event",
+            "subject_refs": [
+              "entity:body_A",
+              "entity:body_B"
+            ],
+            "params": {
+              "t": "fact:meet_time"
+            },
+            "expectation": "holds"
+          }
         ],
-        "capabilities": ["motion1d.constant_velocity", "motion1d.meeting_event", "motion1d.solve_position"]
+        "capabilities": [
+          "motion1d.constant_velocity",
+          "motion1d.meeting_event",
+          "motion1d.solve_position"
+        ]
       }
     },
     {
@@ -333,35 +1562,209 @@
         "domain": "motion1d",
         "statement": "甲、乙两地相距300米，甲以每秒5米驶向乙，汽车以72千米每小时相向而行，问多久相遇？",
         "entities": [
-          { "id": "body_A", "kind": "body", "props": { "segments": [ { "from": 0, "velocity": "fact:v_A" } ] }, "label": "甲" },
-          { "id": "body_car", "kind": "body", "props": { "segments": [ { "from": 0, "velocity": "fact:v_car_ms", "direction": "-1" } ] }, "label": "汽车" },
-          { "id": "track_line", "kind": "number_line", "props": { "axis_label": "m" } }
+          {
+            "id": "body_A",
+            "kind": "body",
+            "props": {
+              "segments": [
+                {
+                  "from": 0,
+                  "velocity": "fact:v_A"
+                }
+              ]
+            },
+            "label": "甲"
+          },
+          {
+            "id": "body_car",
+            "kind": "body",
+            "props": {
+              "segments": [
+                {
+                  "from": 0,
+                  "velocity": "fact:v_car_ms",
+                  "direction": "-1"
+                }
+              ]
+            },
+            "label": "汽车"
+          },
+          {
+            "id": "track_line",
+            "kind": "number_line",
+            "props": {
+              "axis_label": "m"
+            }
+          }
         ],
         "source_facts": [
-          { "fact_id": "total_dist", "name": "两地距离", "value": 300, "unit": "m", "provenance": { "kind": "problem_text", "span": { "text": "相距300米", "start": 7, "end": 13 } } },
-          { "fact_id": "v_A", "name": "甲速度", "value": 5, "unit": "m/s", "provenance": { "kind": "problem_text", "span": { "text": "每秒5米", "start": 16, "end": 20 } } },
-          { "fact_id": "v_car", "name": "汽车速度", "value": 72, "unit": "km/h", "provenance": { "kind": "problem_text", "span": { "text": "72千米每小时", "start": 25, "end": 33 } } }
+          {
+            "fact_id": "total_dist",
+            "name": "两地距离",
+            "value": 300,
+            "unit": "m",
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "相距300米",
+                "start": 5,
+                "end": 11
+              }
+            }
+          },
+          {
+            "fact_id": "v_A",
+            "name": "甲速度",
+            "value": 5,
+            "unit": "m/s",
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "每秒5米",
+                "start": 14,
+                "end": 18
+              }
+            }
+          },
+          {
+            "fact_id": "v_car",
+            "name": "汽车速度",
+            "value": 72,
+            "unit": "km/h",
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "72千米每小时",
+                "start": 25,
+                "end": 32
+              }
+            }
+          }
         ],
         "derived_facts": [
-          { "fact_id": "v_car_ms", "name": "汽车速度(米/秒)", "value": { "exact": "20" }, "unit": "m/s", "provenance": { "kind": "derived", "capability_id": "motion1d.unit_normalize", "inputs": ["fact:v_car"] } },
-          { "fact_id": "meet_time", "name": "相遇时刻", "value": { "exact": "12" }, "unit": "s", "provenance": { "kind": "derived", "capability_id": "motion1d.meeting_event", "inputs": ["fact:total_dist", "fact:v_A", "fact:v_car_ms"] } },
-          { "fact_id": "meet_pos", "name": "相遇位置(距甲)", "value": { "exact": "60" }, "unit": "m", "provenance": { "kind": "derived", "capability_id": "motion1d.solve_position", "inputs": ["fact:v_A", "fact:meet_time"] } }
+          {
+            "fact_id": "v_car_ms",
+            "name": "汽车速度(米/秒)",
+            "value": {
+              "exact": "20"
+            },
+            "unit": "m/s",
+            "provenance": {
+              "kind": "derived",
+              "capability_id": "motion1d.unit_normalize",
+              "inputs": [
+                "fact:v_car"
+              ]
+            }
+          },
+          {
+            "fact_id": "meet_time",
+            "name": "相遇时刻",
+            "value": {
+              "exact": "12"
+            },
+            "unit": "s",
+            "provenance": {
+              "kind": "derived",
+              "capability_id": "motion1d.meeting_event",
+              "inputs": [
+                "fact:total_dist",
+                "fact:v_A",
+                "fact:v_car_ms"
+              ]
+            }
+          },
+          {
+            "fact_id": "meet_pos",
+            "name": "相遇位置(距甲)",
+            "value": {
+              "exact": "60"
+            },
+            "unit": "m",
+            "provenance": {
+              "kind": "derived",
+              "capability_id": "motion1d.solve_position",
+              "inputs": [
+                "fact:v_A",
+                "fact:meet_time"
+              ]
+            }
+          }
         ],
         "runtime_values": [
-          { "id": "pos_A", "expr": { "t": "sym", "name": "x_A" }, "unit": "m", "depends_on": ["fact:v_A"] },
-          { "id": "pos_car", "expr": { "t": "sym", "name": "x_car" }, "unit": "m", "depends_on": ["fact:v_car_ms", "fact:total_dist"] }
+          {
+            "id": "pos_A",
+            "expr": {
+              "t": "sym",
+              "name": "x_A"
+            },
+            "unit": "m",
+            "depends_on": [
+              "fact:v_A"
+            ]
+          },
+          {
+            "id": "pos_car",
+            "expr": {
+              "t": "sym",
+              "name": "x_car"
+            },
+            "unit": "m",
+            "depends_on": [
+              "fact:v_car_ms",
+              "fact:total_dist"
+            ]
+          }
         ],
         "constraints": [
-          { "capability_id": "motion1d.constant_velocity", "subject_refs": ["entity:body_A"] },
-          { "capability_id": "motion1d.constant_velocity", "subject_refs": ["entity:body_car"] }
+          {
+            "capability_id": "motion1d.constant_velocity",
+            "subject_refs": [
+              "entity:body_A"
+            ]
+          },
+          {
+            "capability_id": "motion1d.constant_velocity",
+            "subject_refs": [
+              "entity:body_car"
+            ]
+          }
         ],
         "events": [
-          { "event_id": "ev_meet", "capability_id": "motion1d.meeting_event", "participants": ["entity:body_A", "entity:body_car"], "at": { "kind": "int", "value": "12" } }
+          {
+            "event_id": "ev_meet",
+            "capability_id": "motion1d.meeting_event",
+            "participants": [
+              "entity:body_A",
+              "entity:body_car"
+            ],
+            "at": {
+              "kind": "int",
+              "value": "12"
+            }
+          }
         ],
         "assertions": [
-          { "assertion_id": "assert_meet_pos", "capability_id": "motion1d.meeting_event", "subject_refs": ["entity:body_A", "entity:body_car"], "params": { "x": "fact:meet_pos", "t": "fact:meet_time" }, "expectation": "holds" }
+          {
+            "assertion_id": "assert_meet_pos",
+            "capability_id": "motion1d.meeting_event",
+            "subject_refs": [
+              "entity:body_A",
+              "entity:body_car"
+            ],
+            "params": {
+              "x": "fact:meet_pos",
+              "t": "fact:meet_time"
+            },
+            "expectation": "holds"
+          }
         ],
-        "capabilities": ["motion1d.constant_velocity", "motion1d.unit_normalize", "motion1d.meeting_event", "motion1d.solve_position"]
+        "capabilities": [
+          "motion1d.constant_velocity",
+          "motion1d.unit_normalize",
+          "motion1d.meeting_event",
+          "motion1d.solve_position"
+        ]
       }
     },
     {
@@ -374,32 +1777,172 @@
         "domain": "motion1d",
         "statement": "某人行走，前10秒以每秒2米前进，之后以每秒5米前进，目标在120米处，问何时到达？",
         "entities": [
-          { "id": "body_P", "kind": "body", "props": { "segments": [ { "from": 0, "to": 10, "velocity": "fact:seg1_v" }, { "from": 10, "velocity": "fact:seg2_v" } ] }, "label": "行人" },
-          { "id": "goal_point", "kind": "point", "props": { "position": "fact:target" }, "label": "目标" },
-          { "id": "track_line", "kind": "number_line", "props": { "axis_label": "m" } }
+          {
+            "id": "body_P",
+            "kind": "body",
+            "props": {
+              "segments": [
+                {
+                  "from": 0,
+                  "to": 10,
+                  "velocity": "fact:seg1_v"
+                },
+                {
+                  "from": 10,
+                  "velocity": "fact:seg2_v"
+                }
+              ]
+            },
+            "label": "行人"
+          },
+          {
+            "id": "goal_point",
+            "kind": "point",
+            "props": {
+              "position": "fact:target"
+            },
+            "label": "目标"
+          },
+          {
+            "id": "track_line",
+            "kind": "number_line",
+            "props": {
+              "axis_label": "m"
+            }
+          }
         ],
         "source_facts": [
-          { "fact_id": "seg1_v", "name": "第一段速度", "value": 2, "unit": "m/s", "provenance": { "kind": "problem_text", "span": { "text": "每秒2米", "start": 7, "end": 11 } } },
-          { "fact_id": "seg1_dur", "name": "第一段时长", "value": 10, "unit": "s", "provenance": { "kind": "problem_text", "span": { "text": "前10秒", "start": 5, "end": 9 } } },
-          { "fact_id": "seg2_v", "name": "第二段速度", "value": 5, "unit": "m/s", "provenance": { "kind": "problem_text", "span": { "text": "每秒5米", "start": 15, "end": 19 } } },
-          { "fact_id": "target", "name": "目标距离", "value": 120, "unit": "m", "provenance": { "kind": "problem_text", "span": { "text": "120米", "start": 23, "end": 27 } } }
+          {
+            "fact_id": "seg1_v",
+            "name": "第一段速度",
+            "value": 2,
+            "unit": "m/s",
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "每秒2米",
+                "start": 10,
+                "end": 14
+              }
+            }
+          },
+          {
+            "fact_id": "seg1_dur",
+            "name": "第一段时长",
+            "value": 10,
+            "unit": "s",
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "前10秒",
+                "start": 5,
+                "end": 9
+              }
+            }
+          },
+          {
+            "fact_id": "seg2_v",
+            "name": "第二段速度",
+            "value": 5,
+            "unit": "m/s",
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "每秒5米",
+                "start": 20,
+                "end": 24
+              }
+            }
+          },
+          {
+            "fact_id": "target",
+            "name": "目标距离",
+            "value": 120,
+            "unit": "m",
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "120米",
+                "start": 30,
+                "end": 34
+              }
+            }
+          }
         ],
         "derived_facts": [
-          { "fact_id": "reach_time", "name": "到达时刻", "value": { "exact": "30" }, "unit": "s", "provenance": { "kind": "derived", "capability_id": "motion1d.reach_event", "inputs": ["fact:seg1_v", "fact:seg1_dur", "fact:seg2_v", "fact:target"] } }
+          {
+            "fact_id": "reach_time",
+            "name": "到达时刻",
+            "value": {
+              "exact": "30"
+            },
+            "unit": "s",
+            "provenance": {
+              "kind": "derived",
+              "capability_id": "motion1d.reach_event",
+              "inputs": [
+                "fact:seg1_v",
+                "fact:seg1_dur",
+                "fact:seg2_v",
+                "fact:target"
+              ]
+            }
+          }
         ],
         "runtime_values": [
-          { "id": "pos_P", "expr": { "t": "sym", "name": "x_P" }, "unit": "m", "depends_on": ["fact:seg1_v", "fact:seg2_v"] }
+          {
+            "id": "pos_P",
+            "expr": {
+              "t": "sym",
+              "name": "x_P"
+            },
+            "unit": "m",
+            "depends_on": [
+              "fact:seg1_v",
+              "fact:seg2_v"
+            ]
+          }
         ],
         "constraints": [
-          { "capability_id": "motion1d.piecewise_constant_velocity", "subject_refs": ["entity:body_P"] }
+          {
+            "capability_id": "motion1d.piecewise_constant_velocity",
+            "subject_refs": [
+              "entity:body_P"
+            ]
+          }
         ],
         "events": [
-          { "event_id": "ev_reach", "capability_id": "motion1d.reach_event", "participants": ["entity:body_P", "entity:goal_point"], "at": { "kind": "int", "value": "30" } }
+          {
+            "event_id": "ev_reach",
+            "capability_id": "motion1d.reach_event",
+            "participants": [
+              "entity:body_P",
+              "entity:goal_point"
+            ],
+            "at": {
+              "kind": "int",
+              "value": "30"
+            }
+          }
         ],
         "assertions": [
-          { "assertion_id": "assert_reach_time", "capability_id": "motion1d.reach_event", "subject_refs": ["entity:body_P", "entity:goal_point"], "params": { "t": "fact:reach_time" }, "expectation": "holds" }
+          {
+            "assertion_id": "assert_reach_time",
+            "capability_id": "motion1d.reach_event",
+            "subject_refs": [
+              "entity:body_P",
+              "entity:goal_point"
+            ],
+            "params": {
+              "t": "fact:reach_time"
+            },
+            "expectation": "holds"
+          }
         ],
-        "capabilities": ["motion1d.piecewise_constant_velocity", "motion1d.reach_event"]
+        "capabilities": [
+          "motion1d.piecewise_constant_velocity",
+          "motion1d.reach_event"
+        ]
       }
     },
     {
@@ -410,7 +1953,9 @@
         "manifest": {
           "schema_version": "mathviz.project/v1",
           "engine_version": "0.1.0",
-          "domain_versions": { "motion1d": "0.1.0" },
+          "domain_versions": {
+            "motion1d": "0.1.0"
+          },
           "adapter_versions": {},
           "capability_registry_version": "1.0.0",
           "source_problem": "MOT-001",
@@ -422,47 +1967,296 @@
           "domain": "motion1d",
           "statement": "甲从O点出发以每秒5米的速度匀速前进，乙在甲后方100米处，延迟10秒以每秒8米的速度追甲。问何时相遇？",
           "entities": [
-            { "id": "body_A", "kind": "body", "props": { "segments": [ { "from": 0, "velocity": "fact:v_A" } ] }, "label": "甲" },
-            { "id": "body_B", "kind": "body", "props": { "segments": [ { "from": 10, "velocity": "fact:v_B", "start_offset": "-100" } ] }, "label": "乙" },
-            { "id": "track_line", "kind": "number_line", "props": { "axis_label": "m" } }
+            {
+              "id": "body_A",
+              "kind": "body",
+              "props": {
+                "segments": [
+                  {
+                    "from": 0,
+                    "velocity": "fact:v_A"
+                  }
+                ]
+              },
+              "label": "甲"
+            },
+            {
+              "id": "body_B",
+              "kind": "body",
+              "props": {
+                "segments": [
+                  {
+                    "from": 10,
+                    "velocity": "fact:v_B",
+                    "start_offset": "-100"
+                  }
+                ]
+              },
+              "label": "乙"
+            },
+            {
+              "id": "track_line",
+              "kind": "number_line",
+              "props": {
+                "axis_label": "m"
+              }
+            }
           ],
           "source_facts": [
-            { "fact_id": "gap", "name": "初始间距", "value": 100, "unit": "m", "provenance": { "kind": "problem_text", "span": { "text": "后方100米", "start": 16, "end": 22 } } },
-            { "fact_id": "v_A", "name": "甲速度", "value": 5, "unit": "m/s", "provenance": { "kind": "problem_text", "span": { "text": "每秒5米", "start": 6, "end": 10 } } },
-            { "fact_id": "v_B", "name": "乙速度", "value": 8, "unit": "m/s", "provenance": { "kind": "problem_text", "span": { "text": "每秒8米", "start": 33, "end": 37 } } },
-            { "fact_id": "delay_B", "name": "乙延迟", "value": 10, "unit": "s", "provenance": { "kind": "problem_text", "span": { "text": "延迟10秒", "start": 24, "end": 29 } } }
+            {
+              "fact_id": "gap",
+              "name": "初始间距",
+              "value": 100,
+              "unit": "m",
+              "provenance": {
+                "kind": "problem_text",
+                "span": {
+                  "text": "后方100米",
+                  "start": 22,
+                  "end": 28
+                }
+              }
+            },
+            {
+              "fact_id": "v_A",
+              "name": "甲速度",
+              "value": 5,
+              "unit": "m/s",
+              "provenance": {
+                "kind": "problem_text",
+                "span": {
+                  "text": "每秒5米",
+                  "start": 7,
+                  "end": 11
+                }
+              }
+            },
+            {
+              "fact_id": "v_B",
+              "name": "乙速度",
+              "value": 8,
+              "unit": "m/s",
+              "provenance": {
+                "kind": "problem_text",
+                "span": {
+                  "text": "每秒8米",
+                  "start": 36,
+                  "end": 40
+                }
+              }
+            },
+            {
+              "fact_id": "delay_B",
+              "name": "乙延迟",
+              "value": 10,
+              "unit": "s",
+              "provenance": {
+                "kind": "problem_text",
+                "span": {
+                  "text": "延迟10秒",
+                  "start": 30,
+                  "end": 35
+                }
+              }
+            }
           ],
           "derived_facts": [
-            { "fact_id": "meet_time", "name": "相遇时刻", "value": { "exact": "60" }, "unit": "s", "provenance": { "kind": "derived", "capability_id": "motion1d.meeting_event", "inputs": ["fact:v_A", "fact:v_B", "fact:gap", "fact:delay_B"] } },
-            { "fact_id": "meet_pos", "name": "相遇位置", "value": { "exact": "300" }, "unit": "m", "provenance": { "kind": "derived", "capability_id": "motion1d.solve_position", "inputs": ["fact:v_A", "fact:meet_time"] } }
+            {
+              "fact_id": "meet_time",
+              "name": "相遇时刻",
+              "value": {
+                "exact": "60"
+              },
+              "unit": "s",
+              "provenance": {
+                "kind": "derived",
+                "capability_id": "motion1d.meeting_event",
+                "inputs": [
+                  "fact:v_A",
+                  "fact:v_B",
+                  "fact:gap",
+                  "fact:delay_B"
+                ]
+              }
+            },
+            {
+              "fact_id": "meet_pos",
+              "name": "相遇位置",
+              "value": {
+                "exact": "300"
+              },
+              "unit": "m",
+              "provenance": {
+                "kind": "derived",
+                "capability_id": "motion1d.solve_position",
+                "inputs": [
+                  "fact:v_A",
+                  "fact:meet_time"
+                ]
+              }
+            }
           ],
           "runtime_values": [
-            { "id": "pos_A", "expr": { "t": "sym", "name": "x_A" }, "unit": "m", "depends_on": ["fact:v_A"] },
-            { "id": "pos_B", "expr": { "t": "sym", "name": "x_B" }, "unit": "m", "depends_on": ["fact:v_B", "fact:gap", "fact:delay_B"] }
+            {
+              "id": "pos_A",
+              "expr": {
+                "t": "sym",
+                "name": "x_A"
+              },
+              "unit": "m",
+              "depends_on": [
+                "fact:v_A"
+              ]
+            },
+            {
+              "id": "pos_B",
+              "expr": {
+                "t": "sym",
+                "name": "x_B"
+              },
+              "unit": "m",
+              "depends_on": [
+                "fact:v_B",
+                "fact:gap",
+                "fact:delay_B"
+              ]
+            }
           ],
           "constraints": [
-            { "capability_id": "motion1d.constant_velocity", "subject_refs": ["entity:body_A"] },
-            { "capability_id": "motion1d.constant_velocity", "subject_refs": ["entity:body_B"] }
+            {
+              "capability_id": "motion1d.constant_velocity",
+              "subject_refs": [
+                "entity:body_A"
+              ]
+            },
+            {
+              "capability_id": "motion1d.constant_velocity",
+              "subject_refs": [
+                "entity:body_B"
+              ]
+            }
           ],
           "events": [
-            { "event_id": "ev_meet", "capability_id": "motion1d.meeting_event", "participants": ["entity:body_A", "entity:body_B"], "at": { "kind": "int", "value": "60" } }
+            {
+              "event_id": "ev_meet",
+              "capability_id": "motion1d.meeting_event",
+              "participants": [
+                "entity:body_A",
+                "entity:body_B"
+              ],
+              "at": {
+                "kind": "int",
+                "value": "60"
+              }
+            }
           ],
           "assertions": [
-            { "assertion_id": "assert_meet_time", "capability_id": "motion1d.meeting_event", "subject_refs": ["entity:body_A", "entity:body_B"], "params": { "t": "fact:meet_time" }, "expectation": "holds" }
+            {
+              "assertion_id": "assert_meet_time",
+              "capability_id": "motion1d.meeting_event",
+              "subject_refs": [
+                "entity:body_A",
+                "entity:body_B"
+              ],
+              "params": {
+                "t": "fact:meet_time"
+              },
+              "expectation": "holds"
+            }
           ],
-          "capabilities": ["motion1d.constant_velocity", "motion1d.meeting_event", "motion1d.solve_position"]
+          "capabilities": [
+            "motion1d.constant_velocity",
+            "motion1d.meeting_event",
+            "motion1d.solve_position"
+          ]
         },
         "scene": {
           "schemaVersion": "mathviz.scene/v1",
           "sceneId": "scene-pursuit",
-          "viewport": { "width": 800, "height": 300, "margin": [20, 20, 20, 40] },
+          "viewport": {
+            "width": 800,
+            "height": 300,
+            "margin": [
+              20,
+              20,
+              20,
+              40
+            ]
+          },
           "objects": [
-            { "objectId": "obj_track", "primitive": "number_line", "binding": { "source": "math:entity:track_line" }, "label_layout": { "anchor": "s", "offset_px": [0, 12] } },
-            { "objectId": "obj_A", "primitive": "moving_body", "binding": { "source": "math:runtime:pos_A" }, "label": "甲", "style": { "fill": "#58a6ff" } },
-            { "objectId": "obj_B", "primitive": "moving_body", "binding": { "source": "math:runtime:pos_B" }, "label": "乙", "style": { "fill": "#f0883e" } },
-            { "objectId": "obj_meet", "primitive": "marker", "binding": { "source": "math:fact:meet_pos" }, "label": "相遇", "style": { "fill": "#3fb950" } },
-            { "objectId": "obj_trail_B", "primitive": "trail", "binding": { "source": "math:runtime:pos_B" }, "style": { "stroke": "#f0883e", "opacity": 0.4 } },
-            { "objectId": "obj_caption", "primitive": "text", "binding": { "source": "math:fact:meet_time" }, "text": "相遇时刻", "label_layout": { "anchor": "n", "offset_px": [0, -10] } }
+            {
+              "objectId": "obj_track",
+              "primitive": "number_line",
+              "binding": {
+                "source": "math:entity:track_line"
+              },
+              "label_layout": {
+                "anchor": "s",
+                "offset_px": [
+                  0,
+                  12
+                ]
+              }
+            },
+            {
+              "objectId": "obj_A",
+              "primitive": "moving_body",
+              "binding": {
+                "source": "math:runtime:pos_A"
+              },
+              "label": "甲",
+              "style": {
+                "fill": "#58a6ff"
+              }
+            },
+            {
+              "objectId": "obj_B",
+              "primitive": "moving_body",
+              "binding": {
+                "source": "math:runtime:pos_B"
+              },
+              "label": "乙",
+              "style": {
+                "fill": "#f0883e"
+              }
+            },
+            {
+              "objectId": "obj_meet",
+              "primitive": "marker",
+              "binding": {
+                "source": "math:fact:meet_pos"
+              },
+              "label": "相遇",
+              "style": {
+                "fill": "#3fb950"
+              }
+            },
+            {
+              "objectId": "obj_trail_B",
+              "primitive": "trail",
+              "binding": {
+                "source": "math:runtime:pos_B"
+              },
+              "style": {
+                "stroke": "#f0883e",
+                "opacity": 0.4
+              }
+            },
+            {
+              "objectId": "obj_caption",
+              "primitive": "text",
+              "binding": {
+                "source": "math:fact:meet_time"
+              },
+              "text": "相遇时刻",
+              "label_layout": {
+                "anchor": "n",
+                "offset_px": [
+                  0,
+                  -10
+                ]
+              }
+            }
           ],
           "bindings": []
         },
@@ -475,15 +2269,48 @@
             {
               "track_id": "clock",
               "actions": [
-                { "kind": "map_model_time", "from": 0, "to": 45, "model_from": { "t": "num", "v": { "kind": "int", "value": "0" } }, "model_to": { "t": "num", "v": { "kind": "int", "value": "50" } }, "easing": "linear" }
+                {
+                  "kind": "map_model_time",
+                  "from": 0,
+                  "to": 45,
+                  "model_from": {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "0"
+                    }
+                  },
+                  "model_to": {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "50"
+                    }
+                  },
+                  "easing": "linear"
+                }
               ]
             },
             {
               "track_id": "events",
               "actions": [
-                { "kind": "show", "target": "obj_meet", "at": 36 },
-                { "kind": "highlight", "target": "obj_meet", "at": 36.67, "until": 45 },
-                { "kind": "caption", "at": 36.67, "text": "t = 60s 相遇", "until": 45 }
+                {
+                  "kind": "show",
+                  "target": "obj_meet",
+                  "at": 36
+                },
+                {
+                  "kind": "highlight",
+                  "target": "obj_meet",
+                  "at": 36.67,
+                  "until": 45
+                },
+                {
+                  "kind": "caption",
+                  "at": 36.67,
+                  "text": "t = 60s 相遇",
+                  "until": 45
+                }
               ]
             }
           ]
@@ -500,33 +2327,163 @@
         "domain": "function2d",
         "statement": "二次函数 y=ax²，a 在 [-2,2] 内变化，观察开口与顶点。",
         "parameters": [
-          { "id": "a", "min": { "kind": "int", "value": "-2" }, "max": { "kind": "int", "value": "2" }, "default": { "kind": "int", "value": "1" } }
+          {
+            "id": "a",
+            "min": {
+              "kind": "int",
+              "value": "-2"
+            },
+            "max": {
+              "kind": "int",
+              "value": "2"
+            },
+            "default": {
+              "kind": "int",
+              "value": "1"
+            }
+          }
         ],
         "entities": [
-          { "id": "curve", "kind": "function", "props": { "expression": "a*x^2", "variable": "x" } },
-          { "id": "axis_x", "kind": "axis", "props": { "label": "x" } },
-          { "id": "axis_y", "kind": "axis", "props": { "label": "y" } },
-          { "id": "grid_ref", "kind": "grid", "props": {} }
+          {
+            "id": "curve",
+            "kind": "function",
+            "props": {
+              "expression": "a*x^2",
+              "variable": "x"
+            }
+          },
+          {
+            "id": "axis_x",
+            "kind": "axis",
+            "props": {
+              "label": "x"
+            }
+          },
+          {
+            "id": "axis_y",
+            "kind": "axis",
+            "props": {
+              "label": "y"
+            }
+          },
+          {
+            "id": "grid_ref",
+            "kind": "grid",
+            "props": {}
+          }
         ],
         "source_facts": [
-          { "fact_id": "domain_min", "name": "绘图下界", "value": -3, "provenance": { "kind": "problem_text", "span": { "text": "观察开口与顶点", "start": 21, "end": 28 } } },
-          { "fact_id": "domain_max", "name": "绘图上界", "value": 3, "provenance": { "kind": "problem_text", "span": { "text": "观察开口与顶点", "start": 21, "end": 28 } } }
+          {
+            "fact_id": "domain_min",
+            "name": "绘图下界",
+            "value": -3,
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "观察开口与顶点",
+                "start": 26,
+                "end": 33
+              }
+            }
+          },
+          {
+            "fact_id": "domain_max",
+            "name": "绘图上界",
+            "value": 3,
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "观察开口与顶点",
+                "start": 26,
+                "end": 33
+              }
+            }
+          }
         ],
         "derived_facts": [
-          { "fact_id": "vertex_x", "name": "顶点横坐标", "value": { "exact": "0" }, "provenance": { "kind": "derived", "capability_id": "function2d.extremum", "inputs": ["entity:curve"] } },
-          { "fact_id": "vertex_y", "name": "顶点纵坐标", "value": { "exact": "0" }, "provenance": { "kind": "derived", "capability_id": "function2d.extremum", "inputs": ["entity:curve", "param:a"] } }
+          {
+            "fact_id": "vertex_x",
+            "name": "顶点横坐标",
+            "value": {
+              "exact": "0"
+            },
+            "provenance": {
+              "kind": "derived",
+              "capability_id": "function2d.extremum",
+              "inputs": [
+                "entity:curve"
+              ]
+            }
+          },
+          {
+            "fact_id": "vertex_y",
+            "name": "顶点纵坐标",
+            "value": {
+              "exact": "0"
+            },
+            "provenance": {
+              "kind": "derived",
+              "capability_id": "function2d.extremum",
+              "inputs": [
+                "entity:curve",
+                "param:a"
+              ]
+            }
+          }
         ],
         "runtime_values": [
-          { "id": "vertex_pos", "expr": { "t": "sym", "name": "vertex" }, "depends_on": ["param:a"] },
-          { "id": "sample_y", "expr": { "t": "sym", "name": "y" }, "depends_on": ["param:a"] }
+          {
+            "id": "vertex_pos",
+            "expr": {
+              "t": "sym",
+              "name": "vertex"
+            },
+            "depends_on": [
+              "param:a"
+            ]
+          },
+          {
+            "id": "sample_y",
+            "expr": {
+              "t": "sym",
+              "name": "y"
+            },
+            "depends_on": [
+              "param:a"
+            ]
+          }
         ],
         "constraints": [
-          { "capability_id": "function2d.expression_curve", "subject_refs": ["entity:curve"], "params": { "expression": "a*x^2" } }
+          {
+            "capability_id": "function2d.expression_curve",
+            "subject_refs": [
+              "entity:curve"
+            ],
+            "params": {
+              "expression": "a*x^2"
+            }
+          }
         ],
         "assertions": [
-          { "assertion_id": "assert_vertex_zero", "capability_id": "function2d.value_at", "subject_refs": ["entity:curve"], "params": { "x": "0", "equals": "0" }, "expectation": "holds" }
+          {
+            "assertion_id": "assert_vertex_zero",
+            "capability_id": "function2d.value_at",
+            "subject_refs": [
+              "entity:curve"
+            ],
+            "params": {
+              "x": "0",
+              "equals": "0"
+            },
+            "expectation": "holds"
+          }
         ],
-        "capabilities": ["function2d.expression_curve", "function2d.parameter_sweep", "function2d.extremum", "function2d.value_at"]
+        "capabilities": [
+          "function2d.expression_curve",
+          "function2d.parameter_sweep",
+          "function2d.extremum",
+          "function2d.value_at"
+        ]
       }
     },
     {
@@ -539,19 +2496,61 @@
         "domain": "function2d",
         "statement": "直线 y=x+2 与抛物线 y=x² 的交点。",
         "entities": [
-          { "id": "line_f", "kind": "function", "props": { "expression": "x+2", "variable": "x" } },
-          { "id": "parab", "kind": "function", "props": { "expression": "x^2", "variable": "x" } }
+          {
+            "id": "line_f",
+            "kind": "function",
+            "props": {
+              "expression": "x+2",
+              "variable": "x"
+            }
+          },
+          {
+            "id": "parab",
+            "kind": "function",
+            "props": {
+              "expression": "x^2",
+              "variable": "x"
+            }
+          }
         ],
         "source_facts": [],
         "derived_facts": [
-          { "fact_id": "roots", "name": "交点横坐标", "value": { "exact": "x=-1 或 x=2" }, "provenance": { "kind": "derived", "capability_id": "function2d.intersection", "inputs": ["entity:line_f", "entity:parab"] } }
+          {
+            "fact_id": "roots",
+            "name": "交点横坐标",
+            "value": {
+              "exact": "x=-1 或 x=2"
+            },
+            "provenance": {
+              "kind": "derived",
+              "capability_id": "function2d.intersection",
+              "inputs": [
+                "entity:line_f",
+                "entity:parab"
+              ]
+            }
+          }
         ],
         "runtime_values": [],
         "constraints": [],
         "assertions": [
-          { "assertion_id": "assert_two_intersections", "capability_id": "function2d.intersection", "subject_refs": ["entity:line_f", "entity:parab"], "params": { "count": "2" }, "expectation": "holds" }
+          {
+            "assertion_id": "assert_two_intersections",
+            "capability_id": "function2d.intersection",
+            "subject_refs": [
+              "entity:line_f",
+              "entity:parab"
+            ],
+            "params": {
+              "count": "2"
+            },
+            "expectation": "holds"
+          }
         ],
-        "capabilities": ["function2d.expression_curve", "function2d.intersection"]
+        "capabilities": [
+          "function2d.expression_curve",
+          "function2d.intersection"
+        ]
       }
     },
     {
@@ -564,26 +2563,103 @@
         "domain": "function2d",
         "statement": "抛物线 y=x² 在 x₀ 处的切线。",
         "parameters": [
-          { "id": "x0", "min": { "kind": "int", "value": "-3" }, "max": { "kind": "int", "value": "3" }, "default": { "kind": "int", "value": "1" } }
+          {
+            "id": "x0",
+            "min": {
+              "kind": "int",
+              "value": "-3"
+            },
+            "max": {
+              "kind": "int",
+              "value": "3"
+            },
+            "default": {
+              "kind": "int",
+              "value": "1"
+            }
+          }
         ],
         "entities": [
-          { "id": "parab", "kind": "function", "props": { "expression": "x^2", "variable": "x" } },
-          { "id": "tangent", "kind": "function", "props": { "expression": "2*x0*x - x0^2", "variable": "x" } }
+          {
+            "id": "parab",
+            "kind": "function",
+            "props": {
+              "expression": "x^2",
+              "variable": "x"
+            }
+          },
+          {
+            "id": "tangent",
+            "kind": "function",
+            "props": {
+              "expression": "2*x0*x - x0^2",
+              "variable": "x"
+            }
+          }
         ],
         "source_facts": [
-          { "fact_id": "parab_expr", "name": "抛物线表达式", "value": "x^2", "provenance": { "kind": "problem_text", "span": { "text": "y=x²", "start": 4, "end": 8 } } }
+          {
+            "fact_id": "parab_expr",
+            "name": "抛物线表达式",
+            "value": "x^2",
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "y=x²",
+                "start": 4,
+                "end": 8
+              }
+            }
+          }
         ],
         "derived_facts": [
-          { "fact_id": "slope_fn", "name": "切线斜率函数", "value": { "exact": "2*x" }, "provenance": { "kind": "derived", "capability_id": "function2d.derivative_at", "inputs": ["entity:parab"] } }
+          {
+            "fact_id": "slope_fn",
+            "name": "切线斜率函数",
+            "value": {
+              "exact": "2*x"
+            },
+            "provenance": {
+              "kind": "derived",
+              "capability_id": "function2d.derivative_at",
+              "inputs": [
+                "entity:parab"
+              ]
+            }
+          }
         ],
         "runtime_values": [
-          { "id": "tangent_y", "expr": { "t": "sym", "name": "y_t" }, "depends_on": ["param:x0"] }
+          {
+            "id": "tangent_y",
+            "expr": {
+              "t": "sym",
+              "name": "y_t"
+            },
+            "depends_on": [
+              "param:x0"
+            ]
+          }
         ],
         "constraints": [],
         "assertions": [
-          { "assertion_id": "assert_slope_at_1", "capability_id": "function2d.derivative_at", "subject_refs": ["entity:parab"], "params": { "at": "1", "equals": "2" }, "expectation": "holds" }
+          {
+            "assertion_id": "assert_slope_at_1",
+            "capability_id": "function2d.derivative_at",
+            "subject_refs": [
+              "entity:parab"
+            ],
+            "params": {
+              "at": "1",
+              "equals": "2"
+            },
+            "expectation": "holds"
+          }
         ],
-        "capabilities": ["function2d.expression_curve", "function2d.derivative_at", "function2d.parameter_sweep"]
+        "capabilities": [
+          "function2d.expression_curve",
+          "function2d.derivative_at",
+          "function2d.parameter_sweep"
+        ]
       }
     },
     {
@@ -594,8 +2670,12 @@
         "manifest": {
           "schema_version": "mathviz.project/v1",
           "engine_version": "0.1.0",
-          "domain_versions": { "function2d": "0.1.0" },
-          "adapter_versions": { "sympy-worker": "pin:sympy@1.13.2" },
+          "domain_versions": {
+            "function2d": "0.1.0"
+          },
+          "adapter_versions": {
+            "sympy-worker": "pin:sympy@1.13.2"
+          },
           "capability_registry_version": "1.0.0",
           "source_problem": "FUNC-001",
           "problem_id": "func-quad-sweep"
@@ -606,45 +2686,238 @@
           "domain": "function2d",
           "statement": "二次函数 y=ax²，a 在 [-2,2] 内变化，观察开口与顶点。",
           "parameters": [
-            { "id": "a", "min": { "kind": "int", "value": "-2" }, "max": { "kind": "int", "value": "2" }, "default": { "kind": "int", "value": "1" } }
+            {
+              "id": "a",
+              "min": {
+                "kind": "int",
+                "value": "-2"
+              },
+              "max": {
+                "kind": "int",
+                "value": "2"
+              },
+              "default": {
+                "kind": "int",
+                "value": "1"
+              }
+            }
           ],
           "entities": [
-            { "id": "curve", "kind": "function", "props": { "expression": "a*x^2", "variable": "x" } },
-            { "id": "axis_x", "kind": "axis", "props": { "label": "x" } },
-            { "id": "axis_y", "kind": "axis", "props": { "label": "y" } },
-            { "id": "grid_ref", "kind": "grid", "props": {} }
+            {
+              "id": "curve",
+              "kind": "function",
+              "props": {
+                "expression": "a*x^2",
+                "variable": "x"
+              }
+            },
+            {
+              "id": "axis_x",
+              "kind": "axis",
+              "props": {
+                "label": "x"
+              }
+            },
+            {
+              "id": "axis_y",
+              "kind": "axis",
+              "props": {
+                "label": "y"
+              }
+            },
+            {
+              "id": "grid_ref",
+              "kind": "grid",
+              "props": {}
+            }
           ],
           "source_facts": [
-            { "fact_id": "domain_min", "name": "绘图下界", "value": -3, "provenance": { "kind": "problem_text", "span": { "text": "观察开口与顶点", "start": 21, "end": 28 } } },
-            { "fact_id": "domain_max", "name": "绘图上界", "value": 3, "provenance": { "kind": "problem_text", "span": { "text": "观察开口与顶点", "start": 21, "end": 28 } } }
+            {
+              "fact_id": "domain_min",
+              "name": "绘图下界",
+              "value": -3,
+              "provenance": {
+                "kind": "problem_text",
+                "span": {
+                  "text": "观察开口与顶点",
+                  "start": 26,
+                  "end": 33
+                }
+              }
+            },
+            {
+              "fact_id": "domain_max",
+              "name": "绘图上界",
+              "value": 3,
+              "provenance": {
+                "kind": "problem_text",
+                "span": {
+                  "text": "观察开口与顶点",
+                  "start": 26,
+                  "end": 33
+                }
+              }
+            }
           ],
           "derived_facts": [
-            { "fact_id": "vertex_x", "name": "顶点横坐标", "value": { "exact": "0" }, "provenance": { "kind": "derived", "capability_id": "function2d.extremum", "inputs": ["entity:curve"] } },
-            { "fact_id": "vertex_y", "name": "顶点纵坐标", "value": { "exact": "0" }, "provenance": { "kind": "derived", "capability_id": "function2d.extremum", "inputs": ["entity:curve", "param:a"] } }
+            {
+              "fact_id": "vertex_x",
+              "name": "顶点横坐标",
+              "value": {
+                "exact": "0"
+              },
+              "provenance": {
+                "kind": "derived",
+                "capability_id": "function2d.extremum",
+                "inputs": [
+                  "entity:curve"
+                ]
+              }
+            },
+            {
+              "fact_id": "vertex_y",
+              "name": "顶点纵坐标",
+              "value": {
+                "exact": "0"
+              },
+              "provenance": {
+                "kind": "derived",
+                "capability_id": "function2d.extremum",
+                "inputs": [
+                  "entity:curve",
+                  "param:a"
+                ]
+              }
+            }
           ],
           "runtime_values": [
-            { "id": "vertex_pos", "expr": { "t": "sym", "name": "vertex" }, "depends_on": ["param:a"] },
-            { "id": "sample_y", "expr": { "t": "sym", "name": "y" }, "depends_on": ["param:a"] }
+            {
+              "id": "vertex_pos",
+              "expr": {
+                "t": "sym",
+                "name": "vertex"
+              },
+              "depends_on": [
+                "param:a"
+              ]
+            },
+            {
+              "id": "sample_y",
+              "expr": {
+                "t": "sym",
+                "name": "y"
+              },
+              "depends_on": [
+                "param:a"
+              ]
+            }
           ],
           "constraints": [
-            { "capability_id": "function2d.expression_curve", "subject_refs": ["entity:curve"], "params": { "expression": "a*x^2" } }
+            {
+              "capability_id": "function2d.expression_curve",
+              "subject_refs": [
+                "entity:curve"
+              ],
+              "params": {
+                "expression": "a*x^2"
+              }
+            }
           ],
           "assertions": [
-            { "assertion_id": "assert_vertex_zero", "capability_id": "function2d.value_at", "subject_refs": ["entity:curve"], "params": { "x": "0", "equals": "0" }, "expectation": "holds" }
+            {
+              "assertion_id": "assert_vertex_zero",
+              "capability_id": "function2d.value_at",
+              "subject_refs": [
+                "entity:curve"
+              ],
+              "params": {
+                "x": "0",
+                "equals": "0"
+              },
+              "expectation": "holds"
+            }
           ],
-          "capabilities": ["function2d.expression_curve", "function2d.parameter_sweep", "function2d.extremum", "function2d.value_at"]
+          "capabilities": [
+            "function2d.expression_curve",
+            "function2d.parameter_sweep",
+            "function2d.extremum",
+            "function2d.value_at"
+          ]
         },
         "scene": {
           "schemaVersion": "mathviz.scene/v1",
           "sceneId": "scene-quad",
-          "viewport": { "width": 720, "height": 560, "margin": [30, 30, 30, 50] },
+          "viewport": {
+            "width": 720,
+            "height": 560,
+            "margin": [
+              30,
+              30,
+              30,
+              50
+            ]
+          },
           "objects": [
-            { "objectId": "obj_grid", "primitive": "grid", "binding": { "source": "math:entity:grid_ref" }, "style": { "opacity": 0.15 } },
-            { "objectId": "obj_axis_x", "primitive": "axis", "binding": { "source": "math:entity:axis_x" } },
-            { "objectId": "obj_axis_y", "primitive": "axis", "binding": { "source": "math:entity:axis_y" } },
-            { "objectId": "obj_curve", "primitive": "function_curve", "binding": { "source": "math:entity:curve" }, "style": { "stroke": "#58a6ff", "stroke_width": 3 } },
-            { "objectId": "obj_vertex", "primitive": "math_text", "binding": { "source": "math:fact:vertex_x" }, "text": "顶点", "label_layout": { "anchor": "ne", "offset_px": [10, -10] } },
-            { "objectId": "obj_marker", "primitive": "marker", "binding": { "source": "math:runtime:vertex_pos" }, "style": { "fill": "#3fb950" } }
+            {
+              "objectId": "obj_grid",
+              "primitive": "grid",
+              "binding": {
+                "source": "math:entity:grid_ref"
+              },
+              "style": {
+                "opacity": 0.15
+              }
+            },
+            {
+              "objectId": "obj_axis_x",
+              "primitive": "axis",
+              "binding": {
+                "source": "math:entity:axis_x"
+              }
+            },
+            {
+              "objectId": "obj_axis_y",
+              "primitive": "axis",
+              "binding": {
+                "source": "math:entity:axis_y"
+              }
+            },
+            {
+              "objectId": "obj_curve",
+              "primitive": "function_curve",
+              "binding": {
+                "source": "math:entity:curve"
+              },
+              "style": {
+                "stroke": "#58a6ff",
+                "stroke_width": 3
+              }
+            },
+            {
+              "objectId": "obj_vertex",
+              "primitive": "math_text",
+              "binding": {
+                "source": "math:fact:vertex_x"
+              },
+              "text": "顶点",
+              "label_layout": {
+                "anchor": "ne",
+                "offset_px": [
+                  10,
+                  -10
+                ]
+              }
+            },
+            {
+              "objectId": "obj_marker",
+              "primitive": "marker",
+              "binding": {
+                "source": "math:runtime:vertex_pos"
+              },
+              "style": {
+                "fill": "#3fb950"
+              }
+            }
           ],
           "bindings": []
         },
@@ -657,14 +2930,43 @@
             {
               "track_id": "sweep",
               "actions": [
-                { "kind": "map_model_time", "from": 0, "to": 10, "model_from": { "t": "num", "v": { "kind": "int", "value": "-2" } }, "model_to": { "t": "num", "v": { "kind": "int", "value": "2" } }, "easing": "linear" }
+                {
+                  "kind": "map_model_time",
+                  "from": 0,
+                  "to": 10,
+                  "model_from": {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "-2"
+                    }
+                  },
+                  "model_to": {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "2"
+                    }
+                  },
+                  "easing": "linear"
+                }
               ]
             },
             {
               "track_id": "narrate",
               "actions": [
-                { "kind": "caption", "at": 0, "text": "a 从 -2 扫到 2", "until": 5 },
-                { "kind": "highlight", "target": "obj_marker", "at": 5, "until": 10 }
+                {
+                  "kind": "caption",
+                  "at": 0,
+                  "text": "a 从 -2 扫到 2",
+                  "until": 5
+                },
+                {
+                  "kind": "highlight",
+                  "target": "obj_marker",
+                  "at": 5,
+                  "until": 10
+                }
               ]
             }
           ]
@@ -678,15 +2980,70 @@
       "doc": {
         "schemaVersion": "mathviz.scene/v1",
         "sceneId": "scene-geo-standalone",
-        "viewport": { "width": 800, "height": 600, "margin": [20, 20, 20, 20] },
+        "viewport": {
+          "width": 800,
+          "height": 600,
+          "margin": [
+            20,
+            20,
+            20,
+            20
+          ]
+        },
         "objects": [
-          { "objectId": "obj_pt", "primitive": "point", "binding": { "source": "math:entity:A" }, "label": "A" },
-          { "objectId": "obj_seg", "primitive": "segment", "binding": { "source": "math:entity:BC" }, "style": { "stroke": "#58a6ff", "stroke_width": 2 } },
-          { "objectId": "obj_mark", "primitive": "right_angle_mark", "binding": { "source": "math:fact:angle_bac" }, "attach_to": ["obj_pt"] },
-          { "objectId": "obj_circ", "primitive": "circle", "binding": { "source": "math:entity:circum" }, "style": { "stroke": "#3fb950", "dash": "3 6" }, "label_layout": { "anchor": "ne", "offset_px": [6, -6] } }
+          {
+            "objectId": "obj_pt",
+            "primitive": "point",
+            "binding": {
+              "source": "math:entity:A"
+            },
+            "label": "A"
+          },
+          {
+            "objectId": "obj_seg",
+            "primitive": "segment",
+            "binding": {
+              "source": "math:entity:BC"
+            },
+            "style": {
+              "stroke": "#58a6ff",
+              "stroke_width": 2
+            }
+          },
+          {
+            "objectId": "obj_mark",
+            "primitive": "right_angle_mark",
+            "binding": {
+              "source": "math:fact:angle_bac"
+            },
+            "attach_to": [
+              "obj_pt"
+            ]
+          },
+          {
+            "objectId": "obj_circ",
+            "primitive": "circle",
+            "binding": {
+              "source": "math:entity:circum"
+            },
+            "style": {
+              "stroke": "#3fb950",
+              "dash": "3 6"
+            },
+            "label_layout": {
+              "anchor": "ne",
+              "offset_px": [
+                6,
+                -6
+              ]
+            }
+          }
         ],
         "bindings": [
-          { "objectId": "obj_pt", "source": "math:param:theta" }
+          {
+            "objectId": "obj_pt",
+            "source": "math:param:theta"
+          }
         ]
       }
     },
@@ -697,13 +3054,57 @@
       "doc": {
         "schemaVersion": "mathviz.scene/v1",
         "sceneId": "scene-func-standalone",
-        "viewport": { "width": 720, "height": 560 },
+        "viewport": {
+          "width": 720,
+          "height": 560
+        },
         "objects": [
-          { "objectId": "obj_axis", "primitive": "axis", "binding": { "source": "math:entity:axis_x" } },
-          { "objectId": "obj_grid", "primitive": "grid", "binding": { "source": "math:entity:grid_ref" }, "style": { "opacity": 0.2 } },
-          { "objectId": "obj_curve", "primitive": "function_curve", "binding": { "source": "math:entity:curve" }, "style": { "stroke": "#f0883e", "stroke_width": 2.5 } },
-          { "objectId": "obj_text", "primitive": "math_text", "binding": { "source": "math:fact:roots" }, "text": "交点" },
-          { "objectId": "obj_ring", "primitive": "focus_ring", "binding": { "source": "math:runtime:sample_y" }, "style": { "stroke": "#3fb950" } }
+          {
+            "objectId": "obj_axis",
+            "primitive": "axis",
+            "binding": {
+              "source": "math:entity:axis_x"
+            }
+          },
+          {
+            "objectId": "obj_grid",
+            "primitive": "grid",
+            "binding": {
+              "source": "math:entity:grid_ref"
+            },
+            "style": {
+              "opacity": 0.2
+            }
+          },
+          {
+            "objectId": "obj_curve",
+            "primitive": "function_curve",
+            "binding": {
+              "source": "math:entity:curve"
+            },
+            "style": {
+              "stroke": "#f0883e",
+              "stroke_width": 2.5
+            }
+          },
+          {
+            "objectId": "obj_text",
+            "primitive": "math_text",
+            "binding": {
+              "source": "math:fact:roots"
+            },
+            "text": "交点"
+          },
+          {
+            "objectId": "obj_ring",
+            "primitive": "focus_ring",
+            "binding": {
+              "source": "math:runtime:sample_y"
+            },
+            "style": {
+              "stroke": "#3fb950"
+            }
+          }
         ],
         "bindings": []
       }
@@ -721,17 +3122,44 @@
           {
             "track_id": "t1",
             "actions": [
-              { "kind": "show", "target": "obj_1", "at": 0 },
-              { "kind": "hide", "target": "obj_1", "at": 10 },
-              { "kind": "dim", "target": "obj_1", "at": 12, "until": 20 }
+              {
+                "kind": "show",
+                "target": "obj_1",
+                "at": 0
+              },
+              {
+                "kind": "hide",
+                "target": "obj_1",
+                "at": 10
+              },
+              {
+                "kind": "dim",
+                "target": "obj_1",
+                "at": 12,
+                "until": 20
+              }
             ]
           },
           {
             "track_id": "t2",
             "actions": [
-              { "kind": "highlight", "target": "obj_2", "at": 5 },
-              { "kind": "caption", "at": 2, "text": "观察轨迹", "until": 8 },
-              { "kind": "camera", "at": 15, "zoom": 1.5, "center_on": "obj_1" }
+              {
+                "kind": "highlight",
+                "target": "obj_2",
+                "at": 5
+              },
+              {
+                "kind": "caption",
+                "at": 2,
+                "text": "观察轨迹",
+                "until": 8
+              },
+              {
+                "kind": "camera",
+                "at": 15,
+                "zoom": 1.5,
+                "center_on": "obj_1"
+              }
             ]
           }
         ]
@@ -750,8 +3178,52 @@
           {
             "track_id": "sweep",
             "actions": [
-              { "kind": "map_model_time", "from": 0, "to": 5, "model_from": { "t": "num", "v": { "kind": "int", "value": "0" } }, "model_to": { "t": "app", "op": "*", "args": [ { "t": "sym", "name": "t" }, { "t": "num", "v": { "kind": "int", "value": "10" } } ] } },
-              { "kind": "map_model_time", "from": 5, "to": 10, "model_from": { "t": "sym", "name": "t10" }, "model_to": { "t": "num", "v": { "kind": "int", "value": "40" } }, "easing": "linear" }
+              {
+                "kind": "map_model_time",
+                "from": 0,
+                "to": 5,
+                "model_from": {
+                  "t": "num",
+                  "v": {
+                    "kind": "int",
+                    "value": "0"
+                  }
+                },
+                "model_to": {
+                  "t": "app",
+                  "op": "*",
+                  "args": [
+                    {
+                      "t": "sym",
+                      "name": "t"
+                    },
+                    {
+                      "t": "num",
+                      "v": {
+                        "kind": "int",
+                        "value": "10"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "kind": "map_model_time",
+                "from": 5,
+                "to": 10,
+                "model_from": {
+                  "t": "sym",
+                  "name": "t10"
+                },
+                "model_to": {
+                  "t": "num",
+                  "v": {
+                    "kind": "int",
+                    "value": "40"
+                  }
+                },
+                "easing": "linear"
+              }
             ]
           }
         ]
@@ -765,30 +3237,79 @@
         "manifest": {
           "schema_version": "mathviz.project/v1",
           "engine_version": "0.1.0",
-          "domain_versions": { "motion1d": "0.1.0" },
+          "domain_versions": {
+            "motion1d": "0.1.0"
+          },
           "adapter_versions": {}
         },
         "math": {
           "schemaVersion": "mathviz.math/v1",
           "problemId": "mot-min",
           "domain": "motion1d",
-          "entities": [ { "id": "body_A", "kind": "body", "props": {} } ],
+          "entities": [
+            {
+              "id": "body_A",
+              "kind": "body",
+              "props": {}
+            }
+          ],
           "source_facts": [
-            { "fact_id": "v_A", "name": "速度", "value": 5, "unit": "m/s", "provenance": { "kind": "problem_text", "span": { "text": "每秒5米", "start": 0, "end": 4 } } }
+            {
+              "fact_id": "v_A",
+              "name": "速度",
+              "value": 5,
+              "unit": "m/s",
+              "provenance": {
+                "kind": "problem_text",
+                "span": {
+                  "text": "每秒5米",
+                  "start": 0,
+                  "end": 4
+                }
+              }
+            }
           ],
           "derived_facts": [
-            { "fact_id": "pos_A", "name": "5秒后位置", "value": { "exact": "25" }, "provenance": { "kind": "derived", "capability_id": "motion1d.solve_position", "inputs": ["fact:v_A"] } }
+            {
+              "fact_id": "pos_A",
+              "name": "5秒后位置",
+              "value": {
+                "exact": "25"
+              },
+              "provenance": {
+                "kind": "derived",
+                "capability_id": "motion1d.solve_position",
+                "inputs": [
+                  "fact:v_A"
+                ]
+              }
+            }
           ],
           "runtime_values": [],
           "constraints": [],
           "assertions": [],
-          "capabilities": ["motion1d.constant_velocity"]
+          "capabilities": [
+            "motion1d.constant_velocity",
+            "motion1d.solve_position"
+          ],
+          "statement": "每秒5米"
         },
         "scene": {
           "schemaVersion": "mathviz.scene/v1",
           "sceneId": "scene_min",
-          "viewport": { "width": 400, "height": 200 },
-          "objects": [ { "objectId": "obj_body", "primitive": "moving_body", "binding": { "source": "math:entity:body_A" } } ],
+          "viewport": {
+            "width": 400,
+            "height": 200
+          },
+          "objects": [
+            {
+              "objectId": "obj_body",
+              "primitive": "moving_body",
+              "binding": {
+                "source": "math:entity:body_A"
+              }
+            }
+          ],
           "bindings": []
         },
         "timeline": {
@@ -796,7 +3317,30 @@
           "timelineId": "tl_min",
           "duration": 5,
           "tracks": [
-            { "track_id": "sweep", "actions": [ { "kind": "map_model_time", "from": 0, "to": 5, "model_from": { "t": "num", "v": { "kind": "int", "value": "0" } }, "model_to": { "t": "num", "v": { "kind": "int", "value": "5" } } } ] }
+            {
+              "track_id": "sweep",
+              "actions": [
+                {
+                  "kind": "map_model_time",
+                  "from": 0,
+                  "to": 5,
+                  "model_from": {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "0"
+                    }
+                  },
+                  "model_to": {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "5"
+                    }
+                  }
+                }
+              ]
+            }
           ]
         }
       }
@@ -809,8 +3353,12 @@
         "manifest": {
           "schema_version": "mathviz.project/v1",
           "engine_version": "0.1.0",
-          "domain_versions": { "geometry2d": "0.1.0" },
-          "adapter_versions": { "geometry-dsl": "pin:pending-P2" }
+          "domain_versions": {
+            "geometry2d": "0.1.0"
+          },
+          "adapter_versions": {
+            "geometry-dsl": "pin:pending-P2"
+          }
         },
         "math": {
           "schemaVersion": "mathviz.math/v1",
@@ -818,39 +3366,209 @@
           "domain": "geometry2d",
           "statement": "△ABC中，∠A=90°，AB=6，BC=10，求BC。",
           "entities": [
-            { "id": "T_A", "kind": "point", "props": { "label": "A" } },
-            { "id": "T_B", "kind": "point", "props": { "label": "B" } },
-            { "id": "T_C", "kind": "point", "props": { "label": "C" } },
-            { "id": "seg_AB", "kind": "segment", "props": { "a": "entity:T_A", "b": "entity:T_B" } }
+            {
+              "id": "T_A",
+              "kind": "point",
+              "props": {
+                "label": "A"
+              }
+            },
+            {
+              "id": "T_B",
+              "kind": "point",
+              "props": {
+                "label": "B"
+              }
+            },
+            {
+              "id": "T_C",
+              "kind": "point",
+              "props": {
+                "label": "C"
+              }
+            },
+            {
+              "id": "seg_AB",
+              "kind": "segment",
+              "props": {
+                "a": "entity:T_A",
+                "b": "entity:T_B"
+              }
+            }
           ],
           "source_facts": [
-            { "fact_id": "angle_right", "name": "A为直角", "value": 90, "unit": "度", "provenance": { "kind": "problem_text", "span": { "text": "∠A=90°", "start": 4, "end": 10 } } },
-            { "fact_id": "ab_len", "name": "AB长度", "value": 6, "unit": "长度", "provenance": { "kind": "problem_text", "span": { "text": "AB=6", "start": 11, "end": 15 } } }
+            {
+              "fact_id": "angle_right",
+              "name": "A为直角",
+              "value": 90,
+              "unit": "度",
+              "provenance": {
+                "kind": "problem_text",
+                "span": {
+                  "text": "∠A=90°",
+                  "start": 6,
+                  "end": 12
+                }
+              }
+            },
+            {
+              "fact_id": "ab_len",
+              "name": "AB长度",
+              "value": 6,
+              "unit": "长度",
+              "provenance": {
+                "kind": "problem_text",
+                "span": {
+                  "text": "AB=6",
+                  "start": 13,
+                  "end": 17
+                }
+              }
+            }
           ],
           "derived_facts": [
-            { "fact_id": "bc_len", "name": "BC长度", "value": { "exact": "10" }, "unit": "长度", "provenance": { "kind": "derived", "capability_id": "geometry2d.derive_length", "inputs": ["fact:ab_len", "fact:angle_right"] } }
+            {
+              "fact_id": "bc_len",
+              "name": "BC长度",
+              "value": {
+                "exact": "10"
+              },
+              "unit": "长度",
+              "provenance": {
+                "kind": "derived",
+                "capability_id": "geometry2d.derive_length",
+                "inputs": [
+                  "fact:ab_len",
+                  "fact:angle_right"
+                ]
+              }
+            }
           ],
           "runtime_values": [],
           "constraints": [
-            { "capability_id": "geometry2d.perpendicular", "subject_refs": ["entity:T_B", "entity:T_A", "entity:T_C"] }
+            {
+              "capability_id": "geometry2d.perpendicular",
+              "subject_refs": [
+                "entity:T_B",
+                "entity:T_A",
+                "entity:T_C"
+              ]
+            }
           ],
           "assertions": [
-            { "assertion_id": "assert_ab", "capability_id": "geometry2d.equal_length", "subject_refs": ["entity:T_A", "entity:T_B"], "params": { "value": "6" }, "expectation": "holds" }
+            {
+              "assertion_id": "assert_ab",
+              "capability_id": "geometry2d.equal_length",
+              "subject_refs": [
+                "entity:T_A",
+                "entity:T_B"
+              ],
+              "params": {
+                "value": "6"
+              },
+              "expectation": "holds"
+            }
           ],
-          "capabilities": ["geometry2d.perpendicular", "geometry2d.equal_length", "geometry2d.derive_length"]
+          "capabilities": [
+            "geometry2d.perpendicular",
+            "geometry2d.equal_length",
+            "geometry2d.derive_length"
+          ]
         },
         "scene": {
           "schemaVersion": "mathviz.scene/v1",
           "sceneId": "scene_marks",
-          "viewport": { "width": 600, "height": 480, "margin": [20, 20, 20, 20] },
+          "viewport": {
+            "width": 600,
+            "height": 480,
+            "margin": [
+              20,
+              20,
+              20,
+              20
+            ]
+          },
           "objects": [
-            { "objectId": "obj_A", "primitive": "point", "binding": { "source": "math:entity:T_A" }, "label": "A", "label_layout": { "anchor": "sw", "offset_px": [-8, 8] } },
-            { "objectId": "obj_B", "primitive": "point", "binding": { "source": "math:entity:T_B" }, "label": "B", "style": { "fill": "#58a6ff" } },
-            { "objectId": "obj_C", "primitive": "point", "binding": { "source": "math:entity:T_C" }, "label": "C" },
-            { "objectId": "obj_seg_AB", "primitive": "segment", "binding": { "source": "math:entity:seg_AB" }, "style": { "stroke": "#58a6ff", "stroke_width": 2 } },
-            { "objectId": "obj_mark_right", "primitive": "right_angle_mark", "binding": { "source": "math:fact:angle_right" }, "attach_to": ["obj_A"] },
-            { "objectId": "obj_tick", "primitive": "equal_tick", "binding": { "source": "math:fact:ab_len" }, "attach_to": ["obj_seg_AB"] },
-            { "objectId": "obj_note", "primitive": "math_text", "binding": { "source": "math:fact:bc_len" }, "text": "BC 长度", "label_layout": { "anchor": "n", "offset_px": [0, -12] } }
+            {
+              "objectId": "obj_A",
+              "primitive": "point",
+              "binding": {
+                "source": "math:entity:T_A"
+              },
+              "label": "A",
+              "label_layout": {
+                "anchor": "sw",
+                "offset_px": [
+                  -8,
+                  8
+                ]
+              }
+            },
+            {
+              "objectId": "obj_B",
+              "primitive": "point",
+              "binding": {
+                "source": "math:entity:T_B"
+              },
+              "label": "B",
+              "style": {
+                "fill": "#58a6ff"
+              }
+            },
+            {
+              "objectId": "obj_C",
+              "primitive": "point",
+              "binding": {
+                "source": "math:entity:T_C"
+              },
+              "label": "C"
+            },
+            {
+              "objectId": "obj_seg_AB",
+              "primitive": "segment",
+              "binding": {
+                "source": "math:entity:seg_AB"
+              },
+              "style": {
+                "stroke": "#58a6ff",
+                "stroke_width": 2
+              }
+            },
+            {
+              "objectId": "obj_mark_right",
+              "primitive": "right_angle_mark",
+              "binding": {
+                "source": "math:fact:angle_right"
+              },
+              "attach_to": [
+                "obj_A"
+              ]
+            },
+            {
+              "objectId": "obj_tick",
+              "primitive": "equal_tick",
+              "binding": {
+                "source": "math:fact:ab_len"
+              },
+              "attach_to": [
+                "obj_seg_AB"
+              ]
+            },
+            {
+              "objectId": "obj_note",
+              "primitive": "math_text",
+              "binding": {
+                "source": "math:fact:bc_len"
+              },
+              "text": "BC 长度",
+              "label_layout": {
+                "anchor": "n",
+                "offset_px": [
+                  0,
+                  -12
+                ]
+              }
+            }
           ],
           "bindings": []
         },
@@ -862,9 +3580,21 @@
             {
               "track_id": "reveal",
               "actions": [
-                { "kind": "show", "target": "obj_mark_right", "at": 2 },
-                { "kind": "show", "target": "obj_tick", "at": 4 },
-                { "kind": "caption", "at": 6, "text": "先验证后标记" }
+                {
+                  "kind": "show",
+                  "target": "obj_mark_right",
+                  "at": 2
+                },
+                {
+                  "kind": "show",
+                  "target": "obj_tick",
+                  "at": 4
+                },
+                {
+                  "kind": "caption",
+                  "at": 6,
+                  "text": "先验证后标记"
+                }
               ]
             }
           ]
@@ -879,8 +3609,12 @@
         "manifest": {
           "schema_version": "mathviz.project/v1",
           "engine_version": "0.1.0",
-          "domain_versions": { "function2d": "0.1.0" },
-          "adapter_versions": { "sympy-worker": "pin:sympy@1.13.2" },
+          "domain_versions": {
+            "function2d": "0.1.0"
+          },
+          "adapter_versions": {
+            "sympy-worker": "pin:sympy@1.13.2"
+          },
           "capability_registry_version": "1.0.0",
           "source_problem": "FUNC-002",
           "problem_id": "func-intersect"
@@ -891,32 +3625,126 @@
           "domain": "function2d",
           "statement": "直线 y=x+2 与抛物线 y=x² 的交点。",
           "entities": [
-            { "id": "line_f", "kind": "function", "props": { "expression": "x+2", "variable": "x" } },
-            { "id": "parab", "kind": "function", "props": { "expression": "x^2", "variable": "x" } },
-            { "id": "axis_x", "kind": "axis", "props": { "label": "x" } }
+            {
+              "id": "line_f",
+              "kind": "function",
+              "props": {
+                "expression": "x+2",
+                "variable": "x"
+              }
+            },
+            {
+              "id": "parab",
+              "kind": "function",
+              "props": {
+                "expression": "x^2",
+                "variable": "x"
+              }
+            },
+            {
+              "id": "axis_x",
+              "kind": "axis",
+              "props": {
+                "label": "x"
+              }
+            }
           ],
           "source_facts": [
-            { "fact_id": "line_expr", "name": "直线表达式", "value": "x+2", "provenance": { "kind": "problem_text", "span": { "text": "y=x+2", "start": 3, "end": 8 } } }
+            {
+              "fact_id": "line_expr",
+              "name": "直线表达式",
+              "value": "x+2",
+              "provenance": {
+                "kind": "problem_text",
+                "span": {
+                  "text": "y=x+2",
+                  "start": 3,
+                  "end": 8
+                }
+              }
+            }
           ],
           "derived_facts": [
-            { "fact_id": "roots", "name": "交点横坐标", "value": { "exact": "x=-1 或 x=2" }, "provenance": { "kind": "derived", "capability_id": "function2d.intersection", "inputs": ["entity:line_f", "entity:parab"] } }
+            {
+              "fact_id": "roots",
+              "name": "交点横坐标",
+              "value": {
+                "exact": "x=-1 或 x=2"
+              },
+              "provenance": {
+                "kind": "derived",
+                "capability_id": "function2d.intersection",
+                "inputs": [
+                  "entity:line_f",
+                  "entity:parab"
+                ]
+              }
+            }
           ],
           "runtime_values": [],
           "constraints": [],
           "assertions": [
-            { "assertion_id": "assert_two_intersections", "capability_id": "function2d.intersection", "subject_refs": ["entity:line_f", "entity:parab"], "params": { "count": "2" }, "expectation": "holds" }
+            {
+              "assertion_id": "assert_two_intersections",
+              "capability_id": "function2d.intersection",
+              "subject_refs": [
+                "entity:line_f",
+                "entity:parab"
+              ],
+              "params": {
+                "count": "2"
+              },
+              "expectation": "holds"
+            }
           ],
-          "capabilities": ["function2d.expression_curve", "function2d.intersection"]
+          "capabilities": [
+            "function2d.expression_curve",
+            "function2d.intersection"
+          ]
         },
         "scene": {
           "schemaVersion": "mathviz.scene/v1",
           "sceneId": "scene_versions",
-          "viewport": { "width": 720, "height": 560 },
+          "viewport": {
+            "width": 720,
+            "height": 560
+          },
           "objects": [
-            { "objectId": "obj_axis", "primitive": "axis", "binding": { "source": "math:entity:axis_x" } },
-            { "objectId": "obj_line", "primitive": "function_curve", "binding": { "source": "math:entity:line_f" }, "style": { "stroke": "#58a6ff" } },
-            { "objectId": "obj_parab", "primitive": "function_curve", "binding": { "source": "math:entity:parab" }, "style": { "stroke": "#f0883e" } },
-            { "objectId": "obj_roots", "primitive": "math_text", "binding": { "source": "math:fact:roots" }, "text": "交点" }
+            {
+              "objectId": "obj_axis",
+              "primitive": "axis",
+              "binding": {
+                "source": "math:entity:axis_x"
+              }
+            },
+            {
+              "objectId": "obj_line",
+              "primitive": "function_curve",
+              "binding": {
+                "source": "math:entity:line_f"
+              },
+              "style": {
+                "stroke": "#58a6ff"
+              }
+            },
+            {
+              "objectId": "obj_parab",
+              "primitive": "function_curve",
+              "binding": {
+                "source": "math:entity:parab"
+              },
+              "style": {
+                "stroke": "#f0883e"
+              }
+            },
+            {
+              "objectId": "obj_roots",
+              "primitive": "math_text",
+              "binding": {
+                "source": "math:fact:roots"
+              },
+              "text": "交点"
+            }
           ],
           "bindings": []
         },
@@ -925,10 +3753,26 @@
           "timelineId": "tl_versions",
           "duration": 6,
           "tracks": [
-            { "track_id": "reveal", "actions": [ { "kind": "show", "target": "obj_roots", "at": 3 } ] }
+            {
+              "track_id": "reveal",
+              "actions": [
+                {
+                  "kind": "show",
+                  "target": "obj_roots",
+                  "at": 3
+                }
+              ]
+            }
           ]
         },
-        "assets": { "fonts": ["Inter"], "requires": ["katex"] }
+        "assets": {
+          "fonts": [
+            "Inter"
+          ],
+          "requires": [
+            "katex"
+          ]
+        }
       }
     }
   ]
