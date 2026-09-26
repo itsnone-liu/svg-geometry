@@ -18,6 +18,7 @@ const pursuit = read("fixtures/p3/pursuit.compiled.json");
 const meeting = read("fixtures/p3/meeting.compiled.json");
 const piecewise = read("fixtures/p3/piecewise.compiled.json");
 const invalidPiecewise = read("fixtures/p3/invalid-piecewise-teleport.compiled.json");
+const catchStopped = read("fixtures/p3/catch-stopped.compiled.json");
 const domains = { motion1d: motion1dAdapter };
 function expectCode(fn: () => unknown, code: string) {
   try { fn(); } catch (e: any) {
@@ -60,6 +61,38 @@ describe("P3 Motion1D exact Math IR -> VerifiedMotionProgram", () => {
     const p = compileMotion(piecewise.math);
     expect(fraction(p.events[0].time)).toBe("20/1");
     expect(fraction(p.events[0].position)).toBe("130/1");
+  });
+
+  it("catches a stopped body via the effective event domain (synthetic tail, solver-only)", () => {
+    const p = compileMotion(catchStopped.math);
+    expect(fraction(p.events[0].time)).toBe("15/1");
+    expect(fraction(p.events[0].position)).toBe("50/1");
+    // The synthetic stationary tail must never be written back into the frozen program.
+    expect(p.bodies.find((b: any) => b.id === "A")!.segments).toHaveLength(1);
+    expect(p.bodies.find((b: any) => b.id === "A")!.segments[0].end).toMatchObject({ p: "10", q: "1" });
+    expect(p.bodies.find((b: any) => b.id === "A")!.segments[0].velocity).toMatchObject({ p: "5", q: "1" });
+  });
+
+  it("rejects overtake when the first participant never passes the second", () => {
+    const swapped = structuredClone(catchStopped.math);
+    swapped.events[0].participants = ["entity:A", "entity:B"];
+    swapped.derived_facts.find((f: any) => f.fact_id === "catch_time").provenance.inputs = ["entity:A", "entity:B"];
+    swapped.events[0].at = undefined;
+    swapped.derived_facts = swapped.derived_facts.filter((f: any) => f.fact_id !== "catch_time");
+    expectCode(() => compileMotion(swapped), "E_MATH_CONSTRAINT");
+  });
+
+  it("G12 proves overtake reversal and event equality with exact rationals", () => {
+    const stopped = compileMotion(catchStopped.math);
+    const checks = checkMotionInvariants(stopped, [0, 5, 10, 15, 20]);
+    const reversal = checks.find((c: any) => c.name === "overtake-reversal:catch");
+    expect(reversal?.pass).toBe(true);
+    expect(reversal?.detail).toContain("-25/1 < 0 = 0/1 < 10/1");
+    const exact = checks.find((c: any) => c.name === "event-equality-exact:catch");
+    expect(exact?.pass).toBe(true);
+    const pursuitChecks = checkMotionInvariants(compileMotion(pursuit.math), [80 / 3]);
+    expect(pursuitChecks.find((c: any) => c.name === "overtake-reversal:overtake")?.pass).toBe(true);
+    expect(pursuitChecks.find((c: any) => c.name === "event-equality-exact:overtake")?.pass).toBe(true);
   });
 
   it("validates the compiled invalid fixture through generic contracts and adapter", () => {

@@ -8,27 +8,74 @@ function startOf(s: MotionBodyProgram["segments"][number]): Rat { return fromExa
 function posAt(s: MotionBodyProgram["segments"][number], t: Rat): Rat {
   return add(fromExact(s.startPosition), mul(fromExact(s.velocity), sub(t, startOf(s))));
 }
-function intercept(s: MotionBodyProgram["segments"][number]): Rat {
-  return sub(fromExact(s.startPosition), mul(fromExact(s.velocity), startOf(s)));
-}
 function max(a: Rat, b: Rat): Rat { return cmp(a, b) >= 0 ? a : b; }
+
+/**
+ * P3.1 A1 — the body's effective event time-domain is
+ *
+ *   [first_motion_start, +inf)
+ *
+ * Original motion segments cover the moving part; when the final segment has a
+ * finite end, a synthetic stationary tail [final.end, null) with velocity 0 at
+ * the final position extends the domain. A delayed body therefore does not
+ * participate before its first segment starts, and a body that has stopped
+ * still exists at its endpoint and can be caught later.
+ *
+ * This view is used ONLY by the event solver and G12 invariants. It is never
+ * written back into VerifiedMotionProgram.segments.
+ */
+export interface EventSegment {
+  start: Rat;
+  end: Rat | null;
+  startPosition: Rat;
+  velocity: Rat;
+  synthetic: boolean;
+}
+
+export function eventSegments(body: MotionBodyProgram): EventSegment[] {
+  const view: EventSegment[] = body.segments.map((s) => ({
+    start: startOf(s),
+    end: endOf(s),
+    startPosition: fromExact(s.startPosition),
+    velocity: fromExact(s.velocity),
+    synthetic: false
+  }));
+  const last = body.segments[body.segments.length - 1];
+  if (last && last.end) {
+    const tailStart = endOf(last)!;
+    view.push({
+      start: tailStart,
+      end: null,
+      startPosition: posAt(last, tailStart),
+      velocity: rat(0n),
+      synthetic: true
+    });
+  }
+  return view;
+}
+
+function withinES(s: EventSegment, t: Rat, isLast: boolean): boolean {
+  if (cmp(t, s.start) < 0) return false;
+  if (!s.end) return true;
+  return cmp(t, s.end) < 0 || (isLast && eq(t, s.end));
+}
+function posAtES(s: EventSegment, t: Rat): Rat {
+  return add(s.startPosition, mul(s.velocity, sub(t, s.start)));
+}
+function interceptES(s: EventSegment): Rat {
+  return sub(s.startPosition, mul(s.velocity, s.start));
+}
 function minEnd(a: Rat | null, b: Rat | null): Rat | null {
   if (!a) return b;
   if (!b) return a;
   return cmp(a, b) <= 0 ? a : b;
-}
-function within(s: MotionBodyProgram["segments"][number], t: Rat, isLast: boolean): boolean {
-  if (cmp(t, startOf(s)) < 0) return false;
-  const end = endOf(s);
-  if (!end) return true;
-  return cmp(t, end) < 0 || (isLast && eq(t, end));
 }
 
 export function positionOnBody(body: MotionBodyProgram, t: Rat): Rat {
   if (body.segments.length === 0) return fromExact(body.initialPosition);
   for (let i = 0; i < body.segments.length; i++) {
     const s = body.segments[i];
-    if (within(s, t, i === body.segments.length - 1)) return posAt(s, t);
+    if (withinES({ start: startOf(s), end: endOf(s), startPosition: fromExact(s.startPosition), velocity: fromExact(s.velocity), synthetic: false }, t, i === body.segments.length - 1)) return posAt(s, t);
   }
   const first = body.segments[0];
   if (cmp(t, startOf(first)) < 0) return fromExact(body.initialPosition);
@@ -39,28 +86,27 @@ export function positionOnBody(body: MotionBodyProgram, t: Rat): Rat {
 }
 
 function solveOnPair(
-  a: MotionBodyProgram["segments"][number],
-  b: MotionBodyProgram["segments"][number],
+  a: EventSegment,
+  b: EventSegment,
   isLastA: boolean,
   isLastB: boolean,
   mode: "meeting" | "overtake"
 ): Rat | null {
-  const lo = max(startOf(a), startOf(b));
-  const hi = minEnd(endOf(a), endOf(b));
+  const lo = max(a.start, b.start);
+  const hi = minEnd(a.end, b.end);
   if (hi && cmp(lo, hi) > 0) return null;
-  const va = fromExact(a.velocity), vb = fromExact(b.velocity);
-  const relativeVelocity = sub(va, vb);
-  const relativeIntercept = sub(intercept(a), intercept(b));
+  const relativeVelocity = sub(a.velocity, b.velocity);
+  const relativeIntercept = sub(interceptES(a), interceptES(b));
 
   if (eq(relativeVelocity, { p: 0n, q: 1n })) {
     if (!eq(relativeIntercept, { p: 0n, q: 1n })) return null;
     if (mode === "overtake") return null; // equality without order reversal is not catching up
-    if (!within(a, lo, isLastA) || !within(b, lo, isLastB)) return null;
+    if (!withinES(a, lo, isLastA) || !withinES(b, lo, isLastB)) return null;
     return lo;
   }
   const t = div({ p: -relativeIntercept.p, q: relativeIntercept.q }, relativeVelocity);
   if (cmp(t, lo) < 0 || (hi && cmp(t, hi) > 0)) return null;
-  if (!within(a, t, isLastA) || !within(b, t, isLastB)) return null;
+  if (!withinES(a, t, isLastA) || !withinES(b, t, isLastB)) return null;
   if (mode === "overtake") {
     // Relative position must cross from negative to positive inside a shared
     // active interval. A same-time initial equality is not a catch event.
@@ -78,10 +124,14 @@ export function solvePairEvent(
   b: MotionBodyProgram
 ): SolvedMotionEvent {
   const mode = capabilityId === "motion1d.overtake_event" ? "overtake" : "meeting";
+  // P3.1 A2 — enumerate the effective event domains, not the raw motion
+  // segments: eventSegments(A) x eventSegments(B).
+  const as = eventSegments(a);
+  const bs = eventSegments(b);
   const candidates: Rat[] = [];
-  for (let i = 0; i < a.segments.length; i++) {
-    for (let j = 0; j < b.segments.length; j++) {
-      const t = solveOnPair(a.segments[i], b.segments[j], i === a.segments.length - 1, j === b.segments.length - 1, mode);
+  for (let i = 0; i < as.length; i++) {
+    for (let j = 0; j < bs.length; j++) {
+      const t = solveOnPair(as[i], bs[j], i === as.length - 1, j === bs.length - 1, mode);
       if (t) candidates.push(t);
     }
   }
@@ -95,6 +145,31 @@ export function solvePairEvent(
     throw makeRuntimeError("E_MATH_CONSTRAINT", `event '${eventId}' solver produced unequal positions`);
   }
   return { eventId, capabilityId, participants: [a.id, b.id], time: toExact(time), position: toExact(position) };
+}
+
+/**
+ * P3.1 A3 — recover the exact legal interval [lo, hi] of the eventSegment pair
+ * that produced `time`, so invariants can build exact rational test points
+ * inside the same interval the solver used. hi === null means +inf.
+ */
+export function eventSolveInterval(
+  a: MotionBodyProgram,
+  b: MotionBodyProgram,
+  mode: "meeting" | "overtake",
+  time: Rat
+): { start: Rat; end: Rat | null } | null {
+  const as = eventSegments(a);
+  const bs = eventSegments(b);
+  for (let i = 0; i < as.length; i++) {
+    for (let j = 0; j < bs.length; j++) {
+      const sa = as[i], sb = bs[j];
+      const t = solveOnPair(sa, sb, i === as.length - 1, j === bs.length - 1, mode);
+      if (t && eq(t, time)) {
+        return { start: max(sa.start, sb.start), end: minEnd(sa.end, sb.end) };
+      }
+    }
+  }
+  return null;
 }
 
 export function solveReachEvent(
@@ -114,7 +189,9 @@ export function solveReachEvent(
       continue;
     }
     const t = add(start, div(sub(target, x0), v));
-    if (within(s, t, i === body.segments.length - 1)) candidates.push(t);
+    const end = endOf(s);
+    const inside = cmp(t, start) >= 0 && (!end || cmp(t, end) < 0 || (i === body.segments.length - 1 && eq(t, end)));
+    if (inside) candidates.push(t);
   }
   if (!candidates.length) throw makeRuntimeError("E_MATH_CONSTRAINT", `event '${eventId}' (${capabilityId}) has no legal reach solution`);
   candidates.sort(cmp);

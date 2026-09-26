@@ -1,0 +1,36 @@
+{
+  "manifest": { "schema_version": "mathviz.project/v1", "engine_version": "0.3.0", "domain_versions": { "motion1d": "0.1.0" }, "adapter_versions": { "motion1d": "0.1.0" }, "capability_registry_version": "1.0.0", "problem_id": "p3-catch-stopped" },
+  "math": {
+    "schemaVersion": "mathviz.math/v1", "problemId": "p3-catch-stopped", "domain": "motion1d", "statement": "A moves at 5 m/s for 0 to 10 s then rests at 50 m; B starts from 0 m at 10 s at 10 m/s; B catches A at 15 s and 50 m.",
+    "parameters": [],
+    "entities": [
+      { "id": "A", "kind": "body", "props": { "capability_id": "motion1d.constant_velocity", "initial_position": "math:fact:xA0", "segments": [{ "start": "math:fact:t0", "end": "math:fact:tA_end", "velocity": "math:fact:vA" }] } },
+      { "id": "B", "kind": "body", "props": { "capability_id": "motion1d.constant_velocity", "initial_position": "math:fact:xB0", "segments": [{ "start": "math:fact:tB0", "velocity": "math:fact:vB" }] } },
+      { "id": "catch_marker", "kind": "event_marker", "props": { "event_id": "catch" } }
+    ],
+    "source_facts": [
+      { "fact_id": "xA0", "name": "A initial position", "unit": "m", "value": { "kind": "int", "value": "0" }, "provenance": { "kind": "problem_text", "span": { "text": "A moves at 5 m/s for 0 to 10 s then rests at 50 m; B starts from 0 m at 10 s at 10 m/s; B catches A at 15 s and 50 m.", "start": 0, "end": 117 } } },
+      { "fact_id": "t0", "name": "A start", "unit": "s", "value": { "kind": "int", "value": "0" }, "provenance": { "kind": "problem_text", "span": { "text": "A moves at 5 m/s for 0 to 10 s then rests at 50 m; B starts from 0 m at 10 s at 10 m/s; B catches A at 15 s and 50 m.", "start": 0, "end": 117 } } },
+      { "fact_id": "vA", "name": "A speed", "unit": "m/s", "value": { "kind": "int", "value": "5" }, "provenance": { "kind": "problem_text", "span": { "text": "A moves at 5 m/s for 0 to 10 s then rests at 50 m; B starts from 0 m at 10 s at 10 m/s; B catches A at 15 s and 50 m.", "start": 0, "end": 117 } } },
+      { "fact_id": "tA_end", "name": "A stop time", "unit": "s", "value": { "kind": "int", "value": "10" }, "provenance": { "kind": "problem_text", "span": { "text": "A moves at 5 m/s for 0 to 10 s then rests at 50 m; B starts from 0 m at 10 s at 10 m/s; B catches A at 15 s and 50 m.", "start": 0, "end": 117 } } },
+      { "fact_id": "xB0", "name": "B initial position", "unit": "m", "value": { "kind": "int", "value": "0" }, "provenance": { "kind": "problem_text", "span": { "text": "A moves at 5 m/s for 0 to 10 s then rests at 50 m; B starts from 0 m at 10 s at 10 m/s; B catches A at 15 s and 50 m.", "start": 0, "end": 117 } } },
+      { "fact_id": "tB0", "name": "B start", "unit": "s", "value": { "kind": "int", "value": "10" }, "provenance": { "kind": "problem_text", "span": { "text": "A moves at 5 m/s for 0 to 10 s then rests at 50 m; B starts from 0 m at 10 s at 10 m/s; B catches A at 15 s and 50 m.", "start": 0, "end": 117 } } },
+      { "fact_id": "vB", "name": "B speed", "unit": "m/s", "value": { "kind": "int", "value": "10" }, "provenance": { "kind": "problem_text", "span": { "text": "A moves at 5 m/s for 0 to 10 s then rests at 50 m; B starts from 0 m at 10 s at 10 m/s; B catches A at 15 s and 50 m.", "start": 0, "end": 117 } } }
+    ],
+    "derived_facts": [
+      { "fact_id": "catch_time", "name": "catch time", "unit": "s", "value": { "kind": "int", "value": "15" }, "provenance": { "kind": "derived", "capability_id": "motion1d.overtake_event", "inputs": ["entity:B", "entity:A"] } },
+      { "fact_id": "catch_position", "name": "catch position", "unit": "m", "value": { "kind": "int", "value": "50" }, "provenance": { "kind": "derived", "capability_id": "motion1d.solve_position", "inputs": ["entity:A", "fact:catch_time"] } }
+    ],
+    "runtime_values": [], "constraints": [],
+    "events": [{ "event_id": "catch", "capability_id": "motion1d.overtake_event", "participants": ["entity:B", "entity:A"], "at": { "kind": "int", "value": "15" } }],
+    "assertions": [{ "assertion_id": "assert_catch", "capability_id": "motion1d.overtake_event", "subject_refs": ["entity:A", "entity:B"], "expectation": "holds" }],
+    "capabilities": ["motion1d.constant_velocity", "motion1d.overtake_event", "motion1d.solve_position"]
+  },
+  "scene": { "schemaVersion": "mathviz.scene/v1", "sceneId": "p3_catch_stopped_scene", "viewport": { "width": 800, "height": 180 }, "objects": [
+    { "objectId": "axis", "primitive": "number_line", "binding": { "source": "math:fact:xA0.value" }, "label": "distance (m)" },
+    { "objectId": "body_A", "primitive": "moving_body", "binding": { "source": "math:entity:A.position", "transform": { "kind": "scale", "params": { "domain_min": 0, "domain_max": 120, "range_min": 0, "range_max": 1 } } }, "label": "A" },
+    { "objectId": "body_B", "primitive": "moving_body", "binding": { "source": "math:entity:B.position", "transform": { "kind": "scale", "params": { "domain_min": 0, "domain_max": 120, "range_min": 0, "range_max": 1 } } }, "label": "B" },
+    { "objectId": "catch_marker", "primitive": "marker", "binding": { "source": "math:entity:catch_marker.position", "transform": { "kind": "scale", "params": { "domain_min": 0, "domain_max": 120, "range_min": 0, "range_max": 1 } } }, "label": "catch" }
+  ], "bindings": [] },
+  "timeline": { "schemaVersion": "mathviz.timeline/v1", "timelineId": "p3_catch_stopped_timeline", "duration": 20, "fps": 24, "tracks": [{ "track_id": "motion", "actions": [{ "kind": "map_model_time", "from": 1, "to": 19, "model_from": { "t": "num", "v": { "kind": "int", "value": "0" } }, "model_to": { "t": "num", "v": { "kind": "int", "value": "20" } } }] }] }
+}

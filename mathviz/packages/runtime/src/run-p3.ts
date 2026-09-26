@@ -28,7 +28,7 @@ function browserDigest(chrome: string, frame: number): { digest: string; rendere
 }
 
 async function main() {
-  const files = ["pursuit", "meeting", "piecewise"];
+  const files = ["pursuit", "meeting", "piecewise", "catch-stopped"];
   const fixtures = Object.fromEntries(files.map((name) => [name, JSON.parse(fs.readFileSync(path.join(ROOT, "fixtures/p3", `${name}.compiled.json`), "utf8"))]));
   const invalidFixture = JSON.parse(fs.readFileSync(path.join(ROOT, "fixtures/p3/invalid-piecewise-teleport.compiled.json"), "utf8"));
   const domains = { motion1d: motion1dAdapter };
@@ -48,11 +48,18 @@ async function main() {
 
   const p = compileMotion(fixtures.pursuit.math);
   const pursuitRt = loadRuntime(fixtures.pursuit, { domains });
-  const anchors = [0, 1, 9.999, 10, 20, 79 / 3, 80 / 3, 81 / 3, 30];
-  const vectors = anchors.map((modelTime) => {
+  // P3.1 A5 — domain truth and runtime/timeline mapping are reported as
+  // separate vector families; arbitrary model times are no longer pushed
+  // through an ad-hoc presentation mapping to manufacture a RuntimeState.
+  const domainAnchors = [0, 1, 9.999, 10, 20, 79 / 3, 80 / 3, 81 / 3, 30];
+  const domainVectors = domainAnchors.map((modelTime) => {
     const snapshot = evaluateMotion(p, { modelTime, env: {}, resolveBinding: () => undefined });
-    const state = pursuitRt.stateAt(modelTime < 2 ? 2 + modelTime * 0.375 : 12);
-    return { model_time: modelTime, snapshot_digest: snapshot.digest, A: snapshot.entities.A, B: snapshot.entities.B, state_digest: state.digest };
+    return { model_time: modelTime, snapshot_digest: snapshot.digest, A: snapshot.entities.A, B: snapshot.entities.B };
+  });
+  const runtimeFrames = [0, 48, 120, 216, 288, 360, 432];
+  const runtimeVectors = runtimeFrames.map((frame) => {
+    const state = pursuitRt.stateAtFrame(frame);
+    return { frame, presentation_time: state.presentationTime, mapped_model_time: state.modelTime, state_digest: state.digest };
   });
   const eventSolutions = Object.fromEntries(files.map((name) => {
     const program = compileMotion(fixtures[name].math);
@@ -83,13 +90,13 @@ async function main() {
   let repeatsOk = true;
   for (const name of files) {
     const rt = loadRuntime(fixtures[name], { domains });
-    const anchorsForCase = name === "pursuit" ? [0, 10, 80 / 3, 30] : name === "meeting" ? [0, 5, 10] : [0, 10, 20, 30];
+    const anchorsForCase = name === "pursuit" ? [0, 10, 80 / 3, 30] : name === "meeting" ? [0, 5, 10] : name === "catch-stopped" ? [0, 10, 15, 20] : [0, 10, 20, 30];
     for (const t of anchorsForCase) {
       const first = rt.stateAt(t).digest;
       for (let i = 0; i < 100; i++) if (rt.stateAt(t).digest !== first) repeatsOk = false;
     }
   }
-  gates.push({ gate: "G9_motion_determinism_100x", status: repeatsOk ? "PASS" : "FAIL", anchors: anchors.length });
+  gates.push({ gate: "G9_motion_determinism_100x", status: repeatsOk ? "PASS" : "FAIL", anchors: domainAnchors.length });
 
   const pursuitFrames = [48, 72, 120, 216, 288, 336];
   let g10: any = { gate: "G10_cross_output_consistency", browser: "NOT FOUND", frames: [], status: "PASS" };
@@ -115,7 +122,7 @@ async function main() {
   const artifacts = path.join(ROOT, "runs", "p3");
   fs.mkdirSync(artifacts, { recursive: true });
   fs.writeFileSync(path.join(artifacts, "gates.json"), canonicalSerialize({ fixtures: files, results: gates, summary: summarizeGates(gates, allowBrowserSkip).summary }) + "\n", "utf8");
-  fs.writeFileSync(path.join(artifacts, "motion-vectors.json"), canonicalSerialize({ vectors, invariants, svg_sha256: require("node:crypto").createHash("sha256").update(svg).digest("hex") }) + "\n", "utf8");
+  fs.writeFileSync(path.join(artifacts, "motion-vectors.json"), canonicalSerialize({ domain_vectors: domainVectors, runtime_vectors: runtimeVectors, invariants, svg_sha256: require("node:crypto").createHash("sha256").update(svg).digest("hex") }) + "\n", "utf8");
   fs.writeFileSync(path.join(artifacts, "event-solutions.json"), canonicalSerialize(eventSolutions) + "\n", "utf8");
   console.log(`P3 report: ${artifacts}`);
   const summary = summarizeGates(gates, allowBrowserSkip);
