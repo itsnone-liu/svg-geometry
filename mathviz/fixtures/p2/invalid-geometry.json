@@ -1,0 +1,388 @@
+{
+  "expected_error_codes": [
+    "E_MATH_ASSERTION"
+  ],
+  "reason": "Q 偏离真实垂足位置（BQ=2√2 而非 √2），∠BPQ ≠ 90°：perpendicular 断言 FAIL，且 right_angle_mark 无 PASS 断言支撑 —— 必须拒绝渲染，不能输出『看起来像正确』的图。",
+  "project": {
+    "manifest": {
+      "schema_version": "mathviz.project/v1",
+      "engine_version": "0.3.0",
+      "domain_versions": {
+        "geometry2d": "0.1.0"
+      },
+      "adapter_versions": {
+        "geometry-dsl": "pin:c7ee10030c175acad792ba82b53af540f2b578f8"
+      },
+      "capability_registry_version": "1.0.0",
+      "source_problem": "P2-INVALID-GEOMETRY",
+      "problem_id": "p2-invalid-geometry"
+    },
+    "math": {
+      "schemaVersion": "mathviz.math/v1",
+      "problemId": "p2-invalid-geometry",
+      "domain": "geometry2d",
+      "statement": "在正方形ABCD中，每条边长为3√2，对角线BD=6。点P在对角线BD上且BP=1，点Q在边BC上满足∠BPQ=90°。三角形BPQ绕B点顺时针旋转角θ从0到2π，M、N为P、Q旋转后的对应位置，E为线段ND的中点。",
+      "parameters": [],
+      "entities": [
+        {
+          "id": "A",
+          "kind": "point",
+          "props": {
+            "x": "0",
+            "y": "0"
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "props": {
+            "x": "0",
+            "y": "3*sqrt(2)"
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "props": {
+            "x": "3*sqrt(2)",
+            "y": "3*sqrt(2)"
+          }
+        },
+        {
+          "id": "D",
+          "kind": "point",
+          "props": {
+            "x": "3*sqrt(2)",
+            "y": "0"
+          }
+        },
+        {
+          "id": "P",
+          "kind": "point",
+          "props": {
+            "x": "sqrt(2)/2",
+            "y": "5*sqrt(2)/2"
+          }
+        },
+        {
+          "id": "Q",
+          "kind": "point",
+          "props": {
+            "x": "2*sqrt(2)",
+            "y": "3*sqrt(2)"
+          }
+        },
+        {
+          "id": "M",
+          "kind": "dynamic_point",
+          "props": {
+            "capability_id": "geometry2d.rotate_point",
+            "center": "B",
+            "source": "P",
+            "angle": "math:runtime:theta_at_t",
+            "direction": "cw"
+          }
+        },
+        {
+          "id": "N",
+          "kind": "dynamic_point",
+          "props": {
+            "capability_id": "geometry2d.rotate_point",
+            "center": "B",
+            "source": "Q",
+            "angle": "math:runtime:theta_at_t",
+            "direction": "cw"
+          }
+        },
+        {
+          "id": "E",
+          "kind": "dynamic_point",
+          "props": {
+            "capability_id": "geometry2d.midpoint",
+            "a": "N",
+            "b": "D"
+          }
+        },
+        {
+          "id": "seg_BD",
+          "kind": "segment",
+          "props": {
+            "a": "B",
+            "b": "D"
+          }
+        },
+        {
+          "id": "seg_BP",
+          "kind": "segment",
+          "props": {
+            "a": "B",
+            "b": "P"
+          }
+        },
+        {
+          "id": "seg_BQ",
+          "kind": "segment",
+          "props": {
+            "a": "B",
+            "b": "Q"
+          }
+        },
+        {
+          "id": "seg_PQ",
+          "kind": "segment",
+          "props": {
+            "a": "P",
+            "b": "Q"
+          }
+        }
+      ],
+      "source_facts": [
+        {
+          "fact_id": "bd_len",
+          "name": "对角线长",
+          "value": 6,
+          "provenance": {
+            "kind": "problem_text",
+            "span": {
+              "text": "BD=6",
+              "start": 22,
+              "end": 26
+            }
+          }
+        },
+        {
+          "fact_id": "bp_len",
+          "name": "BP长度",
+          "value": 1,
+          "provenance": {
+            "kind": "problem_text",
+            "span": {
+              "text": "BP=1",
+              "start": 37,
+              "end": 41
+            }
+          }
+        },
+        {
+          "fact_id": "angle_bpq",
+          "name": "直角",
+          "value": 90,
+          "provenance": {
+            "kind": "problem_text",
+            "span": {
+              "text": "∠BPQ=90°",
+              "start": 51,
+              "end": 59
+            }
+          }
+        }
+      ],
+      "derived_facts": [],
+      "runtime_values": [
+        {
+          "id": "theta_at_t",
+          "expr": {
+            "t": "app",
+            "op": "*",
+            "args": [
+              {
+                "t": "app",
+                "op": "*",
+                "args": [
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "2"
+                    }
+                  },
+                  {
+                    "t": "sym",
+                    "name": "pi"
+                  }
+                ]
+              },
+              {
+                "t": "sym",
+                "name": "t"
+              }
+            ]
+          }
+        }
+      ],
+      "constraints": [
+        {
+          "capability_id": "geometry2d.perpendicular",
+          "subject_refs": [
+            "entity:B",
+            "entity:P",
+            "entity:Q"
+          ]
+        }
+      ],
+      "assertions": [
+        {
+          "assertion_id": "assert_perp_bpq",
+          "capability_id": "geometry2d.perpendicular",
+          "subject_refs": [
+            "entity:B",
+            "entity:P",
+            "entity:Q"
+          ],
+          "expectation": "holds"
+        }
+      ],
+      "capabilities": [
+        "geometry2d.point",
+        "geometry2d.segment",
+        "geometry2d.midpoint",
+        "geometry2d.rotate_point",
+        "geometry2d.perpendicular",
+        "geometry2d.right_angle_mark"
+      ]
+    },
+    "scene": {
+      "schemaVersion": "mathviz.scene/v1",
+      "sceneId": "scene-p2-invalid-geometry",
+      "viewport": {
+        "width": 820,
+        "height": 560,
+        "margin": [
+          40,
+          40,
+          40,
+          40
+        ]
+      },
+      "objects": [
+        {
+          "objectId": "obj_seg_BD",
+          "primitive": "segment",
+          "binding": {
+            "source": "math:entity:seg_BD"
+          },
+          "style": {
+            "stroke": "#484f58",
+            "stroke_width": 1,
+            "dash": "6 4"
+          }
+        },
+        {
+          "objectId": "obj_seg_BP",
+          "primitive": "segment",
+          "binding": {
+            "source": "math:entity:seg_BP"
+          },
+          "style": {
+            "stroke": "#f0883e",
+            "stroke_width": 2
+          }
+        },
+        {
+          "objectId": "obj_seg_BQ",
+          "primitive": "segment",
+          "binding": {
+            "source": "math:entity:seg_BQ"
+          },
+          "style": {
+            "stroke": "#f0883e",
+            "stroke_width": 2
+          }
+        },
+        {
+          "objectId": "obj_seg_PQ",
+          "primitive": "segment",
+          "binding": {
+            "source": "math:entity:seg_PQ"
+          },
+          "style": {
+            "stroke": "#f0883e",
+            "stroke_width": 2
+          }
+        },
+        {
+          "objectId": "obj_B",
+          "primitive": "point",
+          "binding": {
+            "source": "math:entity:B"
+          },
+          "label": "B",
+          "style": {
+            "fill": "#8b949e"
+          }
+        },
+        {
+          "objectId": "obj_P",
+          "primitive": "point",
+          "binding": {
+            "source": "math:entity:P"
+          },
+          "label": "P",
+          "style": {
+            "fill": "#58a6ff"
+          }
+        },
+        {
+          "objectId": "obj_Q",
+          "primitive": "point",
+          "binding": {
+            "source": "math:entity:Q"
+          },
+          "label": "Q",
+          "style": {
+            "fill": "#58a6ff"
+          }
+        },
+        {
+          "objectId": "obj_mark_right",
+          "primitive": "right_angle_mark",
+          "binding": {
+            "source": "math:fact:angle_bpq"
+          },
+          "attach_to": [
+            "obj_B",
+            "obj_P",
+            "obj_Q"
+          ],
+          "style": {
+            "stroke": "#58a6ff"
+          }
+        }
+      ],
+      "bindings": []
+    },
+    "timeline": {
+      "schemaVersion": "mathviz.timeline/v1",
+      "timelineId": "tl-p2-invalid-geometry",
+      "duration": 4,
+      "fps": 24,
+      "tracks": [
+        {
+          "track_id": "clock",
+          "actions": [
+            {
+              "kind": "map_model_time",
+              "from": 0,
+              "to": 4,
+              "model_from": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "0"
+                }
+              },
+              "model_to": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "1"
+                }
+              },
+              "easing": "linear"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

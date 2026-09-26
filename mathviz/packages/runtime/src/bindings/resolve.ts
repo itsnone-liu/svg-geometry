@@ -67,12 +67,20 @@ export function buildEnv(math: any, modelTime: number | null): Env {
   return env;
 }
 
-export function resolveSource(math: any, source: string, env: Env): unknown {
+export function resolveSource(math: any, source: string, env: Env, snapshot?: unknown): unknown {
   const parsed = parseSource(source);
   switch (parsed.ns) {
     case "entity": {
+      // P2 frozen order: domain snapshot first, static props fallback.
+      const snap: any = (snapshot as any)?.entities?.[parsed.id];
+      if (snap !== undefined) {
+        return walk(snap, parsed.path, `entity '${parsed.id}'`);
+      }
       const e = (math?.entities ?? []).find((x: any) => x?.id === parsed.id);
       if (!e) throw makeRuntimeError("E_BINDING", `binding references missing entity '${parsed.id}'`);
+      if (e.kind === "dynamic_point" || typeof e.props?.capability_id === "string") {
+        throw makeRuntimeError("E_BINDING", `dynamic entity '${parsed.id}' is missing from the registered DomainSnapshot; refusing static-props fallback`);
+      }
       return walk(e.props ?? {}, parsed.path, `entity '${parsed.id}'`);
     }
     case "fact": {

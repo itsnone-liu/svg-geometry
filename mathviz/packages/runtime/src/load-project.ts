@@ -7,6 +7,12 @@
 import { makeRuntimeError } from "./errors";
 import { compileTimeline, CompiledTimeline } from "./timeline/compile";
 import { digestOf } from "./digest";
+import { DomainAdapter, DomainContext, DomainProgram } from "./domain";
+
+export interface RuntimeOptions {
+  /** Domain adapters to activate, keyed by math.domain (P2 extension point). */
+  domains?: Record<string, DomainAdapter>;
+}
 
 export interface LoadedProject {
   raw: any;
@@ -17,6 +23,7 @@ export interface LoadedProject {
   projectDigest: string;
   duration: number;
   fps: number;
+  domain: DomainContext | null;
 }
 
 const PROJECT_SCHEMA = "mathviz.project/v1";
@@ -24,7 +31,7 @@ const MATH_SCHEMA = "mathviz.math/v1";
 const SCENE_SCHEMA = "mathviz.scene/v1";
 const TIMELINE_SCHEMA = "mathviz.timeline/v1";
 
-export function loadProject(doc: any): LoadedProject {
+export function loadProject(doc: any, opts?: RuntimeOptions): LoadedProject {
   if (!doc || typeof doc !== "object") throw makeRuntimeError("E_SCHEMA", "project document missing");
   const m = doc.manifest ?? {};
   if (m.schema_version !== PROJECT_SCHEMA) {
@@ -55,6 +62,20 @@ export function loadProject(doc: any): LoadedProject {
 
   const compiled = compileTimeline(timeline);
 
+  // Domain program compilation/validation runs ONCE here; the per-frame path
+  // only executes the verified program. The pinned upstream kernel is kept in
+  // the adapter package and exercised by the separate build-time G11 oracle.
+  let domain: DomainContext | null = null;
+  const adapter = opts?.domains?.[String(math?.domain ?? "")];
+  const hasCompiledDomainEntities = (math?.entities ?? []).some((e: any) => e?.kind === "dynamic_point" || typeof e?.props?.capability_id === "string");
+  if (!adapter && hasCompiledDomainEntities) {
+    throw makeRuntimeError("E_CAPABILITY_UNSUPPORTED", `domain '${math?.domain}' contains compiled constructions but no DomainAdapter was registered`);
+  }
+  if (adapter) {
+    const program: DomainProgram = adapter.compile(math);
+    domain = { adapter, program };
+  }
+
   return {
     raw: doc,
     math,
@@ -63,6 +84,7 @@ export function loadProject(doc: any): LoadedProject {
     compiled,
     projectDigest: digestOf(doc),
     duration: compiled.duration,
-    fps: compiled.fps
+    fps: compiled.fps,
+    domain
   };
 }

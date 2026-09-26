@@ -1,2 +1,7 @@
 node_modules/
 runs/
+
+# Workspace-only upstream checkout used to create/verify the committed
+# adapter-scoped vendored kernel; the repository copy is under
+# packages/adapters/geometry-dsl/vendor/geometry-dsl/.
+/vendor/geometry-dsl/

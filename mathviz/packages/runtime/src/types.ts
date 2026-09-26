@@ -48,6 +48,10 @@ export interface RuntimeState {
   camera: CameraState;
   caption: CaptionState | null;
   digest: string;
+  /** P2: digest of the domain snapshot (geometry) for this state; null when
+   *  no domain adapter ran. Attached AFTER the state digest is computed, so
+   *  it never feeds the RuntimeState digest (P1 vectors stay frozen). */
+  domainDigest?: string | null;
 }
 
 export interface PlayerController {

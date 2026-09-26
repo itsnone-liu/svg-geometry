@@ -228,6 +228,13 @@ export function gateCapability(math: any): VizError[] {
   for (const c of math?.constraints ?? []) used.push([c?.capability_id, "constraint"]);
   for (const a of math?.assertions ?? []) used.push([a?.capability_id, "assertion"]);
   for (const ev of math?.events ?? []) used.push([ev?.capability_id, "event"]);
+  // P2: entity constructions carry their capability in props.capability_id
+  // (dynamic geometry points) — those are uses too.
+  for (const e of math?.entities ?? []) {
+    if (typeof e?.props?.capability_id === "string") {
+      used.push([e.props.capability_id, `entity '${e?.id ?? "<unnamed>"}'`]);
+    }
+  }
   for (const [id, where] of used) {
     const entry = capabilities.get(id);
     if (!entry) {

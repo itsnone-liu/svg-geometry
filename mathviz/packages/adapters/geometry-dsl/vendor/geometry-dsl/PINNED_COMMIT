@@ -1,0 +1,5 @@
+repository=shand001/geometry-dsl
+version=0.4.0
+commit=c7ee10030c175acad792ba82b53af540f2b578f8
+license=MIT
+scope=geometry-kernel-only; source copied verbatim from the pinned commit; no DSL parser, timeline, renderer, or player code

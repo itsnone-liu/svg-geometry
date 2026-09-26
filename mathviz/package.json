@@ -1,14 +1,16 @@
 {
   "name": "mathviz-contracts",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
-  "description": "MathViz P0+P0.1: frozen contracts (Math IR / Scene IR / Timeline), capability registry, error catalog, fixtures and gate harness. P1: deterministic pure-function runtime (stateAt/seek/play/pause/setFrame) + thin SVG renderer. No domain solvers, no LLM.",
+  "description": "MathViz P0.1 contracts + P1 pure runtime + P2 Geometry2D Verified Program: compile-time domain adapter, runtime snapshots, assertion gate, pinned Geometry DSL kernel oracle. No LLM or per-frame DSL parse.",
   "type": "commonjs",
   "scripts": {
     "gates:p0": "tsx packages/contracts/src/run.ts",
-    "gates:p1": "tsx packages/runtime/src/run-p1.ts",
-    "gates": "npm run gates:p0 && npm run gates:p1",
+    "gates:p1": "npm run build:player && tsx packages/runtime/src/run-p1.ts",
     "build:player": "vite build --config examples/p1/vite.config.ts",
+    "build:player:p2": "node scripts/gen-p2-html.mjs && vite build --config examples/p2/vite.config.ts",
+    "gates:p2": "node scripts/gen-p2-html.mjs && vite build --config examples/p2/vite.config.ts && tsx packages/runtime/src/run-p2.ts",
+    "gates": "npm run gates:p0 && npm run gates:p1 && npm run gates:p2",
     "test": "vitest run"
   },
   "devDependencies": {

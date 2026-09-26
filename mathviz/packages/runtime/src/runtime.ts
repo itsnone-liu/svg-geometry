@@ -9,15 +9,15 @@
 
 import { CompiledRuntime, PlayerController, RuntimeState } from "./types";
 import { makeRuntimeError } from "./errors";
-import { loadProject, LoadedProject } from "./load-project";
+import { loadProject, LoadedProject, RuntimeOptions } from "./load-project";
 import { stateAt } from "./scene/state-at";
 
-export function loadRuntime(doc: any): CompiledRuntime {
-  const p: LoadedProject = loadProject(doc);
+export function loadRuntime(doc: any, opts?: RuntimeOptions): CompiledRuntime {
+  const p: LoadedProject = loadProject(doc, opts);
 
   const stateAtTime = (t: number): RuntimeState => {
     const clamped = Math.min(Math.max(t, 0), p.duration); // deterministic clamp
-    return stateAt(p.math, p.scene, p.compiled, clamped);
+    return stateAt(p.math, p.scene, p.compiled, clamped, p.domain);
   };
 
   const maxFrame = Math.floor(p.duration * p.fps);

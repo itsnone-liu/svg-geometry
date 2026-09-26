@@ -1,0 +1,466 @@
+{
+  "manifest": {
+    "schema_version": "mathviz.project/v1",
+    "engine_version": "0.3.0",
+    "domain_versions": {
+      "geometry2d": "0.1.0"
+    },
+    "adapter_versions": {
+      "geometry-dsl": "pin:c7ee10030c175acad792ba82b53af540f2b578f8"
+    },
+    "capability_registry_version": "1.0.0",
+    "source_problem": "P2-STATIC-CONSTRUCTION",
+    "problem_id": "p2-static-construction"
+  },
+  "math": {
+    "schemaVersion": "mathviz.math/v1",
+    "problemId": "p2-static-construction",
+    "domain": "geometry2d",
+    "statement": "给定三角形ABC，从顶点A向边BC作垂线，垂足为F。M1为BC的中点，M2为AC的中点，中线AM1与BM2相交于点I。",
+    "parameters": [],
+    "entities": [
+      {
+        "id": "B",
+        "kind": "point",
+        "props": {
+          "x": "0",
+          "y": "0"
+        }
+      },
+      {
+        "id": "A",
+        "kind": "point",
+        "props": {
+          "x": "2",
+          "y": "6"
+        }
+      },
+      {
+        "id": "C",
+        "kind": "point",
+        "props": {
+          "x": "8",
+          "y": "0"
+        }
+      },
+      {
+        "id": "line_BC",
+        "kind": "line",
+        "props": {
+          "a": "B",
+          "b": "C"
+        }
+      },
+      {
+        "id": "F",
+        "kind": "dynamic_point",
+        "props": {
+          "capability_id": "geometry2d.projection_point",
+          "point": "A",
+          "onto": "line_BC"
+        }
+      },
+      {
+        "id": "M1",
+        "kind": "dynamic_point",
+        "props": {
+          "capability_id": "geometry2d.midpoint",
+          "a": "B",
+          "b": "C"
+        }
+      },
+      {
+        "id": "M2",
+        "kind": "dynamic_point",
+        "props": {
+          "capability_id": "geometry2d.midpoint",
+          "a": "A",
+          "b": "C"
+        }
+      },
+      {
+        "id": "seg_A_M1",
+        "kind": "segment",
+        "props": {
+          "a": "A",
+          "b": "M1"
+        }
+      },
+      {
+        "id": "seg_B_M2",
+        "kind": "segment",
+        "props": {
+          "a": "B",
+          "b": "M2"
+        }
+      },
+      {
+        "id": "I",
+        "kind": "dynamic_point",
+        "props": {
+          "capability_id": "geometry2d.intersection_point",
+          "first": "seg_A_M1",
+          "second": "seg_B_M2"
+        }
+      },
+      {
+        "id": "seg_AB",
+        "kind": "segment",
+        "props": {
+          "a": "A",
+          "b": "B"
+        }
+      },
+      {
+        "id": "seg_BC",
+        "kind": "segment",
+        "props": {
+          "a": "B",
+          "b": "C"
+        }
+      },
+      {
+        "id": "seg_CA",
+        "kind": "segment",
+        "props": {
+          "a": "C",
+          "b": "A"
+        }
+      }
+    ],
+    "source_facts": [
+      {
+        "fact_id": "alt_foot",
+        "name": "垂足",
+        "value": "perpendicular",
+        "provenance": {
+          "kind": "problem_text",
+          "span": {
+            "text": "从顶点A向边BC作垂线，垂足为F",
+            "start": 9,
+            "end": 25
+          }
+        }
+      },
+      {
+        "fact_id": "m1_mid",
+        "name": "M1中点",
+        "value": "midpoint",
+        "provenance": {
+          "kind": "problem_text",
+          "span": {
+            "text": "M1为BC的中点",
+            "start": 26,
+            "end": 34
+          }
+        }
+      },
+      {
+        "fact_id": "m2_mid",
+        "name": "M2中点",
+        "value": "midpoint",
+        "provenance": {
+          "kind": "problem_text",
+          "span": {
+            "text": "M2为AC的中点",
+            "start": 35,
+            "end": 43
+          }
+        }
+      },
+      {
+        "fact_id": "i_intersect",
+        "name": "中线交点",
+        "value": "centroid",
+        "provenance": {
+          "kind": "problem_text",
+          "span": {
+            "text": "中线AM1与BM2相交于点I",
+            "start": 44,
+            "end": 58
+          }
+        }
+      }
+    ],
+    "derived_facts": [],
+    "runtime_values": [],
+    "constraints": [
+      {
+        "capability_id": "geometry2d.perpendicular",
+        "subject_refs": [
+          "entity:B",
+          "entity:F",
+          "entity:A"
+        ]
+      },
+      {
+        "capability_id": "geometry2d.collinear",
+        "subject_refs": [
+          "entity:B",
+          "entity:F",
+          "entity:C"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "assertion_id": "assert_perp_bfa",
+        "capability_id": "geometry2d.perpendicular",
+        "subject_refs": [
+          "entity:B",
+          "entity:F",
+          "entity:A"
+        ],
+        "expectation": "holds"
+      },
+      {
+        "assertion_id": "assert_collinear_bfc",
+        "capability_id": "geometry2d.collinear",
+        "subject_refs": [
+          "entity:B",
+          "entity:F",
+          "entity:C"
+        ],
+        "expectation": "holds"
+      },
+      {
+        "assertion_id": "assert_am2_eq_m2c",
+        "capability_id": "geometry2d.equal_length",
+        "subject_refs": [
+          "entity:A",
+          "entity:M2",
+          "entity:M2",
+          "entity:C"
+        ],
+        "expectation": "holds"
+      },
+      {
+        "assertion_id": "assert_ac_len",
+        "capability_id": "geometry2d.distance_equal",
+        "subject_refs": [
+          "entity:A",
+          "entity:C"
+        ],
+        "params": {
+          "value": "sqrt(72)"
+        },
+        "expectation": "holds"
+      }
+    ],
+    "capabilities": [
+      "geometry2d.point",
+      "geometry2d.segment",
+      "geometry2d.line",
+      "geometry2d.midpoint",
+      "geometry2d.intersection_point",
+      "geometry2d.projection_point",
+      "geometry2d.perpendicular",
+      "geometry2d.collinear",
+      "geometry2d.equal_length",
+      "geometry2d.distance_equal",
+      "geometry2d.right_angle_mark",
+      "geometry2d.equal_mark"
+    ]
+  },
+  "scene": {
+    "schemaVersion": "mathviz.scene/v1",
+    "sceneId": "scene-p2-static-construction",
+    "viewport": {
+      "width": 820,
+      "height": 560,
+      "margin": [
+        40,
+        40,
+        40,
+        40
+      ]
+    },
+    "objects": [
+      {
+        "objectId": "obj_seg_AB",
+        "primitive": "segment",
+        "binding": {
+          "source": "math:entity:seg_AB"
+        },
+        "style": {
+          "stroke": "#30363d",
+          "stroke_width": 2
+        }
+      },
+      {
+        "objectId": "obj_seg_BC",
+        "primitive": "segment",
+        "binding": {
+          "source": "math:entity:seg_BC"
+        },
+        "style": {
+          "stroke": "#30363d",
+          "stroke_width": 2
+        }
+      },
+      {
+        "objectId": "obj_seg_CA",
+        "primitive": "segment",
+        "binding": {
+          "source": "math:entity:seg_CA"
+        },
+        "style": {
+          "stroke": "#30363d",
+          "stroke_width": 2
+        }
+      },
+      {
+        "objectId": "obj_seg_A_M1",
+        "primitive": "segment",
+        "binding": {
+          "source": "math:entity:seg_A_M1"
+        },
+        "style": {
+          "stroke": "#58a6ff",
+          "stroke_width": 1,
+          "dash": "5 3"
+        }
+      },
+      {
+        "objectId": "obj_seg_B_M2",
+        "primitive": "segment",
+        "binding": {
+          "source": "math:entity:seg_B_M2"
+        },
+        "style": {
+          "stroke": "#d29922",
+          "stroke_width": 1,
+          "dash": "5 3"
+        }
+      },
+      {
+        "objectId": "obj_A",
+        "primitive": "point",
+        "binding": {
+          "source": "math:entity:A"
+        },
+        "label": "A",
+        "style": {
+          "fill": "#8b949e"
+        }
+      },
+      {
+        "objectId": "obj_B",
+        "primitive": "point",
+        "binding": {
+          "source": "math:entity:B"
+        },
+        "label": "B",
+        "style": {
+          "fill": "#8b949e"
+        }
+      },
+      {
+        "objectId": "obj_C",
+        "primitive": "point",
+        "binding": {
+          "source": "math:entity:C"
+        },
+        "label": "C",
+        "style": {
+          "fill": "#8b949e"
+        }
+      },
+      {
+        "objectId": "obj_F",
+        "primitive": "point",
+        "binding": {
+          "source": "math:entity:F"
+        },
+        "label": "F",
+        "style": {
+          "fill": "#3fb950"
+        }
+      },
+      {
+        "objectId": "obj_M1",
+        "primitive": "point",
+        "binding": {
+          "source": "math:entity:M1"
+        },
+        "label": "M1",
+        "style": {
+          "fill": "#58a6ff"
+        }
+      },
+      {
+        "objectId": "obj_M2",
+        "primitive": "point",
+        "binding": {
+          "source": "math:entity:M2"
+        },
+        "label": "M2",
+        "style": {
+          "fill": "#d29922"
+        }
+      },
+      {
+        "objectId": "obj_I",
+        "primitive": "point",
+        "binding": {
+          "source": "math:entity:I"
+        },
+        "label": "I",
+        "style": {
+          "fill": "#f0883e"
+        }
+      },
+      {
+        "objectId": "obj_mark_right",
+        "primitive": "right_angle_mark",
+        "binding": {
+          "source": "math:fact:alt_foot"
+        },
+        "attach_to": [
+          "obj_B",
+          "obj_F",
+          "obj_A"
+        ],
+        "style": {
+          "stroke": "#3fb950"
+        }
+      },
+      {
+        "objectId": "obj_mark_eq",
+        "primitive": "equal_tick",
+        "binding": {
+          "source": "math:fact:m2_mid"
+        },
+        "attach_to": [
+          "obj_A",
+          "obj_M2",
+          "obj_M2",
+          "obj_C"
+        ],
+        "style": {
+          "stroke": "#d29922"
+        }
+      }
+    ],
+    "bindings": []
+  },
+  "timeline": {
+    "schemaVersion": "mathviz.timeline/v1",
+    "timelineId": "tl-p2-static-construction",
+    "duration": 4,
+    "fps": 24,
+    "tracks": [
+      {
+        "track_id": "narrate",
+        "actions": [
+          {
+            "kind": "caption",
+            "at": 0.5,
+            "until": 4,
+            "text": "垂足 F、中点 M1/M2、中线交点 I —— 全部来自 Verified Geometry Program"
+          }
+        ]
+      }
+    ]
+  }
+}
