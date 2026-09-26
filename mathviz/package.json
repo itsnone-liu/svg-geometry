@@ -12,7 +12,9 @@
     "gates:p2": "node scripts/gen-p2-html.mjs && vite build --config examples/p2/vite.config.ts && tsx packages/runtime/src/run-p2.ts",
     "build:player:p3": "vite build --config examples/p3/vite.config.ts && node scripts/gen-p3-html.mjs",
     "gates:p3": "npm run build:player:p3 && tsx packages/runtime/src/run-p3.ts",
-    "gates": "npm run gates:p0 && npm run gates:p1 && npm run gates:p2 && npm run gates:p3",
+    "build:player:p4": "vite build --config examples/p4/vite.config.ts && node scripts/gen-p4-html.mjs",
+    "gates:p4": "npm run build:player:p4 && tsx packages/runtime/src/run-p4.ts",
+    "gates": "npm run gates:p0 && npm run gates:p1 && npm run gates:p2 && npm run gates:p3 && npm run gates:p4",
     "test": "vitest run"
   },
   "devDependencies": {

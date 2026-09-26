@@ -44,6 +44,23 @@ interface Geom {
   circles: { c: P; r: number }[];
 }
 
+/** Lenient cartesian_window reader: exactly one well-formed
+ *  scene.layoutRules cartesian_window -> window, else null (caller keeps the
+ *  legacy autofit/track mapping). The freeze-time E_LAYOUT gate lives in the
+ *  function2d domain package; the renderer only paints what a valid window
+ *  says (presentation-only world->pixel mapping). */
+interface CartesianWindow { xMin: number; xMax: number; yMin: number; yMax: number }
+function readCartesianWindow(scene: any): CartesianWindow | null {
+  const rules = Array.isArray(scene?.layoutRules) ? scene.layoutRules : [];
+  const wins = rules.filter((r: any) => r?.kind === "cartesian_window");
+  if (wins.length !== 1) return null;
+  const r = wins[0];
+  const { x_min, x_max, y_min, y_max } = r ?? {};
+  const ok = [x_min, x_max, y_min, y_max].every((n: unknown) => typeof n === "number" && Number.isFinite(n));
+  if (!ok || !(x_max > x_min) || !(y_max > y_min)) return null;
+  return { xMin: x_min, xMax: x_max, yMin: y_min, yMax: y_max };
+}
+
 function collectGeometry(state: RuntimeState): Geom {
   const g: Geom = { points: [], segments: [], circles: [] };
   for (const oid of Object.keys(state.objects)) {
@@ -67,9 +84,20 @@ export function renderSvg(state: RuntimeState, sceneIR: any): string {
   const hasGeometry = geom.points.length + geom.segments.length + geom.circles.length > 0;
 
   // ---- deterministic world->screen mapping ----
+  const win = readCartesianWindow(sceneIR);
   let sx: (p: P) => P;
   let fitNote = "";
-  if (hasGeometry) {
+  if (win) {
+    // P4 cartesian window: a FIXED graph viewport — stable while curves
+    // sweep; world->pixel only, never a function evaluation.
+    const innerW = width - margin[1] - margin[3];
+    const innerH = height - margin[0] - margin[2];
+    const wScale = Math.min(innerW / (win.xMax - win.xMin), innerH / (win.yMax - win.yMin));
+    const wOffX = margin[3] + (innerW - (win.xMax - win.xMin) * wScale) / 2;
+    const wOffY = margin[0] + (innerH - (win.yMax - win.yMin) * wScale) / 2;
+    sx = (p: P) => ({ x: wOffX + (p.x - win.xMin) * wScale, y: wOffY + (win.yMax - p.y) * wScale });
+    fitNote = ` data-window="[${win.xMin},${win.yMin}]-[${win.xMax},${win.yMax}]"`;
+  } else if (hasGeometry) {
     let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
     const see = (p: P) => {
       minX = Math.min(minX, p.x); maxX = Math.max(maxX, p.x);
@@ -262,6 +290,87 @@ export function renderSvg(state: RuntimeState, sceneIR: any): string {
       case "text": {
         const anchor = posOf(oid) ?? { x: margin[3], y: height / 2 + 34 };
         body.push(`<text x="${anchor.x.toFixed(3)}" y="${anchor.y.toFixed(3)}" font-size="13" fill="#8b949e" opacity="${opacity}">${esc(pres.text ?? "")}</text>`);
+        break;
+      }
+      case "grid": {
+        if (!win) break; // grid is only meaningful under a cartesian window
+        const stroke = pres.style?.stroke ?? "#21262d";
+        const w = pres.style?.stroke_width ?? 1;
+        const iMin = Math.ceil(win.xMin), iMax = Math.floor(win.xMax);
+        const jMin = Math.ceil(win.yMin), jMax = Math.floor(win.yMax);
+        if (iMax - iMin <= 128) {
+          for (let i = iMin; i <= iMax; i++) {
+            const a = sx({ x: i, y: win.yMin }), b = sx({ x: i, y: win.yMax });
+            body.push(`<line x1="${a.x.toFixed(3)}" y1="${a.y.toFixed(3)}" x2="${b.x.toFixed(3)}" y2="${b.y.toFixed(3)}" stroke="${esc(String(stroke))}" stroke-width="${w}" opacity="${opacity}"/>`);
+          }
+        }
+        if (jMax - jMin <= 128) {
+          for (let j = jMin; j <= jMax; j++) {
+            const a = sx({ x: win.xMin, y: j }), b = sx({ x: win.xMax, y: j });
+            body.push(`<line x1="${a.x.toFixed(3)}" y1="${a.y.toFixed(3)}" x2="${b.x.toFixed(3)}" y2="${b.y.toFixed(3)}" stroke="${esc(String(stroke))}" stroke-width="${w}" opacity="${opacity}"/>`);
+          }
+        }
+        break;
+      }
+      case "axis": {
+        if (!win) break;
+        const stroke = esc(String(pres.style?.stroke ?? "#8b949e"));
+        const w = pres.style?.stroke_width ?? 1.5;
+        // axes sit at 0 clamped into the window
+        const x0 = Math.min(Math.max(0, win.yMin), win.yMax);
+        const y0 = Math.min(Math.max(0, win.xMin), win.xMax);
+        const o = sx({ x: y0, y: x0 });
+        const xe = sx({ x: win.xMax, y: x0 });
+        const xs = sx({ x: win.xMin, y: x0 });
+        const ye = sx({ x: y0, y: win.yMax });
+        const ys = sx({ x: y0, y: win.yMin });
+        body.push(`<line x1="${xs.x.toFixed(3)}" y1="${xs.y.toFixed(3)}" x2="${xe.x.toFixed(3)}" y2="${xe.y.toFixed(3)}" stroke="${stroke}" stroke-width="${w}" opacity="${opacity}"/>`);
+        body.push(`<line x1="${ys.x.toFixed(3)}" y1="${ys.y.toFixed(3)}" x2="${ye.x.toFixed(3)}" y2="${ye.y.toFixed(3)}" stroke="${stroke}" stroke-width="${w}" opacity="${opacity}"/>`);
+        // arrowheads at the positive ends
+        body.push(`<polygon points="${xe.x.toFixed(3)},${xe.y.toFixed(3)} ${(xe.x - 9).toFixed(3)},${(xe.y - 4).toFixed(3)} ${(xe.x - 9).toFixed(3)},${(xe.y + 4).toFixed(3)}" fill="${stroke}" opacity="${opacity}"/>`);
+        body.push(`<polygon points="${ye.x.toFixed(3)},${ye.y.toFixed(3)} ${(ye.x - 4).toFixed(3)},${(ye.y + 9).toFixed(3)} ${(ye.x + 4).toFixed(3)},${(ye.y + 9).toFixed(3)}" fill="${stroke}" opacity="${opacity}"/>`);
+        // integer ticks + labels (bounded)
+        const iMin = Math.ceil(win.xMin), iMax = Math.floor(win.xMax);
+        const jMin = Math.ceil(win.yMin), jMax = Math.floor(win.yMax);
+        if (iMax - iMin <= 64) {
+          for (let i = iMin; i <= iMax; i++) {
+            if (i === 0) continue;
+            const t1 = sx({ x: i, y: x0 });
+            body.push(`<line x1="${t1.x.toFixed(3)}" y1="${t1.y.toFixed(3)}" x2="${t1.x.toFixed(3)}" y2="${(t1.y + (x0 > win.yMin + (win.yMax - win.yMin) / 2 ? -5 : 5)).toFixed(3)}" stroke="${stroke}" stroke-width="${w}" opacity="${opacity}"/>`);
+            body.push(`<text x="${(t1.x - 3).toFixed(3)}" y="${(t1.y + (x0 > win.yMin + (win.yMax - win.yMin) / 2 ? -8 : 16)).toFixed(3)}" font-size="10" fill="#8b949e" opacity="${opacity}">${i}</text>`);
+          }
+        }
+        if (jMax - jMin <= 64) {
+          for (let j = jMin; j <= jMax; j++) {
+            if (j === 0) continue;
+            const t1 = sx({ x: y0, y: j });
+            body.push(`<line x1="${t1.x.toFixed(3)}" y1="${t1.y.toFixed(3)}" x2="${(t1.x + (y0 > win.xMin + (win.xMax - win.xMin) / 2 ? -5 : 5)).toFixed(3)}" y2="${t1.y.toFixed(3)}" stroke="${stroke}" stroke-width="${w}" opacity="${opacity}"/>`);
+            body.push(`<text x="${(t1.x + (y0 > win.xMin + (win.xMax - win.xMin) / 2 ? -22 : 6)).toFixed(3)}" y="${(t1.y + 3).toFixed(3)}" font-size="10" fill="#8b949e" opacity="${opacity}">${j}</text>`);
+          }
+        }
+        body.push(`<text x="${(o.x - 10).toFixed(3)}" y="${(o.y + 14).toFixed(3)}" font-size="10" fill="#8b949e" opacity="${opacity}">0</text>`);
+        break;
+      }
+      case "function_curve": {
+        // consumes the DomainSnapshot function_curve entity: polylines with
+        // breaks. The renderer NEVER evaluates f(x) — it paints the samples
+        // the snapshot already carries.
+        if (!rb || typeof rb !== "object" || rb.kind !== "function_curve" || !Array.isArray(rb.segments)) break;
+        const stroke = pres.style?.stroke ?? "#ff7b72";
+        const w = pres.style?.stroke_width ?? 2.5;
+        for (const seg of rb.segments) {
+          if (!Array.isArray(seg) || seg.length < 2) continue;
+          const pts = seg.map((q: any) => sx({ x: q.x, y: q.y }))
+            .map((q: P) => `${q.x.toFixed(3)},${q.y.toFixed(3)}`)
+            .join(" ");
+          body.push(`<polyline points="${pts}" fill="none" stroke="${esc(String(stroke))}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" opacity="${opacity}"/>`);
+        }
+        if (pres.label && rb.segments.length > 0 && rb.segments[0].length > 0) {
+          const last = rb.segments[rb.segments.length - 1];
+          const q = last[last.length - 1];
+          const p = sx({ x: q.x, y: q.y });
+          body.push(`<text x="${(p.x + 6).toFixed(3)}" y="${(p.y - 6).toFixed(3)}" font-size="12" fill="${esc(String(stroke))}" opacity="${opacity}">${esc(pres.label)}</text>`);
+        }
         break;
       }
       default:
