@@ -1,0 +1,491 @@
+{
+  "schemaVersion": "mathviz.fixtures/v1",
+  "description": "P0 invalid fixtures: every case must FAIL, and its expected_error_codes must all be present among emitted codes.",
+  "cases": [
+    {
+      "case_id": "inv-unknown-capability",
+      "kind": "math",
+      "expect": "fail",
+      "expected_error_codes": ["E_CAPABILITY_UNSUPPORTED"],
+      "doc": {
+        "schemaVersion": "mathviz.math/v1",
+        "problemId": "inv-1",
+        "domain": "geometry2d",
+        "entities": [ { "id": "A", "kind": "point", "props": {} } ],
+        "source_facts": [
+          { "fact_id": "ab_len", "name": "AB长度", "value": 6, "provenance": { "kind": "problem_text", "span": { "text": "AB=6", "start": 0, "end": 4 } } }
+        ],
+        "derived_facts": [],
+        "runtime_values": [],
+        "constraints": [],
+        "assertions": [],
+        "capabilities": ["geometry2d.warp_point"]
+      }
+    },
+    {
+      "case_id": "inv-capability-wrong-domain",
+      "kind": "math",
+      "expect": "fail",
+      "expected_error_codes": ["E_CAPABILITY_UNSUPPORTED"],
+      "doc": {
+        "schemaVersion": "mathviz.math/v1",
+        "problemId": "inv-2",
+        "domain": "motion1d",
+        "entities": [ { "id": "body_A", "kind": "body", "props": {} } ],
+        "source_facts": [
+          { "fact_id": "v_A", "name": "速度", "value": 5, "unit": "m/s", "provenance": { "kind": "problem_text", "span": { "text": "每秒5米", "start": 0, "end": 4 } } }
+        ],
+        "derived_facts": [],
+        "runtime_values": [],
+        "constraints": [
+          { "capability_id": "function2d.roots", "subject_refs": ["entity:body_A"] }
+        ],
+        "assertions": [],
+        "capabilities": ["function2d.roots", "motion1d.constant_velocity"]
+      }
+    },
+    {
+      "case_id": "inv-source-fact-no-provenance",
+      "kind": "math",
+      "expect": "fail",
+      "expected_error_codes": ["E_PROVENANCE"],
+      "doc": {
+        "schemaVersion": "mathviz.math/v1",
+        "problemId": "inv-3",
+        "domain": "motion1d",
+        "entities": [ { "id": "body_A", "kind": "body", "props": {} } ],
+        "source_facts": [
+          { "fact_id": "v_A", "name": "速度", "value": 5, "unit": "m/s" }
+        ],
+        "derived_facts": [],
+        "runtime_values": [],
+        "constraints": [],
+        "assertions": [],
+        "capabilities": ["motion1d.constant_velocity"]
+      }
+    },
+    {
+      "case_id": "inv-source-fact-bad-provenance-kind",
+      "kind": "math",
+      "expect": "fail",
+      "expected_error_codes": ["E_PROVENANCE"],
+      "doc": {
+        "schemaVersion": "mathviz.math/v1",
+        "problemId": "inv-4",
+        "domain": "motion1d",
+        "entities": [ { "id": "body_A", "kind": "body", "props": {} } ],
+        "source_facts": [
+          { "fact_id": "v_A", "name": "速度", "value": 5, "unit": "m/s", "provenance": { "kind": "derived", "capability_id": "motion1d.solve_position", "inputs": ["fact:v_A"] } }
+        ],
+        "derived_facts": [],
+        "runtime_values": [],
+        "constraints": [],
+        "assertions": [],
+        "capabilities": ["motion1d.constant_velocity"]
+      }
+    },
+    {
+      "case_id": "inv-provenance-span-inverted",
+      "kind": "math",
+      "expect": "fail",
+      "expected_error_codes": ["E_PROVENANCE"],
+      "doc": {
+        "schemaVersion": "mathviz.math/v1",
+        "problemId": "inv-5",
+        "domain": "motion1d",
+        "entities": [ { "id": "body_A", "kind": "body", "props": {} } ],
+        "source_facts": [
+          { "fact_id": "v_A", "name": "速度", "value": 5, "unit": "m/s", "provenance": { "kind": "problem_text", "span": { "text": "每秒5米", "start": 20, "end": 5 } } }
+        ],
+        "derived_facts": [],
+        "runtime_values": [],
+        "constraints": [],
+        "assertions": [],
+        "capabilities": ["motion1d.constant_velocity"]
+      }
+    },
+    {
+      "case_id": "inv-derived-input-dangling",
+      "kind": "math",
+      "expect": "fail",
+      "expected_error_codes": ["E_PROVENANCE"],
+      "doc": {
+        "schemaVersion": "mathviz.math/v1",
+        "problemId": "inv-6",
+        "domain": "motion1d",
+        "entities": [ { "id": "body_A", "kind": "body", "props": {} } ],
+        "source_facts": [
+          { "fact_id": "v_A", "name": "速度", "value": 5, "unit": "m/s", "provenance": { "kind": "problem_text", "span": { "text": "每秒5米", "start": 0, "end": 4 } } }
+        ],
+        "derived_facts": [
+          { "fact_id": "pos_A", "name": "位置", "value": { "exact": "25" }, "provenance": { "kind": "derived", "capability_id": "motion1d.solve_position", "inputs": ["fact:ghost"] } }
+        ],
+        "runtime_values": [],
+        "constraints": [],
+        "assertions": [],
+        "capabilities": ["motion1d.constant_velocity"]
+      }
+    },
+    {
+      "case_id": "inv-scene-raw-coordinates",
+      "kind": "scene",
+      "expect": "fail",
+      "expected_error_codes": ["E_SCHEMA"],
+      "doc": {
+        "schemaVersion": "mathviz.scene/v1",
+        "sceneId": "inv_scene_7",
+        "viewport": { "width": 400, "height": 200 },
+        "objects": [
+          { "objectId": "obj_p", "primitive": "point", "binding": { "source": "math:entity:A" }, "x": 3, "y": 4 }
+        ],
+        "bindings": []
+      }
+    },
+    {
+      "case_id": "inv-scene-style-position",
+      "kind": "scene",
+      "expect": "fail",
+      "expected_error_codes": ["E_SCHEMA"],
+      "doc": {
+        "schemaVersion": "mathviz.scene/v1",
+        "sceneId": "inv_scene_8",
+        "viewport": { "width": 400, "height": 200 },
+        "objects": [
+          { "objectId": "obj_c", "primitive": "circle", "binding": { "source": "math:entity:circ" }, "style": { "cx": 3 } }
+        ],
+        "bindings": []
+      }
+    },
+    {
+      "case_id": "inv-scene-object-unbound",
+      "kind": "scene",
+      "expect": "fail",
+      "expected_error_codes": ["E_SCHEMA"],
+      "doc": {
+        "schemaVersion": "mathviz.scene/v1",
+        "sceneId": "inv_scene_9",
+        "viewport": { "width": 400, "height": 200 },
+        "objects": [
+          { "objectId": "obj_p", "primitive": "point", "label": "A" }
+        ],
+        "bindings": []
+      }
+    },
+    {
+      "case_id": "inv-scene-timeline-inside-object",
+      "kind": "scene",
+      "expect": "fail",
+      "expected_error_codes": ["E_SCHEMA"],
+      "doc": {
+        "schemaVersion": "mathviz.scene/v1",
+        "sceneId": "inv_scene_10",
+        "viewport": { "width": 400, "height": 200 },
+        "objects": [
+          { "objectId": "obj_p", "primitive": "point", "binding": { "source": "math:entity:A" }, "timeline": { "duration": 5 } }
+        ],
+        "bindings": []
+      }
+    },
+    {
+      "case_id": "inv-project-scene-dangling-binding",
+      "kind": "project",
+      "expect": "fail",
+      "expected_error_codes": ["E_BINDING"],
+      "doc": {
+        "manifest": {
+          "schema_version": "mathviz.project/v1",
+          "engine_version": "0.1.0",
+          "domain_versions": { "motion1d": "0.1.0" },
+          "adapter_versions": {}
+        },
+        "math": {
+          "schemaVersion": "mathviz.math/v1",
+          "problemId": "inv-11",
+          "domain": "motion1d",
+          "entities": [ { "id": "body_A", "kind": "body", "props": {} } ],
+          "source_facts": [
+            { "fact_id": "v_A", "name": "速度", "value": 5, "unit": "m/s", "provenance": { "kind": "problem_text", "span": { "text": "每秒5米", "start": 0, "end": 4 } } }
+          ],
+          "derived_facts": [],
+          "runtime_values": [],
+          "constraints": [],
+          "assertions": [],
+          "capabilities": ["motion1d.constant_velocity"]
+        },
+        "scene": {
+          "schemaVersion": "mathviz.scene/v1",
+          "sceneId": "inv_scene_11",
+          "viewport": { "width": 400, "height": 200 },
+          "objects": [
+            { "objectId": "obj_p", "primitive": "moving_body", "binding": { "source": "math:entity:ZZ" } }
+          ],
+          "bindings": []
+        },
+        "timeline": {
+          "schemaVersion": "mathviz.timeline/v1",
+          "timelineId": "tl_inv_11",
+          "duration": 5,
+          "tracks": [
+            { "track_id": "sweep", "actions": [ { "kind": "map_model_time", "from": 0, "to": 5, "model_from": { "t": "num", "v": { "kind": "int", "value": "0" } }, "model_to": { "t": "num", "v": { "kind": "int", "value": "5" } } } ] }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "inv-project-timeline-dangling-target",
+      "kind": "project",
+      "expect": "fail",
+      "expected_error_codes": ["E_BINDING"],
+      "doc": {
+        "manifest": {
+          "schema_version": "mathviz.project/v1",
+          "engine_version": "0.1.0",
+          "domain_versions": { "motion1d": "0.1.0" },
+          "adapter_versions": {}
+        },
+        "math": {
+          "schemaVersion": "mathviz.math/v1",
+          "problemId": "inv-12",
+          "domain": "motion1d",
+          "entities": [ { "id": "body_A", "kind": "body", "props": {} } ],
+          "source_facts": [
+            { "fact_id": "v_A", "name": "速度", "value": 5, "unit": "m/s", "provenance": { "kind": "problem_text", "span": { "text": "每秒5米", "start": 0, "end": 4 } } }
+          ],
+          "derived_facts": [],
+          "runtime_values": [],
+          "constraints": [],
+          "assertions": [],
+          "capabilities": ["motion1d.constant_velocity"]
+        },
+        "scene": {
+          "schemaVersion": "mathviz.scene/v1",
+          "sceneId": "inv_scene_12",
+          "viewport": { "width": 400, "height": 200 },
+          "objects": [
+            { "objectId": "obj_p", "primitive": "moving_body", "binding": { "source": "math:entity:body_A" } }
+          ],
+          "bindings": []
+        },
+        "timeline": {
+          "schemaVersion": "mathviz.timeline/v1",
+          "timelineId": "tl_inv_12",
+          "duration": 5,
+          "tracks": [
+            { "track_id": "sweep", "actions": [
+              { "kind": "map_model_time", "from": 0, "to": 5, "model_from": { "t": "num", "v": { "kind": "int", "value": "0" } }, "model_to": { "t": "num", "v": { "kind": "int", "value": "5" } } },
+              { "kind": "show", "target": "obj_ghost", "at": 1 }
+            ] }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "inv-timeline-mapping-missing-model-to",
+      "kind": "timeline",
+      "expect": "fail",
+      "expected_error_codes": ["E_SCHEMA"],
+      "doc": {
+        "schemaVersion": "mathviz.timeline/v1",
+        "timelineId": "tl_inv_13",
+        "duration": 5,
+        "tracks": [
+          { "track_id": "sweep", "actions": [ { "kind": "map_model_time", "from": 0, "to": 5, "model_from": { "t": "num", "v": { "kind": "int", "value": "0" } } } ] }
+        ]
+      }
+    },
+    {
+      "case_id": "inv-math-missing-domain",
+      "kind": "math",
+      "expect": "fail",
+      "expected_error_codes": ["E_SCHEMA"],
+      "doc": {
+        "schemaVersion": "mathviz.math/v1",
+        "problemId": "inv-14",
+        "entities": [ { "id": "body_A", "kind": "body", "props": {} } ],
+        "source_facts": [
+          { "fact_id": "v_A", "name": "速度", "value": 5, "unit": "m/s", "provenance": { "kind": "problem_text", "span": { "text": "每秒5米", "start": 0, "end": 4 } } }
+        ],
+        "derived_facts": [],
+        "runtime_values": [],
+        "constraints": [],
+        "assertions": [],
+        "capabilities": ["motion1d.constant_velocity"]
+      }
+    },
+    {
+      "case_id": "inv-math-zero-denominator",
+      "kind": "math",
+      "expect": "fail",
+      "expected_error_codes": ["E_SCHEMA"],
+      "doc": {
+        "schemaVersion": "mathviz.math/v1",
+        "problemId": "inv-15",
+        "domain": "function2d",
+        "entities": [ { "id": "curve", "kind": "function", "props": { "expression": "x" } } ],
+        "source_facts": [
+          { "fact_id": "dom", "name": "定义域", "value": 1, "provenance": { "kind": "problem_text", "span": { "text": "y=x", "start": 0, "end": 3 } } }
+        ],
+        "derived_facts": [],
+        "runtime_values": [
+          { "id": "r1", "expr": { "t": "num", "v": { "kind": "rational", "p": "1", "q": "0" } } }
+        ],
+        "constraints": [],
+        "assertions": [],
+        "capabilities": ["function2d.expression_curve"]
+      }
+    },
+    {
+      "case_id": "inv-math-duplicate-ids",
+      "kind": "math",
+      "expect": "fail",
+      "expected_error_codes": ["E_SCHEMA"],
+      "doc": {
+        "schemaVersion": "mathviz.math/v1",
+        "problemId": "inv-16",
+        "domain": "geometry2d",
+        "entities": [
+          { "id": "A", "kind": "point", "props": {} },
+          { "id": "A", "kind": "point", "props": {} }
+        ],
+        "source_facts": [
+          { "fact_id": "ab_len", "name": "AB长度", "value": 6, "provenance": { "kind": "problem_text", "span": { "text": "AB=6", "start": 0, "end": 4 } } }
+        ],
+        "derived_facts": [],
+        "runtime_values": [],
+        "constraints": [],
+        "assertions": [],
+        "capabilities": ["geometry2d.point"]
+      }
+    },
+    {
+      "case_id": "inv-assertion-dangling-ref",
+      "kind": "math",
+      "expect": "fail",
+      "expected_error_codes": ["E_BINDING"],
+      "doc": {
+        "schemaVersion": "mathviz.math/v1",
+        "problemId": "inv-17",
+        "domain": "motion1d",
+        "entities": [ { "id": "body_A", "kind": "body", "props": {} } ],
+        "source_facts": [
+          { "fact_id": "v_A", "name": "速度", "value": 5, "unit": "m/s", "provenance": { "kind": "problem_text", "span": { "text": "每秒5米", "start": 0, "end": 4 } } }
+        ],
+        "derived_facts": [],
+        "runtime_values": [],
+        "constraints": [],
+        "assertions": [
+          { "assertion_id": "a1", "capability_id": "motion1d.constant_velocity", "subject_refs": ["entity:ghost"] }
+        ],
+        "capabilities": ["motion1d.constant_velocity"]
+      }
+    },
+    {
+      "case_id": "inv-parameter-range",
+      "kind": "math",
+      "expect": "fail",
+      "expected_error_codes": ["E_MATH_CONSTRAINT"],
+      "doc": {
+        "schemaVersion": "mathviz.math/v1",
+        "problemId": "inv-18",
+        "domain": "function2d",
+        "entities": [ { "id": "curve", "kind": "function", "props": { "expression": "a*x" } } ],
+        "parameters": [
+          { "id": "a", "min": { "kind": "int", "value": "5" }, "max": { "kind": "int", "value": "2" } }
+        ],
+        "source_facts": [
+          { "fact_id": "dom", "name": "定义域", "value": 1, "provenance": { "kind": "problem_text", "span": { "text": "y=ax", "start": 0, "end": 4 } } }
+        ],
+        "derived_facts": [],
+        "runtime_values": [],
+        "constraints": [],
+        "assertions": [],
+        "capabilities": ["function2d.expression_curve"]
+      }
+    },
+    {
+      "case_id": "inv-project-missing-engine-version",
+      "kind": "project",
+      "expect": "fail",
+      "expected_error_codes": ["E_SCHEMA"],
+      "doc": {
+        "manifest": {
+          "schema_version": "mathviz.project/v1",
+          "domain_versions": { "motion1d": "0.1.0" },
+          "adapter_versions": {}
+        },
+        "math": {
+          "schemaVersion": "mathviz.math/v1",
+          "problemId": "inv-19",
+          "domain": "motion1d",
+          "entities": [ { "id": "body_A", "kind": "body", "props": {} } ],
+          "source_facts": [
+            { "fact_id": "v_A", "name": "速度", "value": 5, "unit": "m/s", "provenance": { "kind": "problem_text", "span": { "text": "每秒5米", "start": 0, "end": 4 } } }
+          ],
+          "derived_facts": [],
+          "runtime_values": [],
+          "constraints": [],
+          "assertions": [],
+          "capabilities": ["motion1d.constant_velocity"]
+        },
+        "scene": {
+          "schemaVersion": "mathviz.scene/v1",
+          "sceneId": "inv_scene_19",
+          "viewport": { "width": 400, "height": 200 },
+          "objects": [ { "objectId": "obj_p", "primitive": "moving_body", "binding": { "source": "math:entity:body_A" } } ],
+          "bindings": []
+        },
+        "timeline": {
+          "schemaVersion": "mathviz.timeline/v1",
+          "timelineId": "tl_inv_19",
+          "duration": 5,
+          "tracks": [
+            { "track_id": "sweep", "actions": [ { "kind": "map_model_time", "from": 0, "to": 5, "model_from": { "t": "num", "v": { "kind": "int", "value": "0" } }, "model_to": { "t": "num", "v": { "kind": "int", "value": "5" } } } ] }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "inv-project-schema-version-mismatch",
+      "kind": "project",
+      "expect": "fail",
+      "expected_error_codes": ["E_SCHEMA"],
+      "doc": {
+        "manifest": {
+          "schema_version": "mathviz.project/v1",
+          "engine_version": "0.1.0",
+          "domain_versions": { "motion1d": "0.1.0" },
+          "adapter_versions": {}
+        },
+        "math": {
+          "schemaVersion": "mathviz.math/v2",
+          "problemId": "inv-20",
+          "domain": "motion1d",
+          "entities": [ { "id": "body_A", "kind": "body", "props": {} } ],
+          "source_facts": [
+            { "fact_id": "v_A", "name": "速度", "value": 5, "unit": "m/s", "provenance": { "kind": "problem_text", "span": { "text": "每秒5米", "start": 0, "end": 4 } } }
+          ],
+          "derived_facts": [],
+          "runtime_values": [],
+          "constraints": [],
+          "assertions": [],
+          "capabilities": ["motion1d.constant_velocity"]
+        },
+        "scene": {
+          "schemaVersion": "mathviz.scene/v1",
+          "sceneId": "inv_scene_20",
+          "viewport": { "width": 400, "height": 200 },
+          "objects": [ { "objectId": "obj_p", "primitive": "moving_body", "binding": { "source": "math:entity:body_A" } } ],
+          "bindings": []
+        },
+        "timeline": {
+          "schemaVersion": "mathviz.timeline/v1",
+          "timelineId": "tl_inv_20",
+          "duration": 5,
+          "tracks": [
+            { "track_id": "sweep", "actions": [ { "kind": "map_model_time", "from": 0, "to": 5, "model_from": { "t": "num", "v": { "kind": "int", "value": "0" } }, "model_to": { "t": "num", "v": { "kind": "int", "value": "5" } } } ] }
+          ]
+        }
+      }
+    }
+  ]
+}

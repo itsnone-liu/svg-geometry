@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mathviz.dev/schemas/project/v1",
+  "title": "Compiled Project — frozen artifact (v1)",
+  "description": "The single frozen deliverable. Interactive HTML and MP4 both consume this artifact read-only and MUST NOT add logic of their own. Version stamps (schema/engine/domain/adapter) are mandatory so any rendering difference across time is reproducible and attributable.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manifest", "math", "scene", "timeline"],
+  "properties": {
+    "manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "engine_version", "domain_versions", "adapter_versions"],
+      "properties": {
+        "schema_version": { "const": "mathviz.project/v1" },
+        "engine_version": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/VersionString" },
+        "domain_versions": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": { "type": "string", "minLength": 1 },
+          "description": "e.g. {\"geometry2d\": \"0.1.0\"}"
+        },
+        "adapter_versions": {
+          "type": "object",
+          "additionalProperties": { "type": "string", "minLength": 1 },
+          "description": "e.g. {\"geometry-dsl\": \"pin:<upstream-commit>\"}. Pins, not floating ranges."
+        },
+        "capability_registry_version": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/VersionString" },
+        "source_problem": { "type": "string" },
+        "problem_id": { "type": "string" }
+      }
+    },
+    "math": { "$ref": "https://mathviz.dev/schemas/math/v1" },
+    "scene": { "$ref": "https://mathviz.dev/schemas/scene/v1" },
+    "timeline": { "$ref": "https://mathviz.dev/schemas/timeline/v1" },
+    "assets": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fonts": { "type": "array", "items": { "type": "string" } },
+        "requires": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

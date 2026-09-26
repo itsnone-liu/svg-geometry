@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mathviz.dev/schemas/math/v1",
+  "title": "Math IR — fact contract (v1)",
+  "description": "The fact layer. Describes WHAT exists in the problem world and WHICH relations must hold. Never describes color, pixels or transitions. Facts are split into source_facts (must carry problem_text provenance), derived_facts (must carry derived provenance with a registry capability id) and runtime_values (expression-backed, evaluated later — never plain constants). Provenance presence is enforced by gate G2, not by schema, so violations classify as E_PROVENANCE rather than E_SCHEMA.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "problemId",
+    "domain",
+    "entities",
+    "source_facts",
+    "derived_facts",
+    "runtime_values",
+    "constraints",
+    "assertions",
+    "capabilities"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "mathviz.math/v1" },
+    "problemId": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
+    "domain": { "enum": ["geometry2d", "function2d", "motion1d"] },
+    "statement": {
+      "type": "string",
+      "description": "Original problem text, kept for provenance span resolution and audits."
+    },
+    "parameters": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Parameter" }
+    },
+    "entities": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/MathEntity" }
+    },
+    "source_facts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/SourceFact" }
+    },
+    "derived_facts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/DerivedFact" }
+    },
+    "runtime_values": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/RuntimeValue" }
+    },
+    "constraints": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Constraint" }
+    },
+    "events": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/MathEvent" }
+    },
+    "assertions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Assertion" }
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/CapabilityId" },
+      "description": "Registry capability ids this spec relies on. Unknown or wrong-domain ids are rejected by gate G3 with E_CAPABILITY_UNSUPPORTED."
+    }
+  },
+  "$defs": {
+    "Parameter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "min", "max"],
+      "properties": {
+        "id": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
+        "min": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ExactNumber" },
+        "max": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ExactNumber" },
+        "default": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ExactNumber" },
+        "unit": { "type": "string" }
+      }
+    },
+    "MathEntity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind"],
+      "properties": {
+        "id": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
+        "kind": { "type": "string", "minLength": 1 },
+        "label": { "type": "string" },
+        "props": {
+          "type": "object",
+          "description": "Domain payload. Coordinates and exact constructions live HERE and only here (math layer owns coordinates). Structure is tightened per-domain in P2-P4; P0 keeps it structural so domain packages can evolve behind the frozen outer contract."
+        }
+      }
+    },
+    "SourceFact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fact_id", "name", "value"],
+      "properties": {
+        "fact_id": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
+        "name": { "type": "string", "minLength": 1 },
+        "unit": { "type": "string" },
+        "value": {
+          "description": "Any JSON value; exact numbers encouraged for numeric facts."
+        },
+        "provenance": {
+          "type": "object",
+          "description": "Shape enforced by gate G2: must be {kind:'problem_text', span:{text,start,end}}. Source facts without provenance FAIL with E_PROVENANCE."
+        }
+      }
+    },
+    "DerivedFact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fact_id", "name", "value", "provenance"],
+      "properties": {
+        "fact_id": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
+        "name": { "type": "string", "minLength": 1 },
+        "unit": { "type": "string" },
+        "value": {
+          "description": "Prefer {exact: '<symbolic string>'} or an ExactNumber object."
+        },
+        "provenance": {
+          "type": "object",
+          "description": "Shape enforced by gate G2: {kind:'derived', capability_id:<registry id>, inputs:[refs]}; dangling inputs FAIL with E_PROVENANCE."
+        }
+      }
+    },
+    "RuntimeValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "expr"],
+      "properties": {
+        "id": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
+        "expr": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ExprAst" },
+        "unit": { "type": "string" },
+        "depends_on": {
+          "type": "array",
+          "items": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/MathRefStrict" }
+        }
+      }
+    },
+    "Constraint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capability_id", "subject_refs"],
+      "properties": {
+        "capability_id": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/CapabilityId" },
+        "subject_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/MathRefStrict" }
+        },
+        "params": { "type": "object" }
+      }
+    },
+    "MathEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event_id", "capability_id", "participants"],
+      "properties": {
+        "event_id": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
+        "capability_id": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/CapabilityId" },
+        "participants": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/MathRefStrict" }
+        },
+        "at": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ExactNumber" }
+      }
+    },
+    "Assertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assertion_id", "capability_id", "subject_refs"],
+      "properties": {
+        "assertion_id": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
+        "capability_id": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/CapabilityId" },
+        "subject_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/MathRefStrict" }
+        },
+        "params": { "type": "object" },
+        "expectation": { "enum": ["holds", "forbidden"] },
+        "tolerance": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ExactRational" }
+      }
+    }
+  }
+}

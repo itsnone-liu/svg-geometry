@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mathviz.dev/schemas/timeline/v1",
+  "title": "Timeline — presentation_time to model_time mapping (v1)",
+  "description": "Standalone contract. NEVER embedded inside Scene objects (scene schema rejects any 'timeline' key on objects). model_time bounds are exact expressions; presentation_time values are plain seconds. Mapping windows [from,to] -> [model_from,model_to] are validated for ordering by gate G1 (to > from).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "timelineId", "duration", "tracks"],
+  "properties": {
+    "schemaVersion": { "const": "mathviz.timeline/v1" },
+    "timelineId": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
+    "duration": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Total presentation seconds."
+    },
+    "fps": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Optional export hint for frame addressing."
+    },
+    "tracks": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/Track" }
+    }
+  },
+  "$defs": {
+    "Track": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["track_id", "actions"],
+      "properties": {
+        "track_id": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
+        "actions": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/Action" }
+        }
+      }
+    },
+    "Action": {
+      "oneOf": [
+        { "$ref": "#/$defs/VisibilityAction" },
+        { "$ref": "#/$defs/MapModelTimeAction" },
+        { "$ref": "#/$defs/CameraAction" },
+        { "$ref": "#/$defs/CaptionAction" }
+      ]
+    },
+    "VisibilityAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "target", "at"],
+      "properties": {
+        "kind": { "enum": ["show", "hide", "highlight", "dim"] },
+        "target": { "type": "string", "minLength": 1 },
+        "at": { "type": "number", "minimum": 0 },
+        "until": { "type": "number", "minimum": 0 }
+      }
+    },
+    "MapModelTimeAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "from", "to", "model_from", "model_to"],
+      "properties": {
+        "kind": { "const": "map_model_time" },
+        "from": { "type": "number", "minimum": 0 },
+        "to": { "type": "number", "exclusiveMinimum": 0 },
+        "model_from": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ExprAst" },
+        "model_to": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ExprAst" },
+        "easing": { "const": "linear" }
+      }
+    },
+    "CameraAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "at"],
+      "properties": {
+        "kind": { "const": "camera" },
+        "at": { "type": "number", "minimum": 0 },
+        "zoom": { "type": "number", "exclusiveMinimum": 0 },
+        "center_on": {
+          "type": "string",
+          "description": "objectId or math: reference; non-math values must exist as objects (gate G6)."
+        }
+      }
+    },
+    "CaptionAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "at", "text"],
+      "properties": {
+        "kind": { "const": "caption" },
+        "at": { "type": "number", "minimum": 0 },
+        "text": { "type": "string" },
+        "until": { "type": "number", "minimum": 0 }
+      }
+    }
+  }
+}

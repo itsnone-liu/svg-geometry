@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mathviz.dev/schemas/error-catalog/v1",
+  "title": "Error Catalog (v1)",
+  "description": "Stable error codes, frozen in P0. At least the seven families SCHEMA / CAPABILITY / SOLVE / ASSERTION / BINDING / LAYOUT / RENDER are always present. Every error the harness or runtime emits MUST exist here; emitting an unlisted code is an internal bug (hard throw).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "catalog_version", "families", "errors"],
+  "properties": {
+    "schemaVersion": { "const": "mathviz.error-catalog/v1" },
+    "catalog_version": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/VersionString" },
+    "families": {
+      "type": "array",
+      "minItems": 7,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Z][A-Z_]*$" }
+    },
+    "errors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "family", "stage", "repairable", "summary"],
+        "properties": {
+          "code": { "type": "string", "pattern": "^E_[A-Z0-9_]+$" },
+          "family": { "type": "string", "minLength": 1 },
+          "stage": { "type": "string", "minLength": 1 },
+          "repairable": { "type": "boolean" },
+          "summary": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

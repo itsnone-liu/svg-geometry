@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mathviz.dev/schemas/capability-registry/v1",
+  "title": "Capability Registry (v1)",
+  "description": "Frozen list of stable capability IDs. The LLM parser may only select from this registry; anything outside is E_CAPABILITY_UNSUPPORTED. IDs are two segments: <domain>.<name>, e.g. geometry2d.rotate_point, motion1d.meeting_event.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "registry_version", "capabilities"],
+  "properties": {
+    "schemaVersion": { "const": "mathviz.capability-registry/v1" },
+    "registry_version": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/VersionString" },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "domain", "family", "summary"],
+        "properties": {
+          "id": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/CapabilityId" },
+          "domain": { "enum": ["geometry2d", "function2d", "motion1d"] },
+          "family": {
+            "enum": ["entity", "construct", "transform", "relation", "mark", "dynamic", "curve", "operation", "kinematics", "event", "unit", "solver"]
+          },
+          "summary": { "type": "string", "minLength": 1 },
+          "introduced_in": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/VersionString" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "mathviz.error-catalog/v1",
+  "catalog_version": "1.0.0",
+  "families": [
+    "SCHEMA",
+    "PROVENANCE",
+    "CAPABILITY",
+    "SOLVE",
+    "ASSERTION",
+    "BINDING",
+    "LAYOUT",
+    "DETERMINISM",
+    "RENDER"
+  ],
+  "errors": [
+    { "code": "E_SCHEMA", "family": "SCHEMA", "stage": "contract", "repairable": true, "summary": "文档违反 JSON Schema 合同或跨字段结构检查（重复 id、时间窗乱序等）" },
+    { "code": "E_PROVENANCE", "family": "PROVENANCE", "stage": "contract", "repairable": true, "summary": "溯源缺失或不成立：source fact 无 problem_text span、span 非法、derived 无求解能力或输入悬空" },
+    { "code": "E_CAPABILITY_UNSUPPORTED", "family": "CAPABILITY", "stage": "capability", "repairable": true, "summary": "能力不在冻结注册表内，或能力域与题目域不符；禁止模型临时发明语义" },
+    { "code": "E_MATH_CONSTRAINT", "family": "SOLVE", "stage": "math", "repairable": true, "summary": "数学规格约束无解/退化/参数域非法（P0 检查参数 min>max 类）" },
+    { "code": "E_MATH_ASSERTION", "family": "ASSERTION", "stage": "math", "repairable": false, "summary": "关键关系断言验证失败，阻塞正式渲染（P5+ 求解器接入后生效）" },
+    { "code": "E_BINDING", "family": "BINDING", "stage": "scene", "repairable": true, "summary": "引用解析失败：Scene/Timeline/math 内部引用了不存在的实体、事实或对象" },
+    { "code": "E_SCENE_COVERAGE", "family": "BINDING", "stage": "scene", "repairable": true, "summary": "题目关键条件/目标未获得至少一次视觉呈现（P6 接入）" },
+    { "code": "E_LAYOUT", "family": "LAYOUT", "stage": "scene", "repairable": true, "summary": "布局违规：越界/遮挡/最小字号/安全区（P6 接入）" },
+    { "code": "E_NONDETERMINISTIC", "family": "DETERMINISM", "stage": "runtime", "repairable": false, "summary": "同一输入+版本未得到稳定序列化/状态摘要，阻塞发布" },
+    { "code": "E_RENDER", "family": "RENDER", "stage": "render", "repairable": false, "summary": "渲染执行失败（P7 接入）" }
+  ]
+}
