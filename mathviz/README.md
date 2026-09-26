@@ -1,7 +1,7 @@
-# mathviz-contracts — MathViz Engine P0 (Contracts Layer)
+# mathviz-contracts — MathViz Engine P0/P0.1 (Contracts) + P1 (Runtime Skeleton)
 
-> 范围纪律：**只做 P0**。不实现 renderer、domain solver、LLM parser、Geometry DSL 集成（那是 P1+）。
-> P0 交付：三份冻结合同（Math IR / Scene IR / Timeline）、能力注册表、错误目录、fixtures 与 Gate harness。
+> 范围纪律：P0 只冻结合同；P0.1 审计后硬化；P1 只证明确定性 Runtime。
+> 明确不做（P1 为止）：Geometry DSL、SymPy、motion/geometry solver、LLM、Manim、FFmpeg、自动 layout。
 
 ## 目录
 
@@ -23,9 +23,19 @@ mathviz/
     errors/error-catalog.v1.json    # 10 错误码 / 9 族，catalog_version 1.0.0
     src/load.ts serialize.ts gates.ts run.ts
   fixtures/p0_cases.valid.json     # 20 例必须全 PASS
-  fixtures/p0_cases.invalid.json  # 24 例必须 FAIL 且命中 expected_error_codes
-  tests/p0.test.ts                 # vitest：硬验收 + 目录/注册表完整性 + 规范化向量
-  runs/p0/report.json              # gate 运行产物（.gitignore）
+  fixtures/p0_cases.invalid.json  # 24 例必须 FAIL 且命中 expected_error_codes（P0.1 后）
+  fixtures/p1/minimal-motion.compiled.json   # P1 手写合成 compiled project
+  packages/runtime/               # P1：纯函数 runtime（零依赖，node/浏览器同源）
+    src/{types,errors,load-project,runtime,digest}.ts
+    src/expr/{exact,evaluate}.ts          # bigint 精确轨道 + 确定性数值轨道
+    src/timeline/{compile,evaluate,model-time}.ts  # 双时间轴语义（E1-E4/F 冻结）
+    src/bindings/{resolve,transform}.ts   # 完整 property path + transform 显式未实现
+    src/scene/state-at.ts                 # RuntimeState 装配
+    src/run-p1.ts                         # G9 加强 + G10 跨输出 gate runner
+  packages/renderer-svg/src/render.ts     # 薄渲染层：RuntimeState+SceneIR → SVG
+  examples/p1/                    # player harness（window.mathviz + data-* 属性 + ?frame=N）
+  tests/p0.test.ts p1.test.ts     # vitest：60 + 30 断言
+  runs/p0/ runs/p1/               # gate 运行产物（.gitignore）
 ```
 
 ## 七条钉死的合同规则（P0 实现映射）
@@ -64,10 +74,21 @@ mathviz/
 ```bash
 cd mathviz
 npm install
-npm run gates   # 40 fixtures → runs/p0/report.json，全绿打印 P0 GATES: ALL GREEN，exit 0
-npm test        # vitest 53 断言（硬验收 + 完整性）
+npm run build:player   # 浏览器 bundle（examples/p1/dist/runtime.bundle.js）
+npm run gates          # p0：44 fixtures → runs/p0/report.json；p1：G9/G10 → runs/p1/
+npm test               # vitest 90 断言（p0 60 + p1 30）
 npx tsc --noEmit
 ```
+
+## P1 冻结语义（摘要）
+
+- `stateAt(t)` 纯函数；`setFrame(n) === stateAt(n / fps)` 是唯一帧公式（帧从 0 起，上限 floor(duration×fps)）。
+- 映射窗口 `[from, to)` 半开、末窗闭合；重叠 → E_NONDETERMINISTIC；窗口外 modelTime = null。
+- 同刻 show+hide / 双 camera / caption 区间相交 → E_NONDETERMINISTIC；at/until/from/to 出界或 until ≤ at → E_SCHEMA。
+- 表达式：冻结词表；int/rational 精确（bigint），超越函数确定性数值；缺符号 → E_BINDING；除零/sqrt负/log非正/asin越界 → E_MATH_CONSTRAINT。
+- Binding property path：entity 走 props、fact/param 走对象本体、runtime 求值后下钻；缺环 → E_BINDING；未实现 transform → E_CAPABILITY_UNSUPPORTED。
+- Renderer 只消费 (RuntimeState, SceneIR)；Math IR / Timeline / binding 一律不碰。
+- 浏览器 player：`window.mathviz.{seek,play,pause,setFrame,getState}`；`<body data-rendered-frame data-state-digest>`；headless 入口 `?frame=N`。
 
 ## P0 验收口径（全部达成）
 

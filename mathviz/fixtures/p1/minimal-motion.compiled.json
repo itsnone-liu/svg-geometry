@@ -1,0 +1,72 @@
+{
+  "manifest": {
+    "schema_version": "mathviz.project/v1",
+    "engine_version": "0.1.0",
+    "domain_versions": { "motion1d": "0.1.0" },
+    "adapter_versions": {},
+    "capability_registry_version": "1.0.0",
+    "source_problem": "P1-SYNTHETIC-001",
+    "problem_id": "p1-minimal-motion"
+  },
+  "math": {
+    "schemaVersion": "mathviz.math/v1",
+    "problemId": "p1-minimal-motion",
+    "domain": "motion1d",
+    "statement": "点P沿轨道从左端匀速运动到右端，参数u从0变到1。",
+    "parameters": [
+      { "id": "u", "min": { "kind": "int", "value": "0" }, "max": { "kind": "int", "value": "1" }, "default": { "kind": "int", "value": "0" } }
+    ],
+    "entities": [
+      { "id": "P_point", "kind": "point", "props": { "axis": "x" } },
+      { "id": "track_seg", "kind": "segment", "props": { "axis": "x" } }
+    ],
+    "source_facts": [
+      {
+        "fact_id": "u_range",
+        "name": "参数范围",
+        "value": 1,
+        "provenance": { "kind": "problem_text", "span": { "text": "参数u从0变到1", "start": 16, "end": 24 } }
+      }
+    ],
+    "derived_facts": [],
+    "runtime_values": [
+      { "id": "pos_P", "expr": { "t": "sym", "name": "t" }, "depends_on": [] }
+    ],
+    "constraints": [],
+    "assertions": [],
+    "capabilities": ["motion1d.constant_velocity"]
+  },
+  "scene": {
+    "schemaVersion": "mathviz.scene/v1",
+    "sceneId": "scene-p1-minimal",
+    "viewport": { "width": 800, "height": 200, "margin": [20, 20, 20, 20] },
+    "objects": [
+      { "objectId": "obj_track", "primitive": "segment", "binding": { "source": "math:entity:track_seg" }, "style": { "stroke": "#30363d" } },
+      { "objectId": "obj_P", "primitive": "point", "binding": { "source": "math:runtime:pos_P" }, "label": "P", "style": { "fill": "#58a6ff" } },
+      { "objectId": "obj_note", "primitive": "text", "binding": { "source": "math:fact:u_range" }, "text": "u: 0 → 1" }
+    ],
+    "bindings": []
+  },
+  "timeline": {
+    "schemaVersion": "mathviz.timeline/v1",
+    "timelineId": "tl-p1-minimal",
+    "duration": 8,
+    "fps": 30,
+    "tracks": [
+      {
+        "track_id": "clock",
+        "actions": [
+          { "kind": "map_model_time", "from": 2, "to": 6, "model_from": { "t": "num", "v": { "kind": "int", "value": "0" } }, "model_to": { "t": "num", "v": { "kind": "int", "value": "1" } }, "easing": "linear" }
+        ]
+      },
+      {
+        "track_id": "reveal",
+        "actions": [
+          { "kind": "show", "target": "obj_P", "at": 0 },
+          { "kind": "caption", "at": 0.5, "text": "presentation-only 区间（无模型时间）", "until": 2 },
+          { "kind": "caption", "at": 6, "text": "模型时间已结束", "until": 7.5 }
+        ]
+      }
+    ]
+  }
+}
