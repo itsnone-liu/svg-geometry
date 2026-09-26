@@ -13,6 +13,7 @@ import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { loadRuntime } from "./runtime";
 import { canonicalSerialize } from "./digest";
+import { summarizeGates } from "./gate-summary";
 import { geometry2dAdapter, GEOMETRY_EPS, GEOMETRY_NUMERIC_POLICY, P2_CAPABILITIES } from "../../domains/geometry2d/src/adapter";
 import { runCase } from "../../contracts/src/gates";
 import { oracle, assertPinnedVendor, comparePoint } from "../../adapters/geometry-dsl/src/oracle";
@@ -36,6 +37,8 @@ function expectCode(fn: () => unknown, code: string): boolean {
 }
 
 function findChrome(): string | null {
+  // Deterministic harness override for testing freeze/development skip paths.
+  if (process.env.MATHVIZ_TEST_NO_CHROME === "1") return null;
   const candidates = [
     "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
     "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
@@ -189,11 +192,12 @@ function main(): void {
 
   // ---- G10 cross-output consistency ----
   const chrome = findChrome();
+  const allowBrowserSkip = process.env.ALLOW_BROWSER_SKIP === "1";
   const g10: any = { gate: "G10_cross_output_consistency", browser: chrome ?? "NOT FOUND", frames: [], status: "PASS" };
   if (!chrome) {
-    g10.status = "SKIP";
-    g10.note = "chrome not found";
-    console.log("WARN G10 skipped: chrome executable not found");
+    g10.status = allowBrowserSkip ? "SKIP" : "INCOMPLETE";
+    g10.note = allowBrowserSkip ? "development-only G10 skip explicitly allowed; this run is INCOMPLETE" : "Chrome not found; required G10 was not executed";
+    console.log(allowBrowserSkip ? "WARN G10 development skip allowed; run is INCOMPLETE" : "INCOMPLETE G10: Chrome executable not found");
   } else {
     for (const v of vectors) {
       const node = rtSquare.stateAtFrame(v.frame);
@@ -239,17 +243,17 @@ function main(): void {
   }
   results.push(g11);
 
-  const allGreen = results.every((r) => r.status === "PASS" || r.status === "SKIP") && pin.pinned;
+  const summary = summarizeGates(results, allowBrowserSkip && pin.pinned);
 
   const outDir = path.join(ROOT, "runs", "p2");
   fs.mkdirSync(outDir, { recursive: true });
-  fs.writeFileSync(path.join(outDir, "gates.json"), canonicalSerialize({ generated_by: "run-p1.ts lineage", fixtures: ["square-rotation", "static-construction", "invalid-geometry"], numeric_policy: GEOMETRY_NUMERIC_POLICY, adapter: ADAPTER_VERSION, vendor_pin: pin, results }) + "\n", "utf8");
+  fs.writeFileSync(path.join(outDir, "gates.json"), canonicalSerialize({ generated_by: "run-p1.ts lineage", fixtures: ["square-rotation", "static-construction", "invalid-geometry"], numeric_policy: GEOMETRY_NUMERIC_POLICY, adapter: ADAPTER_VERSION, vendor_pin: pin, results, summary: summary.summary }) + "\n", "utf8");
   fs.writeFileSync(path.join(outDir, "geometry-vectors.json"), canonicalSerialize({ project_digest: rtSquare.projectDigest, fps: rtSquare.fps, vectors }) + "\n", "utf8");
   fs.writeFileSync(path.join(outDir, "oracle-comparison.json"), canonicalSerialize(g11) + "\n", "utf8");
 
   console.log(`report: ${path.join(outDir, "gates.json")}`);
-  console.log(allGreen ? "P2 GATES: ALL GREEN" : "P2 GATES: FAILURES PRESENT");
-  process.exitCode = allGreen ? 0 : 1;
+  console.log(`P2 GATES: ${summary.summary}`);
+  process.exitCode = summary.exitCode;
 }
 
 main();

@@ -8,6 +8,8 @@ import { evaluateGeometry } from "../packages/domains/geometry2d/src/evaluate";
 import { oracle, assertPinnedVendor } from "../packages/adapters/geometry-dsl/src/oracle";
 import { VizRuntimeError } from "../packages/runtime/src/errors";
 import { renderSvg } from "../packages/renderer-svg/src/render";
+import { summarizeGates } from "../packages/runtime/src/gate-summary";
+import { digestOf } from "../packages/runtime/src/digest";
 
 const ROOT = path.resolve(__dirname, "..");
 const read = (rel: string) => JSON.parse(fs.readFileSync(path.join(ROOT, rel), "utf8"));
@@ -26,6 +28,28 @@ function expectCode(fn: () => unknown, code: string) {
 }
 
 const pos = (state: any, oid: string) => state.objects[oid].resolvedBinding.position;
+
+describe("P2.1 G10 strict freeze summary", () => {
+  const passing = [{ gate: "G9", status: "PASS" }, { gate: "G10_cross_output_consistency", status: "PASS" }];
+
+  it("only PASS across every required gate can report ALL GREEN", () => {
+    expect(summarizeGates(passing, false)).toEqual({ summary: "ALL GREEN", exitCode: 0 });
+  });
+
+  it("Chrome missing is INCOMPLETE and non-zero in freeze mode", () => {
+    expect(summarizeGates([{ gate: "G9", status: "PASS" }, { gate: "G10_cross_output_consistency", status: "INCOMPLETE" }], false)).toEqual({ summary: "INCOMPLETE", exitCode: 1 });
+  });
+
+  it("explicit development skip remains INCOMPLETE, never ALL GREEN", () => {
+    expect(summarizeGates([{ gate: "G9", status: "PASS" }, { gate: "G10_cross_output_consistency", status: "SKIP" }], true)).toEqual({ summary: "INCOMPLETE", exitCode: 0 });
+    expect(summarizeGates([{ gate: "G9", status: "PASS" }, { gate: "G10_cross_output_consistency", status: "SKIP" }], false)).toEqual({ summary: "FAILURES PRESENT", exitCode: 1 });
+  });
+
+  it("does not let ALLOW_BROWSER_SKIP mask unrelated skipped or failed gates", () => {
+    expect(summarizeGates([{ gate: "G11", status: "SKIP" }, { gate: "G10_cross_output_consistency", status: "SKIP" }], true).summary).toBe("FAILURES PRESENT");
+    expect(summarizeGates([{ gate: "G9", status: "FAIL" }, { gate: "G10_cross_output_consistency", status: "SKIP" }], true).summary).toBe("FAILURES PRESENT");
+  });
+});
 
 describe("P2 frozen t/parameter distinction", () => {
   it("keeps t as model time; theta_at_t is explicit runtime value", () => {
@@ -194,6 +218,23 @@ describe("P2 geometry evaluation + G5 assertions", () => {
     const d = JSON.parse(JSON.stringify(square));
     d.scene.objects.find((o: any) => o.objectId === "obj_mark_right").binding.source = "math:entity:P";
     expectCode(() => loadRuntime(d, { domains }).stateAt(1), "E_MATH_ASSERTION");
+  });
+
+  it("RuntimeState semantic digest changes when an unbound DomainSnapshot entity changes", () => {
+    const baseline = loadRuntime(square, { domains }).stateAt(3);
+    const baseAdapter = geometry2dAdapter;
+    const changedAdapter = {
+      ...baseAdapter,
+      evaluate(program: any, ctx: any) {
+        const snapshot = baseAdapter.evaluate(program, ctx);
+        const entities = { ...snapshot.entities, unbound_semantic_point: { kind: "point", position: { x: 123, y: 456 } } };
+        return { ...snapshot, entities, digest: digestOf({ modelTime: snapshot.modelTime, entities }) };
+      }
+    };
+    const changed = loadRuntime(square, { domains: { geometry2d: changedAdapter } }).stateAt(3);
+    expect(changed.objects).toEqual(baseline.objects); // Scene binds no new entity.
+    expect(changed.domainDigest).not.toBe(baseline.domainDigest);
+    expect(changed.digest).not.toBe(baseline.digest);
   });
 
   it("100 repeats at one state have identical runtime and snapshot digests", () => {

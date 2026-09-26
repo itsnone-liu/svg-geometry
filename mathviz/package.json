@@ -10,7 +10,9 @@
     "build:player": "vite build --config examples/p1/vite.config.ts",
     "build:player:p2": "node scripts/gen-p2-html.mjs && vite build --config examples/p2/vite.config.ts",
     "gates:p2": "node scripts/gen-p2-html.mjs && vite build --config examples/p2/vite.config.ts && tsx packages/runtime/src/run-p2.ts",
-    "gates": "npm run gates:p0 && npm run gates:p1 && npm run gates:p2",
+    "build:player:p3": "vite build --config examples/p3/vite.config.ts && node scripts/gen-p3-html.mjs",
+    "gates:p3": "npm run build:player:p3 && tsx packages/runtime/src/run-p3.ts",
+    "gates": "npm run gates:p0 && npm run gates:p1 && npm run gates:p2 && npm run gates:p3",
     "test": "vitest run"
   },
   "devDependencies": {

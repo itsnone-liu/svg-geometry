@@ -232,10 +232,31 @@ export function renderSvg(state: RuntimeState, sceneIR: any): string {
         body.push(`<path d="M ${x1} ${y1} A ${r} ${r} 0 ${large} ${sweep} ${x2} ${y2}" fill="none" stroke="${esc(String(stroke))}" stroke-width="1.5" opacity="${opacity}"/>`);
         break;
       }
+      case "number_line": {
+        const x1 = margin[3];
+        const x2 = width - margin[1];
+        const y = height / 2;
+        body.push(`<line x1="${x1}" y1="${y.toFixed(3)}" x2="${x2}" y2="${y.toFixed(3)}" stroke="${esc(String(pres.style?.stroke ?? "#6e7681"))}" stroke-width="2" opacity="${opacity}"/>`);
+        for (let i = 0; i <= 10; i++) {
+          const x = x1 + (x2 - x1) * i / 10;
+          body.push(`<line x1="${x.toFixed(3)}" y1="${(y - 5).toFixed(3)}" x2="${x.toFixed(3)}" y2="${(y + 5).toFixed(3)}" stroke="#6e7681" opacity="${opacity}"/>`);
+        }
+        if (pres.label) body.push(`<text x="${x1}" y="${(y + 28).toFixed(3)}" font-size="13" fill="#8b949e">${esc(pres.label)}</text>`);
+        break;
+      }
+      case "moving_body": {
+        if (typeof rb !== "number" || !Number.isFinite(rb)) break;
+        const p = sx({ x: Math.min(Math.max(rb, 0), 1), y: 0 });
+        const fill = pres.style?.fill ?? (hl ? "#f0883e" : "#58a6ff");
+        body.push(`<circle cx="${p.x.toFixed(3)}" cy="${p.y.toFixed(3)}" r="${hl ? 9 : 7}" fill="${esc(String(fill))}" opacity="${opacity}"/>`);
+        if (pres.label) body.push(`<text x="${(p.x + 9).toFixed(3)}" y="${(p.y - 10).toFixed(3)}" font-size="13" fill="#c9d1d9">${esc(pres.label)}</text>`);
+        break;
+      }
       case "marker": {
         const p = posOf(oid) ?? (typeof rb === "number" ? sx({ x: Math.min(Math.max(rb, 0), 1), y: 0 }) : null);
         if (!p) break;
-        body.push(`<rect x="${(p.x - 4).toFixed(3)}" y="${(p.y - 16).toFixed(3)}" width="8" height="32" fill="#3fb950" opacity="${opacity}"/>`);
+        body.push(`<line x1="${p.x.toFixed(3)}" y1="${(p.y - 18).toFixed(3)}" x2="${p.x.toFixed(3)}" y2="${(p.y + 18).toFixed(3)}" stroke="${esc(String(pres.style?.stroke ?? "#3fb950"))}" stroke-width="2" opacity="${opacity}"/>`);
+        if (pres.label) body.push(`<text x="${(p.x + 6).toFixed(3)}" y="${(p.y - 20).toFixed(3)}" font-size="12" fill="#8b949e">${esc(pres.label)}</text>`);
         break;
       }
       case "text": {

@@ -11,7 +11,7 @@
 import { evalTimeline } from "../timeline/evaluate";
 import { CompiledTimeline } from "../timeline/compile";
 import { buildEnv, resolveSource } from "../bindings/resolve";
-import { assertNoTransform } from "../bindings/transform";
+import { applyBindingTransform } from "../bindings/transform";
 import { makeRuntimeError } from "../errors";
 import { ObjectState, RuntimeState } from "../types";
 import { digestOf } from "../digest";
@@ -60,8 +60,7 @@ export function stateAt(math: any, scene: SceneIR, ct: CompiledTimeline, t: numb
     const flags = tev.flags[oid] ?? { visible: true, highlighted: false, dimmed: false };
     let resolvedBinding: unknown = null;
     if (obj.binding && typeof obj.binding.source === "string") {
-      assertNoTransform(obj.binding);
-      resolvedBinding = resolveSource(math, obj.binding.source, env, snapshot);
+      resolvedBinding = applyBindingTransform(obj.binding, resolveSource(math, obj.binding.source, env, snapshot));
     }
     objects[oid] = {
       objectId: oid,
@@ -90,7 +89,13 @@ export function stateAt(math: any, scene: SceneIR, ct: CompiledTimeline, t: numb
     camera: tev.camera,
     caption: tev.caption
   };
-  // domainDigest is attached AFTER digest computation — it must never feed
-  // the state digest (P1 known vectors are frozen).
-  return { ...partial, digest: digestOf(partial), domainDigest: snapshot ? snapshot.digest : null };
+  // Semantic state includes the complete domain snapshot, even when some
+  // domain entities are not currently bound into Scene. With no snapshot the
+  // exact P1 payload remains unchanged, preserving every P1 known vector.
+  const semanticState = snapshot ? { ...partial, domainDigest: snapshot.digest } : partial;
+  return {
+    ...semanticState,
+    digest: digestOf(semanticState),
+    domainDigest: snapshot ? snapshot.digest : null
+  };
 }

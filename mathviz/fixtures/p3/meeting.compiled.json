@@ -1,0 +1,34 @@
+{
+  "manifest": { "schema_version": "mathviz.project/v1", "engine_version": "0.3.0", "domain_versions": { "motion1d": "0.1.0" }, "adapter_versions": { "motion1d": "0.1.0" }, "capability_registry_version": "1.0.0", "problem_id": "p3-meeting" },
+  "math": {
+    "schemaVersion": "mathviz.math/v1", "problemId": "p3-meeting", "domain": "motion1d", "statement": "A starts at 0 m moving at 18 km/h; B starts at 100 m moving at -5 m/s; they meet at 10 s and position 50 m.",
+    "parameters": [],
+    "entities": [
+      { "id": "A", "kind": "body", "props": { "capability_id": "motion1d.constant_velocity", "initial_position": "math:fact:xA0", "segments": [{ "start": "math:fact:t0", "velocity": "math:fact:vA" }] } },
+      { "id": "B", "kind": "body", "props": { "capability_id": "motion1d.constant_velocity", "initial_position": "math:fact:xB0", "segments": [{ "start": "math:fact:t0", "velocity": "math:fact:vB" }] } },
+      { "id": "meeting_marker", "kind": "event_marker", "props": { "event_id": "meeting" } }
+    ],
+    "source_facts": [
+      { "fact_id": "xA0", "name": "A position", "unit": "m", "value": { "kind": "int", "value": "0" }, "provenance": { "kind": "problem_text", "span": { "text": "A starts at 0 m moving at 18 km/h; B starts at 100 m moving at -5 m/s; they meet at 10 s and position 50 m.", "start": 0, "end": 107 } } },
+      { "fact_id": "xB0", "name": "B position", "unit": "m", "value": { "kind": "int", "value": "100" }, "provenance": { "kind": "problem_text", "span": { "text": "A starts at 0 m moving at 18 km/h; B starts at 100 m moving at -5 m/s; they meet at 10 s and position 50 m.", "start": 0, "end": 107 } } },
+      { "fact_id": "t0", "name": "motion start", "unit": "s", "value": { "kind": "int", "value": "0" }, "provenance": { "kind": "problem_text", "span": { "text": "A starts at 0 m moving at 18 km/h; B starts at 100 m moving at -5 m/s; they meet at 10 s and position 50 m.", "start": 0, "end": 107 } } },
+      { "fact_id": "vA", "name": "A speed", "unit": "km/h", "value": { "kind": "int", "value": "18" }, "provenance": { "kind": "problem_text", "span": { "text": "A starts at 0 m moving at 18 km/h; B starts at 100 m moving at -5 m/s; they meet at 10 s and position 50 m.", "start": 0, "end": 107 } } },
+      { "fact_id": "vB", "name": "B speed", "unit": "m/s", "value": { "kind": "int", "value": "-5" }, "provenance": { "kind": "problem_text", "span": { "text": "A starts at 0 m moving at 18 km/h; B starts at 100 m moving at -5 m/s; they meet at 10 s and position 50 m.", "start": 0, "end": 107 } } }
+    ],
+    "derived_facts": [
+      { "fact_id": "meet_time", "name": "meeting time", "unit": "s", "value": { "kind": "int", "value": "10" }, "provenance": { "kind": "derived", "capability_id": "motion1d.meeting_event", "inputs": ["entity:A", "entity:B"] } },
+      { "fact_id": "meet_pos", "name": "meeting position", "unit": "m", "value": { "kind": "int", "value": "50" }, "provenance": { "kind": "derived", "capability_id": "motion1d.solve_position", "inputs": ["entity:A", "fact:meet_time"] } }
+    ],
+    "runtime_values": [], "constraints": [],
+    "events": [{ "event_id": "meeting", "capability_id": "motion1d.meeting_event", "participants": ["entity:A", "entity:B"], "at": { "kind": "int", "value": "10" } }],
+    "assertions": [{ "assertion_id": "assert_meeting", "capability_id": "motion1d.meeting_event", "subject_refs": ["entity:A", "entity:B"], "expectation": "holds" }],
+    "capabilities": ["motion1d.constant_velocity", "motion1d.meeting_event", "motion1d.solve_position"]
+  },
+  "scene": { "schemaVersion": "mathviz.scene/v1", "sceneId": "p3_meeting_scene", "viewport": { "width": 800, "height": 180 }, "objects": [
+    { "objectId": "axis", "primitive": "number_line", "binding": { "source": "math:fact:xA0.value" }, "label": "metres" },
+    { "objectId": "body_A", "primitive": "moving_body", "binding": { "source": "math:entity:A.position", "transform": { "kind": "scale", "params": { "domain_min": 0, "domain_max": 100, "range_min": 0, "range_max": 1 } } }, "label": "A" },
+    { "objectId": "body_B", "primitive": "moving_body", "binding": { "source": "math:entity:B.position", "transform": { "kind": "scale", "params": { "domain_min": 0, "domain_max": 100, "range_min": 0, "range_max": 1 } } }, "label": "B" },
+    { "objectId": "meeting_marker", "primitive": "marker", "binding": { "source": "math:entity:meeting_marker.position", "transform": { "kind": "scale", "params": { "domain_min": 0, "domain_max": 100, "range_min": 0, "range_max": 1 } } }, "label": "meeting" }
+  ], "bindings": [] },
+  "timeline": { "schemaVersion": "mathviz.timeline/v1", "timelineId": "p3_meeting_timeline", "duration": 10, "fps": 24, "tracks": [{ "track_id": "motion", "actions": [{ "kind": "map_model_time", "from": 0, "to": 10, "model_from": { "t": "num", "v": { "kind": "int", "value": "0" } }, "model_to": { "t": "num", "v": { "kind": "int", "value": "10" } } }] }] }
+}

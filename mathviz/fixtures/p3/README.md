@@ -1,0 +1,1 @@
+Motion1D P3 compiled fixtures are reviewed project artifacts. Math source values must resolve only through provenance-bearing Math IR facts; Scene bindings consume snapshots or facts, and the shared Runtime remains domain-agnostic.

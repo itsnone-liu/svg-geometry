@@ -108,6 +108,21 @@ describe("P1 acceptance: seek / play / pause / random access", () => {
     const d = rt.stateAtFrame(120).digest;
     for (let i = 0; i < 100; i++) expect(rt.stateAtFrame(120).digest).toBe(d);
   });
+
+  it("P2.1 preserves every frozen P1 digest vector when no DomainSnapshot exists", () => {
+    const known: Record<number, string> = {
+      0: "24a9c173a5918780d4e44c8995825b4bcfeaced3845d403da59b2d241e7df993",
+      60: "94e640b65f81550a4b8056c97afd8aa79400ab47c9cb6d110dee3714d7bef9d7",
+      90: "5703c3b83ae51e1da575fbe6c15b002ae6d12903e5dc86564a329f243ee36fa3",
+      120: "8affc36505d3a4eee4f9c060349a4afe2656fd9657e4e20eb3a07b6710fbb696",
+      150: "db028047939ff09933db0488493284eea7b63be0741ef8fa076ea84a1f6eab5d",
+      180: "7c1e4b618f88c2342af4a05779cd701e3dcf760158108b93ddc085644ab83488",
+      240: "34638bbd0057377d6fccc853a2752309024cd84e51d6ca39c621311384283a57"
+    };
+    for (const [frame, digest] of Object.entries(known)) {
+      expect(rt.stateAtFrame(Number(frame)).digest).toBe(digest);
+    }
+  });
 });
 
 describe("P1 acceptance: timeline compile rejections", () => {
@@ -216,9 +231,9 @@ describe("P1 acceptance: bindings", () => {
     expectCode(() => loadRuntime(bad).stateAt(4), "E_BINDING");
   });
 
-  it("declared-but-unimplemented transform -> E_CAPABILITY_UNSUPPORTED", () => {
+  it("unsupported presentation transform remains explicit E_CAPABILITY_UNSUPPORTED", () => {
     const bad = JSON.parse(JSON.stringify(project));
-    bad.scene.objects[1].binding.transform = { kind: "scale", by: 2 };
+    bad.scene.objects[1].binding.transform = { kind: "screen_offset", params: {} };
     expectCode(() => loadRuntime(bad).stateAt(4), "E_CAPABILITY_UNSUPPORTED");
   });
 

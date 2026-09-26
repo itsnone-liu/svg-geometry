@@ -1,0 +1,37 @@
+{
+  "manifest": { "schema_version": "mathviz.project/v1", "engine_version": "0.3.0", "domain_versions": { "motion1d": "0.1.0" }, "adapter_versions": { "motion1d": "0.1.0" }, "capability_registry_version": "1.0.0", "problem_id": "p3-piecewise" },
+  "math": {
+    "schemaVersion": "mathviz.math/v1", "problemId": "p3-piecewise", "domain": "motion1d", "statement": "Body moves 5 m/s from 0 to 10 s, then 8 m/s from 10 to 20 s, then rests until 30 s; it reaches 130 m at 20 s.",
+    "parameters": [],
+    "entities": [{ "id": "P", "kind": "body", "props": { "capability_id": "motion1d.piecewise_constant_velocity", "initial_position": "math:fact:x0", "segments": [
+      { "start": "math:fact:t0", "end": "math:fact:t10", "velocity": "math:fact:v1" },
+      { "start": "math:fact:t10", "end": "math:fact:t20", "velocity": "math:fact:v2" },
+      { "start": "math:fact:t20", "end": "math:fact:t30", "velocity": "math:fact:v0" }
+    ] } }, { "id": "reach_marker", "kind": "event_marker", "props": { "event_id": "reach" } }],
+    "source_facts": [
+      { "fact_id": "x0", "name": "initial position", "unit": "m", "value": { "kind": "int", "value": "0" }, "provenance": { "kind": "problem_text", "span": { "text": "Body moves 5 m/s from 0 to 10 s, then 8 m/s from 10 to 20 s, then rests until 30 s; it reaches 130 m at 20 s.", "start": 0, "end": 109 } } },
+      { "fact_id": "t0", "name": "first start", "unit": "s", "value": { "kind": "int", "value": "0" }, "provenance": { "kind": "problem_text", "span": { "text": "Body moves 5 m/s from 0 to 10 s, then 8 m/s from 10 to 20 s, then rests until 30 s; it reaches 130 m at 20 s.", "start": 0, "end": 109 } } },
+      { "fact_id": "t10", "name": "switch time 10", "unit": "s", "value": { "kind": "int", "value": "10" }, "provenance": { "kind": "problem_text", "span": { "text": "Body moves 5 m/s from 0 to 10 s, then 8 m/s from 10 to 20 s, then rests until 30 s; it reaches 130 m at 20 s.", "start": 0, "end": 109 } } },
+      { "fact_id": "t20", "name": "switch time 20", "unit": "s", "value": { "kind": "int", "value": "20" }, "provenance": { "kind": "problem_text", "span": { "text": "Body moves 5 m/s from 0 to 10 s, then 8 m/s from 10 to 20 s, then rests until 30 s; it reaches 130 m at 20 s.", "start": 0, "end": 109 } } },
+      { "fact_id": "t30", "name": "final interval end", "unit": "s", "value": { "kind": "int", "value": "30" }, "provenance": { "kind": "problem_text", "span": { "text": "Body moves 5 m/s from 0 to 10 s, then 8 m/s from 10 to 20 s, then rests until 30 s; it reaches 130 m at 20 s.", "start": 0, "end": 109 } } },
+      { "fact_id": "v1", "name": "first speed", "unit": "m/s", "value": { "kind": "int", "value": "5" }, "provenance": { "kind": "problem_text", "span": { "text": "Body moves 5 m/s from 0 to 10 s, then 8 m/s from 10 to 20 s, then rests until 30 s; it reaches 130 m at 20 s.", "start": 0, "end": 109 } } },
+      { "fact_id": "v2", "name": "second speed", "unit": "m/s", "value": { "kind": "int", "value": "8" }, "provenance": { "kind": "problem_text", "span": { "text": "Body moves 5 m/s from 0 to 10 s, then 8 m/s from 10 to 20 s, then rests until 30 s; it reaches 130 m at 20 s.", "start": 0, "end": 109 } } },
+      { "fact_id": "v0", "name": "rest velocity", "unit": "m/s", "value": { "kind": "int", "value": "0" }, "provenance": { "kind": "problem_text", "span": { "text": "Body moves 5 m/s from 0 to 10 s, then 8 m/s from 10 to 20 s, then rests until 30 s; it reaches 130 m at 20 s.", "start": 0, "end": 109 } } },
+      { "fact_id": "x_target", "name": "target position", "unit": "m", "value": { "kind": "int", "value": "130" }, "provenance": { "kind": "problem_text", "span": { "text": "Body moves 5 m/s from 0 to 10 s, then 8 m/s from 10 to 20 s, then rests until 30 s; it reaches 130 m at 20 s.", "start": 0, "end": 109 } } }
+    ],
+    "derived_facts": [
+      { "fact_id": "x20", "name": "position at 20 s", "unit": "m", "value": { "kind": "int", "value": "130" }, "provenance": { "kind": "derived", "capability_id": "motion1d.solve_position", "inputs": ["entity:P", "fact:t20"] } },
+      { "fact_id": "reach_t", "name": "target reach time", "unit": "s", "value": { "kind": "int", "value": "20" }, "provenance": { "kind": "derived", "capability_id": "motion1d.reach_event", "inputs": ["entity:P", "fact:x_target"] } }
+    ],
+    "runtime_values": [], "constraints": [],
+    "events": [{ "event_id": "reach", "capability_id": "motion1d.reach_event", "participants": ["entity:P", "fact:x_target"], "at": { "kind": "int", "value": "20" } }],
+    "assertions": [{ "assertion_id": "assert_reach", "capability_id": "motion1d.reach_event", "subject_refs": ["entity:P"], "expectation": "holds" }],
+    "capabilities": ["motion1d.piecewise_constant_velocity", "motion1d.solve_position", "motion1d.reach_event"]
+  },
+  "scene": { "schemaVersion": "mathviz.scene/v1", "sceneId": "p3_piecewise_scene", "viewport": { "width": 800, "height": 180 }, "objects": [
+    { "objectId": "axis", "primitive": "number_line", "binding": { "source": "math:fact:x0.value" }, "label": "distance (m)" },
+    { "objectId": "body_P", "primitive": "moving_body", "binding": { "source": "math:entity:P.position", "transform": { "kind": "scale", "params": { "domain_min": 0, "domain_max": 140, "range_min": 0, "range_max": 1 } } }, "label": "P" },
+    { "objectId": "reach_marker", "primitive": "marker", "binding": { "source": "math:entity:reach_marker.position", "transform": { "kind": "scale", "params": { "domain_min": 0, "domain_max": 140, "range_min": 0, "range_max": 1 } } }, "label": "target" }
+  ], "bindings": [] },
+  "timeline": { "schemaVersion": "mathviz.timeline/v1", "timelineId": "p3_piecewise_timeline", "duration": 30, "fps": 24, "tracks": [{ "track_id": "motion", "actions": [{ "kind": "map_model_time", "from": 0, "to": 30, "model_from": { "t": "num", "v": { "kind": "int", "value": "0" } }, "model_to": { "t": "num", "v": { "kind": "int", "value": "30" } } }] }] }
+}

@@ -10,10 +10,13 @@ import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { loadRuntime } from "./runtime";
 import { canonicalSerialize } from "./digest";
+import { summarizeGates } from "./gate-summary";
 
 const ROOT = path.resolve(__dirname, "..", "..", "..");
 
 function findChrome(): string | null {
+  // Deterministic harness override for testing freeze/development skip paths.
+  if (process.env.MATHVIZ_TEST_NO_CHROME === "1") return null;
   const candidates = [
     "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
     "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
@@ -74,11 +77,14 @@ function main(): void {
 
   // ---- G10 cross-output consistency (node runtime vs browser bundle) ----
   const chrome = findChrome();
+  const allowBrowserSkip = process.env.ALLOW_BROWSER_SKIP === "1";
   const g10: any = { gate: "G10_cross_output_consistency", browser: chrome ?? "NOT FOUND", frames: [], status: "PASS" };
   if (!chrome) {
-    g10.status = "SKIP";
-    g10.note = "chrome not found; run on a machine with Chrome to execute the browser-side comparison";
-    console.log("WARN G10 skipped: chrome executable not found");
+    g10.status = allowBrowserSkip ? "SKIP" : "INCOMPLETE";
+    g10.note = allowBrowserSkip
+      ? "development-only G10 skip explicitly allowed; this run is INCOMPLETE"
+      : "Chrome not found; required G10 was not executed";
+    console.log(allowBrowserSkip ? "WARN G10 development skip allowed; run is INCOMPLETE" : "INCOMPLETE G10: Chrome executable not found");
   } else {
     for (const f of frames) {
       const node = rt.stateAtFrame(f);
@@ -90,8 +96,8 @@ function main(): void {
     console.log(`${g10.status === "PASS" ? "OK  " : "BAD "} G10 cross-output consistency (node vs chrome, ${frames.length} frames)`);
   }
 
-  const gates = { project: "fixtures/p1/minimal-motion.compiled.json", project_digest: rt.projectDigest, results: [g9, g10] };
-  const allGreen = g9.status === "PASS" && (g10.status === "PASS" || g10.status === "SKIP");
+  const summary = summarizeGates([g9, g10], allowBrowserSkip);
+  const gates = { project: "fixtures/p1/minimal-motion.compiled.json", project_digest: rt.projectDigest, results: [g9, g10], summary: summary.summary };
 
   const outDir = path.join(ROOT, "runs", "p1");
   fs.mkdirSync(outDir, { recursive: true });
@@ -100,8 +106,8 @@ function main(): void {
   fs.writeFileSync(path.join(outDir, "digest-vectors.json"), canonicalSerialize(digestVectors) + "\n", "utf8");
 
   console.log(`report: ${path.join(outDir, "gates.json")}`);
-  console.log(allGreen ? "P1 GATES: ALL GREEN" : "P1 GATES: FAILURES PRESENT");
-  process.exitCode = allGreen ? 0 : 1;
+  console.log(`P1 GATES: ${summary.summary}`);
+  process.exitCode = summary.exitCode;
 }
 
 main();

@@ -48,9 +48,9 @@ export interface RuntimeState {
   camera: CameraState;
   caption: CaptionState | null;
   digest: string;
-  /** P2: digest of the domain snapshot (geometry) for this state; null when
-   *  no domain adapter ran. Attached AFTER the state digest is computed, so
-   *  it never feeds the RuntimeState digest (P1 vectors stay frozen). */
+  /** P2.1: digest of complete domain semantic state (geometry/motion), null
+   *  when no domain adapter ran. Included in RuntimeState.digest whenever a
+   *  snapshot exists; P1 no-snapshot digest vectors remain byte-identical. */
   domainDigest?: string | null;
 }
 
