@@ -114,8 +114,11 @@ export function evaluateFunction(program: VerifiedFunctionProgram, ctx: DomainEv
     }
   }
 
-  // ---- claim points (move with the sweep: symbolic values re-evaluated
-  //      under the CURRENT parameter values every frame) ----
+  // ---- fact projection (P4.1): each derived fact reads under the CURRENT
+  //      parameter values — symbolic roots a-1/a+1 become concrete points as
+  //      the sweep runs. Scene draws these via `math:fact:<id>.point`; no
+  //      drawable entities exist in Math IR (claim_point removed) ----
+  const facts: Record<string, { kind: string; value: number | null; point: { x: number; y: number } | null }> = {};
   for (const claim of program.derivedClaims) {
     let env: ParameterEnv | null;
     if (claim.kind === "solve_equation") {
@@ -125,14 +128,17 @@ export function evaluateFunction(program: VerifiedFunctionProgram, ctx: DomainEv
     } else {
       env = null;
     }
-    entities[claim.pointEntityId ?? claim.id] = {
-      kind: "point",
-      claimId: claim.id,
-      capabilityId: claim.capabilityId,
-      position: claimPosition(claim, program, env)
+    let value: number | null = null;
+    if (env) {
+      try { value = claimValueToNumber(claim.value, env as any, `claim '${claim.id}'`); } catch { value = null; }
+    }
+    facts[claim.id] = {
+      kind: claim.kind,
+      value,
+      point: claimPosition(claim, program, env)
     };
   }
 
-  const partial = { modelTime: ctx.modelTime, entities };
+  const partial = { modelTime: ctx.modelTime, entities, facts };
   return { ...partial, digest: digestOf(partial) } as FunctionSnapshot;
 }

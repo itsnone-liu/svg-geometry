@@ -4,7 +4,9 @@
 // P1 property-path semantics (frozen):
 //   - entity: path walks the entity's `props` object (math:entity:A.position
 //     -> A.props.position). Entities carry their payload in props by contract.
-//   - fact:   path walks the fact object itself (math:fact:meet_pos.value).
+//   - fact:   snapshot fact projection first (P4.1: the fact under the
+//             CURRENT runtime state, e.g. math:fact:root_left.point), then
+//             the frozen Math fact object fallback (math:fact:meet_pos.value).
 //   - param:  path walks the parameter object (math:param:u.default).
 //   - runtime: the expression is evaluated in the current environment
 //     (reserved symbol `t` = current model time; parameters at their declared
@@ -84,6 +86,13 @@ export function resolveSource(math: any, source: string, env: Env, snapshot?: un
       return walk(e.props ?? {}, parsed.path, `entity '${parsed.id}'`);
     }
     case "fact": {
+      // P4.1 frozen order: dynamic snapshot fact projection FIRST (the fact
+      // under the CURRENT runtime state, e.g. a moving root point), then the
+      // frozen Math fact object as fallback (static facts, label values).
+      const snapFact: any = (snapshot as any)?.facts?.[parsed.id];
+      if (snapFact !== undefined) {
+        return walk(snapFact, parsed.path, `fact '${parsed.id}'`);
+      }
       const f = [...(math?.source_facts ?? []), ...(math?.derived_facts ?? [])].find((x: any) => x?.fact_id === parsed.id);
       if (!f) throw makeRuntimeError("E_BINDING", `binding references missing fact '${parsed.id}'`);
       return walk(f, parsed.path, `fact '${parsed.id}'`);

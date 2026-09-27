@@ -5,10 +5,12 @@ import { loadRuntime } from "../packages/runtime/src/runtime";
 import { summarizeGates } from "../packages/runtime/src/gate-summary";
 import { function2dAdapter } from "../packages/domains/function2d/src/adapter";
 import { compileFunction } from "../packages/domains/function2d/src/compile";
+import { evaluateFunction } from "../packages/domains/function2d/src/evaluate";
 import { differentiate } from "../packages/domains/function2d/src/differentiate";
 import { sampleFunction } from "../packages/domains/function2d/src/sampling";
 import { checkCartesianWindow } from "../packages/domains/function2d/src/layout";
 import { FUNCTION2D_CAPABILITIES, FUNCTION_EPS, FUNCTION_SAMPLE_COUNT } from "../packages/domains/function2d/src/constants";
+import { resolveSource } from "../packages/runtime/src/bindings/resolve";
 import { renderSvg } from "../packages/renderer-svg/src/render";
 import { VizRuntimeError } from "../packages/runtime/src/errors";
 import { runCase } from "../packages/contracts/src/gates";
@@ -60,8 +62,8 @@ describe("P4 Function2D Math IR -> VerifiedFunctionProgram", () => {
     const state = rt.stateAt(6);
     const curve: any = state.objects.curve_f.resolvedBinding;
     expect(curve.parameterValues.a).toBe(0); // declared default, not model time t=0.5
-    expect((state.objects.pt_root_left.resolvedBinding as any).position).toEqual({ x: -1, y: 0 });
-    expect((state.objects.pt_root_right.resolvedBinding as any).position).toEqual({ x: 1, y: 0 });
+    expect(state.objects.pt_root_left.resolvedBinding).toEqual({ x: -1, y: 0 });
+    expect(state.objects.pt_root_right.resolvedBinding).toEqual({ x: 1, y: 0 });
   });
 
   it("moves curve, roots, and vertex from runtime parameter binding at arbitrary time", () => {
@@ -76,27 +78,28 @@ describe("P4 Function2D Math IR -> VerifiedFunctionProgram", () => {
     expect(curve.parameterValues.a).toBeCloseTo(0, 12);
     expect(curve.segments).toHaveLength(1);
     expect(curve.segments[0]).toHaveLength(257);
-    expect((s.objects.pt_root_left.resolvedBinding as any).position).toEqual({ x: -1, y: 0 });
-    expect((s.objects.pt_root_right.resolvedBinding as any).position).toEqual({ x: 1, y: 0 });
-    expect((s.objects.pt_vertex.resolvedBinding as any).position).toEqual({ x: 0, y: -1 });
+    // Scene point objects bind math:fact:<id>.point -> snapshot fact projection
+    expect(s.objects.pt_root_left.resolvedBinding).toEqual({ x: -1, y: 0 });
+    expect(s.objects.pt_root_right.resolvedBinding).toEqual({ x: 1, y: 0 });
+    expect(s.objects.pt_vertex.resolvedBinding).toEqual({ x: 0, y: -1 });
     expect(s.digest).toMatch(/^[0-9a-f]{64}$/);
     expect(rt.stateAt(6).digest).toBe(s.digest);
   });
 
   it("evaluates intersections, derivatives, extrema, values, and exact equation roots", () => {
     const intersections = loadRuntime(fixtures.intersections, { domains }).stateAt(3);
-    expect((intersections.objects.pt_x_left.resolvedBinding as any).position).toEqual({ x: -1, y: 1 });
-    expect((intersections.objects.pt_x_right.resolvedBinding as any).position).toEqual({ x: 3, y: 9 });
+    expect(intersections.objects.pt_x_left.resolvedBinding).toEqual({ x: -1, y: 1 });
+    expect(intersections.objects.pt_x_right.resolvedBinding).toEqual({ x: 3, y: 9 });
 
     const calc = loadRuntime(fixtures.calculus, { domains }).stateAt(3);
-    expect((calc.objects.pt_max.resolvedBinding as any).position).toEqual({ x: -1, y: 2 });
-    expect((calc.objects.pt_min.resolvedBinding as any).position).toEqual({ x: 1, y: -2 });
-    expect((calc.objects.pt_d2.resolvedBinding as any).position).toEqual({ x: 2, y: 9 });
-    expect((calc.objects.pt_v2.resolvedBinding as any).position).toEqual({ x: 2, y: 2 });
+    expect(calc.objects.pt_max.resolvedBinding).toEqual({ x: -1, y: 2 });
+    expect(calc.objects.pt_min.resolvedBinding).toEqual({ x: 1, y: -2 });
+    expect(calc.objects.pt_d2.resolvedBinding).toEqual({ x: 2, y: 9 });
+    expect(calc.objects.pt_v2.resolvedBinding).toEqual({ x: 2, y: 2 });
 
     const eq = loadRuntime(fixtures.equation, { domains }).stateAt(3);
-    expect((eq.objects.pt_sol_left.resolvedBinding as any).position).toEqual({ x: 2, y: 0 });
-    expect((eq.objects.pt_sol_right.resolvedBinding as any).position).toEqual({ x: 3, y: 0 });
+    expect(eq.objects.pt_sol_left.resolvedBinding).toEqual({ x: 2, y: 0 });
+    expect(eq.objects.pt_sol_right.resolvedBinding).toEqual({ x: 3, y: 0 });
   });
 
   it("validates each Function2D scene's fixed cartesian window", () => {
@@ -149,7 +152,41 @@ describe("P4 Function2D Math IR -> VerifiedFunctionProgram", () => {
     const program = compileFunction(fixtures.invalid.math);
     expect(program.derivedClaims).toHaveLength(1);
     const state = loadRuntime(fixtures.invalid, { domains }).stateAt(3);
-    expect((state.objects.pt_sol_zero.resolvedBinding as any).position).toEqual({ x: 0, y: 0 });
+    expect(state.objects.pt_sol_zero.resolvedBinding).toEqual({ x: 0, y: 0 });
+  });
+
+  it("P4.1: fact projection replaces drawable entities in Math IR", () => {
+    // No fixture entity is drawing-motivated anymore...
+    for (const doc of Object.values(fixtures)) {
+      expect((doc.math.entities as any[]).some((e) => e.kind === "claim_point")).toBe(false);
+    }
+    // ...and re-adding one fails closed at compile time.
+    const doc = structuredClone(fixtures.equation);
+    doc.math.entities.push({ id: "pt_back", kind: "claim_point", props: { fact_id: "sol_left" } });
+    expectCode(() => compileFunction(doc.math), "E_CAPABILITY_UNSUPPORTED");
+
+    // Snapshot exposes facts keyed by fact id (point + numeric value) and the
+    // digest covers them; scene objects resolve math:fact:<id>.point directly.
+    const rt = loadRuntime(fixtures.sweep, { domains });
+    const s6 = rt.stateAt(6); // a = 0
+    const snap = (s6 as any).domainDigest;
+    expect(snap).toMatch(/^[0-9a-f]{64}$/);
+    const prog = compileFunction(fixtures.sweep.math);
+    const snapshot6 = evaluateFunction(prog, { modelTime: 0.5, env: { t: { kind: "num", v: 0.5 } }, resolveBinding: (src: string) => (src === "math:runtime:a_at_t" ? 0 : null) } as any);
+    expect(snapshot6.facts.root_left).toEqual({ kind: "roots", value: -1, point: { x: -1, y: 0 } });
+    expect(snapshot6.facts.vertex_x).toEqual({ kind: "extremum", value: 0, point: { x: 0, y: -1 } });
+    expect(Object.values(snapshot6.entities).every((e: any) => e.kind === "function_curve")).toBe(true);
+
+    // Outside every mapping window the claim is INACTIVE: fact exists, values null.
+    const s0 = rt.stateAt(0);
+    expect(s0.objects.pt_root_left.resolvedBinding).toBeNull();
+
+    // Resolver order: snapshot fact first, frozen Math fact fallback when no
+    // snapshot carries the fact (labels may bind the frozen ExactNumber).
+    const math = fixtures.equation.math;
+    const frozen = resolveSource(math, "math:fact:sol_left.value", {});
+    expect(frozen).toEqual({ kind: "int", value: "2" }); // frozen fallback, no snapshot
+    expectCode(() => resolveSource(math, "math:fact:no_such_fact.value", {}), "E_BINDING");
   });
 
   it("keeps SymPy freeze-required: explicit skip is incomplete, never green", () => {

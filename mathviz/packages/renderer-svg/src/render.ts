@@ -61,6 +61,10 @@ function readCartesianWindow(scene: any): CartesianWindow | null {
   return { xMin: x_min, xMax: x_max, yMin: y_min, yMax: y_max };
 }
 
+function isPlainPoint(rb: any): boolean {
+  return typeof rb?.x === "number" && Number.isFinite(rb.x) && typeof rb?.y === "number" && Number.isFinite(rb.y);
+}
+
 function collectGeometry(state: RuntimeState): Geom {
   const g: Geom = { points: [], segments: [], circles: [] };
   for (const oid of Object.keys(state.objects)) {
@@ -68,6 +72,7 @@ function collectGeometry(state: RuntimeState): Geom {
     const rb: any = st.resolvedBinding;
     if (!rb || typeof rb !== "object") continue;
     if (rb.kind === "point" && rb.position) { g.points.push(rb.position); continue; }
+    if (isPlainPoint(rb)) { g.points.push(rb); continue; } // P4.1 fact projection: math:fact:<id>.point
     if ((rb.kind === "segment" || rb.kind === "line") && rb.a && rb.b) { g.segments.push({ a: rb.a, b: rb.b }); continue; }
     if (rb.kind === "circle" && rb.center && typeof rb.radius === "number") { g.circles.push({ c: rb.center, r: rb.radius }); continue; }
   }
@@ -133,6 +138,7 @@ export function renderSvg(state: RuntimeState, sceneIR: any): string {
     const rb: any = state.objects[oid]?.resolvedBinding;
     if (!rb || typeof rb !== "object") return null;
     if (rb.kind === "point" && rb.position) return sx(rb.position);
+    if (isPlainPoint(rb)) return sx(rb); // P4.1: math:fact:<id>.point projection
     return null;
   };
   const segOf = (oid: string): { a: P; b: P } | null => {

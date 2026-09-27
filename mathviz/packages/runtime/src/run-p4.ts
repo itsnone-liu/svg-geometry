@@ -242,7 +242,7 @@ async function main() {
         model_time: state.modelTime,
         state_digest: state.digest,
         curve_f: snapAny.entities?.f ? { parameterValues: snapAny.entities.f.parameterValues, segments: snapAny.entities.f.segments.length, sample_span: snapAny.entities.f.segments[0]?.length ?? 0 } : null,
-        points: Object.fromEntries(program.derivedClaims.map((c) => [c.id, snapAny.entities?.[c.pointEntityId ?? c.id]?.position ?? null]))
+        points: Object.fromEntries(program.derivedClaims.map((c) => [c.id, snapAny.facts?.[c.id]?.point ?? null]))
       });
     }
     functionVectors[name] = vectors;
@@ -406,9 +406,12 @@ async function main() {
               env2[fn.variable] = { kind: "num", v: xNum };
               const cv0 = evalExpr(d2, env2);
               const cv = cv0.kind === "exact" ? ratToNumber(cv0.r as Rat) : cv0.v;
-              const expected = cv > FUNCTION_EPS ? "min" : cv < -FUNCTION_EPS ? "max" : "flat";
-              const ok = p.type === expected;
-              classDetail.push({ x: p.x, second_derivative: cv, sympy_type: p.type, ts_type: expected, ok });
+              // P4.1: no "flat" verdict — an inconclusive second derivative
+              // must have been REFUSED by SymPy; a returned point here is a
+              // cross-check failure, never a classification.
+              const expected = cv > FUNCTION_EPS ? "min" : cv < -FUNCTION_EPS ? "max" : null;
+              const ok = expected !== null && p.type === expected;
+              classDetail.push({ x: p.x, second_derivative: cv, sympy_type: p.type, ts_type: expected ?? "undetermined", ok });
               if (!ok) classOk = false;
             }
             row(name, `extremum_classification:${fn.id}`, classOk, classDetail);
@@ -442,13 +445,32 @@ async function main() {
         }
       }
     }
-    // (c) negative: non-finite solution set must be refused, not guessed
+    // (c) negatives: fail-closed refusals must stay refusals (P4.1)
     try {
       const eq = invalidFixture.math.entities.find((e: any) => e.id === "eq_tan");
       await oracle.solveEquation(eq.props.lhs, eq.props.rhs, "x");
       row("invalid-function", "nonfinite_solution_set_refused", false, { error: "oracle unexpectedly returned a finite set" });
     } catch (e: any) {
       row("invalid-function", "nonfinite_solution_set_refused", e?.code === "E_CAPABILITY_UNSUPPORTED", { code: e?.code, message: e?.message });
+    }
+    // ConditionSet (x^2+a=0 over Reals, free parameter a): no solve() fallback
+    try {
+      await oracle.solveEquation(
+        { t: "app", op: "+", args: [{ t: "app", op: "^", args: [{ t: "sym", name: "x" }, { t: "num", v: { kind: "int", value: "2" } }] }, { t: "sym", name: "a" }] },
+        { t: "num", v: { kind: "int", value: "0" } },
+        "x"
+      );
+      row("negative", "conditionset_refused", false, { error: "oracle unexpectedly solved a conditional/parametric set" });
+    } catch (e: any) {
+      row("negative", "conditionset_refused", e?.code === "E_CAPABILITY_UNSUPPORTED", { code: e?.code, message: e?.message });
+    }
+    // f(x)=x^3: f'(0)=0 with f''(0)=0 — NOT classifiable; must be refused
+    try {
+      const cube = { t: "app", op: "^", args: [{ t: "sym", name: "x" }, { t: "num", v: { kind: "int", value: "3" } }] };
+      await oracle.extremum(cube as any, "x");
+      row("negative", "inconclusive_extremum_refused", false, { error: "oracle unexpectedly classified f''=0 stationary point" });
+    } catch (e: any) {
+      row("negative", "inconclusive_extremum_refused", e?.code === "E_CAPABILITY_UNSUPPORTED", { code: e?.code, message: e?.message });
     }
     sympyOracleLog.rows = rows;
   }

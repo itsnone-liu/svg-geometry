@@ -51,10 +51,6 @@ export interface FunctionClaim {
   at?: ExactRational;
   value: any;
   parameterSymbols: string[];
-  /** snapshot entity key override: the claim_point entity id when the claim
-   *  is declared in Math IR as a drawable point (Math ids are globally
-   *  unique, so entity id differs from the fact id). */
-  pointEntityId?: string;
 }
 
 export interface FunctionAssertion {
@@ -89,18 +85,24 @@ export interface FunctionCurveSnapshotEntity {
   segments: Array<Array<{ x: number; y: number }>>;
 }
 
-export interface FunctionPointSnapshotEntity {
-  [key: string]: unknown;
-  kind: "point";
-  claimId: string;
-  capabilityId: string;
-  position: { x: number; y: number } | null;
-}
+export type FunctionSnapshotEntity = FunctionCurveSnapshotEntity;
 
-export type FunctionSnapshotEntity = FunctionCurveSnapshotEntity | FunctionPointSnapshotEntity;
+/** P4.1: per-state projection of a derived fact, keyed by Math fact_id.
+ * Math IR stays pure semantics (claim_point is gone); Scene draws a fact by
+ * binding `math:fact:<fact_id>.point`, which resolves here snapshot-first.
+ * `value` is the fact's numeric reading under the CURRENT parameter values
+ * (null while the claim is inactive, e.g. a swept parameter outside every
+ * mapping window); `point` is the drawable position or null. */
+export interface FunctionFactSnapshot {
+  [key: string]: unknown;
+  kind: FunctionClaimKind;
+  value: number | null;
+  point: { x: number; y: number } | null;
+}
 
 export interface FunctionSnapshot extends DomainSnapshot {
   entities: Record<string, FunctionSnapshotEntity>;
+  facts: Record<string, FunctionFactSnapshot>;
 }
 
 export type ParameterValues = Record<string, number | null>;

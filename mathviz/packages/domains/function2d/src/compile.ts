@@ -134,7 +134,6 @@ export function compileFunction(math: any): VerifiedFunctionProgram {
   const equations: CompiledEquation[] = [];
   const functionById = new Map<string, CompiledFunction>();
   const equationById = new Map<string, CompiledEquation>();
-  const claimPointFacts: Array<{ entityId: string; factId: string }> = [];
   let anyRuntimeBinding = false;
   const usedCapabilities = new Set<string>();
 
@@ -209,15 +208,12 @@ export function compileFunction(math: any): VerifiedFunctionProgram {
       equationById.set(eq.id, eq);
       equations.push(eq);
       usedCapabilities.add("function2d.solve_equation");
-    } else if (e.kind === "claim_point") {
-      // passive scene anchor: declares that fact X is drawn as a point; the
-      // snapshot supplies the live geometry (snapshot-first resolution)
-      const factId = props.fact_id;
-      if (typeof factId !== "string" || !factId) {
-        err("E_SCHEMA", `claim_point entity '${e.id}': props.fact_id required`);
-      }
-      claimPointFacts.push({ entityId: e.id, factId });
     } else {
+      // P4.1: `claim_point` entities were removed from Math IR — drawing a
+      // derived fact now goes through the snapshot fact projection and a
+      // Scene binding `math:fact:<fact_id>.point`; nothing drawable lives in
+      // the Math document. Any leftover drawing-motivated entity kind is
+      // rejected here so stale producers fail loudly.
       err("E_CAPABILITY_UNSUPPORTED", `function2d compile: entity '${e.id}' has unsupported kind '${e.kind}'`);
     }
   }
@@ -300,20 +296,6 @@ export function compileFunction(math: any): VerifiedFunctionProgram {
     claims.push(claim);
     claimById.set(claim.id, claim);
     usedCapabilities.add(cap);
-  }
-
-  // claim_point entities must reference real derived claims (G6 parity); the
-  // entity id becomes the snapshot key so bindings resolve snapshot-first
-  const claimEntityByFact = new Map<string, string>();
-  for (const { entityId, factId } of claimPointFacts) {
-    if (!claimById.has(factId)) {
-      err("E_BINDING", `claim_point entity '${entityId}': fact_id '${factId}' is not a derived function claim`);
-    }
-    if (!claimEntityByFact.has(factId)) claimEntityByFact.set(factId, entityId);
-  }
-  for (const claim of claims) {
-    const eid = claimEntityByFact.get(claim.id);
-    if (eid) claim.pointEntityId = eid;
   }
 
   // parameter sweep: any runtime-bound parameter REQUIRES the declared

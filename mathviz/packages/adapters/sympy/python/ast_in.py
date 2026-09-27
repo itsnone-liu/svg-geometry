@@ -44,8 +44,15 @@ class WorkerError(Exception):
 def sym(name):
     if not isinstance(name, str) or not name:
         raise WorkerError("E_SCHEMA", "sym node needs a non-empty name")
+    # P4.1: every MathViz symbol denotes a REAL quantity (ExactNumber is
+    # rational-only; function variables range over real domains; parameters
+    # carry finite rational ranges). Declaring real=True lets solveset PROVE
+    # that e.g. {a-1, a+1} is real (collapsing Intersection(..., Reals) to a
+    # plain FiniteSet), while conditionally-real shapes like sqrt(-a) stay
+    # unproven and must be refused downstream — they encode an unresolved
+    # parameter condition (a <= 0), which P4 has no assumptions layer for.
     if name not in _SYMBOL_CACHE:
-        _SYMBOL_CACHE[name] = Symbol(name)
+        _SYMBOL_CACHE[name] = Symbol(name, real=True)
     return _SYMBOL_CACHE[name]
 
 

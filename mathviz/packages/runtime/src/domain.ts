@@ -18,10 +18,26 @@ export interface DomainSnapshotEntity {
   [key: string]: unknown;
 }
 
-/** Opaque-to-the-runtime domain snapshot: entities keyed by id + digest. */
+/** P4.1: dynamic per-state projection of a (derived) Math fact. The Math
+ * document owns WHAT the fact is (semantics, provenance); the domain adapter
+ * projects HOW that fact reads under the CURRENT runtime state — e.g. a
+ * symbolic root a-1 becomes a concrete point once the parameter `a` is bound.
+ * Scene binds `math:fact:<fact_id>.point`; no drawing-motivated entities are
+ * ever added to Math IR (claim_point removed). Cross-domain by design:
+ * motion event facts and geometry dynamic facts project the same way. */
+export interface DomainFactSnapshot {
+  /** semantic kind, e.g. "roots" | "intersection" | "extremum" | "event". */
+  kind: string;
+  [key: string]: unknown;
+}
+
+/** Opaque-to-the-runtime domain snapshot: entities keyed by id + digest.
+ * `facts` (P4.1, optional) is the fact projection layer, keyed by Math
+ * fact_id; it participates in the snapshot digest whenever present. */
 export interface DomainSnapshot {
   modelTime: number | null;
   entities: Record<string, DomainSnapshotEntity>;
+  facts?: Record<string, DomainFactSnapshot>;
   digest: string;
 }
 
