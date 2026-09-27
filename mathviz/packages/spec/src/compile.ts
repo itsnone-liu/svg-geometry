@@ -211,18 +211,26 @@ export function compileProblemSpec(spec: any): CompiledSpec {
     );
   }
 
-  // 2. source layer passes through verbatim; answer layers start empty
+  // 2. source layer passes through verbatim EXCEPT spec-layer provenance:
+  //    Math IR v1 entities/constraints have no provenance field (that schema
+  //    is frozen with additionalProperties:false) — the spec document stays
+  //    the audit artifact for entity/constraint provenance.
+  const stripProvenance = <T,>(arr: T[]): T[] =>
+    arr.map((x: any) => {
+      const { provenance: _drop, ...rest } = x ?? {};
+      return rest as T;
+    });
   const math: any = {
     schemaVersion: "mathviz.math/v1",
     problemId: spec.problemId,
     domain: spec.domain,
     statement: spec.statement,
     parameters: structuredClone(spec.parameters ?? []),
-    entities: structuredClone(spec.entities ?? []),
+    entities: stripProvenance(structuredClone(spec.entities ?? [])),
     source_facts: structuredClone(spec.source_facts ?? []),
     derived_facts: [],
     runtime_values: [],
-    constraints: structuredClone(spec.constraints ?? []),
+    constraints: stripProvenance(structuredClone(spec.constraints ?? [])),
     assertions: [],
     capabilities: []
   };

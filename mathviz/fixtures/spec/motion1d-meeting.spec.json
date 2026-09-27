@@ -16,6 +16,14 @@
             "velocity": "math:fact:vA"
           }
         ]
+      },
+      "provenance": {
+        "kind": "problem_text",
+        "span": {
+          "text": "甲从位置 0 m 出发，以 5 m/s 匀速前进",
+          "start": 0,
+          "end": 24
+        }
       }
     },
     {
@@ -30,6 +38,14 @@
             "velocity": "math:fact:vB"
           }
         ]
+      },
+      "provenance": {
+        "kind": "problem_text",
+        "span": {
+          "text": "乙从位置 100 m 出发，以 -5 m/s 匀速前进",
+          "start": 25,
+          "end": 52
+        }
       }
     }
   ],

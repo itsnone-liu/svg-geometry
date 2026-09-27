@@ -70,6 +70,14 @@
             "value": "0"
           }
         }
+      },
+      "provenance": {
+        "kind": "problem_text",
+        "span": {
+          "text": "x^2 - 5x + 6 = 0",
+          "start": 4,
+          "end": 20
+        }
       }
     }
   ],

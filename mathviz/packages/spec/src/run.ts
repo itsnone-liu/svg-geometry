@@ -112,14 +112,19 @@ function main(): void {
         semantic_errors: codes(semErrs)
       });
     }
-    const invalid = loadJson(path.join(SPEC_DIR, "cases.invalid.json"));
-    for (const c of invalid.cases) {
-      const schemaErrs = gateSchema(c.doc, "problemspec");
-      const semErrs = validateProblemSpec(c.doc);
-      const got = new Set([...codes(schemaErrs), ...codes(semErrs)]);
-      const ok = c.expected_error_codes.every((code: string) => got.has(code));
-      rows.push({ case: c.case_id, ok, expected: c.expected_error_codes, got: [...got] });
+    const invalidFiles = ["cases.invalid.json", "cases-p501.invalid.json"];
+    const invalidRows: any[] = [];
+    for (const file of invalidFiles) {
+      const invalid = loadJson(path.join(SPEC_DIR, file));
+      for (const c of invalid.cases) {
+        const schemaErrs = gateSchema(c.doc, "problemspec");
+        const semErrs = validateProblemSpec(c.doc);
+        const got = new Set([...codes(schemaErrs), ...codes(semErrs)]);
+        const ok = c.expected_error_codes.every((code: string) => got.has(code));
+        invalidRows.push({ case: c.case_id, ok, expected: c.expected_error_codes, got: [...got] });
+      }
     }
+    rows.push(...invalidRows);
     const ok = rows.every((r) => r.ok);
     gates.push({ gate: "G15_spec_contract", status: ok ? "PASS" : "FAIL", rows });
     report.push(`## G15_spec_contract: ${ok ? "PASS" : "FAIL"}`);

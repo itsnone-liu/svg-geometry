@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://mathviz.dev/schemas/problemspec/v1",
-  "title": "MathViz ProblemSpec v1 (P5.0, frozen)",
-  "description": "The LLM-facing INPUT contract, layered BEFORE Math IR (P5 restructure). A ProblemSpec expresses SOURCE semantics only: the problem's world (entities), its givens (source facts with problem-text provenance), and WHAT is asked (goals referencing registry capabilities). It is structurally INCAPABLE of carrying answers: goals admit exactly {goalId, capabilityId, inputs}; answer-shaped layers (derived_facts, events, runtime_values, assertions, capabilities, scene) are not properties of this object at all. A deterministic compiler (packages/spec) turns a valid ProblemSpec into a Math IR v1 document whose derived facts are computed by the domain solvers, never asserted by the producer. The LLM (P5.1) parses NL -> ProblemSpec and MUST NOT generate Math IR directly.",
+  "title": "MathViz ProblemSpec v1 (P5.0, frozen; P5.0.1 parser surface hardened)",
+  "description": "The LLM-facing INPUT contract, layered BEFORE Math IR (P5 restructure). A ProblemSpec expresses SOURCE semantics only: the problem's world (entities), its givens (source facts with problem-text provenance), and WHAT is asked (goals referencing registry capabilities). It is structurally INCAPABLE of carrying answers: goals admit exactly {goalId, capabilityId, inputs}; answer-shaped layers (derived_facts, events, runtime_values, assertions, capabilities, scene) are not properties of this object at all. P5.0.1 hardens the parser surface: every source semantic payload is allow-listed per (domain, entity kind) — unknown props are E_SCHEMA, never ignored; every source entity and constraint must cite a problem_text span; constraint params are forbidden outright in this MVP (no capability needs them).",
   "type": "object",
   "additionalProperties": false,
   "required": ["schemaVersion", "problemId", "domain", "statement", "entities", "source_facts", "goals"],
@@ -13,7 +13,7 @@
     "statement": {
       "type": "string",
       "minLength": 1,
-      "description": "Original problem text. Source-fact provenance spans resolve against this string; goals do not reference it."
+      "description": "Original problem text. Source-fact, source-entity and constraint provenance spans resolve against this string; goals do not reference it."
     },
     "parameters": {
       "type": "array",
@@ -53,14 +53,183 @@
     "SourceEntity": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "kind"],
+      "required": ["id", "kind", "props", "provenance"],
       "properties": {
         "id": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
         "kind": { "type": "string", "minLength": 1 },
         "label": { "type": "string" },
-        "props": { "type": "object" }
+        "props": {
+          "type": "object",
+          "description": "Allow-listed per entity kind by the allOf branches below — a kind with no branch or a prop outside its branch fails with E_SCHEMA. The semantic validator additionally whitelists kinds per domain."
+        },
+        "provenance": {
+          "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ProblemTextProvenance",
+          "description": "P5.0.1: where this entity's structure/expression/relation comes from. One span anchors the WHOLE entity (its AST needs no per-node provenance); spans may overlap with source-fact spans."
+        }
       },
-      "description": "Same structural shape as a Math IR entity, but only SOURCE entities belong here: no dynamic/derived entity kinds (they are compiler outputs), no claim/drawing-motivated kinds."
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "point" } } },
+          "then": {
+            "properties": {
+              "props": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["x", "y"],
+                "properties": {
+                  "x": { "type": "string", "description": "Geometry DSL literal, e.g. \"2\" or \"-3/4\"." },
+                  "y": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "segment" } } },
+          "then": {
+            "properties": {
+              "props": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["a", "b"],
+                "properties": {
+                  "a": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
+                  "b": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "line" } } },
+          "then": {
+            "properties": {
+              "props": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["a", "b"],
+                "properties": {
+                  "a": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
+                  "b": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "circle" } } },
+          "then": {
+            "properties": {
+              "props": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["center", "radius"],
+                "properties": {
+                  "center": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
+                  "radius": {
+                    "oneOf": [
+                      { "type": "string" },
+                      { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ExactNumber" }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "body" } } },
+          "then": {
+            "properties": {
+              "props": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["capability_id", "initial_position", "segments"],
+                "properties": {
+                  "capability_id": { "const": "motion1d.constant_velocity" },
+                  "initial_position": {
+                    "type": "string",
+                    "pattern": "^math:fact:[A-Za-z_][A-Za-z0-9_-]*$"
+                  },
+                  "segments": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": { "$ref": "#/$defs/MotionSegmentProps" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "function" } } },
+          "then": {
+            "properties": {
+              "props": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["capability_id", "variable", "expr"],
+                "properties": {
+                  "capability_id": { "const": "function2d.expression_curve" },
+                  "variable": { "type": "string", "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$" },
+                  "expr": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ExprAst" },
+                  "x_domain": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ExactNumber" }
+                  },
+                  "parameter_bindings": {
+                    "type": "object",
+                    "propertyNames": { "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$" },
+                    "additionalProperties": {
+                      "oneOf": [
+                        { "type": "string", "pattern": "^math:param:[A-Za-z_][A-Za-z0-9_-]*$" },
+                        { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ExactNumber" }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "equation" } } },
+          "then": {
+            "properties": {
+              "props": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["capability_id", "variable", "lhs", "rhs"],
+                "properties": {
+                  "capability_id": { "const": "function2d.solve_equation" },
+                  "variable": { "type": "string", "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$" },
+                  "lhs": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ExprAst" },
+                  "rhs": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ExprAst" }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "description": "Source entity kinds are globally disjoint across domains (point/segment/line/circle = geometry2d, body = motion1d, function/equation = function2d), so per-kind prop allow-lists need no domain switch; the semantic validator whitelists the kind SET per domain."
+    },
+    "MotionSegmentProps": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "velocity"],
+      "properties": {
+        "start": { "type": "string", "pattern": "^math:fact:[A-Za-z_][A-Za-z0-9_-]*$" },
+        "end": { "type": "string", "pattern": "^math:fact:[A-Za-z_][A-Za-z0-9_-]*$" },
+        "velocity": { "type": "string", "pattern": "^math:fact:[A-Za-z_][A-Za-z0-9_-]*$" },
+        "start_position": {
+          "oneOf": [
+            { "type": "string", "pattern": "^math:fact:[A-Za-z_][A-Za-z0-9_-]*$" },
+            { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ExactNumber" }
+          ]
+        }
+      }
     },
     "SpecSourceFact": {
       "type": "object",
@@ -73,12 +242,12 @@
         "value": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ExactNumber" },
         "provenance": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ProblemTextProvenance" }
       },
-      "description": "Stricter than Math IR source facts: provenance (problem_text + span) is REQUIRED by the schema itself, and values must be ExactNumber objects — a parser cannot smuggle a free-form answer payload."
+      "description": "Independent NUMERIC facts (division of labor: entity provenance anchors structure/expression/relation; fact provenance anchors standalone numbers). Values must be ExactNumber objects; spans may overlap entity spans."
     },
     "SpecConstraint": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["capability_id", "subject_refs"],
+      "required": ["capability_id", "subject_refs", "provenance"],
       "properties": {
         "capability_id": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/CapabilityId" },
         "subject_refs": {
@@ -86,8 +255,12 @@
           "minItems": 1,
           "items": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/MathRefStrict" }
         },
-        "params": { "type": "object" }
-      }
+        "provenance": {
+          "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ProblemTextProvenance",
+          "description": "P5.0.1: constraints are source semantics — an unconstrained LLM could otherwise invent 'AB ⟂ CD' out of thin air."
+        }
+      },
+      "description": "No `params` in this MVP: no wired constraint capability consumes parameters, so the field is forbidden outright (unknown params would otherwise be an open write surface). A future capability needing params must add an explicit capability→allowed-params table first."
     },
     "Goal": {
       "type": "object",
@@ -97,7 +270,7 @@
         "goalId": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
         "capabilityId": {
           "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/CapabilityId",
-          "description": "Registry capability that answers this goal. Must be family 'solver' or 'event' (checked by the semantic validator), so presentation-only capabilities cannot pose as goals."
+          "description": "Registry capability that answers this goal; must ALSO be on the ProblemSpec Compiler Capability Surface (semantic validator) — a registry id that exists but is not compiler-wired is refused with E_CAPABILITY_UNSUPPORTED."
         },
         "inputs": {
           "type": "array",

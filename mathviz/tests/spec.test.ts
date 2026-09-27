@@ -139,3 +139,98 @@ describe("P5.0 deterministic spec compiler", () => {
     expectCode(() => compileProblemSpec(spec), "E_CAPABILITY_UNSUPPORTED");
   });
 });
+
+describe("P5.0.1 parser surface hardening", () => {
+  const geo = () => loadSpec("geometry2d-length.spec.json");
+
+  it("every source entity carries a valid problem_text span (fixtures re-signed)", () => {
+    for (const f of ["function2d-solve.spec.json", "motion1d-meeting.spec.json", "geometry2d-length.spec.json"]) {
+      const doc = loadSpec(f);
+      for (const e of doc.entities) {
+        const span = e.provenance?.span;
+        expect(span, `${f}:${e.id}`).toBeTruthy();
+        expect(doc.statement.slice(span.start, span.end)).toBe(span.text);
+      }
+      expect(validateProblemSpec(doc)).toEqual([]);
+    }
+  });
+
+  it("schema rejects answer smuggled into props, unknown props, missing entity provenance, constraint params", () => {
+    const withAnswer = geo();
+    withAnswer.entities[0].props.answer = "10";
+    expect(validatorFor("problemspec")(withAnswer)).toBe(false);
+
+    const unknownProp = geo();
+    unknownProp.entities[1].props.z = "9";
+    expect(validatorFor("problemspec")(unknownProp)).toBe(false);
+
+    const noProv = geo();
+    delete noProv.entities[0].provenance;
+    expect(validatorFor("problemspec")(noProv)).toBe(false);
+
+    const withParams = geo();
+    withParams.constraints = [{
+      capability_id: "geometry2d.collinear",
+      subject_refs: ["entity:A", "entity:B"],
+      provenance: structuredClone(geo().entities[0].provenance),
+      params: { x: 1 }
+    }];
+    expect(validatorFor("problemspec")(withParams)).toBe(false);
+  });
+
+  it("validator flags duplicate ids, dangling internal refs, bad spans, wrong-kind endpoints", () => {
+    const dup = geo();
+    dup.entities.push(structuredClone(dup.entities[1]));
+    expect(validateProblemSpec(dup).map((e) => e.code)).toContain("E_SCHEMA");
+
+    const dangling = geo();
+    dangling.entities[2].props.a = "Z";
+    expect(validateProblemSpec(dangling).map((e) => e.code)).toContain("E_BINDING");
+
+    const wrongKind = geo();
+    wrongKind.entities[2].props.a = "AB";
+    expect(validateProblemSpec(wrongKind).map((e) => e.code)).toContain("E_BINDING");
+
+    const badSpan = geo();
+    badSpan.entities[0].provenance = { kind: "problem_text", span: { text: "点 P(9, 9)", start: 0, end: 8 } };
+    expect(validateProblemSpec(badSpan).map((e) => e.code)).toContain("E_PROVENANCE");
+
+    const crossKind = geo();
+    crossKind.entities.push({ id: "bod", kind: "body", props: { capability_id: "motion1d.constant_velocity", initial_position: "math:fact:x", segments: [] }, provenance: structuredClone(geo().entities[0].provenance) });
+    expect(validateProblemSpec(crossKind).map((e) => e.code)).toContain("E_SCHEMA");
+  });
+
+  it("expression symbol closure: undeclared symbols fail, declared parameters pass", () => {
+    const fx = loadSpec("function2d-solve.spec.json");
+    const withK = structuredClone(fx);
+    withK.entities[0].props.lhs = {
+      t: "app", op: "+",
+      args: [withK.entities[0].props.lhs, { t: "sym", name: "mysterious_k" }]
+    };
+    expect(validateProblemSpec(withK).map((e) => e.code)).toContain("E_BINDING");
+
+    const declared = structuredClone(fx);
+    declared.parameters = [{ id: "k", min: { kind: "int", value: "0" }, max: { kind: "int", value: "9" } }];
+    declared.entities[0].props.lhs = {
+      t: "app", op: "+",
+      args: [declared.entities[0].props.lhs, { t: "sym", name: "k" }]
+    };
+    const errs = validateProblemSpec(declared);
+    expect(errs.filter((e) => e.code === "E_BINDING")).toEqual([]); // symbol closed
+  });
+
+  it("compiler surface is enforced: registry existence alone does not make a goal emittable", () => {
+    const spec = geo();
+    spec.goals = [{ goalId: "g", capabilityId: "geometry2d.midpoint", inputs: ["entity:AB"] }];
+    const errs = validateProblemSpec(spec);
+    expect(errs.map((e) => e.code)).toContain("E_CAPABILITY_UNSUPPORTED");
+    expect(errs.some((e) => e.message.includes("Compiler Capability Surface"))).toBe(true);
+  });
+
+  it("compiled Math IR no longer carries spec-layer provenance on entities", () => {
+    const compiled = compileProblemSpec(loadSpec("geometry2d-length.spec.json"));
+    for (const e of compiled.math.entities) {
+      expect(e.provenance).toBeUndefined();
+    }
+  });
+});
