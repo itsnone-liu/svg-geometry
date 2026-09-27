@@ -3,6 +3,10 @@ runs/
 __pycache__/
 *.py[cod]
 
+# Live-mode credentials (MATHVIZ_LLM_*). Never commit the Bailian key.
+.env
+.env.local
+
 # Workspace-only upstream checkout used to create/verify the committed
 # adapter-scoped vendored kernel; the repository copy is under
 # packages/adapters/geometry-dsl/vendor/geometry-dsl/.

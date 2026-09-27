@@ -57,7 +57,7 @@
       "properties": {
         "id": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
         "kind": { "type": "string", "minLength": 1 },
-        "label": { "type": "string" },
+        "label": { "type": "string", "minLength": 1 },
         "props": {
           "type": "object",
           "description": "Allow-listed per entity kind by the allOf branches below — a kind with no branch or a prop outside its branch fails with E_SCHEMA. The semantic validator additionally whitelists kinds per domain."

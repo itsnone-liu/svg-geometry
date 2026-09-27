@@ -37,6 +37,7 @@ const DOMAIN_SCHEMA = {
 
 export const ENTITY_KIND_GUIDE = `
 Entity kinds and their EXACT allowed props (unknown props are rejected):
+For geometry points/segments, include a label only when explicitly present in the source (e.g. A, B, AB); labels must not be invented. For function/equation entities, cite the equation/function expression itself in the provenance span. For a function named f, its function entity span must include f(x) = ...; for a zero-finding equation, cite the exact function declaration together with the request for zeros so the explicit zero-set evidence is local.
 - geometry2d:
   point:    {x: string-literal, y: string-literal}
   segment:  {a: point-id, b: point-id}

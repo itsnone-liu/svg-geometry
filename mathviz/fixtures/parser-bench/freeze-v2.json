@@ -1,0 +1,13 @@
+{
+  "dataset_version": 2,
+  "case_count": 60,
+  "domain_counts": {
+    "geometry2d": 20,
+    "motion1d": 20,
+    "function2d": 20
+  },
+  "dataset_sha256": "c77c1714aebda407d0d05e9dc7c966cfe74418f8c254aa300fe60cdc3c1e66cc",
+  "scoring_policy": "docs/P5_1B_SCORING_POLICY.md",
+  "scoring_policy_sha256": "a4d91ba0d7727e01dec4d236b3127a267eac4107f60120b01f342f419cf3214a",
+  "frozen_at_utc": "2026-09-27T10:58:28.987Z"
+}

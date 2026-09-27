@@ -818,9 +818,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "P 与 Q",
-                "start": 34,
-                "end": 39
+                "text": "点 P 在坐标 (0, 0) 处，点 Q 在坐标 (3, 4)",
+                "start": 0,
+                "end": 31
               }
             }
           }
@@ -2400,9 +2400,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "x^2 - 9",
-                "start": 11,
-                "end": 18
+                "text": "求函数 f(x) = x^2 - 9 的所有零点",
+                "start": 0,
+                "end": 24
               }
             }
           },
@@ -3282,9 +3282,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "5 m/s",
-                "start": 14,
-                "end": 19
+                "text": "甲从位置 0 m 出发，以 5 m/s 匀速前进",
+                "start": 0,
+                "end": 24
               }
             }
           },
@@ -3419,9 +3419,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "3 m/s",
-                "start": 14,
-                "end": 19
+                "text": "甲从位置 0 m 出发，以 3 m/s 匀速前进",
+                "start": 0,
+                "end": 24
               }
             }
           },
@@ -3436,9 +3436,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "位置 12 m",
-                "start": 38,
-                "end": 45
+                "text": "12 m",
+                "start": 31,
+                "end": 35
               }
             }
           },
@@ -3453,9 +3453,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "1 m/s",
-                "start": 48,
-                "end": 53
+                "text": "乙在甲前方 12 m 处（位置 12 m）以 1 m/s 同向前进",
+                "start": 25,
+                "end": 58
               }
             }
           }
@@ -3590,9 +3590,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "2 m/s",
-                "start": 15,
-                "end": 20
+                "text": "乙从位置 0 m 出发，以 2 m/s 匀速前进",
+                "start": 26,
+                "end": 50
               }
             }
           }
@@ -3672,9 +3672,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "4 m/s",
-                "start": 14,
-                "end": 19
+                "text": "甲从位置 0 m 出发，以 4 m/s 匀速前进",
+                "start": 0,
+                "end": 24
               }
             }
           },
@@ -3874,8 +3874,8 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "位置 -6 m",
-                "start": 2,
+                "text": "-6 m",
+                "start": 5,
                 "end": 9
               }
             }
@@ -3891,9 +3891,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "2 m/s",
-                "start": 15,
-                "end": 20
+                "text": "甲从位置 -6 m 出发，以 2 m/s 匀速前进",
+                "start": 0,
+                "end": 25
               }
             }
           },
@@ -3908,9 +3908,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "位置 6 m",
-                "start": 28,
-                "end": 34
+                "text": "6 m",
+                "start": 6,
+                "end": 9
               }
             }
           },
@@ -4028,9 +4028,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "5 m/s",
-                "start": 15,
-                "end": 20
+                "text": "兔子从位置 0 m 出发，以 5 m/s 匀速前进",
+                "start": 0,
+                "end": 25
               }
             }
           },
@@ -4062,9 +4062,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "3 m/s",
-                "start": 40,
-                "end": 45
+                "text": "乌龟在位置 200 m 以 3 m/s 同向前进",
+                "start": 26,
+                "end": 50
               }
             }
           }
@@ -4166,9 +4166,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "5/2 m/s",
-                "start": 14,
-                "end": 21
+                "text": "甲从位置 0 m 出发，以 5/2 m/s 匀速前进",
+                "start": 0,
+                "end": 26
               }
             }
           },
@@ -4282,9 +4282,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "6 m/s",
-                "start": 14,
-                "end": 19
+                "text": "甲从位置 0 m 出发，以 6 m/s 匀速前进",
+                "start": 0,
+                "end": 24
               }
             }
           },
@@ -4385,8 +4385,8 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "位置 -10 m",
-                "start": 2,
+                "text": "-10 m",
+                "start": 5,
                 "end": 10
               }
             }
@@ -4402,9 +4402,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "5 m/s",
-                "start": 16,
-                "end": 21
+                "text": "甲从位置 -10 m 出发，以 5 m/s 匀速前进",
+                "start": 0,
+                "end": 26
               }
             }
           },
@@ -4419,8 +4419,8 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "位置 50 m",
-                "start": 29,
+                "text": "50 m",
+                "start": 32,
                 "end": 36
               }
             }
@@ -4522,9 +4522,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "0 m 处",
+                "text": "0 m",
                 "start": 6,
-                "end": 11
+                "end": 9
               }
             }
           },
@@ -4539,9 +4539,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "5 m/s",
-                "start": 13,
-                "end": 18
+                "text": "一列快车从 0 m 处以 5 m/s 直线行驶",
+                "start": 0,
+                "end": 23
               }
             }
           },
@@ -4556,9 +4556,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "100 m 处",
+                "text": "100 m",
                 "start": 30,
-                "end": 37
+                "end": 35
               }
             }
           },
@@ -4659,9 +4659,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "20 m 标记处",
+                "text": "20 m",
                 "start": 12,
-                "end": 20
+                "end": 16
               }
             }
           },
@@ -4693,9 +4693,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "0 m 标记处",
-                "start": 13,
-                "end": 20
+                "text": "0 m",
+                "start": 35,
+                "end": 38
               }
             }
           },
@@ -4710,9 +4710,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "2 m/s",
-                "start": 22,
-                "end": 27
+                "text": "乙从 0 m 标记处以 2 m/s 向前跑",
+                "start": 32,
+                "end": 53
               }
             }
           }
@@ -4796,8 +4796,8 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "起点 0 m",
-                "start": 3,
+                "text": "0 m",
+                "start": 6,
                 "end": 9
               }
             }
@@ -4813,9 +4813,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "5 m/s",
-                "start": 12,
-                "end": 17
+                "text": "兔子从起点 0 m 以 5 m/s 追赶",
+                "start": 0,
+                "end": 20
               }
             }
           },
@@ -4847,9 +4847,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "3 m/s",
-                "start": 32,
-                "end": 37
+                "text": "前方 200 m 处以 3 m/s 爬行的乌龟",
+                "start": 20,
+                "end": 43
               }
             }
           }
@@ -4912,9 +4912,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "0 m 处",
+                "text": "0 m",
                 "start": 6,
-                "end": 11
+                "end": 9
               }
             }
           },
@@ -4929,9 +4929,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "4 m/s",
-                "start": 13,
-                "end": 18
+                "text": "一只信鸽从 0 m 处以 4 m/s 匀速飞行",
+                "start": 0,
+                "end": 23
               }
             }
           },
@@ -5013,8 +5013,8 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "乙车从 6 m 站点以 2 m/s 驶出",
-                "start": 31,
+                "text": "两辆电车相向而行：甲车从 -6 m 站点以 2 m/s 驶出，乙车从 6 m 站点以 2 m/s 驶出",
+                "start": 0,
                 "end": 51
               }
             }
@@ -5032,9 +5032,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "-6 m 站点",
+                "text": "-6 m",
                 "start": 13,
-                "end": 20
+                "end": 17
               }
             }
           },
@@ -5049,9 +5049,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "2 m/s",
-                "start": 22,
-                "end": 27
+                "text": "甲车从 -6 m 站点以 2 m/s 驶出",
+                "start": 9,
+                "end": 30
               }
             }
           },
@@ -5066,9 +5066,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "6 m 站点",
-                "start": 14,
-                "end": 20
+                "text": "6 m",
+                "start": 35,
+                "end": 38
               }
             }
           },
@@ -5186,9 +5186,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "5 m/s",
-                "start": 21,
-                "end": 26
+                "text": "从位置 0 m 出发，以 5 m/s 匀速前进",
+                "start": 8,
+                "end": 31
               }
             }
           },
@@ -5323,9 +5323,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "5 m/s",
-                "start": 27,
-                "end": 32
+                "text": "兔子从位置 0 m 出发，以 5 m/s 匀速前进",
+                "start": 12,
+                "end": 37
               }
             }
           },
@@ -5357,9 +5357,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "3 m/s",
-                "start": 52,
-                "end": 57
+                "text": "乌龟在位置 200 m 以 3 m/s 同向前进",
+                "start": 38,
+                "end": 62
               }
             }
           }
@@ -5439,9 +5439,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "4 m/s",
-                "start": 24,
-                "end": 29
+                "text": "甲从位置 0 m 出发，以 4 m/s 匀速前进",
+                "start": 10,
+                "end": 34
               }
             }
           },

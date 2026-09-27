@@ -13,6 +13,28 @@ import { ProviderError, type LlmGenerateRequest, type LlmGenerateResult, type St
 
 const ZERO: TokenUsage = { input_tokens: 0, output_tokens: 0 };
 
+// Bounded transport retry (2026-09-27 P5.1b live run evidence): 10/60 cases
+// died on transient "fetch failed" (stale keep-alive socket / short network
+// outage windows) and each burn silently consumed that case's A1+repair.
+// We retry ONLY transport-level conditions — fetch throw, or HTTP 429/5xx.
+// E_JSON and non-retryable 4xx (auth/validation) surface immediately.
+// Scoring semantics are untouched: a retried request is the same single A1
+// (+<=1 repair) call from the pipeline's point of view.
+const RETRYABLE_HTTP = new Set([429, 500, 502, 503, 504]);
+const RETRY_DELAYS_MS = [2_000, 8_000, 20_000, 45_000];
+const sleep = (ms: number): Promise<void> => new Promise((r) => setTimeout(r, ms));
+
+function isTransientTransportError(e: unknown): boolean {
+  if (!(e instanceof ProviderError)) return false;
+  // Network-level wrapper thrown below on fetch rejection.
+  if (e.code === "E_PROVIDER" && e.message.startsWith("LLM request failed:")) return true;
+  if (e.code === "E_HTTP") {
+    const m = /^LLM HTTP (\d+)/.exec(e.message);
+    if (m) return RETRYABLE_HTTP.has(Number(m[1]));
+  }
+  return false;
+}
+
 function extractJsonText(raw: string): string {
   // Models are told JSON-only (P5.1 §16); defensively strip markdown fences.
   const fenced = /^```(?:json)?\s*([\s\S]*?)\s*```$/.exec(raw.trim());
@@ -38,6 +60,19 @@ export class OpenAICompatibleProvider implements StructuredLLMProvider {
   }
 
   async generate<T>(req: LlmGenerateRequest): Promise<LlmGenerateResult<T>> {
+    for (let attempt = 0; ; attempt++) {
+      try {
+        return await this.attemptOnce<T>(req);
+      } catch (e) {
+        if (!isTransientTransportError(e) || attempt >= RETRY_DELAYS_MS.length) throw e;
+        // Back off, then re-dial (a fresh connection also sidesteps any
+        // stale pooled keep-alive socket that caused the failure).
+        await sleep(RETRY_DELAYS_MS[attempt]);
+      }
+    }
+  }
+
+  private async attemptOnce<T>(req: LlmGenerateRequest): Promise<LlmGenerateResult<T>> {
     let resp: any;
     try {
       resp = await fetch(`${this.baseUrl}/chat/completions`, {
@@ -112,16 +147,18 @@ export class GoldenProvider implements StructuredLLMProvider {
   readonly id = "golden-replay";
   calls = 0;
   private byStatement = new Map<string, GoldenCase>();
+  private currentCase: GoldenCase | null = null;
   constructor(cases: GoldenCase[]) {
     for (const c of cases) this.byStatement.set(c.statement, c);
   }
+  select(statement:string):void { this.currentCase=this.byStatement.get(statement)??null; }
 
   async generate<T>(req: LlmGenerateRequest): Promise<LlmGenerateResult<T>> {
     this.calls++;
     // A0 domain-routing calls embed the statement; A1 calls too. Find the
     // longest dataset statement contained in the input (wording-stable).
-    let best: GoldenCase | null = null;
-    for (const c of this.byStatement.values()) {
+    let best: GoldenCase | null = this.currentCase;
+    if (!best) for (const c of this.byStatement.values()) {
       if (req.input.includes(c.statement) && (!best || c.statement.length > best.statement.length)) best = c;
     }
     if (!best) throw new ProviderError("golden provider: statement not in dataset");

@@ -9,6 +9,7 @@ import { ScriptedProvider, extractJsonText } from "../packages/parser/src/provid
 import { repairCall } from "../packages/parser/src/prompt";
 import { leakScan, cacheKey } from "../packages/parser/src/telemetry";
 import { semanticEqual, normalizedKey, semanticLayers } from "../packages/parser-benchmark/src/normalize-spec";
+import { groundProblemSpec } from "../packages/parser-benchmark/src/grounding";
 
 const ROOT = path.resolve(__dirname, "..");
 const geo = JSON.parse(fs.readFileSync(path.join(ROOT, "fixtures/spec/geometry2d-length.spec.json"), "utf8"));
@@ -109,6 +110,136 @@ describe("P5.1 parse pipeline", () => {
     expect(cacheKey("p1", "a")).not.toBe(cacheKey("p2", "a"));
     expect(cacheKey("p1", "a")).not.toBe(cacheKey("p1", "b"));
     expect(cacheKey("p1", "a")).toBe(cacheKey("p1", "a"));
+  });
+});
+
+describe("G19 provenance semantic grounding", () => {
+  const dataset = JSON.parse(fs.readFileSync(path.join(ROOT, "fixtures/parser-bench/cases.json"), "utf8"));
+  it("grounds supported goldens within the frozen verifier subset", () => {
+    for (const c of dataset.cases.filter((x: any) => x.expected === "COMPILE_OK" && x.id !== "mo_wd_05")) {
+      const result = groundProblemSpec(c.golden, c.statement);
+      expect(result.sliceValid, c.id).toBe(true);
+      expect(result.semanticGrounded, c.id + ": " + JSON.stringify(result.findings.filter((f: any) => !f.grounded))).toBe(true);
+    }
+  });
+  it("grounds label-free segments by source names while keeping endpoint evidence local",()=>{
+    const c=dataset.cases.find((x:any)=>x.id==="geo_sf_01"),candidate=structuredClone(c.golden),seg=candidate.entities.find((e:any)=>e.kind==="segment");delete seg.label;seg.id="AB";
+    expect(groundProblemSpec(candidate,c.statement).findings.find((f:any)=>f.path==="/entities/AB")?.grounded).toBe(true);
+    const phrase="求线段的长度";const start=c.statement.indexOf(phrase);seg.provenance.span={text:phrase,start,end:start+phrase.length};
+    expect(groundProblemSpec(candidate,c.statement).findings.find((f:any)=>f.path==="/entities/"+seg.id)?.grounded).toBe(false);
+  });
+  it("fails closed for per-body sign inferred only from shared opposing-motion relation", () => {
+    const c = dataset.cases.find((x: any) => x.id === "mo_wd_05"), result = groundProblemSpec(c.golden, c.statement);
+    expect(result.sliceValid).toBe(true);
+    expect(result.findings.find((f: any) => f.path === "/source_facts/vB")?.grounded).toBe(false);
+    expect(result.findings.find((f: any) => f.path === "/entities/B")?.grounded).toBe(false);
+  });
+  it("rejects a fabricated exponent under the implicit square-language exception",()=>{
+    const c=dataset.cases.find((x:any)=>x.id==="fx_wd_02"),candidate=structuredClone(c.golden),eq=candidate.entities.find((e:any)=>e.kind==="equation");eq.props.lhs={t:"app",op:"^",args:[{t:"sym",name:"x"},{t:"num",v:{kind:"int",value:"3"}}]};
+    expect(groundProblemSpec(candidate,c.statement).findings.find((f:any)=>f.path==="/entities/"+eq.id)?.grounded).toBe(false);
+  });
+  it("rejects fabricated coefficients under the implicit square-language exception", () => {
+    const c=dataset.cases.find((x:any)=>x.id==="fx_wd_02"),candidate=structuredClone(c.golden),eq=candidate.entities.find((e:any)=>e.kind==="equation"),num=(v:string)=>({t:"num",v:{kind:"int",value:v}}),sym={t:"sym",name:"x"};
+    eq.props.lhs={t:"app",op:"-",args:[{t:"app",op:"^",args:[sym,num("2")]},{t:"app",op:"+",args:[{t:"app",op:"*",args:[num("2"),sym]},num("2")]}]};
+    expect(groundProblemSpec(candidate,c.statement).findings.find((f:any)=>f.path==="/entities/"+eq.id)?.grounded).toBe(false);
+  });
+  it("rejects a zero-set equation whose evidence omits the function declaration",()=>{
+    const c=dataset.cases.find((x:any)=>x.id==="fx_wd_01"),candidate=structuredClone(c.golden),eq=candidate.entities.find((e:any)=>e.kind==="equation"),phrase="求函数 f(x) = x^2 - 9 的所有零点";const start=c.statement.indexOf(phrase);eq.provenance.span={text:phrase,start,end:start+phrase.length};const fn=candidate.entities.find((e:any)=>e.kind==="function");fn.provenance.span.text="f(x) = x^2 - 9";fn.provenance.span.start=4;fn.provenance.span.end=18;eq.provenance.span.text="所有零点";eq.provenance.span.start=c.statement.indexOf("所有零点");eq.provenance.span.end=eq.provenance.span.start+"所有零点".length;
+    expect(groundProblemSpec(candidate,c.statement).findings.find((f:any)=>f.path==="/entities/"+eq.id)?.grounded).toBe(false);
+  });
+  it("rejects a fabricated nonzero rhs on the zero-set equation", () => {
+    const c=dataset.cases.find((x:any)=>x.id==="fx_wd_01"),candidate=structuredClone(c.golden),eq=candidate.entities.find((e:any)=>e.kind==="equation");eq.props.rhs={t:"num",v:{kind:"int",value:"7"}};
+    expect(groundProblemSpec(candidate,c.statement).findings.find((f:any)=>f.path==="/entities/"+eq.id)?.grounded).toBe(false);
+  });
+  it("rejects a fabricated composite rhs on an implicit equation", () => {
+    const c = dataset.cases.find((x: any) => x.id === "fx_wd_02");
+    const candidate = structuredClone(c.golden);
+    const num = (v: string) => ({ t: "num", v: { kind: "int", value: v } });
+    const sym = { t: "sym", name: "x" };
+    candidate.entities.find((e: any) => e.kind === "equation").props.rhs = { t: "app", op: "+", args: [num("7"), sym] };
+    expect(groundProblemSpec(candidate, c.statement).findings.find((f: any) => f.path === "/entities/EQ")?.grounded).toBe(false);
+  });
+  it("does not classify 根据 as a root-finding goal", () => {
+    const spec: any = { statement: "根据统计，3x 种行道树高12米", entities: [{id:"EQ",kind:"equation",props:{lhs:{t:"app",op:"*",args:[{t:"num",v:{kind:"int",value:"3"}},{t:"sym",name:"x"}]},rhs:{t:"num",v:{kind:"int",value:"12"}}},provenance:{span:{text:"根据统计，3x 种行道树高12米",start:0,end:16}}}], source_facts: [], constraints: [] };
+    expect(groundProblemSpec(spec).findings.find((f: any) => f.path === "/entities/EQ")?.grounded).toBe(false);
+  });
+  it("requires segment evidence in its own cited slice and rejects empty labels", () => {
+    const c = dataset.cases.find((x: any) => x.id === "geo_sf_01");
+    const candidate = structuredClone(c.golden); const seg = candidate.entities.find((e: any) => e.kind === "segment");
+    seg.label = ""; const phrase = "求线段"; const start = c.statement.indexOf(phrase); seg.provenance.span = {text:phrase,start,end:start+phrase.length};
+    expect(groundProblemSpec(candidate,c.statement).findings.find((f:any)=>f.path==="/entities/SEG")?.grounded).toBe(false);
+  });
+  it("does not ground negative km/h from a magnitude-only directional phrase", () => {
+    const spec: any = { statement: "乙以60 km/h行驶。", entities: [], constraints: [], source_facts: [{fact_id:"v",unit:"km/h",value:{kind:"int",value:"-60"},provenance:{span:{text:"以60 km/h行驶",start:1,end:10}}}] };
+    expect(groundProblemSpec(spec).findings.find((f:any)=>f.path==="/source_facts/v")?.grounded).toBe(false);
+  });
+  it("requires both segment endpoints to be grounded in the segment's cited slice", () => {
+    const c=dataset.cases.find((x:any)=>x.id==="geo_wd_01"),candidate=structuredClone(c.golden),seg=candidate.entities.find((e:any)=>e.kind==="segment");
+    seg.label=""; const phrase="P 与 Q 相距多远"; const start=c.statement.indexOf(phrase); seg.provenance.span={text:phrase,start,end:start+phrase.length};
+    expect(groundProblemSpec(candidate,c.statement).findings.find((f:any)=>f.path==="/entities/"+seg.id)?.grounded).toBe(false);
+  });
+  it("rejects velocity sign swapped across clauses of a shared cited sentence", () => {
+    const c=dataset.cases.find((x:any)=>x.id==="mo_sf_06"), candidate=structuredClone(c.golden);
+    const f=candidate.source_facts.find((x:any)=>x.fact_id==="vA"); f.value.value="-2"; f.provenance.span={text:c.statement,start:0,end:c.statement.length};
+    expect(groundProblemSpec(candidate,c.statement).findings.find((x:any)=>x.path==="/source_facts/vA")?.grounded).toBe(false);
+  });
+  it("does not accept an m unit prefix inside a different ASCII unit", () => {
+    const spec:any={statement:"A travels 5 mm.",entities:[],constraints:[],source_facts:[{fact_id:"d",unit:"m",value:{kind:"int",value:"5"},provenance:{span:{text:"5 mm",start:10,end:14}}}]};
+    expect(groundProblemSpec(spec).findings.find((f:any)=>f.path==="/source_facts/d")?.grounded).toBe(false);
+  });
+  it("does not confuse speed with distance units", () => {
+    const c=dataset.cases.find((x:any)=>x.id==="mo_sf_01"), candidate=structuredClone(c.golden);
+    const f=candidate.source_facts.find((x:any)=>x.fact_id==="vA"); f.unit="m";
+    expect(groundProblemSpec(candidate,c.statement).findings.find((x:any)=>x.path==="/source_facts/vA")?.grounded).toBe(false);
+  });
+  it("does not reuse a numeric-unit occurrence for duplicate facts", () => {
+    const c=dataset.cases.find((x:any)=>x.id==="mo_sf_01"), candidate=structuredClone(c.golden);
+    const f=structuredClone(candidate.source_facts.find((x:any)=>x.fact_id==="vA"));f.fact_id="vA_copy";candidate.source_facts.push(f);
+    expect(groundProblemSpec(candidate,c.statement).findings.find((x:any)=>x.path==="/source_facts/vA_copy")?.grounded).toBe(false);
+  });
+  it("rejects a correct slice when the claimed numeric payload is not in that evidence", () => {
+    const c = dataset.cases.find((x: any) => x.id === "mo_sf_01");
+    const candidate = structuredClone(c.golden);
+    const f = candidate.source_facts.find((x: any) => x.fact_id === "vA");
+    f.value.value = "8";
+    const result = groundProblemSpec(candidate, c.statement);
+    expect(result.sliceValid).toBe(true);
+    expect(result.findings.find((x: any) => x.path === "/source_facts/vA")?.grounded).toBe(false);
+  });
+  it("rejects a valid slice that cites an unrelated value sentence", () => {
+    const c = dataset.cases.find((x: any) => x.id === "mo_sf_01");
+    const candidate = structuredClone(c.golden);
+    const f = candidate.source_facts.find((x: any) => x.fact_id === "vA");
+    const phrase = "问它们何时相遇？";
+    const start = c.statement.indexOf(phrase);
+    f.provenance.span = { text: phrase, start, end: start + phrase.length };
+    const result = groundProblemSpec(candidate, c.statement);
+    expect(result.sliceValid).toBe(true);
+    expect(result.semanticGrounded).toBe(false);
+    expect(result.findings.find((x: any) => x.path === "/source_facts/vA")?.grounded).toBe(false);
+  });
+  it("requires reverse direction for inferred negative velocity and detects sign conflict", () => {
+    const c = dataset.cases.find((x: any) => x.id === "mo_sf_01");
+    const candidate = structuredClone(c.golden);
+    const f = candidate.source_facts.find((x: any) => x.fact_id === "vB");
+    f.value.value = "5";
+    const result = groundProblemSpec(candidate, c.statement);
+    expect(result.findings.find((x: any) => x.path === "/source_facts/vB")?.grounded).toBe(false);
+  });
+  it("does not accept a coordinate pair for the wrong point label", () => {
+    const c = dataset.cases.find((x: any) => x.id === "geo_sf_01");
+    const candidate = structuredClone(c.golden);
+    candidate.entities.find((x: any) => x.id === "PA").props.x = "3";
+    const result = groundProblemSpec(candidate, c.statement);
+    expect(result.findings.find((x: any) => x.path === "/entities/PA")?.grounded).toBe(false);
+  });
+  it("does not treat AST token co-occurrence as grounded when slice is foreign to statement", () => {
+    const c = dataset.cases.find((x: any) => x.id === "fx_sf_01");
+    const candidate = structuredClone(c.golden);
+    candidate.statement = "irrelevant source";
+    const result = groundProblemSpec(candidate, c.statement);
+    expect(result.sliceValid).toBe(false);
+    expect(result.semanticGrounded).toBe(false);
   });
 });
 
