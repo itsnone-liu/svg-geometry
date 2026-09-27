@@ -1,0 +1,133 @@
+{
+  "schemaVersion": "mathviz.problemspec/v1",
+  "problemId": "p50-motion1d-meeting",
+  "domain": "motion1d",
+  "statement": "甲从位置 0 m 出发，以 5 m/s 匀速前进；乙从位置 100 m 出发，以 -5 m/s 匀速前进。两者何时相遇？相遇位置在哪里？",
+  "entities": [
+    {
+      "id": "A",
+      "kind": "body",
+      "props": {
+        "capability_id": "motion1d.constant_velocity",
+        "initial_position": "math:fact:xA0",
+        "segments": [
+          {
+            "start": "math:fact:t0",
+            "velocity": "math:fact:vA"
+          }
+        ]
+      }
+    },
+    {
+      "id": "B",
+      "kind": "body",
+      "props": {
+        "capability_id": "motion1d.constant_velocity",
+        "initial_position": "math:fact:xB0",
+        "segments": [
+          {
+            "start": "math:fact:t0",
+            "velocity": "math:fact:vB"
+          }
+        ]
+      }
+    }
+  ],
+  "source_facts": [
+    {
+      "fact_id": "xA0",
+      "name": "甲的初始位置",
+      "unit": "m",
+      "value": {
+        "kind": "int",
+        "value": "0"
+      },
+      "provenance": {
+        "kind": "problem_text",
+        "span": {
+          "text": "位置 0 m",
+          "start": 2,
+          "end": 8
+        }
+      }
+    },
+    {
+      "fact_id": "vA",
+      "name": "甲的速度",
+      "unit": "m/s",
+      "value": {
+        "kind": "int",
+        "value": "5"
+      },
+      "provenance": {
+        "kind": "problem_text",
+        "span": {
+          "text": "以 5 m/s 匀速前进",
+          "start": 12,
+          "end": 24
+        }
+      }
+    },
+    {
+      "fact_id": "xB0",
+      "name": "乙的初始位置",
+      "unit": "m",
+      "value": {
+        "kind": "int",
+        "value": "100"
+      },
+      "provenance": {
+        "kind": "problem_text",
+        "span": {
+          "text": "位置 100 m",
+          "start": 27,
+          "end": 35
+        }
+      }
+    },
+    {
+      "fact_id": "vB",
+      "name": "乙的速度",
+      "unit": "m/s",
+      "value": {
+        "kind": "int",
+        "value": "-5"
+      },
+      "provenance": {
+        "kind": "problem_text",
+        "span": {
+          "text": "以 -5 m/s 匀速前进",
+          "start": 39,
+          "end": 52
+        }
+      }
+    },
+    {
+      "fact_id": "t0",
+      "name": "出发时刻",
+      "unit": "s",
+      "value": {
+        "kind": "int",
+        "value": "0"
+      },
+      "provenance": {
+        "kind": "problem_text",
+        "span": {
+          "text": "出发",
+          "start": 9,
+          "end": 11
+        }
+      }
+    }
+  ],
+  "goals": [
+    {
+      "goalId": "meet",
+      "capabilityId": "motion1d.meeting_event",
+      "inputs": [
+        "entity:A",
+        "entity:B"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "mathviz.problemspec/v1",
+  "problemId": "p50-function2d-solve",
+  "domain": "function2d",
+  "statement": "解方程：x^2 - 5x + 6 = 0，求它的全部实数解。",
+  "entities": [
+    {
+      "id": "eq_main",
+      "kind": "equation",
+      "props": {
+        "capability_id": "function2d.solve_equation",
+        "variable": "x",
+        "lhs": {
+          "t": "app",
+          "op": "+",
+          "args": [
+            {
+              "t": "app",
+              "op": "-",
+              "args": [
+                {
+                  "t": "app",
+                  "op": "^",
+                  "args": [
+                    {
+                      "t": "sym",
+                      "name": "x"
+                    },
+                    {
+                      "t": "num",
+                      "v": {
+                        "kind": "int",
+                        "value": "2"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "t": "app",
+                  "op": "*",
+                  "args": [
+                    {
+                      "t": "num",
+                      "v": {
+                        "kind": "int",
+                        "value": "5"
+                      }
+                    },
+                    {
+                      "t": "sym",
+                      "name": "x"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "t": "num",
+              "v": {
+                "kind": "int",
+                "value": "6"
+              }
+            }
+          ]
+        },
+        "rhs": {
+          "t": "num",
+          "v": {
+            "kind": "int",
+            "value": "0"
+          }
+        }
+      }
+    }
+  ],
+  "source_facts": [],
+  "goals": [
+    {
+      "goalId": "solve_main",
+      "capabilityId": "function2d.solve_equation",
+      "inputs": [
+        "entity:eq_main"
+      ]
+    }
+  ]
+}

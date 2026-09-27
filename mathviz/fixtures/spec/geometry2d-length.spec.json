@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "mathviz.problemspec/v1",
+  "problemId": "p50-geometry2d-length",
+  "domain": "geometry2d",
+  "statement": "已知点 A(0, 0) 与点 B(6, 8)，求线段 AB 的长度。",
+  "entities": [
+    {
+      "id": "A",
+      "kind": "point",
+      "props": {
+        "x": "0",
+        "y": "0"
+      }
+    },
+    {
+      "id": "B",
+      "kind": "point",
+      "props": {
+        "x": "6",
+        "y": "8"
+      }
+    },
+    {
+      "id": "AB",
+      "kind": "segment",
+      "props": {
+        "a": "A",
+        "b": "B"
+      }
+    }
+  ],
+  "source_facts": [],
+  "goals": [
+    {
+      "goalId": "len",
+      "capabilityId": "geometry2d.derive_length",
+      "inputs": [
+        "entity:AB"
+      ]
+    }
+  ]
+}

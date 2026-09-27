@@ -1,0 +1,459 @@
+{
+  "cases": [
+    {
+      "case_id": "goal_carries_answer_field",
+      "expect": "fail",
+      "expected_error_codes": [
+        "E_SCHEMA"
+      ],
+      "doc": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "p50-function2d-solve",
+        "domain": "function2d",
+        "statement": "解方程：x^2 - 5x + 6 = 0，求它的全部实数解。",
+        "entities": [
+          {
+            "id": "eq_main",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "x",
+              "lhs": {
+                "t": "app",
+                "op": "+",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "-",
+                    "args": [
+                      {
+                        "t": "app",
+                        "op": "^",
+                        "args": [
+                          {
+                            "t": "sym",
+                            "name": "x"
+                          },
+                          {
+                            "kind": "int",
+                            "value": "2"
+                          }
+                        ]
+                      },
+                      {
+                        "t": "app",
+                        "op": "*",
+                        "args": [
+                          {
+                            "kind": "int",
+                            "value": "5"
+                          },
+                          {
+                            "t": "sym",
+                            "name": "x"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "int",
+                    "value": "6"
+                  }
+                ]
+              },
+              "rhs": {
+                "kind": "int",
+                "value": "0"
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:eq_main"
+            ],
+            "value": {
+              "kind": "int",
+              "value": "2"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "derived_layer_smuggled_into_spec",
+      "expect": "fail",
+      "expected_error_codes": [
+        "E_SCHEMA"
+      ],
+      "doc": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "p50-geometry2d-length",
+        "domain": "geometry2d",
+        "statement": "已知点 A(0, 0) 与点 B(6, 8)，求线段 AB 的长度。",
+        "entities": [
+          {
+            "id": "A",
+            "kind": "point",
+            "props": {
+              "x": "0",
+              "y": "0"
+            }
+          },
+          {
+            "id": "B",
+            "kind": "point",
+            "props": {
+              "x": "6",
+              "y": "8"
+            }
+          },
+          {
+            "id": "AB",
+            "kind": "segment",
+            "props": {
+              "a": "A",
+              "b": "B"
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:AB"
+            ]
+          }
+        ],
+        "derived_facts": [
+          {
+            "fact_id": "smuggled",
+            "name": "answer",
+            "value": {
+              "kind": "int",
+              "value": "10"
+            },
+            "provenance": {
+              "kind": "derived",
+              "capability_id": "geometry2d.derive_length",
+              "inputs": [
+                "entity:AB"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "unknown_capability",
+      "expect": "fail",
+      "expected_error_codes": [
+        "E_CAPABILITY_UNSUPPORTED"
+      ],
+      "doc": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "p50-geometry2d-length",
+        "domain": "geometry2d",
+        "statement": "已知点 A(0, 0) 与点 B(6, 8)，求线段 AB 的长度。",
+        "entities": [
+          {
+            "id": "A",
+            "kind": "point",
+            "props": {
+              "x": "0",
+              "y": "0"
+            }
+          },
+          {
+            "id": "B",
+            "kind": "point",
+            "props": {
+              "x": "6",
+              "y": "8"
+            }
+          },
+          {
+            "id": "AB",
+            "kind": "segment",
+            "props": {
+              "a": "A",
+              "b": "B"
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g",
+            "capabilityId": "geometry2d.magic_wand",
+            "inputs": [
+              "entity:AB"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "cross_domain_capability",
+      "expect": "fail",
+      "expected_error_codes": [
+        "E_SCHEMA"
+      ],
+      "doc": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "p50-geometry2d-length",
+        "domain": "geometry2d",
+        "statement": "已知点 A(0, 0) 与点 B(6, 8)，求线段 AB 的长度。",
+        "entities": [
+          {
+            "id": "A",
+            "kind": "point",
+            "props": {
+              "x": "0",
+              "y": "0"
+            }
+          },
+          {
+            "id": "B",
+            "kind": "point",
+            "props": {
+              "x": "6",
+              "y": "8"
+            }
+          },
+          {
+            "id": "AB",
+            "kind": "segment",
+            "props": {
+              "a": "A",
+              "b": "B"
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:AB"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "presentation_capability_as_goal",
+      "expect": "fail",
+      "expected_error_codes": [
+        "E_CAPABILITY_UNSUPPORTED"
+      ],
+      "doc": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "p50-geometry2d-length",
+        "domain": "geometry2d",
+        "statement": "已知点 A(0, 0) 与点 B(6, 8)，求线段 AB 的长度。",
+        "entities": [
+          {
+            "id": "A",
+            "kind": "point",
+            "props": {
+              "x": "0",
+              "y": "0"
+            }
+          },
+          {
+            "id": "B",
+            "kind": "point",
+            "props": {
+              "x": "6",
+              "y": "8"
+            }
+          },
+          {
+            "id": "AB",
+            "kind": "segment",
+            "props": {
+              "a": "A",
+              "b": "B"
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g",
+            "capabilityId": "geometry2d.equal_mark",
+            "inputs": [
+              "entity:AB"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "dangling_goal_input",
+      "expect": "fail",
+      "expected_error_codes": [
+        "E_BINDING"
+      ],
+      "doc": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "p50-geometry2d-length",
+        "domain": "geometry2d",
+        "statement": "已知点 A(0, 0) 与点 B(6, 8)，求线段 AB 的长度。",
+        "entities": [
+          {
+            "id": "A",
+            "kind": "point",
+            "props": {
+              "x": "0",
+              "y": "0"
+            }
+          },
+          {
+            "id": "B",
+            "kind": "point",
+            "props": {
+              "x": "6",
+              "y": "8"
+            }
+          },
+          {
+            "id": "AB",
+            "kind": "segment",
+            "props": {
+              "a": "A",
+              "b": "B"
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:NOPE"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "empty_goals",
+      "expect": "fail",
+      "expected_error_codes": [
+        "E_SCHEMA"
+      ],
+      "doc": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "p50-geometry2d-length",
+        "domain": "geometry2d",
+        "statement": "已知点 A(0, 0) 与点 B(6, 8)，求线段 AB 的长度。",
+        "entities": [
+          {
+            "id": "A",
+            "kind": "point",
+            "props": {
+              "x": "0",
+              "y": "0"
+            }
+          },
+          {
+            "id": "B",
+            "kind": "point",
+            "props": {
+              "x": "6",
+              "y": "8"
+            }
+          },
+          {
+            "id": "AB",
+            "kind": "segment",
+            "props": {
+              "a": "A",
+              "b": "B"
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": []
+      }
+    },
+    {
+      "case_id": "span_not_a_statement_slice",
+      "expect": "fail",
+      "expected_error_codes": [
+        "E_PROVENANCE"
+      ],
+      "doc": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "p50-geometry2d-length",
+        "domain": "geometry2d",
+        "statement": "已知点 A(0, 0) 与点 B(6, 8)，求线段 AB 的长度。",
+        "entities": [
+          {
+            "id": "A",
+            "kind": "point",
+            "props": {
+              "x": "0",
+              "y": "0"
+            }
+          },
+          {
+            "id": "B",
+            "kind": "point",
+            "props": {
+              "x": "6",
+              "y": "8"
+            }
+          },
+          {
+            "id": "AB",
+            "kind": "segment",
+            "props": {
+              "a": "A",
+              "b": "B"
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "given_len",
+            "name": "given",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "7"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "AB 的长度是 7",
+                "start": 0,
+                "end": 9
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:AB"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

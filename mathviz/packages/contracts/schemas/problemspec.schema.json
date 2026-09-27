@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mathviz.dev/schemas/problemspec/v1",
+  "title": "MathViz ProblemSpec v1 (P5.0, frozen)",
+  "description": "The LLM-facing INPUT contract, layered BEFORE Math IR (P5 restructure). A ProblemSpec expresses SOURCE semantics only: the problem's world (entities), its givens (source facts with problem-text provenance), and WHAT is asked (goals referencing registry capabilities). It is structurally INCAPABLE of carrying answers: goals admit exactly {goalId, capabilityId, inputs}; answer-shaped layers (derived_facts, events, runtime_values, assertions, capabilities, scene) are not properties of this object at all. A deterministic compiler (packages/spec) turns a valid ProblemSpec into a Math IR v1 document whose derived facts are computed by the domain solvers, never asserted by the producer. The LLM (P5.1) parses NL -> ProblemSpec and MUST NOT generate Math IR directly.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "problemId", "domain", "statement", "entities", "source_facts", "goals"],
+  "properties": {
+    "schemaVersion": { "const": "mathviz.problemspec/v1" },
+    "problemId": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
+    "domain": { "enum": ["geometry2d", "function2d", "motion1d"] },
+    "statement": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Original problem text. Source-fact provenance spans resolve against this string; goals do not reference it."
+    },
+    "parameters": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Parameter" }
+    },
+    "entities": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/SourceEntity" }
+    },
+    "source_facts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/SpecSourceFact" }
+    },
+    "constraints": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/SpecConstraint" }
+    },
+    "goals": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/Goal" }
+    }
+  },
+  "$defs": {
+    "Parameter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "min", "max"],
+      "properties": {
+        "id": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
+        "min": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ExactNumber" },
+        "max": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ExactNumber" },
+        "default": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ExactNumber" },
+        "unit": { "type": "string" }
+      }
+    },
+    "SourceEntity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind"],
+      "properties": {
+        "id": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
+        "kind": { "type": "string", "minLength": 1 },
+        "label": { "type": "string" },
+        "props": { "type": "object" }
+      },
+      "description": "Same structural shape as a Math IR entity, but only SOURCE entities belong here: no dynamic/derived entity kinds (they are compiler outputs), no claim/drawing-motivated kinds."
+    },
+    "SpecSourceFact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fact_id", "name", "value", "provenance"],
+      "properties": {
+        "fact_id": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
+        "name": { "type": "string", "minLength": 1 },
+        "unit": { "type": "string" },
+        "value": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ExactNumber" },
+        "provenance": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/ProblemTextProvenance" }
+      },
+      "description": "Stricter than Math IR source facts: provenance (problem_text + span) is REQUIRED by the schema itself, and values must be ExactNumber objects — a parser cannot smuggle a free-form answer payload."
+    },
+    "SpecConstraint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capability_id", "subject_refs"],
+      "properties": {
+        "capability_id": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/CapabilityId" },
+        "subject_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/MathRefStrict" }
+        },
+        "params": { "type": "object" }
+      }
+    },
+    "Goal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["goalId", "capabilityId", "inputs"],
+      "properties": {
+        "goalId": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/Identifier" },
+        "capabilityId": {
+          "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/CapabilityId",
+          "description": "Registry capability that answers this goal. Must be family 'solver' or 'event' (checked by the semantic validator), so presentation-only capabilities cannot pose as goals."
+        },
+        "inputs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "https://mathviz.dev/schemas/common/v1#/$defs/MathRefStrict" },
+          "description": "What the goal is asked ABOUT — references to source entities/facts. additionalProperties:false on Goal means NO value/answer/expectation field can exist here at all."
+        }
+      },
+      "description": "A question, never an answer. FROZEN: the only three keys are goalId, capabilityId, inputs."
+    }
+  }
+}

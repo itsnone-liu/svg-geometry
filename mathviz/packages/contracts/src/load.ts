@@ -11,10 +11,11 @@ export const SCHEMA_IDS = {
   timeline: "https://mathviz.dev/schemas/timeline/v1",
   registry: "https://mathviz.dev/schemas/capability-registry/v1",
   catalog: "https://mathviz.dev/schemas/error-catalog/v1",
-  project: "https://mathviz.dev/schemas/project/v1"
+  project: "https://mathviz.dev/schemas/project/v1",
+  problemspec: "https://mathviz.dev/schemas/problemspec/v1"
 } as const;
 
-export type CaseKind = "math" | "scene" | "timeline" | "project";
+export type CaseKind = "math" | "scene" | "timeline" | "project" | "problemspec";
 
 const ajv = new Ajv2020({ allErrors: true, strict: false });
 
@@ -25,7 +26,8 @@ const SCHEMA_FILES = [
   "timeline.schema.json",
   "capability-registry.schema.json",
   "error-catalog.schema.json",
-  "project.schema.json"
+  "project.schema.json",
+  "problemspec.schema.json"
 ];
 
 for (const f of SCHEMA_FILES) {
