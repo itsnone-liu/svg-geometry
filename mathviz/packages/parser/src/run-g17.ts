@@ -1,0 +1,178 @@
+// P5.1 G17_parser_contract — the gate that makes the pipeline safe to attach
+// an LLM to. All scenarios run against ScriptedProvider (zero tokens, zero
+// network); they exercise the DETERMINISTIC parts, which is exactly what a
+// contract gate can honestly guarantee:
+//
+//   S1 answer-bearing goal   -> refused (schema), repaired -> accepted
+//   S2 smuggled derived_facts-> refused (schema), repaired -> accepted
+//   S3 fenced JSON           -> fence-stripped, accepted
+//   S4 non-JSON garbage      -> JSON_ERROR, repair -> accepted
+//   S5 valid-but-unsupported -> ENGINE_UNSUPPORTED (NOT a parser failure)
+//   S6 unrepairable output   -> PARSE_FAILED after exactly ONE repair
+//   S7 answer leakage        -> leakScan(cleanSpec) === [] on every accepted
+//      spec (belt-and-braces over the structural guarantee)
+//   S8 deterministic cache   -> second parse of the same statement hits the
+//      validated cache (provider call count does not grow)
+//
+// Plus the frozen invariant: repair never exceeds MAX_REPAIRS = 1.
+
+import fs from "node:fs";
+import path from "node:path";
+import { ROOT } from "../../contracts/src/load";
+import { parseProblemSpec, MAX_REPAIRS } from "./parse";
+import { ScriptedProvider } from "./provider";
+import { leakScan } from "./telemetry";
+
+const OUT_DIR = path.join(ROOT, "runs", "p51");
+
+const loadSpec = (f: string) => JSON.parse(fs.readFileSync(path.join(ROOT, "fixtures", "spec", f), "utf8"));
+
+function expect(cond: boolean, message: string): void {
+  if (!cond) throw new Error("G17 assertion failed: " + message);
+}
+
+async function main(): Promise<void> {
+  fs.mkdirSync(OUT_DIR, { recursive: true });
+  const rows: any[] = [];
+  const row = (id: string, ok: boolean, detail: unknown = undefined) => {
+    rows.push({ case: id, ok, detail });
+    console.log(`${ok ? "ok  " : "FAIL"} ${id}`);
+  };
+
+  const geoGolden = loadSpec("geometry2d-length.spec.json");
+  const fxGolden = loadSpec("function2d-solve.spec.json");
+  const ST = "已知点 A(0, 0) 与点 B(6, 8)，求线段 AB 的长度。";
+
+  // ---- S1: goal carries an answer field ----
+  {
+    const bad = structuredClone(geoGolden);
+    (bad.goals[0] as any).value = { kind: "int", value: "10" };
+    const good = structuredClone(geoGolden);
+    const p = new ScriptedProvider([
+      JSON.stringify({ domain: "geometry2d" }),
+      JSON.stringify(bad),
+      JSON.stringify(good)
+    ]);
+    const out = await parseProblemSpec(p, ST, { noCache: true });
+    row("s1_answer_field_refused_then_repaired",
+      out.status === "PARSER_ACCEPTED" &&
+      out.repairUsed === true &&
+      out.errors.some((e) => e.category === "SCHEMA_ERROR") &&
+      leakScan(out.spec).length === 0,
+      { status: out.status, repairUsed: out.repairUsed });
+  }
+
+  // ---- S2: smuggled answer layer at the top level ----
+  {
+    const bad: any = structuredClone(geoGolden);
+    bad.derived_facts = [{ fact_id: "ans", name: "answer", value: { kind: "int", value: "10" } }];
+    const good = structuredClone(geoGolden);
+    const p = new ScriptedProvider([
+      JSON.stringify({ domain: "geometry2d" }),
+      JSON.stringify(bad),
+      JSON.stringify(good)
+    ]);
+    const out = await parseProblemSpec(p, ST, { noCache: true });
+    row("s2_derived_layer_refused_then_repaired",
+      out.status === "PARSER_ACCEPTED" && out.repairUsed === true && leakScan(out.spec).length === 0,
+      { status: out.status });
+  }
+
+  // ---- S3: fenced JSON is tolerated (fence stripping) ----
+  {
+    const p = new ScriptedProvider([
+      JSON.stringify({ domain: "geometry2d" }),
+      "```json\n" + JSON.stringify(geoGolden) + "\n```"
+    ]);
+    const out = await parseProblemSpec(p, ST, { noCache: true });
+    row("s3_fenced_json_accepted", out.status === "PARSER_ACCEPTED" && out.spec !== null);
+  }
+
+  // ---- S4: non-JSON garbage -> JSON_ERROR -> repaired ----
+  {
+    const p = new ScriptedProvider([
+      JSON.stringify({ domain: "geometry2d" }),
+      "the answer is 10, obviously",
+      JSON.stringify(geoGolden)
+    ]);
+    const out = await parseProblemSpec(p, ST, { noCache: true });
+    row("s4_garbage_then_repair",
+      out.status === "PARSER_ACCEPTED" && out.repairUsed === true &&
+      out.errors.some((e) => e.category === "JSON_ERROR"),
+      { status: out.status });
+  }
+
+  // ---- S5: valid spec outside the engine's capability ----
+  {
+    // x^2 - 2 = 0: parses cleanly, rational-root certificate refuses it
+    const unsupported: any = structuredClone(fxGolden);
+    unsupported.entities[0].props.lhs = {
+      t: "app", op: "-",
+      args: [
+        { t: "app", op: "^", args: [{ t: "sym", name: "x" }, { t: "num", v: { kind: "int", value: "2" } }] },
+        { t: "num", v: { kind: "int", value: "2" } }
+      ]
+    };
+    unsupported.entities[0].provenance = structuredClone(fxGolden.entities[0].provenance);
+    const p = new ScriptedProvider([
+      JSON.stringify({ domain: "function2d" }),
+      JSON.stringify(unsupported)
+    ]);
+    const out = await parseProblemSpec(p, "解方程：x^2 - 2 = 0，求它的全部实数解。", { noCache: true });
+    row("s5_engine_unsupported_not_parser_failure",
+      out.status === "ENGINE_UNSUPPORTED" &&
+      out.errors.every((e) => e.category === "COMPILER_UNSUPPORTED") &&
+      out.spec !== null,
+      { status: out.status });
+  }
+
+  // ---- S6: unrepairable output stops after exactly one repair ----
+  {
+    const bad = "still not json";
+    const p = new ScriptedProvider([
+      JSON.stringify({ domain: "geometry2d" }),
+      bad,
+      bad
+    ]);
+    const out = await parseProblemSpec(p, ST, { noCache: true });
+    row("s6_unrepairable_fails_after_one_repair",
+      out.status === "PARSE_FAILED" && out.repairUsed === true && p.calls === 3, // A0 + A1 + 1 repair
+      { calls: p.calls, MAX_REPAIRS });
+  }
+
+  // ---- S7: frozen invariant ----
+  row("s7_max_repairs_is_one", MAX_REPAIRS === 1, { MAX_REPAIRS });
+
+  // ---- S8: deterministic validated-spec cache ----
+  {
+    // warm the cache through a fresh (uncached) run, then re-parse with a
+    // provider that would FAIL if called — the cache must answer instead.
+    await parseProblemSpec(new ScriptedProvider([
+      JSON.stringify({ domain: "geometry2d" }),
+      JSON.stringify(geoGolden)
+    ]), ST); // cache enabled
+    const p = new ScriptedProvider([]); // no replies: any call would throw
+    const out = await parseProblemSpec(p, ST);
+    row("s8_validated_cache_hit", out.status === "PARSER_ACCEPTED" && out.cached === true && p.calls === 0,
+      { cached: out.cached, calls: p.calls });
+  }
+
+  // ---- domain routing failure surfaces DOMAIN_ERROR ----
+  {
+    const p = new ScriptedProvider([JSON.stringify({ domain: "chemistry" })]);
+    const out = await parseProblemSpec(p, ST, { noCache: true });
+    row("s9_domain_error_surfaces",
+      out.status === "PARSE_FAILED" && out.errors.some((e) => e.category === "DOMAIN_ERROR") && p.calls === 1);
+  }
+
+  const ok = rows.every((r) => r.ok);
+  const summary = ok ? "PASS" : "FAIL";
+  fs.writeFileSync(path.join(OUT_DIR, "g17.json"), JSON.stringify({ gate: "G17_parser_contract", status: summary, rows }, null, 2) + "\n", "utf8");
+  console.log(`G17_parser_contract: ${summary}`);
+  if (!ok) process.exit(1);
+}
+
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});

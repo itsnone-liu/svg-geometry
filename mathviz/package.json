@@ -15,7 +15,8 @@
     "build:player:p4": "vite build --config examples/p4/vite.config.ts && node scripts/gen-p4-html.mjs",
     "gates:p4": "npm run build:player:p4 && tsx packages/runtime/src/run-p4.ts",
     "gates:p50": "tsx packages/spec/src/run.ts",
-    "gates": "npm run gates:p0 && npm run gates:p1 && npm run gates:p2 && npm run gates:p3 && npm run gates:p4 && npm run gates:p50",
+    "gates:p51": "tsx packages/parser/src/run-g17.ts && tsx packages/parser-benchmark/src/run.ts",
+    "gates": "npm run gates:p0 && npm run gates:p1 && npm run gates:p2 && npm run gates:p3 && npm run gates:p4 && npm run gates:p50 && npm run gates:p51",
     "test": "vitest run"
   },
   "devDependencies": {
