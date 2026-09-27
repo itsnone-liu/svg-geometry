@@ -46,11 +46,13 @@ function compileBodies(math: any, factById: Map<string, any>): MotionBodyProgram
     for (let i = 0; i < rawSegments.length; i++) {
       const raw = rawSegments[i];
       const where = `body '${e.id}' segment ${i}`;
-      const startId = refId(raw.start, "fact", `${where}.start`);
+      const startId = raw.start === undefined || raw.start === null ? null : refId(raw.start, "fact", `${where}.start`);
       const velocityId = refId(raw.velocity, "fact", `${where}.velocity`);
-      const startFact = factById.get(startId), velocityFact = factById.get(velocityId);
-      if (!startFact || !velocityFact) throw makeRuntimeError("E_BINDING", `${where}: missing start or velocity source fact`);
-      const start = exactAtFact(startFact, "time", `${where}.start`);
+      const startFact = startId ? factById.get(startId) : null, velocityFact = factById.get(velocityId);
+      if ((startId && !startFact) || !velocityFact) throw makeRuntimeError("E_BINDING", `${where}: missing start or velocity source fact`);
+      // Omitted ProblemSpec segment.start means the engine's deterministic
+      // time-origin convention t=0. It is NOT materialized as a source fact.
+      const start = startFact ? exactAtFact(startFact, "time", `${where}.start`) : rat(0n);
       const velocity = exactAtFact(velocityFact, "velocity", `${where}.velocity`);
       if (cmp(start, rat(0n)) < 0) throw makeRuntimeError("E_MATH_CONSTRAINT", `${where}: segment start must be non-negative`);
       if (prevStart && cmp(start, prevStart) <= 0) throw makeRuntimeError("E_SCHEMA", `${where}: starts must be strictly increasing in input order`);

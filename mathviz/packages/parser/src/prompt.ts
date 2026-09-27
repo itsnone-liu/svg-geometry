@@ -44,7 +44,8 @@ Entity kinds and their EXACT allowed props (unknown props are rejected):
   circle:   {center: point-id, radius: string-literal | ExactNumber}
 - motion1d:
   body:     {capability_id: "motion1d.constant_velocity", initial_position: "math:fact:<id>",
-             segments: [{start: "math:fact:<id>", velocity: "math:fact:<id>", end?: "math:fact:<id>", start_position?: ExactNumber | "math:fact:<id>"}]}
+             segments: [{start?: "math:fact:<id>", velocity: "math:fact:<id>", end?: "math:fact:<id>", start_position?: ExactNumber | "math:fact:<id>"}]}
+Omit segment.start when the problem gives no explicit start time: MathViz defines that as t=0. Do NOT invent a source fact named t0. For signed velocity, preserve direction: if the statement says "5 m/s backward", value is -5 and provenance must span the velocity AND direction wording (e.g. the full phrase "5 m/s backward"), not the speed numeral alone.
 - function2d:
   function: {capability_id: "function2d.expression_curve", variable, expr: ExprAst, x_domain?, parameter_bindings?}
   equation: {capability_id: "function2d.solve_equation", variable, lhs: ExprAst, rhs: ExprAst}
@@ -103,22 +104,34 @@ export function specCall(statement: string, domain: string): { schema: unknown; 
   return { schema: SPEC_SCHEMA, system: SYSTEM_CONTRACT, input };
 }
 
-/** P5.1 §20 repair prompt: patch only, never solve, never add answers. */
-export function repairCall(statement: string, domain: string, errors: Array<{ code: string; path?: string; message: string }>): { schema: unknown; system: string; input: string } {
+/** Repair contract: previous full candidate + structured errors + same schema
+ * and domain guide as initial generation. The model returns a COMPLETE spec. */
+export function repairCall(statement: string, domain: string, previousCandidate: any, errors: Array<{ code: string; path?: string; message: string }>, previousRawText?: string): { schema: unknown; system: string; input: string } {
+  const fewshot = FEWSHOTS[domain];
   const input = [
     `Target domain: ${domain}`,
-    `Allowed goal capabilities: ${(PROBLEM_SPEC_COMPILER_SURFACE[domain] ?? []).join(", ")}`,
     ``,
-    `The previously emitted ProblemSpec for this problem failed validation:`,
-    JSON.stringify({ errors }, null, 1),
+    `Allowed goal capabilities (the ONLY ones you may emit):`,
+    ...(PROBLEM_SPEC_COMPILER_SURFACE[domain] ?? []).map((c) => `- ${c}`),
     ``,
-    `Problem:`,
+    ENTITY_KIND_GUIDE.trim(),
+    UNIT_VOCABULARY.trim(),
+    ``,
+    `Frozen valid example for this domain:`,
+    JSON.stringify(fewshot, null, 1),
+    ``,
+    `## Original problem statement`,
     statement,
     ``,
-    `Patch only the invalid ProblemSpec.`,
-    `Do not solve the problem.`,
-    `Do not add answer fields.`,
-    `Return the complete corrected ProblemSpec as one JSON object.`
+    `## Previous complete ProblemSpec (repair this document; do not start from an unrelated example)`,
+    JSON.stringify(previousCandidate, null, 1),
+    ...(previousRawText ? [``, `Previous raw model text (could not be parsed as JSON):`, previousRawText] : []),
+    ``,
+    `## Structured validation/compile errors`,
+    JSON.stringify(errors.map((e) => ({ code: e.code, path: e.path ?? "", message: e.message })), null, 1),
+    ``,
+    `Return the COMPLETE corrected ProblemSpec. Preserve every correct source fact/entity/goal from the previous candidate; make only corrections required by the errors and the original statement.`,
+    `Do not solve the problem. Do not add answer fields, derived facts, or guessed facts. Every provenance span must be an exact slice of the original statement.`
   ].join("\n");
   return { schema: SPEC_SCHEMA, system: SYSTEM_CONTRACT, input };
 }

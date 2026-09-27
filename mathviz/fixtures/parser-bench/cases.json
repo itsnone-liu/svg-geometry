@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "cases": [
     {
       "id": "geo_sf_01",
@@ -2405,6 +2405,53 @@
                 "end": 18
               }
             }
+          },
+          {
+            "id": "func_f",
+            "kind": "function",
+            "label": "f",
+            "props": {
+              "capability_id": "function2d.expression_curve",
+              "variable": "x",
+              "expr": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "^",
+                    "args": [
+                      {
+                        "t": "sym",
+                        "name": "x"
+                      },
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "2"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "9"
+                    }
+                  }
+                ]
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "f(x) = x^2 - 9",
+                "start": 4,
+                "end": 18
+              }
+            }
           }
         ],
         "source_facts": [],
@@ -3171,7 +3218,6 @@
               "initial_position": "math:fact:A0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vA"
                 }
               ]
@@ -3193,7 +3239,6 @@
               "initial_position": "math:fact:B0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vB"
                 }
               ]
@@ -3271,26 +3316,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "5 m/s",
-                "start": 14,
-                "end": 19
-              }
-            }
-          },
-          {
-            "fact_id": "t0",
-            "name": "start",
-            "unit": "s",
-            "value": {
-              "kind": "int",
-              "value": "0"
-            },
-            "provenance": {
-              "kind": "problem_text",
-              "span": {
-                "text": "从",
-                "start": 1,
-                "end": 2
+                "text": "乙从位置 100 m 出发，以 5 m/s 匀速后退",
+                "start": 25,
+                "end": 51
               }
             }
           }
@@ -3327,7 +3355,6 @@
               "initial_position": "math:fact:A0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vA"
                 }
               ]
@@ -3349,7 +3376,6 @@
               "initial_position": "math:fact:B0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vB"
                 }
               ]
@@ -3432,23 +3458,6 @@
                 "end": 53
               }
             }
-          },
-          {
-            "fact_id": "t0",
-            "name": "start",
-            "unit": "s",
-            "value": {
-              "kind": "int",
-              "value": "0"
-            },
-            "provenance": {
-              "kind": "problem_text",
-              "span": {
-                "text": "从",
-                "start": 1,
-                "end": 2
-              }
-            }
           }
         ],
         "goals": [
@@ -3483,7 +3492,6 @@
               "initial_position": "math:fact:A0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vA"
                 }
               ]
@@ -3505,7 +3513,6 @@
               "initial_position": "math:fact:B0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vB"
                 }
               ]
@@ -3549,9 +3556,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "2 m/s",
-                "start": 15,
-                "end": 20
+                "text": "甲从位置 20 m 出发，以 2 m/s 匀速后退",
+                "start": 0,
+                "end": 25
               }
             }
           },
@@ -3588,23 +3595,6 @@
                 "end": 20
               }
             }
-          },
-          {
-            "fact_id": "t0",
-            "name": "start",
-            "unit": "s",
-            "value": {
-              "kind": "int",
-              "value": "0"
-            },
-            "provenance": {
-              "kind": "problem_text",
-              "span": {
-                "text": "从",
-                "start": 1,
-                "end": 2
-              }
-            }
           }
         ],
         "goals": [
@@ -3639,7 +3629,6 @@
               "initial_position": "math:fact:A0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vA"
                 }
               ]
@@ -3686,23 +3675,6 @@
                 "text": "4 m/s",
                 "start": 14,
                 "end": 19
-              }
-            }
-          },
-          {
-            "fact_id": "t0",
-            "name": "start",
-            "unit": "s",
-            "value": {
-              "kind": "int",
-              "value": "0"
-            },
-            "provenance": {
-              "kind": "problem_text",
-              "span": {
-                "text": "从",
-                "start": 1,
-                "end": 2
               }
             }
           },
@@ -3756,7 +3728,6 @@
               "initial_position": "math:fact:A0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vA"
                 }
               ]
@@ -3800,26 +3771,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "10 m/s",
-                "start": 16,
-                "end": 22
-              }
-            }
-          },
-          {
-            "fact_id": "t0",
-            "name": "start",
-            "unit": "s",
-            "value": {
-              "kind": "int",
-              "value": "0"
-            },
-            "provenance": {
-              "kind": "problem_text",
-              "span": {
-                "text": "从",
-                "start": 1,
-                "end": 2
+                "text": "乙从位置 100 m 出发，以 10 m/s 匀速后退",
+                "start": 0,
+                "end": 27
               }
             }
           },
@@ -3873,7 +3827,6 @@
               "initial_position": "math:fact:A0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vA"
                 }
               ]
@@ -3895,7 +3848,6 @@
               "initial_position": "math:fact:B0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vB"
                 }
               ]
@@ -3973,26 +3925,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "2 m/s",
-                "start": 15,
-                "end": 20
-              }
-            }
-          },
-          {
-            "fact_id": "t0",
-            "name": "start",
-            "unit": "s",
-            "value": {
-              "kind": "int",
-              "value": "0"
-            },
-            "provenance": {
-              "kind": "problem_text",
-              "span": {
-                "text": "从",
-                "start": 1,
-                "end": 2
+                "text": "乙从位置 6 m 出发，以 2 m/s 匀速后退",
+                "start": 26,
+                "end": 50
               }
             }
           }
@@ -4029,7 +3964,6 @@
               "initial_position": "math:fact:A0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vA"
                 }
               ]
@@ -4051,7 +3985,6 @@
               "initial_position": "math:fact:B0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vB"
                 }
               ]
@@ -4134,23 +4067,6 @@
                 "end": 45
               }
             }
-          },
-          {
-            "fact_id": "t0",
-            "name": "start",
-            "unit": "s",
-            "value": {
-              "kind": "int",
-              "value": "0"
-            },
-            "provenance": {
-              "kind": "problem_text",
-              "span": {
-                "text": "从",
-                "start": 2,
-                "end": 3
-              }
-            }
           }
         ],
         "goals": [
@@ -4185,7 +4101,6 @@
               "initial_position": "math:fact:A0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vA"
                 }
               ]
@@ -4207,7 +4122,6 @@
               "initial_position": "math:fact:B0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vB"
                 }
               ]
@@ -4291,23 +4205,6 @@
                 "end": 40
               }
             }
-          },
-          {
-            "fact_id": "t0",
-            "name": "start",
-            "unit": "s",
-            "value": {
-              "kind": "int",
-              "value": "0"
-            },
-            "provenance": {
-              "kind": "problem_text",
-              "span": {
-                "text": "从",
-                "start": 1,
-                "end": 2
-              }
-            }
           }
         ],
         "goals": [
@@ -4342,7 +4239,6 @@
               "initial_position": "math:fact:A0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vA"
                 }
               ]
@@ -4389,23 +4285,6 @@
                 "text": "6 m/s",
                 "start": 14,
                 "end": 19
-              }
-            }
-          },
-          {
-            "fact_id": "t0",
-            "name": "start",
-            "unit": "s",
-            "value": {
-              "kind": "int",
-              "value": "0"
-            },
-            "provenance": {
-              "kind": "problem_text",
-              "span": {
-                "text": "从",
-                "start": 1,
-                "end": 2
               }
             }
           },
@@ -4459,7 +4338,6 @@
               "initial_position": "math:fact:A0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vA"
                 }
               ]
@@ -4481,7 +4359,6 @@
               "initial_position": "math:fact:B0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vB"
                 }
               ]
@@ -4559,26 +4436,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "5 m/s",
-                "start": 16,
-                "end": 21
-              }
-            }
-          },
-          {
-            "fact_id": "t0",
-            "name": "start",
-            "unit": "s",
-            "value": {
-              "kind": "int",
-              "value": "0"
-            },
-            "provenance": {
-              "kind": "problem_text",
-              "span": {
-                "text": "从",
-                "start": 1,
-                "end": 2
+                "text": "乙从位置 50 m 出发，以 5 m/s 匀速后退",
+                "start": 27,
+                "end": 52
               }
             }
           }
@@ -4615,7 +4475,6 @@
               "initial_position": "math:fact:A0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vA"
                 }
               ]
@@ -4637,7 +4496,6 @@
               "initial_position": "math:fact:B0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vB"
                 }
               ]
@@ -4715,26 +4573,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "5 m/s",
-                "start": 13,
-                "end": 18
-              }
-            }
-          },
-          {
-            "fact_id": "t0",
-            "name": "start",
-            "unit": "s",
-            "value": {
-              "kind": "int",
-              "value": "0"
-            },
-            "provenance": {
-              "kind": "problem_text",
-              "span": {
-                "text": "从",
-                "start": 4,
-                "end": 5
+                "text": "一列慢车从 100 m 处以 5 m/s 向它驶来",
+                "start": 24,
+                "end": 49
               }
             }
           }
@@ -4771,7 +4612,6 @@
               "initial_position": "math:fact:A0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vA"
                 }
               ]
@@ -4793,7 +4633,6 @@
               "initial_position": "math:fact:B0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vB"
                 }
               ]
@@ -4837,9 +4676,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "2 m/s",
-                "start": 22,
-                "end": 27
+                "text": "甲从 20 m 标记处以 2 m/s 向后跑",
+                "start": 9,
+                "end": 31
               }
             }
           },
@@ -4876,23 +4715,6 @@
                 "end": 27
               }
             }
-          },
-          {
-            "fact_id": "t0",
-            "name": "start",
-            "unit": "s",
-            "value": {
-              "kind": "int",
-              "value": "0"
-            },
-            "provenance": {
-              "kind": "problem_text",
-              "span": {
-                "text": "从",
-                "start": 10,
-                "end": 11
-              }
-            }
           }
         ],
         "goals": [
@@ -4927,7 +4749,6 @@
               "initial_position": "math:fact:A0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vA"
                 }
               ]
@@ -4949,7 +4770,6 @@
               "initial_position": "math:fact:B0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vB"
                 }
               ]
@@ -5032,23 +4852,6 @@
                 "end": 37
               }
             }
-          },
-          {
-            "fact_id": "t0",
-            "name": "start",
-            "unit": "s",
-            "value": {
-              "kind": "int",
-              "value": "0"
-            },
-            "provenance": {
-              "kind": "problem_text",
-              "span": {
-                "text": "从",
-                "start": 2,
-                "end": 3
-              }
-            }
           }
         ],
         "goals": [
@@ -5083,7 +4886,6 @@
               "initial_position": "math:fact:A0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vA"
                 }
               ]
@@ -5130,23 +4932,6 @@
                 "text": "4 m/s",
                 "start": 13,
                 "end": 18
-              }
-            }
-          },
-          {
-            "fact_id": "t0",
-            "name": "start",
-            "unit": "s",
-            "value": {
-              "kind": "int",
-              "value": "0"
-            },
-            "provenance": {
-              "kind": "problem_text",
-              "span": {
-                "text": "从",
-                "start": 4,
-                "end": 5
               }
             }
           },
@@ -5200,7 +4985,6 @@
               "initial_position": "math:fact:A0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vA"
                 }
               ]
@@ -5222,7 +5006,6 @@
               "initial_position": "math:fact:B0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vB"
                 }
               ]
@@ -5300,26 +5083,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "2 m/s",
-                "start": 22,
-                "end": 27
-              }
-            }
-          },
-          {
-            "fact_id": "t0",
-            "name": "start",
-            "unit": "s",
-            "value": {
-              "kind": "int",
-              "value": "0"
-            },
-            "provenance": {
-              "kind": "problem_text",
-              "span": {
-                "text": "从",
-                "start": 11,
-                "end": 12
+                "text": "乙车从 6 m 站点以 2 m/s 驶出",
+                "start": 31,
+                "end": 51
               }
             }
           }
@@ -5356,7 +5122,6 @@
               "initial_position": "math:fact:A0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vA"
                 }
               ]
@@ -5378,7 +5143,6 @@
               "initial_position": "math:fact:B0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vB"
                 }
               ]
@@ -5456,26 +5220,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "5 m/s",
-                "start": 21,
-                "end": 26
-              }
-            }
-          },
-          {
-            "fact_id": "t0",
-            "name": "start",
-            "unit": "s",
-            "value": {
-              "kind": "int",
-              "value": "0"
-            },
-            "provenance": {
-              "kind": "problem_text",
-              "span": {
-                "text": "从",
-                "start": 8,
-                "end": 9
+                "text": "乙从位置 100 m 出发，以 5 m/s 匀速后退",
+                "start": 32,
+                "end": 58
               }
             }
           }
@@ -5512,7 +5259,6 @@
               "initial_position": "math:fact:A0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vA"
                 }
               ]
@@ -5534,7 +5280,6 @@
               "initial_position": "math:fact:B0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vB"
                 }
               ]
@@ -5617,23 +5362,6 @@
                 "end": 57
               }
             }
-          },
-          {
-            "fact_id": "t0",
-            "name": "start",
-            "unit": "s",
-            "value": {
-              "kind": "int",
-              "value": "0"
-            },
-            "provenance": {
-              "kind": "problem_text",
-              "span": {
-                "text": "从",
-                "start": 14,
-                "end": 15
-              }
-            }
           }
         ],
         "goals": [
@@ -5668,7 +5396,6 @@
               "initial_position": "math:fact:A0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vA"
                 }
               ]
@@ -5715,23 +5442,6 @@
                 "text": "4 m/s",
                 "start": 24,
                 "end": 29
-              }
-            }
-          },
-          {
-            "fact_id": "t0",
-            "name": "start",
-            "unit": "s",
-            "value": {
-              "kind": "int",
-              "value": "0"
-            },
-            "provenance": {
-              "kind": "problem_text",
-              "span": {
-                "text": "从",
-                "start": 11,
-                "end": 12
               }
             }
           },
@@ -5785,7 +5495,6 @@
               "initial_position": "math:fact:A0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vA"
                 }
               ]
@@ -5807,7 +5516,6 @@
               "initial_position": "math:fact:B0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vB"
                 }
               ]
@@ -5890,23 +5598,6 @@
                 "end": 19
               }
             }
-          },
-          {
-            "fact_id": "t0",
-            "name": "start",
-            "unit": "s",
-            "value": {
-              "kind": "int",
-              "value": "0"
-            },
-            "provenance": {
-              "kind": "problem_text",
-              "span": {
-                "text": "从",
-                "start": 1,
-                "end": 2
-              }
-            }
           }
         ],
         "goals": [
@@ -5941,7 +5632,6 @@
               "initial_position": "math:fact:A0",
               "segments": [
                 {
-                  "start": "math:fact:t0",
                   "velocity": "math:fact:vA"
                 }
               ]
@@ -5985,26 +5675,9 @@
             "provenance": {
               "kind": "problem_text",
               "span": {
-                "text": "-2 m/s",
-                "start": 15,
-                "end": 21
-              }
-            }
-          },
-          {
-            "fact_id": "t0",
-            "name": "start",
-            "unit": "s",
-            "value": {
-              "kind": "int",
-              "value": "0"
-            },
-            "provenance": {
-              "kind": "problem_text",
-              "span": {
-                "text": "从",
-                "start": 1,
-                "end": 2
+                "text": "甲从位置 10 m 出发，以 -2 m/s 匀速后退",
+                "start": 0,
+                "end": 26
               }
             }
           },

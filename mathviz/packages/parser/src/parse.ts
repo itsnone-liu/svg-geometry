@@ -1,203 +1,101 @@
-// P5.1 semantic parser core: NL problem -> validated, compiled ProblemSpec.
-//
-// Two logical LLM calls (§15): A0 domain routing, A1 spec generation.
-// Deterministic validation in between at every step (§19): JSON-only output
-// (fences defensively stripped inside providers), schema gate, semantic
-// validator, then the deterministic compiler. One repair round MAX (§21):
-// the model receives the structured error list and must return a COMPLETE
-// corrected spec; the pipeline never patches documents incrementally.
-//
-// Outcome classification (§22-23): a spec that validates but cannot compile
-// is ENGINE_UNSUPPORTED — not a parser failure. Everything else that fails
-// is PARSE_FAILED with a categorized error.
-
+// P5.1 semantic parser core with P5.1a request-level diagnostics.
 import { validatorFor } from "../../contracts/src/load";
 import { validateProblemSpec } from "../../contracts/src/spec-validate";
 import { compileProblemSpec } from "../../spec/src/compile";
 import { domainRoutingCall, specCall, repairCall } from "./prompt";
 import { cacheGet, cachePut, repairDelta as diffTopLevel } from "./telemetry";
-import {
-  categoryForCode,
-  type ParserError,
-  type ParseOutcome,
-  type StructuredLLMProvider,
-  type TokenUsage
-} from "./types";
+import { categoryForCode, type ParserError, type ParseOutcome, type ParseCallDiagnostic, type StructuredLLMProvider, type TokenUsage } from "./types";
 
 export const MAX_REPAIRS = 1;
-
+const ZERO: TokenUsage = { input_tokens: 0, output_tokens: 0 };
 function addUsage(a: TokenUsage | null, b: TokenUsage | null): TokenUsage {
-  return {
-    input_tokens: (a?.input_tokens ?? 0) + (b?.input_tokens ?? 0),
-    output_tokens: (a?.output_tokens ?? 0) + (b?.output_tokens ?? 0)
-  };
+  return { input_tokens: (a?.input_tokens ?? 0) + (b?.input_tokens ?? 0), output_tokens: (a?.output_tokens ?? 0) + (b?.output_tokens ?? 0) };
 }
-
-interface Attempt {
-  ok: boolean;
-  engineUnsupported: boolean;
-  spec: any | null;
-  errors: ParserError[];
-}
-
-/** Schema + semantics + deterministic compile for one candidate document. */
+interface Attempt { ok: boolean; engineUnsupported: boolean; spec: any | null; errors: ParserError[]; compileError?: { code: string; message: string } | null }
 export function attemptCompile(candidate: any): Attempt {
-  if (!candidate || typeof candidate !== "object") {
-    return { ok: false, engineUnsupported: false, spec: null, errors: [{ code: "E_PROVIDER", category: "JSON_ERROR", message: "model output was not a JSON object" }] };
-  }
-  const schemaValidator = validatorFor("problemspec");
-  if (!schemaValidator(candidate)) {
-    const errors: ParserError[] = (schemaValidator.errors ?? []).slice(0, 20).map((e: any) => ({
-      code: "E_SCHEMA",
-      category: "SCHEMA_ERROR" as const,
-      path: String(e.instancePath ?? "") || undefined,
-      message: `${String(e.message ?? "")}${e.params ? ` (${JSON.stringify(e.params)})` : ""}`
-    }));
-    return { ok: false, engineUnsupported: false, spec: null, errors };
-  }
+  if (!candidate || typeof candidate !== "object") return { ok: false, engineUnsupported: false, spec: null, errors: [{ code: "E_PROVIDER", category: "JSON_ERROR", message: "model output was not a JSON object" }] };
+  const v = validatorFor("problemspec");
+  if (!v(candidate)) return { ok: false, engineUnsupported: false, spec: null, errors: (v.errors ?? []).slice(0, 20).map((e: any) => ({ code: "E_SCHEMA", category: "SCHEMA_ERROR", path: String(e.instancePath ?? "") || undefined, message: `${String(e.message ?? "")}${e.params ? ` (${JSON.stringify(e.params)})` : ""}` })) };
   const semantic = validateProblemSpec(candidate);
-  if (semantic.length > 0) {
-    return {
-      ok: false,
-      engineUnsupported: false,
-      spec: null,
-      errors: semantic.map((e) => ({ code: e.code, category: categoryForCode(e.code), message: e.message }))
-    };
-  }
-  try {
-    compileProblemSpec(candidate);
-    return { ok: true, engineUnsupported: false, spec: candidate, errors: [] };
-  } catch (e: any) {
-    // Spec is valid but the engine refuses to answer it: the capability is
-    // outside the compiler's wired surface, or the (valid) problem has no
-    // legal solution under the engine's constraints. Either way this is
-    // NOT a parser failure — the parser did its job.
-    if (e?.code === "E_CAPABILITY_UNSUPPORTED" || e?.code === "E_MATH_CONSTRAINT") {
-      return {
-        ok: false,
-        engineUnsupported: true,
-        spec: candidate,
-        errors: [{ code: e.code, category: "COMPILER_UNSUPPORTED", message: e?.message ?? String(e) }]
-      };
-    }
-    return {
-      ok: false,
-      engineUnsupported: false,
-      spec: null,
-      errors: [{ code: e?.code ?? "E_SCHEMA", category: categoryForCode(e?.code ?? "E_SCHEMA"), message: e?.message ?? String(e) }]
-    };
+  if (semantic.length) return { ok: false, engineUnsupported: false, spec: null, errors: semantic.map((e) => ({ code: e.code, category: categoryForCode(e.code), path: e.path, message: e.message })) };
+  try { compileProblemSpec(candidate); return { ok: true, engineUnsupported: false, spec: candidate, errors: [], compileError: null }; }
+  catch (e: any) {
+    const compileError = { code: e?.code ?? "E_SCHEMA", message: e?.message ?? String(e) };
+    if (e?.code === "E_CAPABILITY_UNSUPPORTED" || e?.code === "E_MATH_CONSTRAINT") return { ok: false, engineUnsupported: true, spec: candidate, errors: [{ code: e.code, category: "COMPILER_UNSUPPORTED", message: compileError.message }], compileError };
+    return { ok: false, engineUnsupported: false, spec: null, errors: [{ code: compileError.code, category: categoryForCode(compileError.code), message: compileError.message }], compileError };
   }
 }
 
-export async function routeDomain(provider: StructuredLLMProvider, statement: string): Promise<{ domain: string | null; usage: TokenUsage | null; error?: ParserError }> {
+export async function routeDomain(provider: StructuredLLMProvider, statement: string): Promise<{ domain: string | null; usage: TokenUsage | null; error?: ParserError; diagnostic?: ParseCallDiagnostic }> {
   try {
     const res = await provider.generate<any>(domainRoutingCall(statement));
-    const d = res?.value?.domain;
-    if (d === "geometry2d" || d === "motion1d" || d === "function2d") return { domain: d, usage: res.usage };
-    return { domain: null, usage: res.usage, error: { code: "E_SCHEMA", category: "DOMAIN_ERROR", message: `domain routing returned '${String(d)}' (not one of the three domains)` } };
+    const d = res.value?.domain;
+    const error = d === "geometry2d" || d === "motion1d" || d === "function2d" ? undefined : { code: "E_SCHEMA", category: "DOMAIN_ERROR" as const, message: `domain routing returned '${String(d)}' (not one of the three domains)` };
+    return { domain: error ? null : d, usage: res.usage, error, diagnostic: { stage: "A0", ...res.diagnostics, parsed_candidate: res.value, usage: res.usage, errors: error ? [error] : [] } };
   } catch (e: any) {
-    return { domain: null, usage: null, error: { code: "E_PROVIDER", category: "DOMAIN_ERROR", message: e?.message ?? String(e) } };
+    const diagnostic = e?.diagnostics;
+    const error = { code: e?.code ?? "E_PROVIDER", category: "DOMAIN_ERROR" as const, message: e?.message ?? String(e) };
+    return { domain: null, usage: e?.usage ?? null, error, diagnostic: { stage: "A0", ...(diagnostic ?? {}), usage: e?.usage ?? null, errors: [error] } };
   }
 }
-
-export interface ParseOptions {
-  /** Skip the A0 routing call (benchmark/repair already knows the domain). */
-  domain?: string;
-  /** Disable the validated-spec cache (tests that must observe calls). */
-  noCache?: boolean;
-}
+export interface ParseOptions { domain?: string; noCache?: boolean }
 
 export async function parseProblemSpec(provider: StructuredLLMProvider, statement: string, opts: ParseOptions = {}): Promise<ParseOutcome> {
+  const diagnostics: ParseCallDiagnostic[] = [];
   let initialUsage: TokenUsage | null = null;
   let repairUsage: TokenUsage | null = null;
+  let routingUsage: TokenUsage | null = null;
   const allErrors: ParserError[] = [];
-
-  // ---- validated-spec cache: same contract + policy + provider + statement ----
   if (!opts.noCache) {
     const hit = cacheGet(provider.id, statement);
-    if (hit) {
-      return {
-        status: "PARSER_ACCEPTED",
-        domain: hit?.domain ?? null,
-        spec: hit,
-        errors: [],
-        repairUsed: false,
-        repairDelta: null,
-        usage: { initial: null, repair: null, total: { input_tokens: 0, output_tokens: 0 } },
-        cached: true
-      };
-    }
+    if (hit) return { status: "PARSER_ACCEPTED", domain: hit?.domain ?? null, spec: hit, errors: [], repairUsed: false, repairDelta: null, usage: { initial: null, repair: null, total: ZERO }, cached: true, diagnostics: [], compileError: null };
   }
-
-  // ---- A0: domain routing (skipped when the caller pins the domain) ----
   let domain = opts.domain ?? null;
   if (!domain) {
     const routed = await routeDomain(provider, statement);
+    routingUsage = routed.usage;
     initialUsage = addUsage(initialUsage, routed.usage);
-    if (routed.error || !routed.domain) {
+    if (routed.diagnostic) diagnostics.push(routed.diagnostic);
+    if (!routed.domain || routed.error) {
       if (routed.error) allErrors.push(routed.error);
-      return {
-        status: "PARSE_FAILED",
-        domain: null,
-        spec: null,
-        errors: allErrors,
-        repairUsed: false,
-        repairDelta: null,
-        usage: { initial: initialUsage, repair: null, total: addUsage(initialUsage, null) },
-        cached: false
-      };
+      return { status: "PARSE_FAILED", domain: null, spec: null, errors: allErrors, repairUsed: false, repairDelta: null, usage: { initial: initialUsage, repair: null, total: addUsage(initialUsage, null) }, cached: false, diagnostics, compileError: null };
     }
     domain = routed.domain;
   }
-
-  // ---- A1 + (at most) one repair round ----
-  const runCall = async (call: { schema: unknown; system: string; input: string }) => {
+  const callStage = async (stage: "A1" | "repair", call: { schema: unknown; system: string; input: string }, prior?: any) => {
     try {
       const res = await provider.generate<any>(call);
-      return { attempt: attemptCompile(res.value), usage: res.usage as TokenUsage | null, doc: res.value ?? null };
+      const attempt = attemptCompile(res.value);
+      const diag: ParseCallDiagnostic = { stage, ...res.diagnostics, parsed_candidate: res.value, usage: res.usage, errors: attempt.errors };
+      diagnostics.push(diag);
+      return { attempt, doc: res.value, usage: res.usage, diag };
     } catch (e: any) {
-      return {
-        attempt: { ok: false, engineUnsupported: false, spec: null, errors: [{ code: "E_PROVIDER", category: "JSON_ERROR", message: e?.message ?? String(e) }] } as Attempt,
-        usage: null as TokenUsage | null,
-        doc: null as any
-      };
+      const error: ParserError = { code: e?.code ?? "E_PROVIDER", category: "JSON_ERROR", message: e?.message ?? String(e) };
+      const diag: ParseCallDiagnostic = { stage, ...(e?.diagnostics ?? {}), usage: e?.usage ?? null, errors: [error] };
+      diagnostics.push(diag);
+      return { attempt: { ok: false, engineUnsupported: false, spec: null, errors: [error] } as Attempt, doc: null, usage: e?.usage ?? null, diag };
     }
   };
-
-  const first = await runCall(specCall(statement, domain));
-  initialUsage = first.usage;
+  const first = await callStage("A1", specCall(statement, domain));
+  initialUsage = addUsage(routingUsage, first.usage);
   let current = first.attempt;
   if (!current.ok) allErrors.push(...current.errors);
-
   let repairUsed = false;
   let delta: number | null = null;
   if (!current.ok && !current.engineUnsupported) {
     repairUsed = true;
-    const second = await runCall(repairCall(statement, domain, current.errors));
+    const firstRaw = diagnostics.find((d) => d.stage === "A1")?.raw_text;
+    const second = await callStage("repair", repairCall(statement, domain, first.doc, current.errors, firstRaw));
     repairUsage = second.usage;
     current = second.attempt;
     if (!current.ok) allErrors.push(...current.errors);
     if (first.doc && second.doc) delta = diffTopLevel(first.doc, second.doc);
   }
-
-  const status: ParseOutcome["status"] = current.ok
-    ? "PARSER_ACCEPTED"
-    : current.engineUnsupported
-      ? "ENGINE_UNSUPPORTED"
-      : "PARSE_FAILED";
-
-  if (status === "PARSER_ACCEPTED" && !opts.noCache) {
-    cachePut(provider.id, statement, current.spec);
-  }
-
+  const status: ParseOutcome["status"] = current.ok ? "PARSER_ACCEPTED" : current.engineUnsupported ? "ENGINE_UNSUPPORTED" : "PARSE_FAILED";
+  if (status === "PARSER_ACCEPTED" && !opts.noCache) cachePut(provider.id, statement, current.spec);
   return {
-    status,
-    domain,
-    spec: current.spec,
-    errors: allErrors,
-    repairUsed,
-    repairDelta: delta,
+    status, domain, spec: current.spec, errors: allErrors, repairUsed, repairDelta: delta,
     usage: { initial: initialUsage, repair: repairUsage, total: addUsage(initialUsage, repairUsage) },
-    cached: false
+    cached: false, diagnostics, compileError: current.compileError ?? null
   };
 }

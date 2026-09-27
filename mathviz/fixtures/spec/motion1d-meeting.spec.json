@@ -12,7 +12,6 @@
         "initial_position": "math:fact:xA0",
         "segments": [
           {
-            "start": "math:fact:t0",
             "velocity": "math:fact:vA"
           }
         ]
@@ -34,7 +33,6 @@
         "initial_position": "math:fact:xB0",
         "segments": [
           {
-            "start": "math:fact:t0",
             "velocity": "math:fact:vB"
           }
         ]
@@ -115,23 +113,6 @@
           "text": "以 -5 m/s 匀速前进",
           "start": 39,
           "end": 52
-        }
-      }
-    },
-    {
-      "fact_id": "t0",
-      "name": "出发时刻",
-      "unit": "s",
-      "value": {
-        "kind": "int",
-        "value": "0"
-      },
-      "provenance": {
-        "kind": "problem_text",
-        "span": {
-          "text": "出发",
-          "start": 9,
-          "end": 11
         }
       }
     }

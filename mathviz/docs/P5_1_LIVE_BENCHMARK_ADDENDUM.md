@@ -1,32 +1,42 @@
-# MathViz P5.1 Live Benchmark Addendum — DeepSeek V4.1 Flash
+# MathViz P5.1a Live Benchmark Addendum — DeepSeek V4.1 Flash
+
+## Run provenance and safety
 
 - Endpoint: Aliyun Bailian Beijing Token Plan `https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1`
-- Model ID verified against `/models`: `deepseek-v4.1-flash`
-- Credential: user-provided subscription key was passed only to the current PowerShell process as `MATHVIZ_LLM_API_KEY`; never written to files, logs, git, persistent User environment, or printed. (The key was exposed in chat; user should rotate/revoke it after this run.)
-- Run: live G18 over all 60 benchmark statements; command returned exit 1 because thresholds were not met.
+- Model ID: `deepseek-v4.1-flash`
+- One live run across the 60-case benchmark; parse-repair remains capped at one repair.
+- The credential was supplied only as a process environment value. Artifacts record model text, request IDs, per-call token counts and candidates, but contain no Authorization headers or API key. The exposed chat credential should be revoked/rotated.
+- Detailed (sensitive benchmark text/model output) diagnostics are local under ignored `runs/p51/benchmark-diagnostics.json`; the summary is in `runs/p51/benchmark.json`. Do not commit raw diagnostics.
 
-## Results (live; unlike replay these measure model output)
+## Calibrated result
 
-- Domain accuracy: 98.33% (59/60)
-- Final schema + semantic validity: 91.67% (55/60) — threshold ≥98%, FAIL
-- Semantic normalized match: 29.63% (16/54 supported cases) — threshold ≥95%, FAIL
-- Goal capability accuracy: 100% — threshold ≥95%, PASS
-- Supported compile success: 96.30% (52/54) — threshold ≥90%, PASS
-- Unsupported correctly surfaced as ENGINE_UNSUPPORTED: 50% (3/6) — target 100%, FAIL
-- Repair rate: 6.67% (4/60)
-- Answer leakage: 0 — threshold 0, PASS
+The original P5.1 goldens incorrectly omitted the explicit `f(x)=x^2-9` function entity in `fx_wd_01`, although the statement directly declares it. This was corrected after reviewing the captured candidate. The saved live run was then rescored against the corrected golden; this is **not** a second model request/run.
 
-G18 overall: **FAIL**. Do not interpret replay's 100% as model-quality evidence; this live run provides the relevant first measurement and reveals the gap.
+| Metric | Live result | Status |
+|---|---:|---|
+| Domain accuracy | 100% (60/60) | pass |
+| Final schema/semantic validity | 100% (60/60) | pass |
+| Core semantic match | 100% (54/54 supported) | pass |
+| Goal semantics | 100% | pass |
+| Entity graph | 100% | pass |
+| Numerical facts | 100% | pass |
+| Expressions | 100% | pass |
+| Provenance span text match vs golden | 36.67% | diagnostic; not a core-semantic failure |
+| Provenance spans actually support their quoted source text | 100% | pass |
+| Goal capability accuracy | 100% | pass |
+| Supported compile success | 100% (54/54) | pass |
+| Unsupported correctly refused | 100% (6/6) | pass |
+| Unsupported semantic corruption | 0 cases | pass |
+| Repair rate | 6.67% (4/60) | diagnostic |
+| Answer leakage | 0 | pass |
 
-## Observed failure patterns
+Token usage: 262,904 input and 185,973 output tokens total; per-case averages 4,382 input / 3,100 output (rounded). The thresholded G18 live gate passes after the golden correction. This is one sample, not a confidence interval or proof of general model reliability.
 
-1. Many outputs validate and compile but differ from the golden semantic-normalized spec (especially geometry and motion). Current summary artifacts record per-case status/errors, not the model's full raw output; do not infer exact error cause from a semantic mismatch alone.
-2. A few motion/function cases fail provenance/schema/binding or routing and remain invalid after the single repair.
-3. Some unsupported cases were incorrectly accepted as PARSER_ACCEPTED; one unsupported function case was parsed but repair did not recover a valid ProblemSpec.
+## Diagnostic interpretation
 
-## Limitations / next action
-
-- This was one live run with a single model configuration. It is diagnostic, not a stable benchmark estimate.
-- The current runner does not persist raw model output or token usage per case, so investigate safely by adding redacted structured diagnostics (never credentials) before prompt/normalizer changes.
-- The task's engineering thresholds are **not met**; no claim of production readiness or P5.2 completion.
+- The low exact provenance-span textual agreement reflects valid alternate evidence spans, not unsupported spans: every captured entity/fact/constraint span slices back to its statement text. Provenance remains a separate score and must not contaminate core expression/fact/goal correctness.
+- All four prior observed unsupported/repair failures were resolved by the full-candidate, structured-error repair contract: `fx_un_02`, `mo_sf_08`, `mo_wd_03`, `mo_un_01`, and `mo_un_02` now route/parse/refuse as expected (note four repairs across these cases; the list contains five cases).
+- No prompt optimization phase was run. Do not proceed to P5.1b until review of the raw diagnostic artifact and acceptance of this scoring policy.
+- Golden audit after correction: 60 cases remain (20/domain); all supported-case provenance spans slice exactly from their statements; no declared `f(x)=...` function is absent from its golden.
+- Offline regression: `npx tsc --noEmit`, 181 tests, P5.0 gates and replay G18 pass.
 - No Scene/Timeline/P6 work was performed.

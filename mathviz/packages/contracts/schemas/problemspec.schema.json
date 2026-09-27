@@ -218,9 +218,9 @@
     "MotionSegmentProps": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["start", "velocity"],
+      "required": ["velocity"],
       "properties": {
-        "start": { "type": "string", "pattern": "^math:fact:[A-Za-z_][A-Za-z0-9_-]*$" },
+        "start": { "type": "string", "pattern": "^math:fact:[A-Za-z_][A-Za-z0-9_-]*$", "description": "Optional. Omitted means the deterministic MathViz time-origin convention t=0; this is not a source fact and must not be hallucinated as one." },
         "end": { "type": "string", "pattern": "^math:fact:[A-Za-z_][A-Za-z0-9_-]*$" },
         "velocity": { "type": "string", "pattern": "^math:fact:[A-Za-z_][A-Za-z0-9_-]*$" },
         "start_position": {

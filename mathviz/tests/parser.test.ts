@@ -6,8 +6,9 @@ import fs from "node:fs";
 import path from "node:path";
 import { parseProblemSpec, attemptCompile, routeDomain } from "../packages/parser/src/parse";
 import { ScriptedProvider, extractJsonText } from "../packages/parser/src/provider";
+import { repairCall } from "../packages/parser/src/prompt";
 import { leakScan, cacheKey } from "../packages/parser/src/telemetry";
-import { semanticEqual, normalizedKey } from "../packages/parser-benchmark/src/normalize-spec";
+import { semanticEqual, normalizedKey, semanticLayers } from "../packages/parser-benchmark/src/normalize-spec";
 
 const ROOT = path.resolve(__dirname, "..");
 const geo = JSON.parse(fs.readFileSync(path.join(ROOT, "fixtures/spec/geometry2d-length.spec.json"), "utf8"));
@@ -62,15 +63,30 @@ describe("P5.1 parse pipeline", () => {
     expect(p.calls).toBe(2); // no repair round for engine refusals
   });
 
-  it("repairs exactly once, then gives up", async () => {
+  it("repair prompt includes the complete previous candidate and structured path errors", () => {
+    const previous = structuredClone(geo);
+    previous.entities[0].props.answer = "smuggled";
+    const call = repairCall(ST, "geometry2d", previous, [{ code: "E_SCHEMA", path: "/entities/0/props/answer", message: "additional property" }]);
+    expect(call.input).toContain(JSON.stringify(previous, null, 1));
+    expect(call.input).toContain("/entities/0/props/answer");
+    expect(call.input).toContain("Allowed goal capabilities");
+    expect(call.input).toContain("Entity kinds and their EXACT allowed props");
+  });
+
+  it("repairs exactly once, then gives up with the prior candidate included", async () => {
+    const bad = structuredClone(geo) as any;
+    bad.entities[0].props.answer = "smuggled";
     const p = new ScriptedProvider([
       '{"domain":"geometry2d"}',
-      "garbage one",
-      "garbage two"
+      JSON.stringify(bad),
+      JSON.stringify(geo)
     ]);
     const out = await parseProblemSpec(p, ST, { noCache: true });
-    expect(out.status).toBe("PARSE_FAILED");
+    expect(p.requests[2]!.input).toContain(JSON.stringify(bad, null, 1));
+    expect(p.requests[2]!.input).toContain("/entities/0/props");
+    expect(out.status).toBe("PARSER_ACCEPTED");
     expect(out.repairUsed).toBe(true);
+    expect(out.repairDelta).toBeGreaterThan(0);
     expect(p.calls).toBe(3); // A0 + A1 + exactly one repair
   });
 
@@ -111,8 +127,10 @@ describe("P5.1 benchmark semantic normalizer", () => {
     expect(semanticEqual(geo, structuredClone(geo))).toBe(true);
   });
 
-  it("stable renaming preserves semantics", () => {
-    expect(semanticEqual(geo, renameVariant())).toBe(true);
+  it("stable renaming preserves semantics independent of entity array order", () => {
+    const renamed = renameVariant();
+    renamed.entities.reverse();
+    expect(semanticEqual(geo, renamed)).toBe(true);
   });
 
   it("int and rational q=1 literals normalize together", () => {
@@ -138,6 +156,19 @@ describe("P5.1 benchmark semantic normalizer", () => {
     expect(semanticEqual(kmh, ms)).toBe(true);
   });
 
+  it("subtraction and commutative equation sides normalize", () => {
+    const a = { t: "sym", name: "x" };
+    const b = { t: "sym", name: "y" };
+    const left = { t: "app", op: "-", args: [a,b] };
+    const right = { t: "app", op: "+", args: [a,{ t: "app", op: "neg", args: [b] }] };
+    const x = structuredClone(geo) as any;
+    x.entities.push({ id: "Q", kind: "equation", props: { capability_id: "function2d.solve_equation", variable: "x", lhs: left, rhs: { t: "num", v: { kind: "int", value: "0" } } }, provenance: structuredClone(geo.entities[0].provenance) });
+    const y = structuredClone(x);
+    y.entities[3].props.lhs = right;
+    [y.entities[3].props.lhs, y.entities[3].props.rhs] = [y.entities[3].props.rhs, y.entities[3].props.lhs];
+    expect(normalizedKey(x)).toBe(normalizedKey(y));
+  });
+
   it("AST neutral terms drop: x + 0 equals x", () => {
     const withZero = structuredClone(geo);
     withZero.entities.push({
@@ -151,6 +182,15 @@ describe("P5.1 benchmark semantic normalizer", () => {
     const without = structuredClone(withZero);
     without.entities[3].props.expr = { t: "sym", name: "t" };
     expect(normalizedKey(withZero)).toBe(normalizedKey(without));
+  });
+
+  it("provenance span variation is independent of core semantic equality", () => {
+    const alt = structuredClone(geo);
+    const text = "已知点 A(0, 0)";
+    const start = alt.statement.indexOf(text);
+    alt.entities[0].provenance.span = { text, start, end: start + text.length };
+    expect(semanticEqual(geo, alt)).toBe(true);
+    expect(semanticLayers(geo).provenance).not.toBe(semanticLayers(alt).provenance);
   });
 
   it("hallucinated facts and wrong capabilities still fail comparison", () => {

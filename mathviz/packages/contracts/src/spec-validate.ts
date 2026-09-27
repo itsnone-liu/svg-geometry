@@ -182,7 +182,9 @@ export function validateProblemSpec(doc: any): VizError[] {
       requireFact(`${owner} props.initial_position`, props.initial_position);
       for (let i = 0; i < (props.segments ?? []).length; i++) {
         const seg = props.segments[i];
-        requireFact(`${owner} segments[${i}].start`, seg?.start);
+        // P5.1a: omitted segment.start is the deterministic time-origin
+        // convention t=0, not a source fact and therefore has no provenance.
+        if (seg?.start !== undefined) requireFact(`${owner} segments[${i}].start`, seg.start);
         requireFact(`${owner} segments[${i}].velocity`, seg?.velocity);
         if (seg?.end !== undefined) requireFact(`${owner} segments[${i}].end`, seg.end);
         if (typeof seg?.start_position === "string") requireFact(`${owner} segments[${i}].start_position`, seg.start_position);

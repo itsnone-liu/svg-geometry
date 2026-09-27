@@ -56,21 +56,24 @@ export class OpenAICompatibleProvider implements StructuredLLMProvider {
     } catch (e: any) {
       throw new ProviderError(`LLM request failed: ${e?.message ?? e}`);
     }
-    if (!resp.ok) throw new ProviderError(`LLM HTTP ${resp.status}: ${(await resp.text()).slice(0, 300)}`);
+    if (!resp.ok) throw new ProviderError(`LLM HTTP ${resp.status}`, "E_HTTP", { model: this.model, request_id: resp.headers?.get?.("x-request-id") ?? null }, { ...ZERO });
     const body = await resp.json();
     const text: string = body?.choices?.[0]?.message?.content ?? "";
+    const u = body?.usage;
+    const usage = { input_tokens: u?.prompt_tokens ?? 0, output_tokens: u?.completion_tokens ?? 0 };
+    const diagnostics = {
+      raw_text: text,
+      model: body?.model ?? this.model,
+      finish_reason: body?.choices?.[0]?.finish_reason ?? null,
+      request_id: body?.id ?? resp?.headers?.get?.("x-request-id") ?? null
+    };
     let value: T;
     try {
       value = JSON.parse(extractJsonText(text)) as T;
     } catch {
-      throw new ProviderError("LLM output was not valid JSON after fence stripping");
+      throw new ProviderError("LLM output was not valid JSON after fence stripping", "E_JSON", diagnostics, usage);
     }
-    const u = body?.usage;
-    return {
-      value,
-      usage: { input_tokens: u?.prompt_tokens ?? 0, output_tokens: u?.completion_tokens ?? 0 },
-      model: this.model
-    };
+    return { value, usage, model: diagnostics.model, diagnostics };
   }
 }
 
@@ -78,14 +81,22 @@ export class OpenAICompatibleProvider implements StructuredLLMProvider {
 export class ScriptedProvider implements StructuredLLMProvider {
   readonly id = "scripted";
   calls = 0;
+  readonly requests: LlmGenerateRequest[] = [];
   constructor(private replies: Array<string | Error>) {}
 
   async generate<T>(_req: LlmGenerateRequest): Promise<LlmGenerateResult<T>> {
     this.calls++;
+    this.requests.push(_req);
     const next = this.replies.shift();
     if (next === undefined) throw new ProviderError("scripted provider exhausted");
     if (next instanceof Error) throw next;
-    return { value: JSON.parse(extractJsonText(next)) as T, usage: { ...ZERO }, model: "scripted" };
+    const diagnostics = { raw_text: next, model: "scripted", finish_reason: "stop", request_id: null };
+    try {
+      const clean = extractJsonText(next);
+      return { value: JSON.parse(clean) as T, usage: { ...ZERO }, model: "scripted", diagnostics };
+    } catch {
+      throw new ProviderError("scripted output was not valid JSON", "E_JSON", diagnostics, { ...ZERO });
+    }
   }
 }
 
@@ -118,7 +129,7 @@ export class GoldenProvider implements StructuredLLMProvider {
     // {required:["domain"]} object; the A1 schema is the full ProblemSpec.
     const isDomainCall = Array.isArray((req.schema as any)?.required) && (req.schema as any).required.length === 1 && (req.schema as any).required[0] === "domain";
     const value = isDomainCall ? { domain: best.domain } : best.golden;
-    return { value: value as T, usage: { ...ZERO }, model: "golden-replay" };
+    return { value: value as T, usage: { ...ZERO }, model: "golden-replay", diagnostics: { raw_text: JSON.stringify(value), model: "golden-replay", finish_reason: "stop", request_id: null } };
   }
 }
 

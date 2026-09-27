@@ -82,6 +82,14 @@ describe("P5.0 deterministic spec compiler", () => {
     expect(program.derivedClaims).toHaveLength(2); // compile-time exact verification passed
   });
 
+  it("motion1d time origin is deterministic convention, not a fabricated source fact", () => {
+    const doc = loadSpec("motion1d-meeting.spec.json");
+    expect(doc.source_facts.some((f: any) => f.fact_id === "t0")).toBe(false);
+    expect(doc.entities.every((e: any) => e.props.segments.every((s: any) => s.start === undefined))).toBe(true);
+    const compiled = compileProblemSpec(doc);
+    expect(compiled.goalResults[0]!.factIds).toContain("meet_time");
+  });
+
   it("motion1d: meeting goal bootstraps the frozen motion solver; final IR re-verifies time and position facts", () => {
     const compiled = compileProblemSpec(loadSpec("motion1d-meeting.spec.json"));
     // solver output is passed through VERBATIM (exact rational form, q=1 kept)
