@@ -27,6 +27,16 @@ export interface FunctionZeroDualityResult {
   findings: FunctionZeroDualityFinding[];
 }
 
+export function functionZeroErrors(spec: any, statement: string) {
+  return checkFunctionZeroDuality(spec, statement).findings.map((f) => ({
+    code: f.code,
+    category: "FIDELITY_ERROR" as const,
+    path: f.path,
+    message: f.message,
+    repair_hint: f.repair_hint,
+  }));
+}
+
 function numericRat(ast: Ast): [bigint, bigint] | null {
   if (!ast || typeof ast !== "object") return null;
   if (ast.t === "num") {

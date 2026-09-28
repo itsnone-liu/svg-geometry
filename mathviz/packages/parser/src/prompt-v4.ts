@@ -1,6 +1,7 @@
 // P5.3 v4 prompt overlay. v3 prompt policy remains frozen; callers for a new
 // preregistered version may opt into this explicit dual-representation clause.
 import { repairCall, specCall } from "./prompt";
+import type { LlmGenerateRequest } from "./types";
 
 export const FUNCTION_ZERO_DUALITY_V4_GUIDANCE = `
 ## Function2D zero-finding dual-representation contract (v4)
@@ -19,7 +20,7 @@ export function specCallV4(statement: string, domain: string) {
   return { ...call, system: `${call.system}\n${FUNCTION_ZERO_DUALITY_V4_GUIDANCE}` };
 }
 
-export function repairCallV4(statement: string, domain: string, previousCandidate: any, errors: Array<{ code: string; path?: string; message: string; repair_hint?: string }>, previousRawText?: string) {
+export function repairCallV4(statement: string, domain: string, previousCandidate: any, errors: Array<{ code: string; path?: string; message: string; repair_hint?: string }>, previousRawText?: string): LlmGenerateRequest {
   const call = repairCall(statement, domain, previousCandidate, errors, previousRawText);
   return { ...call, system: `${call.system}\n${FUNCTION_ZERO_DUALITY_V4_GUIDANCE}` };
 }

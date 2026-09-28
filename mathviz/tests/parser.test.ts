@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
 import { parseProblemSpec, attemptCompile, routeDomain } from "../packages/parser/src/parse";
+import { parseProblemSpecV4, attemptCompileV4 } from "../packages/parser/src/parse-v4";
 import { ScriptedProvider, extractJsonText } from "../packages/parser/src/provider";
 import { repairCall } from "../packages/parser/src/prompt";
 import { leakScan, cacheKey } from "../packages/parser/src/telemetry";
@@ -435,6 +436,57 @@ describe("P5.2 grounding-aware bounded repair", () => {
     expect(out.status).toBe("PARSE_FAILED"); // relational direction -> per-body signed velocity is not groundable
     expect(out.errors.some((e) => e.code === "E_PROVENANCE_GROUNDING")).toBe(true);
     expect(out.spec).toBeNull();
+  });
+});
+
+describe("P5.3 v4 Stage-B aggregated diagnostics", () => {
+  const dualV4 = JSON.parse(fs.readFileSync(path.join(ROOT, "fixtures/spec/function2d-zeros.spec.json"), "utf8"));
+  const dualV4Statement: string = dualV4.statement;
+
+  it("aggregates G20-D and compiler binding for function-only goal->function", () => {
+    const bad = structuredClone(dualV4);
+    bad.entities = bad.entities.filter((e: any) => e.kind !== "equation");
+    bad.goals[0].inputs = ["entity:func_g"];
+    const out = attemptCompileV4(bad, dualV4Statement);
+    expect(out.errors.map((e) => e.code)).toContain("E_FUNCTION_ZERO_EQUATION_MISSING");
+    expect(out.errors.some((e) => e.code === "E_BINDING" && /not an equation/.test(e.message))).toBe(true);
+  });
+
+  it("equation-only repairs once to the dual structure", async () => {
+    const bad = structuredClone(dualV4);
+    bad.entities = bad.entities.filter((e: any) => e.kind !== "function");
+    const provider = new ScriptedProvider([JSON.stringify(bad), JSON.stringify(dualV4)]);
+    const out = await parseProblemSpecV4(provider, dualV4Statement, { domain: "function2d" });
+    expect(out.status).toBe("PARSER_ACCEPTED");
+    expect(out.repairUsed).toBe(true);
+    expect(provider.calls).toBe(2);
+    expect(out.diagnostics[0].errors?.some((e) => e.code === "E_FUNCTION_ZERO_FUNCTION_MISSING")).toBe(true);
+  });
+
+  it("function-only goal->function aggregates and repairs once", async () => {
+    const bad = structuredClone(dualV4);
+    bad.entities = bad.entities.filter((e: any) => e.kind !== "equation");
+    bad.goals[0].inputs = ["entity:func_g"];
+    const provider = new ScriptedProvider([JSON.stringify(bad), JSON.stringify(dualV4)]);
+    const out = await parseProblemSpecV4(provider, dualV4Statement, { domain: "function2d" });
+    expect(out.status).toBe("PARSER_ACCEPTED");
+    expect(out.repairUsed).toBe(true);
+    expect(provider.calls).toBe(2);
+    expect(out.diagnostics[0].errors?.some((e) => e.code === "E_FUNCTION_ZERO_EQUATION_MISSING")).toBe(true);
+    expect(out.diagnostics[0].errors?.some((e) => e.code === "E_BINDING" && /not an equation/.test(e.message))).toBe(true);
+  });
+
+  it("aggregates G20-D and grounding before one repair, then accepts", async () => {
+    const bad = structuredClone(dualV4);
+    bad.entities = bad.entities.filter((e: any) => e.kind !== "function");
+    bad.entities.find((e: any) => e.kind === "equation").provenance.span = { text: "的所有零点", start: 20, end: 25 };
+    const provider = new ScriptedProvider([JSON.stringify(bad), JSON.stringify(dualV4)]);
+    const out = await parseProblemSpecV4(provider, dualV4Statement, { domain: "function2d" });
+    expect(out.status).toBe("PARSER_ACCEPTED");
+    expect(out.repairUsed).toBe(true);
+    expect(provider.calls).toBe(2);
+    expect(out.diagnostics[0].errors?.some((e) => e.code === "E_FUNCTION_ZERO_FUNCTION_MISSING")).toBe(true);
+    expect(out.diagnostics[0].errors?.some((e) => e.code === "E_PROVENANCE_GROUNDING")).toBe(true);
   });
 });
 
