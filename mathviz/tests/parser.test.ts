@@ -11,6 +11,8 @@ import { leakScan, cacheKey } from "../packages/parser/src/telemetry";
 import { semanticEqual, normalizedKey, semanticLayers } from "../packages/parser-benchmark/src/normalize-spec";
 import { groundProblemSpec } from "../packages/parser-benchmark/src/grounding";
 import { checkSourceFidelity } from "../packages/parser/src/fidelity";
+import { checkFunctionZeroDuality } from "../packages/parser/src/function-zero-duality";
+import { FUNCTION_ZERO_DUALITY_V4_GUIDANCE } from "../packages/parser/src/prompt-v4";
 
 const ROOT = path.resolve(__dirname, "..");
 const geo = JSON.parse(fs.readFileSync(path.join(ROOT, "fixtures/spec/geometry2d-length.spec.json"), "utf8"));
@@ -433,6 +435,54 @@ describe("P5.2 grounding-aware bounded repair", () => {
     expect(out.status).toBe("PARSE_FAILED"); // relational direction -> per-body signed velocity is not groundable
     expect(out.errors.some((e) => e.code === "E_PROVENANCE_GROUNDING")).toBe(true);
     expect(out.spec).toBeNull();
+  });
+});
+
+describe("P5.3 v4 G20-D function-zero duality", () => {
+  const dual = JSON.parse(fs.readFileSync(path.join(ROOT, "fixtures/spec/function2d-zeros.spec.json"), "utf8"));
+  const dualStatement: string = dual.statement;
+
+  it("accepts function + equation + goal bound to equation", () => {
+    expect(checkFunctionZeroDuality(dual, dualStatement)).toEqual({ applicable: true, findings: [] });
+  });
+
+  it("states the compiler-compatible v4 prompt contract", () => {
+    expect(FUNCTION_ZERO_DUALITY_V4_GUIDANCE).toContain("goal MUST reference the equation entity");
+    expect(FUNCTION_ZERO_DUALITY_V4_GUIDANCE).toContain("equation.rhs MUST be zero");
+  });
+
+  it("rejects function-only output", () => {
+    const bad = structuredClone(dual);
+    bad.entities = bad.entities.filter((e: any) => e.kind !== "equation");
+    const codes = checkFunctionZeroDuality(bad, dualStatement).findings.map((f) => f.code);
+    expect(codes).toContain("E_FUNCTION_ZERO_EQUATION_MISSING");
+    expect(codes).toContain("E_FUNCTION_ZERO_GOAL_BINDING");
+  });
+
+  it("rejects equation-only output", () => {
+    const bad = structuredClone(dual);
+    bad.entities = bad.entities.filter((e: any) => e.kind !== "function");
+    const codes = checkFunctionZeroDuality(bad, dualStatement).findings.map((f) => f.code);
+    expect(codes).toContain("E_FUNCTION_ZERO_FUNCTION_MISSING");
+  });
+
+  it("rejects a goal bound directly to the function", () => {
+    const bad = structuredClone(dual);
+    bad.goals[0].inputs = ["entity:func_g"];
+    expect(checkFunctionZeroDuality(bad, dualStatement).findings.map((f) => f.code)).toContain("E_FUNCTION_ZERO_GOAL_BINDING");
+  });
+
+  it("rejects expression mismatch", () => {
+    const bad = structuredClone(dual);
+    bad.entities.find((e: any) => e.kind === "equation").props.lhs = { t: "sym", name: "t" };
+    const codes = checkFunctionZeroDuality(bad, dualStatement).findings.map((f) => f.code);
+    expect(codes).toContain("E_FUNCTION_ZERO_EQUATION_MISSING");
+  });
+
+  it("rejects a nonzero equation rhs", () => {
+    const bad = structuredClone(dual);
+    bad.entities.find((e: any) => e.kind === "equation").props.rhs = { t: "num", v: { kind: "int", value: "1" } };
+    expect(checkFunctionZeroDuality(bad, dualStatement).findings.map((f) => f.code)).toContain("E_FUNCTION_ZERO_RHS_NOT_ZERO");
   });
 });
 
