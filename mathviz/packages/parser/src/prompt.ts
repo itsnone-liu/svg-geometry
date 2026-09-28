@@ -14,10 +14,11 @@ import path from "node:path";
 import { PROBLEM_SPEC_COMPILER_SURFACE } from "../../contracts/src/spec-validate";
 
 export const PARSER_CONTRACT_VERSION = "mathviz.problemspec/v1+p5.0.1";
-// P5.2: the repair prompt now renders E_PROVENANCE_GROUNDING repair_hints and
-// the grounding anti-corruption constraints. Bumping this version invalidates
-// all pre-P5.2 validated-spec cache entries (cache key includes it).
-export const PROMPT_POLICY_VERSION = "p5.2-policy-v1";
+// P5.3: the A1 system contract adds the source-fidelity rules (completeness,
+// structural expression copying, goal-relevance minimality) and the repair
+// prompt adds source-fidelity anti-corruption constraints. Bumping this
+// version invalidates all pre-P5.3 validated-spec cache entries.
+export const PROMPT_POLICY_VERSION = "p5.3-policy-v1";
 
 const ROOT = path.resolve(__dirname, "..", "..", "..");
 
@@ -66,6 +67,19 @@ divides cleanly. geometry2d/function2d facts carry no unit.
 const SYSTEM_CONTRACT = `You are a semantic compiler.
 
 Extract only information explicitly stated or structurally implied by the problem.
+
+Preserve every explicit mathematical entity or fact that is necessary to
+represent the stated goal and its source model.
+
+Copy source expressions structurally and completely. Never drop terms,
+coefficients, operators, or equation sides.
+
+Emit only source semantics that participate in the goal's dependency graph.
+Do not extract unrelated numerical facts.
+
+Before emitting JSON, silently check: required declared entities are
+represented; source expressions are complete; every emitted fact/entity is
+goal-relevant.
 
 Do not solve any requested goal.
 Do not infer requested answer values.
@@ -143,8 +157,15 @@ export function repairCall(statement: string, domain: string, previousCandidate:
       `- Prefer correcting provenance: choose source spans that directly evidence each claim.`,
       `- If the original text does not support the claim under the contract, do not invent supporting evidence.`
     ] : []),
+    ...(errors.some((e) => e.code === "E_SOURCE_COMPLETENESS" || e.code === "E_SOURCE_EXPRESSION_LOSS" || e.code === "E_SOURCE_IRRELEVANT") ? [
+      ``,
+      `## Source fidelity repair constraints`,
+      `- Do not delete an explicitly declared source entity merely because the goal can be solved without representing that declaration.`,
+      `- Do not omit any term/operator from an explicit source expression.`,
+      `- Remove source facts/entities that are unrelated to the requested goal rather than preserving them merely because they are true.`
+    ] : []),
     ``,
-    `Return the COMPLETE corrected ProblemSpec. Preserve every correct source fact/entity/goal from the previous candidate; make only corrections required by the errors and the original statement.`,
+    `Return the COMPLETE corrected ProblemSpec. Preserve every correct, goal-relevant source fact/entity/goal from the previous candidate; remove any source facts/entities identified as irrelevant, and make only corrections required by the errors and original statement.`,
     `Do not solve the problem. Do not add answer fields, derived facts, or guessed facts. Every provenance span must be an exact slice of the original statement.`
   ].join("\n");
   return { schema: SPEC_SCHEMA, system: SYSTEM_CONTRACT, input };

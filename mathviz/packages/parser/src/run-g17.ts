@@ -24,6 +24,12 @@
 //      failure on the repaired candidate REJECTS (no second repair)
 //   S12 unrepairable grounding-> PARSE_FAILED after exactly one repair,
 //      no spec yielded
+//
+// P5.3 source semantic fidelity (G20):
+//   S13 G20+G19 aggregate     -> both finding sets reach the SINGLE repair
+//      prompt (both constraint blocks present); repaired -> accepted
+//   S14 repair corruption      -> fixing G19 while adding an irrelevant
+//      duplicate entity REJECTS (E_SOURCE_IRRELEVANT), no second repair
 
 import fs from "node:fs";
 import path from "node:path";
@@ -231,6 +237,50 @@ async function main(): Promise<void> {
     const out = await parseProblemSpec(p, ST, { noCache: true });
     row("s12_unrepairable_grounding_fails_after_one_repair",
       out.status === "PARSE_FAILED" && out.repairUsed === true && p.calls === 3 && out.spec === null,
+      { status: out.status, calls: p.calls });
+  }
+
+  // ---- S13 (P5.3): G20 and G19 findings aggregate into the single repair ----
+  {
+    const fxz = loadSpec("function2d-zeros.spec.json");
+    const bad: any = structuredClone(fxz);
+    bad.entities = bad.entities.filter((e: any) => e.kind !== "function"); // G20-A
+    bad.entities.find((e: any) => e.kind === "equation").provenance.span = { text: "的所有零点", start: 20, end: 25 }; // G19
+    const p = new ScriptedProvider([
+      JSON.stringify({ domain: "function2d" }),
+      JSON.stringify(bad),
+      JSON.stringify(fxz)
+    ]);
+    const out = await parseProblemSpec(p, fxz.statement, { noCache: true });
+    const repairInput = p.requests[2]?.input ?? "";
+    row("s13_g20_g19_aggregate_single_repair",
+      out.status === "PARSER_ACCEPTED" && out.repairUsed === true && p.calls === 3 &&
+      repairInput.includes("## Grounding repair constraints") &&
+      repairInput.includes("## Source fidelity repair constraints") &&
+      repairInput.includes("E_SOURCE_COMPLETENESS") &&
+      repairInput.includes("E_PROVENANCE_GROUNDING") &&
+      leakScan(out.spec).length === 0,
+      { status: out.status, calls: p.calls });
+  }
+
+  // ---- S14 (P5.3): repair fixes G19 but adds an irrelevant duplicate -> REJECT ----
+  {
+    const fxz = loadSpec("function2d-zeros.spec.json");
+    const bad: any = structuredClone(fxz);
+    bad.entities.find((e: any) => e.kind === "equation").provenance.span = { text: "的所有零点", start: 20, end: 25 }; // G19 only
+    const corrupted: any = structuredClone(fxz); // spans fixed ...
+    const dup: any = structuredClone(fxz.entities.find((e: any) => e.kind === "function"));
+    dup.id = "func_g2";
+    corrupted.entities.push(dup); // ... but an unreachable duplicate function appears
+    const p = new ScriptedProvider([
+      JSON.stringify({ domain: "function2d" }),
+      JSON.stringify(bad),
+      JSON.stringify(corrupted)
+    ]);
+    const out = await parseProblemSpec(p, fxz.statement, { noCache: true });
+    row("s14_repair_creates_irrelevant_entity_rejects",
+      out.status === "PARSE_FAILED" && out.repairUsed === true && p.calls === 3 && out.spec === null &&
+      out.errors.some((e) => e.code === "E_SOURCE_IRRELEVANT"),
       { status: out.status, calls: p.calls });
   }
 

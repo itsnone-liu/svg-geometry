@@ -11,6 +11,7 @@ import { validatorFor } from "../../contracts/src/load";
 import { validateProblemSpec } from "../../contracts/src/spec-validate";
 import { compileProblemSpec } from "../../spec/src/compile";
 import { groundProblemSpec } from "./grounding";
+import { checkSourceFidelity } from "./fidelity";
 import { domainRoutingCall, specCall, repairCall } from "./prompt";
 import { cacheGet, cachePut, repairDelta as diffTopLevel } from "./telemetry";
 import { categoryForCode, type ParserError, type ParseOutcome, type ParseCallDiagnostic, type StructuredLLMProvider, type TokenUsage } from "./types";
@@ -48,16 +49,22 @@ export function attemptCompile(candidate: any, statement?: string): Attempt {
   if (semantic.length) return { ok: false, engineUnsupported: false, spec: null, errors: semantic.map((e) => ({ code: e.code, category: categoryForCode(e.code), path: e.path, message: e.message })) };
   try {
     compileProblemSpec(candidate);
-    // Gate 4 (P5.2): deterministic source grounding. Only reached when the
-    // candidate already passed schema, semantic validation, and compilation —
-    // engine-unsupported refusals short-circuit above and stay clean.
+    // Gate 4 (P5.2): deterministic source grounding. Gate 5 (P5.3): source
+    // semantic fidelity (G20-A/B/C). Only reached when the candidate already
+    // passed schema, semantic validation, and compilation — engine-unsupported
+    // refusals short-circuit above and stay clean. G20 and G19 findings are
+    // AGGREGATED so the single shared repair sees the complete problem set.
     if (typeof statement === "string") {
+      const g20 = checkSourceFidelity(candidate, statement);
       const g = groundProblemSpec(candidate, statement);
       const ungrounded = g.findings.filter((f) => f.grounded === false);
-      if (ungrounded.length) {
+      if (g20.findings.length || ungrounded.length) {
         return {
           ok: false, engineUnsupported: false, spec: null,
-          errors: ungrounded.map((f) => ({ code: "E_PROVENANCE_GROUNDING", category: "PROVENANCE_ERROR" as const, path: `${f.path}/provenance/span`, message: f.reason, repair_hint: groundingRepairHint(f.path, f.reason) }))
+          errors: [
+            ...g20.findings.map((f) => ({ code: f.code, category: categoryForCode(f.code), path: f.path, message: f.message, repair_hint: f.repair_hint })),
+            ...ungrounded.map((f) => ({ code: "E_PROVENANCE_GROUNDING", category: "PROVENANCE_ERROR" as const, path: `${f.path}/provenance/span`, message: f.reason, repair_hint: groundingRepairHint(f.path, f.reason) }))
+          ]
         };
       }
     }
@@ -66,7 +73,13 @@ export function attemptCompile(candidate: any, statement?: string): Attempt {
   catch (e: any) {
     const compileError = { code: e?.code ?? "E_SCHEMA", message: e?.message ?? String(e) };
     if (e?.code === "E_CAPABILITY_UNSUPPORTED" || e?.code === "E_MATH_CONSTRAINT") return { ok: false, engineUnsupported: true, spec: candidate, errors: [{ code: e.code, category: "COMPILER_UNSUPPORTED", message: compileError.message }], compileError };
-    return { ok: false, engineUnsupported: false, spec: null, errors: [{ code: compileError.code, category: categoryForCode(compileError.code), message: compileError.message }], compileError };
+    // Best effort (P5.3 §10): a repairable compile failure still returns the
+    // independently computable G20 findings, so the single repair sees them.
+    let extra: ParserError[] = [];
+    if (typeof statement === "string") {
+      try { extra = checkSourceFidelity(candidate, statement).findings.map((f) => ({ code: f.code, category: categoryForCode(f.code), path: f.path, message: f.message, repair_hint: f.repair_hint })); } catch { /* fidelity is best-effort here */ }
+    }
+    return { ok: false, engineUnsupported: false, spec: null, errors: [{ code: compileError.code, category: categoryForCode(compileError.code), message: compileError.message }, ...extra], compileError };
   }
 }
 

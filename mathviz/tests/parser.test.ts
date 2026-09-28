@@ -10,6 +10,7 @@ import { repairCall } from "../packages/parser/src/prompt";
 import { leakScan, cacheKey } from "../packages/parser/src/telemetry";
 import { semanticEqual, normalizedKey, semanticLayers } from "../packages/parser-benchmark/src/normalize-spec";
 import { groundProblemSpec } from "../packages/parser-benchmark/src/grounding";
+import { checkSourceFidelity } from "../packages/parser/src/fidelity";
 
 const ROOT = path.resolve(__dirname, "..");
 const geo = JSON.parse(fs.readFileSync(path.join(ROOT, "fixtures/spec/geometry2d-length.spec.json"), "utf8"));
@@ -432,5 +433,115 @@ describe("P5.2 grounding-aware bounded repair", () => {
     expect(out.status).toBe("PARSE_FAILED"); // relational direction -> per-body signed velocity is not groundable
     expect(out.errors.some((e) => e.code === "E_PROVENANCE_GROUNDING")).toBe(true);
     expect(out.spec).toBeNull();
+  });
+});
+
+describe("P5.3 G20 source fidelity", () => {
+  const fxz = JSON.parse(fs.readFileSync(path.join(ROOT, "fixtures/spec/function2d-zeros.spec.json"), "utf8"));
+  const FX_ST: string = fxz.statement;
+  const dataset = JSON.parse(fs.readFileSync(path.join(ROOT, "fixtures/parser-bench/cases.json"), "utf8"));
+
+  it("the fixture passes the full chain and all v2 goldens stay G20-silent (regression)", () => {
+    expect(attemptCompile(structuredClone(fxz), FX_ST).ok).toBe(true);
+    for (const c of dataset.cases) {
+      const r = checkSourceFidelity(c.golden, c.statement);
+      expect(`${c.id}: ${JSON.stringify(r.findings)}`).toBe(`${c.id}: []`);
+    }
+  });
+
+  it("G20-A: omitting a declared function entity fires E_SOURCE_COMPLETENESS (fx_wd_01 class)", () => {
+    const bad: any = structuredClone(fxz);
+    bad.entities = bad.entities.filter((e: any) => e.kind !== "function");
+    const out = attemptCompile(bad, FX_ST);
+    expect(out.ok).toBe(false);
+    const e = out.errors.find((x) => x.code === "E_SOURCE_COMPLETENESS");
+    expect(e).toBeDefined();
+    expect(e!.category).toBe("FIDELITY_ERROR");
+    expect(e!.repair_hint!.length).toBeGreaterThan(20);
+    expect(e!.repair_hint).not.toContain("t^2"); // never the golden expression
+    expect(e!.repair_hint).not.toContain("g(t)"); // never the declaration itself
+  });
+
+  it("G20-B: dropping a term from a source equation fires E_SOURCE_EXPRESSION_LOSS (fx_ir_02 class)", () => {
+    const c = dataset.cases.find((x: any) => x.id === "fx_ir_02");
+    const bad = structuredClone(c.golden);
+    bad.entities.find((e: any) => e.kind === "equation").props.lhs = { t: "sym", name: "x" };
+    const out = attemptCompile(bad, c.statement);
+    expect(out.ok).toBe(false);
+    expect(out.errors.some((e) => e.code === "E_SOURCE_EXPRESSION_LOSS" && e.category === "FIDELITY_ERROR" && typeof e.repair_hint === "string")).toBe(true);
+  });
+
+  it("G20-C: a true, grounded, goal-irrelevant fact fires E_SOURCE_IRRELEVANT (mo_ir_02 class)", () => {
+    const c = dataset.cases.find((x: any) => x.id === "mo_ir_02");
+    const bad = structuredClone(c.golden);
+    const t0 = c.statement.indexOf("每 5 米一棵");
+    bad.source_facts.push({ fact_id: "treeSpacing", name: "treeSpacing", unit: "m", value: { kind: "int", value: "5" }, provenance: { kind: "problem_text", span: { text: "每 5 米一棵", start: t0, end: t0 + "每 5 米一棵".length } } });
+    const out = attemptCompile(bad, c.statement);
+    expect(out.ok).toBe(false);
+    const e = out.errors.find((x) => x.code === "E_SOURCE_IRRELEVANT");
+    expect(e).toBeDefined();
+    expect(e!.path).toBe("/source_facts/treeSpacing");
+    expect(e!.repair_hint).not.toContain("树"); // no statement-specific info in the hint
+  });
+
+  it("G20 and G19 findings aggregate into the single repair; both constraint blocks render", async () => {
+    const bad: any = structuredClone(fxz);
+    bad.entities = bad.entities.filter((e: any) => e.kind !== "function"); // G20-A
+    bad.entities.find((e: any) => e.kind === "equation").provenance.span = { text: "的所有零点", start: 20, end: 25 }; // G19
+    const p = new ScriptedProvider([
+      JSON.stringify({ domain: "function2d" }),
+      JSON.stringify(bad),
+      JSON.stringify(fxz)
+    ]);
+    const out = await parseProblemSpec(p, FX_ST, { noCache: true });
+    expect(out.status).toBe("PARSER_ACCEPTED");
+    expect(p.calls).toBe(3); // exactly one repair
+    const repairInput = p.requests[2]!.input;
+    expect(repairInput).toContain("## Grounding repair constraints");
+    expect(repairInput).toContain("## Source fidelity repair constraints");
+    expect(repairInput).toContain("Do not delete an explicitly declared source entity");
+    expect(repairInput).toContain("Remove source facts/entities that are unrelated");
+    expect(repairInput).toContain("E_SOURCE_COMPLETENESS");
+    expect(repairInput).toContain("E_PROVENANCE_GROUNDING");
+    expect(leakScan(out.spec).length).toBe(0);
+  });
+
+  it("repair fixes G20 but leaves G19 -> REJECT with no second repair", async () => {
+    const bad: any = structuredClone(fxz);
+    bad.entities = bad.entities.filter((e: any) => e.kind !== "function");
+    bad.entities.find((e: any) => e.kind === "equation").provenance.span = { text: "的所有零点", start: 20, end: 25 };
+    const stillBad = structuredClone(fxz); // function restored (G20 fixed) ...
+    stillBad.entities.find((e: any) => e.kind === "equation").provenance.span = { text: "的所有零点", start: 20, end: 25 }; // ... span still ungrounded
+    const p = new ScriptedProvider([
+      JSON.stringify({ domain: "function2d" }),
+      JSON.stringify(bad),
+      JSON.stringify(stillBad)
+    ]);
+    const out = await parseProblemSpec(p, FX_ST, { noCache: true });
+    expect(out.status).toBe("PARSE_FAILED");
+    expect(out.repairUsed).toBe(true);
+    expect(p.calls).toBe(3);
+    expect(out.spec).toBeNull();
+    expect(out.errors.some((e) => e.code === "E_PROVENANCE_GROUNDING")).toBe(true);
+  });
+
+  it("repair fixes G19 but creates an irrelevant duplicate entity -> REJECT with no second repair", async () => {
+    const bad: any = structuredClone(fxz);
+    bad.entities.find((e: any) => e.kind === "equation").provenance.span = { text: "的所有零点", start: 20, end: 25 }; // G19 only
+    const corrupted: any = structuredClone(fxz);
+    const dup: any = structuredClone(fxz.entities.find((e: any) => e.kind === "function"));
+    dup.id = "func_g2";
+    corrupted.entities.push(dup); // grounded duplicate, unreachable from goal semantics
+    const p = new ScriptedProvider([
+      JSON.stringify({ domain: "function2d" }),
+      JSON.stringify(bad),
+      JSON.stringify(corrupted)
+    ]);
+    const out = await parseProblemSpec(p, FX_ST, { noCache: true });
+    expect(out.status).toBe("PARSE_FAILED");
+    expect(out.repairUsed).toBe(true);
+    expect(p.calls).toBe(3);
+    expect(out.spec).toBeNull();
+    expect(out.errors.some((e) => e.code === "E_SOURCE_IRRELEVANT")).toBe(true);
   });
 });

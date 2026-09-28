@@ -1,0 +1,387 @@
+{
+  "benchmark": "mathviz-parser-benchmark/v3",
+  "dataset_version": 3,
+  "case_count": 72,
+  "dataset_sha256": "6a581071a92015200658d7226dcadb9d68b28d6d595f704fb99329806e514aa8",
+  "scoring_policy_sha256": "e6ae32256f8b296d8cb09beebddbf942ce35c1234b37777a698a2817e9dcaeef",
+  "prompt_policy_version": "p5.3-policy-v1",
+  "frozen_at_utc": "2026-09-28T03:43:28.128Z",
+  "expected_counts": {
+    "COMPILE_OK": 64,
+    "ENGINE_UNSUPPORTED": 6,
+    "KNOWN_LIMITATION_EXPECTED_REJECT": 2
+  },
+  "challenge_counts": {
+    "declared-entity-completeness": 6,
+    "irrelevant-grounded-distractor": 6,
+    "expression-term-loss": 6,
+    "multi-finding-one-repair": 6
+  },
+  "golden_audit": {
+    "passed": 72,
+    "failed": 0,
+    "outcomes": [
+      {
+        "id": "g3_sf_01",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_sf_02",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_sf_03",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_sf_04",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_sf_05",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_sf_06",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_sf_07",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_sf_08",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_wd_01",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_wd_02",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_wd_03",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_wd_04",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_ir_01",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_ir_02",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_ir_03",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_ir_04",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_cp_01",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_cp_02",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_cp_03",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_cp_04",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_un_01",
+        "expected": "ENGINE_UNSUPPORTED",
+        "outcome": "engine_unsupported"
+      },
+      {
+        "id": "g3_un_02",
+        "expected": "ENGINE_UNSUPPORTED",
+        "outcome": "engine_unsupported"
+      },
+      {
+        "id": "g3_hr_01",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "g3_hr_02",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_sf_01",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_sf_02",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_sf_03",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_sf_04",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_sf_05",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_sf_06",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_sf_07",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_sf_08",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_wd_01",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_wd_02",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_wd_03",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_wd_04",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_ir_01",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_ir_02",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_ir_03",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_ir_04",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_cp_01",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_cp_02",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_cp_03",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_cp_04",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "m3_un_01",
+        "expected": "ENGINE_UNSUPPORTED",
+        "outcome": "engine_unsupported"
+      },
+      {
+        "id": "m3_un_02",
+        "expected": "ENGINE_UNSUPPORTED",
+        "outcome": "engine_unsupported"
+      },
+      {
+        "id": "m3_kl_01",
+        "expected": "KNOWN_LIMITATION_EXPECTED_REJECT",
+        "outcome": "expected_grounding_reject"
+      },
+      {
+        "id": "m3_kl_02",
+        "expected": "KNOWN_LIMITATION_EXPECTED_REJECT",
+        "outcome": "expected_grounding_reject"
+      },
+      {
+        "id": "f3_sf_01",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_sf_02",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_sf_03",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_sf_04",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_sf_05",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_sf_06",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_sf_07",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_sf_08",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_wd_01",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_wd_02",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_wd_03",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_wd_04",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_ir_01",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_ir_02",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_ir_03",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_ir_04",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_cp_01",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_cp_02",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_cp_03",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_cp_04",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_un_01",
+        "expected": "ENGINE_UNSUPPORTED",
+        "outcome": "engine_unsupported"
+      },
+      {
+        "id": "f3_un_02",
+        "expected": "ENGINE_UNSUPPORTED",
+        "outcome": "engine_unsupported"
+      },
+      {
+        "id": "f3_hr_01",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      },
+      {
+        "id": "f3_hr_02",
+        "expected": "COMPILE_OK",
+        "outcome": "accepted"
+      }
+    ]
+  },
+  "freeze_rule": "Any correction after this freeze requires a new benchmark version and new preregistered run."
+}

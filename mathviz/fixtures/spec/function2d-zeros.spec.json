@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "mathviz.problemspec/v1",
+  "problemId": "p53-function2d-zeros",
+  "domain": "function2d",
+  "statement": "求函数 g(t) = t^2 - 16 的所有零点。",
+  "entities": [
+    {
+      "id": "eq_main",
+      "kind": "equation",
+      "props": {
+        "capability_id": "function2d.solve_equation",
+        "variable": "t",
+        "lhs": {
+          "t": "app",
+          "op": "-",
+          "args": [
+            {
+              "t": "app",
+              "op": "^",
+              "args": [
+                { "t": "sym", "name": "t" },
+                { "t": "num", "v": { "kind": "int", "value": "2" } }
+              ]
+            },
+            { "t": "num", "v": { "kind": "int", "value": "16" } }
+          ]
+        },
+        "rhs": { "t": "num", "v": { "kind": "int", "value": "0" } }
+      },
+      "provenance": {
+        "kind": "problem_text",
+        "span": { "text": "求函数 g(t) = t^2 - 16 的所有零点", "start": 0, "end": 25 }
+      }
+    },
+    {
+      "id": "func_g",
+      "kind": "function",
+      "label": "g",
+      "props": {
+        "capability_id": "function2d.expression_curve",
+        "variable": "t",
+        "expr": {
+          "t": "app",
+          "op": "-",
+          "args": [
+            {
+              "t": "app",
+              "op": "^",
+              "args": [
+                { "t": "sym", "name": "t" },
+                { "t": "num", "v": { "kind": "int", "value": "2" } }
+              ]
+            },
+            { "t": "num", "v": { "kind": "int", "value": "16" } }
+          ]
+        }
+      },
+      "provenance": {
+        "kind": "problem_text",
+        "span": { "text": "g(t) = t^2 - 16", "start": 4, "end": 19 }
+      }
+    }
+  ],
+  "source_facts": [],
+  "goals": [
+    {
+      "goalId": "solve_main",
+      "capabilityId": "function2d.solve_equation",
+      "inputs": ["entity:eq_main"]
+    }
+  ]
+}

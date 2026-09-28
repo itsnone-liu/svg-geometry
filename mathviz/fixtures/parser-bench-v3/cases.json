@@ -1,0 +1,7114 @@
+{
+  "version": 3,
+  "cases": [
+    {
+      "id": "g3_sf_01",
+      "domain": "geometry2d",
+      "category": "straightforward",
+      "statement": "已知点 A(1, 2) 与点 B(4, 6)，求线段 AB 的长度。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_sf_01",
+        "domain": "geometry2d",
+        "statement": "已知点 A(1, 2) 与点 B(4, 6)，求线段 AB 的长度。",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "1",
+              "y": "2"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(1, 2)",
+                "start": 4,
+                "end": 11
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "4",
+              "y": "6"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(4, 6)",
+                "start": 15,
+                "end": 22
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "AB",
+                "start": 27,
+                "end": 29
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_sf_02",
+      "domain": "geometry2d",
+      "category": "straightforward",
+      "statement": "点 A(0, 3) 和点 B(0, 11) 确定线段 AB，求其长度。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_sf_02",
+        "domain": "geometry2d",
+        "statement": "点 A(0, 3) 和点 B(0, 11) 确定线段 AB，求其长度。",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "0",
+              "y": "3"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(0, 3)",
+                "start": 2,
+                "end": 9
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "0",
+              "y": "11"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(0, 11)",
+                "start": 13,
+                "end": 21
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "AB",
+                "start": 27,
+                "end": 29
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_sf_03",
+      "domain": "geometry2d",
+      "category": "straightforward",
+      "statement": "已知 A(2, 1)、B(8, 1)，求 AB 的长度。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_sf_03",
+        "domain": "geometry2d",
+        "statement": "已知 A(2, 1)、B(8, 1)，求 AB 的长度。",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "2",
+              "y": "1"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(2, 1)",
+                "start": 3,
+                "end": 10
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "8",
+              "y": "1"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(8, 1)",
+                "start": 11,
+                "end": 18
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "AB",
+                "start": 21,
+                "end": 23
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_sf_04",
+      "domain": "geometry2d",
+      "category": "straightforward",
+      "statement": "点 A(5, 2) 与点 B(5, 9) 之间的距离是多少？",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_sf_04",
+        "domain": "geometry2d",
+        "statement": "点 A(5, 2) 与点 B(5, 9) 之间的距离是多少？",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "5",
+              "y": "2"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(5, 2)",
+                "start": 2,
+                "end": 9
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "5",
+              "y": "9"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(5, 9)",
+                "start": 13,
+                "end": 20
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(5, 2) 与点 B(5, 9)",
+                "start": 2,
+                "end": 20
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_sf_05",
+      "domain": "geometry2d",
+      "category": "straightforward",
+      "statement": "已知点 A(3, 4) 和点 B(9, 12)，计算线段 AB 长度。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_sf_05",
+        "domain": "geometry2d",
+        "statement": "已知点 A(3, 4) 和点 B(9, 12)，计算线段 AB 长度。",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "3",
+              "y": "4"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(3, 4)",
+                "start": 4,
+                "end": 11
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "9",
+              "y": "12"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(9, 12)",
+                "start": 15,
+                "end": 23
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "AB",
+                "start": 29,
+                "end": 31
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_sf_06",
+      "domain": "geometry2d",
+      "category": "straightforward",
+      "statement": "A(7, 0) 与 B(7, 5) 两点相连，求 AB 长。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_sf_06",
+        "domain": "geometry2d",
+        "statement": "A(7, 0) 与 B(7, 5) 两点相连，求 AB 长。",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "7",
+              "y": "0"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(7, 0)",
+                "start": 0,
+                "end": 7
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "7",
+              "y": "5"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(7, 5)",
+                "start": 10,
+                "end": 17
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "AB",
+                "start": 25,
+                "end": 27
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_sf_07",
+      "domain": "geometry2d",
+      "category": "straightforward",
+      "statement": "点 A(1, 8)、点 B(6, 8)，线段 AB 有多长？",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_sf_07",
+        "domain": "geometry2d",
+        "statement": "点 A(1, 8)、点 B(6, 8)，线段 AB 有多长？",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "1",
+              "y": "8"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(1, 8)",
+                "start": 2,
+                "end": 9
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "6",
+              "y": "8"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(6, 8)",
+                "start": 12,
+                "end": 19
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "AB",
+                "start": 23,
+                "end": 25
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_sf_08",
+      "domain": "geometry2d",
+      "category": "straightforward",
+      "statement": "已知 A(4, 2) 和 B(10, 2)，求两点间距离。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_sf_08",
+        "domain": "geometry2d",
+        "statement": "已知 A(4, 2) 和 B(10, 2)，求两点间距离。",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "4",
+              "y": "2"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(4, 2)",
+                "start": 3,
+                "end": 10
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "10",
+              "y": "2"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(10, 2)",
+                "start": 13,
+                "end": 21
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(4, 2) 和 B(10, 2)",
+                "start": 3,
+                "end": 21
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_wd_01",
+      "domain": "geometry2d",
+      "category": "wording",
+      "statement": "若 A(2, 3)、B(6, 6)，连接 AB 后求这条线段的长度。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_wd_01",
+        "domain": "geometry2d",
+        "statement": "若 A(2, 3)、B(6, 6)，连接 AB 后求这条线段的长度。",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "2",
+              "y": "3"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(2, 3)",
+                "start": 2,
+                "end": 9
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "6",
+              "y": "6"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(6, 6)",
+                "start": 10,
+                "end": 17
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "AB",
+                "start": 21,
+                "end": 23
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_wd_02",
+      "domain": "geometry2d",
+      "category": "wording",
+      "statement": "坐标为 A(0, 0) 和 B(9, 12)，请计算 A、B 间的直线距离。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_wd_02",
+        "domain": "geometry2d",
+        "statement": "坐标为 A(0, 0) 和 B(9, 12)，请计算 A、B 间的直线距离。",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "0",
+              "y": "0"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(0, 0)",
+                "start": 4,
+                "end": 11
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "9",
+              "y": "12"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(9, 12)",
+                "start": 14,
+                "end": 22
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(0, 0) 和 B(9, 12)",
+                "start": 4,
+                "end": 22
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_wd_03",
+      "domain": "geometry2d",
+      "category": "wording",
+      "statement": "从 A(3, 1) 到 B(3, 13) 的线段长度是多少？",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_wd_03",
+        "domain": "geometry2d",
+        "statement": "从 A(3, 1) 到 B(3, 13) 的线段长度是多少？",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "3",
+              "y": "1"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(3, 1)",
+                "start": 2,
+                "end": 9
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "3",
+              "y": "13"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(3, 13)",
+                "start": 12,
+                "end": 20
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(3, 1) 到 B(3, 13)",
+                "start": 2,
+                "end": 20
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_wd_04",
+      "domain": "geometry2d",
+      "category": "wording",
+      "statement": "给定两个点 A(5, 5)、B(12, 5)，求 AB 的长度。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_wd_04",
+        "domain": "geometry2d",
+        "statement": "给定两个点 A(5, 5)、B(12, 5)，求 AB 的长度。",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "5",
+              "y": "5"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(5, 5)",
+                "start": 6,
+                "end": 13
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "12",
+              "y": "5"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(12, 5)",
+                "start": 14,
+                "end": 22
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "AB",
+                "start": 25,
+                "end": 27
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_ir_01",
+      "domain": "geometry2d",
+      "category": "irrelevant",
+      "statement": "教室有 18 把椅子。已知 A(1, 1) 与 B(4, 5)，求 AB 的长度。",
+      "expected": "COMPILE_OK",
+      "challengeType": "irrelevant-grounded-distractor",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_ir_01",
+        "domain": "geometry2d",
+        "statement": "教室有 18 把椅子。已知 A(1, 1) 与 B(4, 5)，求 AB 的长度。",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "1",
+              "y": "1"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(1, 1)",
+                "start": 14,
+                "end": 21
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "4",
+              "y": "5"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(4, 5)",
+                "start": 24,
+                "end": 31
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "AB",
+                "start": 34,
+                "end": 36
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_ir_02",
+      "domain": "geometry2d",
+      "category": "irrelevant",
+      "statement": "路旁每隔 7 米有一盏灯。点 A(2, 0) 与 B(8, 8) 的距离是多少？",
+      "expected": "COMPILE_OK",
+      "challengeType": "irrelevant-grounded-distractor",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_ir_02",
+        "domain": "geometry2d",
+        "statement": "路旁每隔 7 米有一盏灯。点 A(2, 0) 与 B(8, 8) 的距离是多少？",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "2",
+              "y": "0"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(2, 0)",
+                "start": 15,
+                "end": 22
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "8",
+              "y": "8"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(8, 8)",
+                "start": 25,
+                "end": 32
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(2, 0) 与 B(8, 8)",
+                "start": 15,
+                "end": 32
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_ir_03",
+      "domain": "geometry2d",
+      "category": "irrelevant",
+      "statement": "操场周长是 240 米。已知 A(0, 4)、B(0, 13)，求 AB 长度。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_ir_03",
+        "domain": "geometry2d",
+        "statement": "操场周长是 240 米。已知 A(0, 4)、B(0, 13)，求 AB 长度。",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "0",
+              "y": "4"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(0, 4)",
+                "start": 15,
+                "end": 22
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "0",
+              "y": "13"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(0, 13)",
+                "start": 23,
+                "end": 31
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "AB",
+                "start": 34,
+                "end": 36
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_ir_04",
+      "domain": "geometry2d",
+      "category": "irrelevant",
+      "statement": "今天气温 22 摄氏度。求点 A(6, 2) 到点 B(6, 10) 的距离。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_ir_04",
+        "domain": "geometry2d",
+        "statement": "今天气温 22 摄氏度。求点 A(6, 2) 到点 B(6, 10) 的距离。",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "6",
+              "y": "2"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(6, 2)",
+                "start": 15,
+                "end": 22
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "6",
+              "y": "10"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(6, 10)",
+                "start": 26,
+                "end": 34
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(6, 2) 到点 B(6, 10)",
+                "start": 15,
+                "end": 34
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_cp_01",
+      "domain": "geometry2d",
+      "category": "compositional",
+      "statement": "已知 A(0, 2)、B(5, 6)、C(9, 1)，只求线段 AB 的长度。",
+      "expected": "COMPILE_OK",
+      "challengeType": "multi-finding-one-repair",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_cp_01",
+        "domain": "geometry2d",
+        "statement": "已知 A(0, 2)、B(5, 6)、C(9, 1)，只求线段 AB 的长度。",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "0",
+              "y": "2"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(0, 2)",
+                "start": 3,
+                "end": 10
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "5",
+              "y": "6"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(5, 6)",
+                "start": 11,
+                "end": 18
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "AB",
+                "start": 32,
+                "end": 34
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_cp_02",
+      "domain": "geometry2d",
+      "category": "compositional",
+      "statement": "图中三点为 A(2, 2)、B(8, 7)、C(3, 10)，问题只问 AB 有多长。",
+      "expected": "COMPILE_OK",
+      "challengeType": "multi-finding-one-repair",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_cp_02",
+        "domain": "geometry2d",
+        "statement": "图中三点为 A(2, 2)、B(8, 7)、C(3, 10)，问题只问 AB 有多长。",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "2",
+              "y": "2"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(2, 2)",
+                "start": 6,
+                "end": 13
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "8",
+              "y": "7"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(8, 7)",
+                "start": 14,
+                "end": 21
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "AB",
+                "start": 36,
+                "end": 38
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_cp_03",
+      "domain": "geometry2d",
+      "category": "compositional",
+      "statement": "点 A(1, 3)、B(11, 3) 与 C(5, 9) 已知，求线段 AB 的长度。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_cp_03",
+        "domain": "geometry2d",
+        "statement": "点 A(1, 3)、B(11, 3) 与 C(5, 9) 已知，求线段 AB 的长度。",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "1",
+              "y": "3"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(1, 3)",
+                "start": 2,
+                "end": 9
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "11",
+              "y": "3"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(11, 3)",
+                "start": 10,
+                "end": 18
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "AB",
+                "start": 36,
+                "end": 38
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_cp_04",
+      "domain": "geometry2d",
+      "category": "compositional",
+      "statement": "给出 A(4, 1)、B(9, 13)、C(12, 2)，请只计算 A 与 B 之间的距离。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_cp_04",
+        "domain": "geometry2d",
+        "statement": "给出 A(4, 1)、B(9, 13)、C(12, 2)，请只计算 A 与 B 之间的距离。",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "4",
+              "y": "1"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(4, 1)",
+                "start": 3,
+                "end": 10
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "9",
+              "y": "13"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(9, 13)",
+                "start": 11,
+                "end": 19
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(4, 1)、B(9, 13)",
+                "start": 3,
+                "end": 19
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_un_01",
+      "domain": "geometry2d",
+      "category": "unsupported",
+      "statement": "已知 A(1, 0) 与 B(sqrt(3), 0)，求线段 AB 的长度。",
+      "expected": "ENGINE_UNSUPPORTED",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_un_01",
+        "domain": "geometry2d",
+        "statement": "已知 A(1, 0) 与 B(sqrt(3), 0)，求线段 AB 的长度。",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "1",
+              "y": "0"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(1, 0)",
+                "start": 3,
+                "end": 10
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "sqrt(3)",
+              "y": "0"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(sqrt(3), 0)",
+                "start": 13,
+                "end": 26
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "AB",
+                "start": 31,
+                "end": 33
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_un_02",
+      "domain": "geometry2d",
+      "category": "unsupported",
+      "statement": "点 A(0, 2) 和点 B(2*sqrt(5), 2) 确定 AB，求其长度。",
+      "expected": "ENGINE_UNSUPPORTED",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_un_02",
+        "domain": "geometry2d",
+        "statement": "点 A(0, 2) 和点 B(2*sqrt(5), 2) 确定 AB，求其长度。",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "0",
+              "y": "2"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(0, 2)",
+                "start": 2,
+                "end": 9
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "2*sqrt(5)",
+              "y": "2"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(2*sqrt(5), 2)",
+                "start": 13,
+                "end": 28
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "AB",
+                "start": 32,
+                "end": 34
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_hr_01",
+      "domain": "geometry2d",
+      "category": "harder_repair",
+      "statement": "先给出 A(3, 7) 与 B(15, 7)，再问两点间距离。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_hr_01",
+        "domain": "geometry2d",
+        "statement": "先给出 A(3, 7) 与 B(15, 7)，再问两点间距离。",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "3",
+              "y": "7"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(3, 7)",
+                "start": 4,
+                "end": 11
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "15",
+              "y": "7"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(15, 7)",
+                "start": 14,
+                "end": 22
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(3, 7) 与 B(15, 7)",
+                "start": 4,
+                "end": 22
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3_hr_02",
+      "domain": "geometry2d",
+      "category": "harder_repair",
+      "statement": "测得点 A(4, 6)，另一个端点 B(13, 18)；线段 AB 多长？",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "g3_hr_02",
+        "domain": "geometry2d",
+        "statement": "测得点 A(4, 6)，另一个端点 B(13, 18)；线段 AB 多长？",
+        "entities": [
+          {
+            "id": "PA",
+            "kind": "point",
+            "label": "A",
+            "props": {
+              "x": "4",
+              "y": "6"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "A(4, 6)",
+                "start": 4,
+                "end": 11
+              }
+            }
+          },
+          {
+            "id": "PB",
+            "kind": "point",
+            "label": "B",
+            "props": {
+              "x": "13",
+              "y": "18"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "B(13, 18)",
+                "start": 18,
+                "end": 27
+              }
+            }
+          },
+          {
+            "id": "SEG",
+            "kind": "segment",
+            "label": "AB",
+            "props": {
+              "a": "PA",
+              "b": "PB"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "AB",
+                "start": 31,
+                "end": 33
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_len",
+            "capabilityId": "geometry2d.derive_length",
+            "inputs": [
+              "entity:SEG"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_sf_01",
+      "domain": "motion1d",
+      "category": "straightforward",
+      "statement": "甲从位置 0 m 出发，以 4 m/s 匀速前进。问甲何时到达位置 28 m？",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_sf_01",
+        "domain": "motion1d",
+        "statement": "甲从位置 0 m 出发，以 4 m/s 匀速前进。问甲何时到达位置 28 m？",
+        "entities": [
+          {
+            "id": "BODY",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_sf_01_x0",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_sf_01_v"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "甲从位置 0 m 出发，以 4 m/s 匀速前进",
+                "start": 0,
+                "end": 24
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_sf_01_x0",
+            "name": "initial_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "0"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 0 m",
+                "start": 2,
+                "end": 8
+              }
+            }
+          },
+          {
+            "fact_id": "m3_sf_01_v",
+            "name": "velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "4"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 4 m/s 匀速前进",
+                "start": 12,
+                "end": 24
+              }
+            }
+          },
+          {
+            "fact_id": "m3_sf_01_target",
+            "name": "target_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "28"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 28 m",
+                "start": 31,
+                "end": 38
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_reach",
+            "capabilityId": "motion1d.reach_event",
+            "inputs": [
+              "entity:BODY",
+              "fact:m3_sf_01_target"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_sf_02",
+      "domain": "motion1d",
+      "category": "straightforward",
+      "statement": "乙从位置 5 m 出发，以 3 m/s 匀速前进。乙到达位置 20 m 需要多久？",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_sf_02",
+        "domain": "motion1d",
+        "statement": "乙从位置 5 m 出发，以 3 m/s 匀速前进。乙到达位置 20 m 需要多久？",
+        "entities": [
+          {
+            "id": "BODY",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_sf_02_x0",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_sf_02_v"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "乙从位置 5 m 出发，以 3 m/s 匀速前进",
+                "start": 0,
+                "end": 24
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_sf_02_x0",
+            "name": "initial_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "5"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 5 m",
+                "start": 2,
+                "end": 8
+              }
+            }
+          },
+          {
+            "fact_id": "m3_sf_02_v",
+            "name": "velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "3"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 3 m/s 匀速前进",
+                "start": 12,
+                "end": 24
+              }
+            }
+          },
+          {
+            "fact_id": "m3_sf_02_target",
+            "name": "target_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "20"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 20 m",
+                "start": 28,
+                "end": 35
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_reach",
+            "capabilityId": "motion1d.reach_event",
+            "inputs": [
+              "entity:BODY",
+              "fact:m3_sf_02_target"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_sf_03",
+      "domain": "motion1d",
+      "category": "straightforward",
+      "statement": "丙从位置 30 m 出发，以 2 m/s 匀速后退。问丙到达位置 10 m 的时间。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_sf_03",
+        "domain": "motion1d",
+        "statement": "丙从位置 30 m 出发，以 2 m/s 匀速后退。问丙到达位置 10 m 的时间。",
+        "entities": [
+          {
+            "id": "BODY",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_sf_03_x0",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_sf_03_v"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "丙从位置 30 m 出发，以 2 m/s 匀速后退",
+                "start": 0,
+                "end": 25
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_sf_03_x0",
+            "name": "initial_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "30"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 30 m",
+                "start": 2,
+                "end": 9
+              }
+            }
+          },
+          {
+            "fact_id": "m3_sf_03_v",
+            "name": "velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "-2"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 2 m/s 匀速后退",
+                "start": 13,
+                "end": 25
+              }
+            }
+          },
+          {
+            "fact_id": "m3_sf_03_target",
+            "name": "target_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "10"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 10 m",
+                "start": 30,
+                "end": 37
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_reach",
+            "capabilityId": "motion1d.reach_event",
+            "inputs": [
+              "entity:BODY",
+              "fact:m3_sf_03_target"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_sf_04",
+      "domain": "motion1d",
+      "category": "straightforward",
+      "statement": "丁从位置 8 m 出发，以 5 m/s 匀速前进。多久能到位置 48 m？",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_sf_04",
+        "domain": "motion1d",
+        "statement": "丁从位置 8 m 出发，以 5 m/s 匀速前进。多久能到位置 48 m？",
+        "entities": [
+          {
+            "id": "BODY",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_sf_04_x0",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_sf_04_v"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "丁从位置 8 m 出发，以 5 m/s 匀速前进",
+                "start": 0,
+                "end": 24
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_sf_04_x0",
+            "name": "initial_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "8"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 8 m",
+                "start": 2,
+                "end": 8
+              }
+            }
+          },
+          {
+            "fact_id": "m3_sf_04_v",
+            "name": "velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "5"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 5 m/s 匀速前进",
+                "start": 12,
+                "end": 24
+              }
+            }
+          },
+          {
+            "fact_id": "m3_sf_04_target",
+            "name": "target_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "48"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 48 m",
+                "start": 29,
+                "end": 36
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_reach",
+            "capabilityId": "motion1d.reach_event",
+            "inputs": [
+              "entity:BODY",
+              "fact:m3_sf_04_target"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_sf_05",
+      "domain": "motion1d",
+      "category": "straightforward",
+      "statement": "甲从位置 0 m 出发，以 6 m/s 匀速前进；乙从位置 90 m 出发，以 3 m/s 匀速后退。问何时相遇？",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_sf_05",
+        "domain": "motion1d",
+        "statement": "甲从位置 0 m 出发，以 6 m/s 匀速前进；乙从位置 90 m 出发，以 3 m/s 匀速后退。问何时相遇？",
+        "entities": [
+          {
+            "id": "A",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_sf_05_xA",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_sf_05_vA"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "甲从位置 0 m 出发，以 6 m/s 匀速前进",
+                "start": 0,
+                "end": 24
+              }
+            }
+          },
+          {
+            "id": "B",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_sf_05_xB",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_sf_05_vB"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "乙从位置 90 m 出发，以 3 m/s 匀速后退",
+                "start": 25,
+                "end": 50
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_sf_05_xA",
+            "name": "A_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "0"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 0 m",
+                "start": 2,
+                "end": 8
+              }
+            }
+          },
+          {
+            "fact_id": "m3_sf_05_vA",
+            "name": "A_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "6"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 6 m/s 匀速前进",
+                "start": 12,
+                "end": 24
+              }
+            }
+          },
+          {
+            "fact_id": "m3_sf_05_xB",
+            "name": "B_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "90"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 90 m",
+                "start": 27,
+                "end": 34
+              }
+            }
+          },
+          {
+            "fact_id": "m3_sf_05_vB",
+            "name": "B_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "-3"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 3 m/s 匀速后退",
+                "start": 38,
+                "end": 50
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_meet",
+            "capabilityId": "motion1d.meeting_event",
+            "inputs": [
+              "entity:A",
+              "entity:B"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_sf_06",
+      "domain": "motion1d",
+      "category": "straightforward",
+      "statement": "甲从位置 10 m 出发，以 2 m/s 匀速前进；乙从位置 70 m 出发，以 4 m/s 匀速后退。问它们何时相遇？",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_sf_06",
+        "domain": "motion1d",
+        "statement": "甲从位置 10 m 出发，以 2 m/s 匀速前进；乙从位置 70 m 出发，以 4 m/s 匀速后退。问它们何时相遇？",
+        "entities": [
+          {
+            "id": "A",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_sf_06_xA",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_sf_06_vA"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "甲从位置 10 m 出发，以 2 m/s 匀速前进",
+                "start": 0,
+                "end": 25
+              }
+            }
+          },
+          {
+            "id": "B",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_sf_06_xB",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_sf_06_vB"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "乙从位置 70 m 出发，以 4 m/s 匀速后退",
+                "start": 26,
+                "end": 51
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_sf_06_xA",
+            "name": "A_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "10"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 10 m",
+                "start": 2,
+                "end": 9
+              }
+            }
+          },
+          {
+            "fact_id": "m3_sf_06_vA",
+            "name": "A_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "2"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 2 m/s 匀速前进",
+                "start": 13,
+                "end": 25
+              }
+            }
+          },
+          {
+            "fact_id": "m3_sf_06_xB",
+            "name": "B_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "70"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 70 m",
+                "start": 28,
+                "end": 35
+              }
+            }
+          },
+          {
+            "fact_id": "m3_sf_06_vB",
+            "name": "B_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "-4"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 4 m/s 匀速后退",
+                "start": 39,
+                "end": 51
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_meet",
+            "capabilityId": "motion1d.meeting_event",
+            "inputs": [
+              "entity:A",
+              "entity:B"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_sf_07",
+      "domain": "motion1d",
+      "category": "straightforward",
+      "statement": "甲从位置 4 m 出发，以 3 m/s 匀速前进；乙从位置 40 m 出发，以 3 m/s 匀速后退。求相遇时间。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_sf_07",
+        "domain": "motion1d",
+        "statement": "甲从位置 4 m 出发，以 3 m/s 匀速前进；乙从位置 40 m 出发，以 3 m/s 匀速后退。求相遇时间。",
+        "entities": [
+          {
+            "id": "A",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_sf_07_xA",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_sf_07_vA"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "甲从位置 4 m 出发，以 3 m/s 匀速前进",
+                "start": 0,
+                "end": 24
+              }
+            }
+          },
+          {
+            "id": "B",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_sf_07_xB",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_sf_07_vB"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "乙从位置 40 m 出发，以 3 m/s 匀速后退",
+                "start": 25,
+                "end": 50
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_sf_07_xA",
+            "name": "A_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "4"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 4 m",
+                "start": 2,
+                "end": 8
+              }
+            }
+          },
+          {
+            "fact_id": "m3_sf_07_vA",
+            "name": "A_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "3"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 3 m/s 匀速前进",
+                "start": 12,
+                "end": 24
+              }
+            }
+          },
+          {
+            "fact_id": "m3_sf_07_xB",
+            "name": "B_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "40"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 40 m",
+                "start": 27,
+                "end": 34
+              }
+            }
+          },
+          {
+            "fact_id": "m3_sf_07_vB",
+            "name": "B_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "-3"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 3 m/s 匀速后退",
+                "start": 38,
+                "end": 50
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_meet",
+            "capabilityId": "motion1d.meeting_event",
+            "inputs": [
+              "entity:A",
+              "entity:B"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_sf_08",
+      "domain": "motion1d",
+      "category": "straightforward",
+      "statement": "甲从位置 2 m 出发，以 5 m/s 匀速前进；乙从位置 62 m 出发，以 1 m/s 匀速后退。问相遇时刻。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_sf_08",
+        "domain": "motion1d",
+        "statement": "甲从位置 2 m 出发，以 5 m/s 匀速前进；乙从位置 62 m 出发，以 1 m/s 匀速后退。问相遇时刻。",
+        "entities": [
+          {
+            "id": "A",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_sf_08_xA",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_sf_08_vA"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "甲从位置 2 m 出发，以 5 m/s 匀速前进",
+                "start": 0,
+                "end": 24
+              }
+            }
+          },
+          {
+            "id": "B",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_sf_08_xB",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_sf_08_vB"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "乙从位置 62 m 出发，以 1 m/s 匀速后退",
+                "start": 25,
+                "end": 50
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_sf_08_xA",
+            "name": "A_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "2"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 2 m",
+                "start": 2,
+                "end": 8
+              }
+            }
+          },
+          {
+            "fact_id": "m3_sf_08_vA",
+            "name": "A_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "5"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 5 m/s 匀速前进",
+                "start": 12,
+                "end": 24
+              }
+            }
+          },
+          {
+            "fact_id": "m3_sf_08_xB",
+            "name": "B_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "62"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 62 m",
+                "start": 27,
+                "end": 34
+              }
+            }
+          },
+          {
+            "fact_id": "m3_sf_08_vB",
+            "name": "B_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "-1"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 1 m/s 匀速后退",
+                "start": 38,
+                "end": 50
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_meet",
+            "capabilityId": "motion1d.meeting_event",
+            "inputs": [
+              "entity:A",
+              "entity:B"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_wd_01",
+      "domain": "motion1d",
+      "category": "wording",
+      "statement": "戊以 4 m/s 向前匀速运动，起点在 3 m，问到 31 m 要几秒？",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_wd_01",
+        "domain": "motion1d",
+        "statement": "戊以 4 m/s 向前匀速运动，起点在 3 m，问到 31 m 要几秒？",
+        "entities": [
+          {
+            "id": "BODY",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_wd_01_x0",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_wd_01_v"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "戊以 4 m/s 向前匀速运动，起点在 3 m",
+                "start": 0,
+                "end": 23
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_wd_01_x0",
+            "name": "initial_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "3"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "起点在 3 m",
+                "start": 16,
+                "end": 23
+              }
+            }
+          },
+          {
+            "fact_id": "m3_wd_01_v",
+            "name": "velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "4"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 4 m/s 向前匀速运动",
+                "start": 1,
+                "end": 15
+              }
+            }
+          },
+          {
+            "fact_id": "m3_wd_01_target",
+            "name": "target_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "31"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "到 31 m",
+                "start": 25,
+                "end": 31
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_reach",
+            "capabilityId": "motion1d.reach_event",
+            "inputs": [
+              "entity:BODY",
+              "fact:m3_wd_01_target"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_wd_02",
+      "domain": "motion1d",
+      "category": "wording",
+      "statement": "己从 6 m 处以 2 m/s 匀速向前行进，到 18 m 需多长时间？",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_wd_02",
+        "domain": "motion1d",
+        "statement": "己从 6 m 处以 2 m/s 匀速向前行进，到 18 m 需多长时间？",
+        "entities": [
+          {
+            "id": "BODY",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_wd_02_x0",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_wd_02_v"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "己从 6 m 处以 2 m/s 匀速向前行进",
+                "start": 0,
+                "end": 22
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_wd_02_x0",
+            "name": "initial_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "6"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "从 6 m 处",
+                "start": 1,
+                "end": 8
+              }
+            }
+          },
+          {
+            "fact_id": "m3_wd_02_v",
+            "name": "velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "2"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 2 m/s 匀速向前行进",
+                "start": 8,
+                "end": 22
+              }
+            }
+          },
+          {
+            "fact_id": "m3_wd_02_target",
+            "name": "target_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "18"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "到 18 m",
+                "start": 23,
+                "end": 29
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_reach",
+            "capabilityId": "motion1d.reach_event",
+            "inputs": [
+              "entity:BODY",
+              "fact:m3_wd_02_target"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_wd_03",
+      "domain": "motion1d",
+      "category": "wording",
+      "statement": "甲在 0 m 处以 4 m/s 向前走，乙在 52 m 处以 2 m/s 向后走，多久会相遇？",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_wd_03",
+        "domain": "motion1d",
+        "statement": "甲在 0 m 处以 4 m/s 向前走，乙在 52 m 处以 2 m/s 向后走，多久会相遇？",
+        "entities": [
+          {
+            "id": "A",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_wd_03_xA",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_wd_03_vA"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "甲在 0 m 处以 4 m/s 向前走",
+                "start": 0,
+                "end": 19
+              }
+            }
+          },
+          {
+            "id": "B",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_wd_03_xB",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_wd_03_vB"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "乙在 52 m 处以 2 m/s 向后走",
+                "start": 20,
+                "end": 40
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_wd_03_xA",
+            "name": "A_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "0"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "在 0 m 处",
+                "start": 1,
+                "end": 8
+              }
+            }
+          },
+          {
+            "fact_id": "m3_wd_03_vA",
+            "name": "A_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "4"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 4 m/s 向前走",
+                "start": 8,
+                "end": 19
+              }
+            }
+          },
+          {
+            "fact_id": "m3_wd_03_xB",
+            "name": "B_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "52"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "在 52 m 处",
+                "start": 21,
+                "end": 29
+              }
+            }
+          },
+          {
+            "fact_id": "m3_wd_03_vB",
+            "name": "B_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "-2"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 2 m/s 向后走",
+                "start": 29,
+                "end": 40
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_meet",
+            "capabilityId": "motion1d.meeting_event",
+            "inputs": [
+              "entity:A",
+              "entity:B"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_wd_04",
+      "domain": "motion1d",
+      "category": "wording",
+      "statement": "甲车由 9 m 站点以 3 m/s 匀速前进，乙车由 45 m 站点以 3 m/s 匀速后退，何时相遇？",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_wd_04",
+        "domain": "motion1d",
+        "statement": "甲车由 9 m 站点以 3 m/s 匀速前进，乙车由 45 m 站点以 3 m/s 匀速后退，何时相遇？",
+        "entities": [
+          {
+            "id": "A",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_wd_04_xA",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_wd_04_vA"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "甲车由 9 m 站点以 3 m/s 匀速前进",
+                "start": 0,
+                "end": 22
+              }
+            }
+          },
+          {
+            "id": "B",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_wd_04_xB",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_wd_04_vB"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "乙车由 45 m 站点以 3 m/s 匀速后退",
+                "start": 23,
+                "end": 46
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_wd_04_xA",
+            "name": "A_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "9"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "由 9 m 站点",
+                "start": 2,
+                "end": 10
+              }
+            }
+          },
+          {
+            "fact_id": "m3_wd_04_vA",
+            "name": "A_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "3"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 3 m/s 匀速前进",
+                "start": 10,
+                "end": 22
+              }
+            }
+          },
+          {
+            "fact_id": "m3_wd_04_xB",
+            "name": "B_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "45"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "由 45 m 站点",
+                "start": 25,
+                "end": 34
+              }
+            }
+          },
+          {
+            "fact_id": "m3_wd_04_vB",
+            "name": "B_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "-3"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 3 m/s 匀速后退",
+                "start": 34,
+                "end": 46
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_meet",
+            "capabilityId": "motion1d.meeting_event",
+            "inputs": [
+              "entity:A",
+              "entity:B"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_ir_01",
+      "domain": "motion1d",
+      "category": "irrelevant",
+      "statement": "路边每隔 8 m 有一根标杆。甲从位置 0 m 出发，以 2 m/s 匀速前进，问到位置 20 m 的时间。",
+      "expected": "COMPILE_OK",
+      "challengeType": "irrelevant-grounded-distractor",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_ir_01",
+        "domain": "motion1d",
+        "statement": "路边每隔 8 m 有一根标杆。甲从位置 0 m 出发，以 2 m/s 匀速前进，问到位置 20 m 的时间。",
+        "entities": [
+          {
+            "id": "BODY",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_ir_01_x0",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_ir_01_v"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "甲从位置 0 m 出发，以 2 m/s 匀速前进",
+                "start": 15,
+                "end": 39
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_ir_01_x0",
+            "name": "initial_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "0"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 0 m",
+                "start": 17,
+                "end": 23
+              }
+            }
+          },
+          {
+            "fact_id": "m3_ir_01_v",
+            "name": "velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "2"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 2 m/s 匀速前进",
+                "start": 27,
+                "end": 39
+              }
+            }
+          },
+          {
+            "fact_id": "m3_ir_01_target",
+            "name": "target_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "20"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 20 m",
+                "start": 42,
+                "end": 49
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_reach",
+            "capabilityId": "motion1d.reach_event",
+            "inputs": [
+              "entity:BODY",
+              "fact:m3_ir_01_target"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_ir_02",
+      "domain": "motion1d",
+      "category": "irrelevant",
+      "statement": "公园有 14 盏路灯。乙从位置 1 m 出发，以 3 m/s 匀速前进，到位置 25 m 要多久？",
+      "expected": "COMPILE_OK",
+      "challengeType": "irrelevant-grounded-distractor",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_ir_02",
+        "domain": "motion1d",
+        "statement": "公园有 14 盏路灯。乙从位置 1 m 出发，以 3 m/s 匀速前进，到位置 25 m 要多久？",
+        "entities": [
+          {
+            "id": "BODY",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_ir_02_x0",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_ir_02_v"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "乙从位置 1 m 出发，以 3 m/s 匀速前进",
+                "start": 11,
+                "end": 35
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_ir_02_x0",
+            "name": "initial_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "1"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 1 m",
+                "start": 13,
+                "end": 19
+              }
+            }
+          },
+          {
+            "fact_id": "m3_ir_02_v",
+            "name": "velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "3"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 3 m/s 匀速前进",
+                "start": 23,
+                "end": 35
+              }
+            }
+          },
+          {
+            "fact_id": "m3_ir_02_target",
+            "name": "target_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "25"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 25 m",
+                "start": 37,
+                "end": 44
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_reach",
+            "capabilityId": "motion1d.reach_event",
+            "inputs": [
+              "entity:BODY",
+              "fact:m3_ir_02_target"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_ir_03",
+      "domain": "motion1d",
+      "category": "irrelevant",
+      "statement": "操场一圈长 400 m。甲从位置 0 m 出发，以 5 m/s 匀速前进；乙从位置 80 m 出发，以 5 m/s 匀速后退。问相遇时间。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_ir_03",
+        "domain": "motion1d",
+        "statement": "操场一圈长 400 m。甲从位置 0 m 出发，以 5 m/s 匀速前进；乙从位置 80 m 出发，以 5 m/s 匀速后退。问相遇时间。",
+        "entities": [
+          {
+            "id": "A",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_ir_03_xA",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_ir_03_vA"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "甲从位置 0 m 出发，以 5 m/s 匀速前进",
+                "start": 12,
+                "end": 36
+              }
+            }
+          },
+          {
+            "id": "B",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_ir_03_xB",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_ir_03_vB"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "乙从位置 80 m 出发，以 5 m/s 匀速后退",
+                "start": 37,
+                "end": 62
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_ir_03_xA",
+            "name": "A_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "0"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 0 m",
+                "start": 14,
+                "end": 20
+              }
+            }
+          },
+          {
+            "fact_id": "m3_ir_03_vA",
+            "name": "A_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "5"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 5 m/s 匀速前进",
+                "start": 24,
+                "end": 36
+              }
+            }
+          },
+          {
+            "fact_id": "m3_ir_03_xB",
+            "name": "B_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "80"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 80 m",
+                "start": 39,
+                "end": 46
+              }
+            }
+          },
+          {
+            "fact_id": "m3_ir_03_vB",
+            "name": "B_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "-5"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 5 m/s 匀速后退",
+                "start": 50,
+                "end": 62
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_meet",
+            "capabilityId": "motion1d.meeting_event",
+            "inputs": [
+              "entity:A",
+              "entity:B"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_ir_04",
+      "domain": "motion1d",
+      "category": "irrelevant",
+      "statement": "今天最高气温 27 摄氏度。丙从位置 10 m 出发，以 4 m/s 匀速前进，到 34 m 需几秒？",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_ir_04",
+        "domain": "motion1d",
+        "statement": "今天最高气温 27 摄氏度。丙从位置 10 m 出发，以 4 m/s 匀速前进，到 34 m 需几秒？",
+        "entities": [
+          {
+            "id": "BODY",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_ir_04_x0",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_ir_04_v"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "丙从位置 10 m 出发，以 4 m/s 匀速前进",
+                "start": 14,
+                "end": 39
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_ir_04_x0",
+            "name": "initial_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "10"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 10 m",
+                "start": 16,
+                "end": 23
+              }
+            }
+          },
+          {
+            "fact_id": "m3_ir_04_v",
+            "name": "velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "4"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 4 m/s 匀速前进",
+                "start": 27,
+                "end": 39
+              }
+            }
+          },
+          {
+            "fact_id": "m3_ir_04_target",
+            "name": "target_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "34"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "到 34 m",
+                "start": 40,
+                "end": 46
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_reach",
+            "capabilityId": "motion1d.reach_event",
+            "inputs": [
+              "entity:BODY",
+              "fact:m3_ir_04_target"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_cp_01",
+      "domain": "motion1d",
+      "category": "compositional",
+      "statement": "甲从位置 0 m 出发，以 4 m/s 匀速前进；乙从位置 60 m 出发，以 2 m/s 匀速后退。路旁每 10 m 有一块牌子。问何时相遇？",
+      "expected": "COMPILE_OK",
+      "challengeType": "multi-finding-one-repair",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_cp_01",
+        "domain": "motion1d",
+        "statement": "甲从位置 0 m 出发，以 4 m/s 匀速前进；乙从位置 60 m 出发，以 2 m/s 匀速后退。路旁每 10 m 有一块牌子。问何时相遇？",
+        "entities": [
+          {
+            "id": "A",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_cp_01_xA",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_cp_01_vA"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "甲从位置 0 m 出发，以 4 m/s 匀速前进",
+                "start": 0,
+                "end": 24
+              }
+            }
+          },
+          {
+            "id": "B",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_cp_01_xB",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_cp_01_vB"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "乙从位置 60 m 出发，以 2 m/s 匀速后退",
+                "start": 25,
+                "end": 50
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_cp_01_xA",
+            "name": "A_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "0"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 0 m",
+                "start": 2,
+                "end": 8
+              }
+            }
+          },
+          {
+            "fact_id": "m3_cp_01_vA",
+            "name": "A_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "4"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 4 m/s 匀速前进",
+                "start": 12,
+                "end": 24
+              }
+            }
+          },
+          {
+            "fact_id": "m3_cp_01_xB",
+            "name": "B_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "60"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 60 m",
+                "start": 27,
+                "end": 34
+              }
+            }
+          },
+          {
+            "fact_id": "m3_cp_01_vB",
+            "name": "B_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "-2"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 2 m/s 匀速后退",
+                "start": 38,
+                "end": 50
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_meet",
+            "capabilityId": "motion1d.meeting_event",
+            "inputs": [
+              "entity:A",
+              "entity:B"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_cp_02",
+      "domain": "motion1d",
+      "category": "compositional",
+      "statement": "丁从位置 12 m 出发，以 3 m/s 匀速前进，途中每 6 m 有一盏灯；问丁到 42 m 的时间。",
+      "expected": "COMPILE_OK",
+      "challengeType": "multi-finding-one-repair",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_cp_02",
+        "domain": "motion1d",
+        "statement": "丁从位置 12 m 出发，以 3 m/s 匀速前进，途中每 6 m 有一盏灯；问丁到 42 m 的时间。",
+        "entities": [
+          {
+            "id": "BODY",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_cp_02_x0",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_cp_02_v"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "丁从位置 12 m 出发，以 3 m/s 匀速前进",
+                "start": 0,
+                "end": 25
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_cp_02_x0",
+            "name": "initial_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "12"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 12 m",
+                "start": 2,
+                "end": 9
+              }
+            }
+          },
+          {
+            "fact_id": "m3_cp_02_v",
+            "name": "velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "3"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 3 m/s 匀速前进",
+                "start": 13,
+                "end": 25
+              }
+            }
+          },
+          {
+            "fact_id": "m3_cp_02_target",
+            "name": "target_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "42"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "到 42 m",
+                "start": 41,
+                "end": 47
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_reach",
+            "capabilityId": "motion1d.reach_event",
+            "inputs": [
+              "entity:BODY",
+              "fact:m3_cp_02_target"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_cp_03",
+      "domain": "motion1d",
+      "category": "compositional",
+      "statement": "甲从位置 5 m 出发，以 7 m/s 匀速前进；乙从位置 95 m 出发，以 4 m/s 匀速后退。问两人何时相遇？",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_cp_03",
+        "domain": "motion1d",
+        "statement": "甲从位置 5 m 出发，以 7 m/s 匀速前进；乙从位置 95 m 出发，以 4 m/s 匀速后退。问两人何时相遇？",
+        "entities": [
+          {
+            "id": "A",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_cp_03_xA",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_cp_03_vA"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "甲从位置 5 m 出发，以 7 m/s 匀速前进",
+                "start": 0,
+                "end": 24
+              }
+            }
+          },
+          {
+            "id": "B",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_cp_03_xB",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_cp_03_vB"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "乙从位置 95 m 出发，以 4 m/s 匀速后退",
+                "start": 25,
+                "end": 50
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_cp_03_xA",
+            "name": "A_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "5"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 5 m",
+                "start": 2,
+                "end": 8
+              }
+            }
+          },
+          {
+            "fact_id": "m3_cp_03_vA",
+            "name": "A_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "7"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 7 m/s 匀速前进",
+                "start": 12,
+                "end": 24
+              }
+            }
+          },
+          {
+            "fact_id": "m3_cp_03_xB",
+            "name": "B_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "95"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 95 m",
+                "start": 27,
+                "end": 34
+              }
+            }
+          },
+          {
+            "fact_id": "m3_cp_03_vB",
+            "name": "B_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "-4"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 4 m/s 匀速后退",
+                "start": 38,
+                "end": 50
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_meet",
+            "capabilityId": "motion1d.meeting_event",
+            "inputs": [
+              "entity:A",
+              "entity:B"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_cp_04",
+      "domain": "motion1d",
+      "category": "compositional",
+      "statement": "戌由 2 m 位置起步，以 6 m/s 匀速前进；到达 50 m 时需要多久？",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_cp_04",
+        "domain": "motion1d",
+        "statement": "戌由 2 m 位置起步，以 6 m/s 匀速前进；到达 50 m 时需要多久？",
+        "entities": [
+          {
+            "id": "BODY",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_cp_04_x0",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_cp_04_v"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "戌由 2 m 位置起步，以 6 m/s 匀速前进",
+                "start": 0,
+                "end": 24
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_cp_04_x0",
+            "name": "initial_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "2"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "由 2 m 位置",
+                "start": 1,
+                "end": 9
+              }
+            }
+          },
+          {
+            "fact_id": "m3_cp_04_v",
+            "name": "velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "6"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 6 m/s 匀速前进",
+                "start": 12,
+                "end": 24
+              }
+            }
+          },
+          {
+            "fact_id": "m3_cp_04_target",
+            "name": "target_position",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "50"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "到达 50 m",
+                "start": 25,
+                "end": 32
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_reach",
+            "capabilityId": "motion1d.reach_event",
+            "inputs": [
+              "entity:BODY",
+              "fact:m3_cp_04_target"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_un_01",
+      "domain": "motion1d",
+      "category": "unsupported",
+      "statement": "甲从位置 2 m 出发，以 4 m/s 匀速前进；乙从位置 18 m 出发，以 4 m/s 同向前进。问甲何时追上乙？",
+      "expected": "ENGINE_UNSUPPORTED",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_un_01",
+        "domain": "motion1d",
+        "statement": "甲从位置 2 m 出发，以 4 m/s 匀速前进；乙从位置 18 m 出发，以 4 m/s 同向前进。问甲何时追上乙？",
+        "entities": [
+          {
+            "id": "A",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_un_01_xA",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_un_01_vA"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "甲从位置 2 m 出发，以 4 m/s 匀速前进",
+                "start": 0,
+                "end": 24
+              }
+            }
+          },
+          {
+            "id": "B",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_un_01_xB",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_un_01_vB"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "乙从位置 18 m 出发，以 4 m/s 同向前进",
+                "start": 25,
+                "end": 50
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_un_01_xA",
+            "name": "A_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "2"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 2 m",
+                "start": 2,
+                "end": 8
+              }
+            }
+          },
+          {
+            "fact_id": "m3_un_01_vA",
+            "name": "A_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "4"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 4 m/s 匀速前进",
+                "start": 12,
+                "end": 24
+              }
+            }
+          },
+          {
+            "fact_id": "m3_un_01_xB",
+            "name": "B_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "18"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 18 m",
+                "start": 27,
+                "end": 34
+              }
+            }
+          },
+          {
+            "fact_id": "m3_un_01_vB",
+            "name": "B_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "4"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 4 m/s 同向前进",
+                "start": 38,
+                "end": 50
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_over",
+            "capabilityId": "motion1d.overtake_event",
+            "inputs": [
+              "entity:A",
+              "entity:B"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_un_02",
+      "domain": "motion1d",
+      "category": "unsupported",
+      "statement": "甲从位置 16 m 出发，以 -3 m/s 匀速后退。问甲何时到达位置 34 m？",
+      "expected": "ENGINE_UNSUPPORTED",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_un_02",
+        "domain": "motion1d",
+        "statement": "甲从位置 16 m 出发，以 -3 m/s 匀速后退。问甲何时到达位置 34 m？",
+        "entities": [
+          {
+            "id": "A",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_un_02_x0",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_un_02_v"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "甲从位置 16 m 出发，以 -3 m/s 匀速后退",
+                "start": 0,
+                "end": 26
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_un_02_x0",
+            "name": "initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "16"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 16 m",
+                "start": 2,
+                "end": 9
+              }
+            }
+          },
+          {
+            "fact_id": "m3_un_02_v",
+            "name": "velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "-3"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 -3 m/s 匀速后退",
+                "start": 13,
+                "end": 26
+              }
+            }
+          },
+          {
+            "fact_id": "m3_un_02_target",
+            "name": "target",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "34"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 34 m",
+                "start": 33,
+                "end": 40
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_reach",
+            "capabilityId": "motion1d.reach_event",
+            "inputs": [
+              "entity:A",
+              "fact:m3_un_02_target"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_kl_01",
+      "domain": "motion1d",
+      "category": "harder_repair",
+      "statement": "两艘渡船相向而行：甲从位置 -9 m 出发，以 3 m/s 驶出；乙从位置 9 m 出发，以 3 m/s 驶出。何时相遇？",
+      "expected": "KNOWN_LIMITATION_EXPECTED_REJECT",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_kl_01",
+        "domain": "motion1d",
+        "statement": "两艘渡船相向而行：甲从位置 -9 m 出发，以 3 m/s 驶出；乙从位置 9 m 出发，以 3 m/s 驶出。何时相遇？",
+        "entities": [
+          {
+            "id": "A",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_kl_01_xA",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_kl_01_vA"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "甲从位置 -9 m 出发，以 3 m/s 驶出",
+                "start": 9,
+                "end": 32
+              }
+            }
+          },
+          {
+            "id": "B",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_kl_01_xB",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_kl_01_vB"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "乙从位置 9 m 出发，以 3 m/s 驶出",
+                "start": 33,
+                "end": 55
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_kl_01_xA",
+            "name": "A_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "-9"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 -9 m",
+                "start": 11,
+                "end": 18
+              }
+            }
+          },
+          {
+            "fact_id": "m3_kl_01_vA",
+            "name": "A_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "3"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 3 m/s 驶出",
+                "start": 22,
+                "end": 32
+              }
+            }
+          },
+          {
+            "fact_id": "m3_kl_01_xB",
+            "name": "B_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "9"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 9 m",
+                "start": 35,
+                "end": 41
+              }
+            }
+          },
+          {
+            "fact_id": "m3_kl_01_vB",
+            "name": "B_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "-3"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 3 m/s 驶出",
+                "start": 22,
+                "end": 32
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_meet",
+            "capabilityId": "motion1d.meeting_event",
+            "inputs": [
+              "entity:A",
+              "entity:B"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "m3_kl_02",
+      "domain": "motion1d",
+      "category": "harder_repair",
+      "statement": "两列检修车相向移动：甲车从位置 -12 m 以 4 m/s 出发；乙车从位置 12 m 以 4 m/s 出发。求相遇时刻。",
+      "expected": "KNOWN_LIMITATION_EXPECTED_REJECT",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "m3_kl_02",
+        "domain": "motion1d",
+        "statement": "两列检修车相向移动：甲车从位置 -12 m 以 4 m/s 出发；乙车从位置 12 m 以 4 m/s 出发。求相遇时刻。",
+        "entities": [
+          {
+            "id": "A",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_kl_02_xA",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_kl_02_vA"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "甲车从位置 -12 m 以 4 m/s 出发",
+                "start": 10,
+                "end": 32
+              }
+            }
+          },
+          {
+            "id": "B",
+            "kind": "body",
+            "props": {
+              "capability_id": "motion1d.constant_velocity",
+              "initial_position": "math:fact:m3_kl_02_xB",
+              "segments": [
+                {
+                  "velocity": "math:fact:m3_kl_02_vB"
+                }
+              ]
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "乙车从位置 12 m 以 4 m/s 出发",
+                "start": 33,
+                "end": 54
+              }
+            }
+          }
+        ],
+        "source_facts": [
+          {
+            "fact_id": "m3_kl_02_xA",
+            "name": "A_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "-12"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 -12 m",
+                "start": 13,
+                "end": 21
+              }
+            }
+          },
+          {
+            "fact_id": "m3_kl_02_vA",
+            "name": "A_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "4"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 4 m/s 出发",
+                "start": 22,
+                "end": 32
+              }
+            }
+          },
+          {
+            "fact_id": "m3_kl_02_xB",
+            "name": "B_initial",
+            "unit": "m",
+            "value": {
+              "kind": "int",
+              "value": "12"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "位置 12 m",
+                "start": 36,
+                "end": 43
+              }
+            }
+          },
+          {
+            "fact_id": "m3_kl_02_vB",
+            "name": "B_velocity",
+            "unit": "m/s",
+            "value": {
+              "kind": "int",
+              "value": "-4"
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "以 4 m/s 出发",
+                "start": 22,
+                "end": 32
+              }
+            }
+          }
+        ],
+        "goals": [
+          {
+            "goalId": "g_meet",
+            "capabilityId": "motion1d.meeting_event",
+            "inputs": [
+              "entity:A",
+              "entity:B"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_sf_01",
+      "domain": "function2d",
+      "category": "straightforward",
+      "statement": "解方程：x + 7 = 19。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_sf_01",
+        "domain": "function2d",
+        "statement": "解方程：x + 7 = 19。",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "x",
+              "lhs": {
+                "t": "app",
+                "op": "+",
+                "args": [
+                  {
+                    "t": "sym",
+                    "name": "x"
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "7"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "19"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "x + 7 = 19",
+                "start": 4,
+                "end": 14
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_sf_02",
+      "domain": "function2d",
+      "category": "straightforward",
+      "statement": "解方程：x - 8 = 4。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_sf_02",
+        "domain": "function2d",
+        "statement": "解方程：x - 8 = 4。",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "x",
+              "lhs": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "sym",
+                    "name": "x"
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "8"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "4"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "x - 8 = 4",
+                "start": 4,
+                "end": 13
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_sf_03",
+      "domain": "function2d",
+      "category": "straightforward",
+      "statement": "解方程：x^2 - 25 = 0，求全部实数解。",
+      "expected": "COMPILE_OK",
+      "challengeType": "expression-term-loss",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_sf_03",
+        "domain": "function2d",
+        "statement": "解方程：x^2 - 25 = 0，求全部实数解。",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "x",
+              "lhs": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "^",
+                    "args": [
+                      {
+                        "t": "sym",
+                        "name": "x"
+                      },
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "2"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "25"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "0"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "x^2 - 25 = 0",
+                "start": 4,
+                "end": 16
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_sf_04",
+      "domain": "function2d",
+      "category": "straightforward",
+      "statement": "解方程：x^2 + 2x - 15 = 0。",
+      "expected": "COMPILE_OK",
+      "challengeType": "expression-term-loss",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_sf_04",
+        "domain": "function2d",
+        "statement": "解方程：x^2 + 2x - 15 = 0。",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "x",
+              "lhs": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "+",
+                    "args": [
+                      {
+                        "t": "app",
+                        "op": "^",
+                        "args": [
+                          {
+                            "t": "sym",
+                            "name": "x"
+                          },
+                          {
+                            "t": "num",
+                            "v": {
+                              "kind": "int",
+                              "value": "2"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "t": "app",
+                        "op": "*",
+                        "args": [
+                          {
+                            "t": "num",
+                            "v": {
+                              "kind": "int",
+                              "value": "2"
+                            }
+                          },
+                          {
+                            "t": "sym",
+                            "name": "x"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "15"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "0"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "x^2 + 2x - 15 = 0",
+                "start": 4,
+                "end": 21
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_sf_05",
+      "domain": "function2d",
+      "category": "straightforward",
+      "statement": "解方程：3x = 27。",
+      "expected": "COMPILE_OK",
+      "challengeType": "expression-term-loss",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_sf_05",
+        "domain": "function2d",
+        "statement": "解方程：3x = 27。",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "x",
+              "lhs": {
+                "t": "app",
+                "op": "*",
+                "args": [
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "3"
+                    }
+                  },
+                  {
+                    "t": "sym",
+                    "name": "x"
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "27"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "3x = 27",
+                "start": 4,
+                "end": 11
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_sf_06",
+      "domain": "function2d",
+      "category": "straightforward",
+      "statement": "解方程：5x - 10 = 0。",
+      "expected": "COMPILE_OK",
+      "challengeType": "expression-term-loss",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_sf_06",
+        "domain": "function2d",
+        "statement": "解方程：5x - 10 = 0。",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "x",
+              "lhs": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "*",
+                    "args": [
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "5"
+                        }
+                      },
+                      {
+                        "t": "sym",
+                        "name": "x"
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "10"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "0"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "5x - 10 = 0",
+                "start": 4,
+                "end": 15
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_sf_07",
+      "domain": "function2d",
+      "category": "straightforward",
+      "statement": "求函数 a(t) = t^2 - 4 的所有零点。",
+      "expected": "COMPILE_OK",
+      "challengeType": "declared-entity-completeness",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_sf_07",
+        "domain": "function2d",
+        "statement": "求函数 a(t) = t^2 - 4 的所有零点。",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "t",
+              "lhs": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "^",
+                    "args": [
+                      {
+                        "t": "sym",
+                        "name": "t"
+                      },
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "2"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "4"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "0"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "求函数 a(t) = t^2 - 4 的所有零点",
+                "start": 0,
+                "end": 24
+              }
+            }
+          },
+          {
+            "id": "func_a",
+            "kind": "function",
+            "label": "a",
+            "props": {
+              "capability_id": "function2d.expression_curve",
+              "variable": "t",
+              "expr": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "^",
+                    "args": [
+                      {
+                        "t": "sym",
+                        "name": "t"
+                      },
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "2"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "4"
+                    }
+                  }
+                ]
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "a(t) = t^2 - 4",
+                "start": 4,
+                "end": 18
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_sf_08",
+      "domain": "function2d",
+      "category": "straightforward",
+      "statement": "求函数 b(y) = 3*y + 12 的所有零点。",
+      "expected": "COMPILE_OK",
+      "challengeType": "declared-entity-completeness",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_sf_08",
+        "domain": "function2d",
+        "statement": "求函数 b(y) = 3*y + 12 的所有零点。",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "y",
+              "lhs": {
+                "t": "app",
+                "op": "+",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "*",
+                    "args": [
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "3"
+                        }
+                      },
+                      {
+                        "t": "sym",
+                        "name": "y"
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "12"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "0"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "求函数 b(y) = 3*y + 12 的所有零点",
+                "start": 0,
+                "end": 25
+              }
+            }
+          },
+          {
+            "id": "func_b",
+            "kind": "function",
+            "label": "b",
+            "props": {
+              "capability_id": "function2d.expression_curve",
+              "variable": "y",
+              "expr": {
+                "t": "app",
+                "op": "+",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "*",
+                    "args": [
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "3"
+                        }
+                      },
+                      {
+                        "t": "sym",
+                        "name": "y"
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "12"
+                    }
+                  }
+                ]
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "b(y) = 3*y + 12",
+                "start": 4,
+                "end": 19
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_wd_01",
+      "domain": "function2d",
+      "category": "wording",
+      "statement": "若 x + 11 = 20，x 是多少？",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_wd_01",
+        "domain": "function2d",
+        "statement": "若 x + 11 = 20，x 是多少？",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "x",
+              "lhs": {
+                "t": "app",
+                "op": "+",
+                "args": [
+                  {
+                    "t": "sym",
+                    "name": "x"
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "11"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "20"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "x + 11 = 20",
+                "start": 2,
+                "end": 13
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_wd_02",
+      "domain": "function2d",
+      "category": "wording",
+      "statement": "找出满足 4x - 3 = 9 的 x。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_wd_02",
+        "domain": "function2d",
+        "statement": "找出满足 4x - 3 = 9 的 x。",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "x",
+              "lhs": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "*",
+                    "args": [
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "4"
+                        }
+                      },
+                      {
+                        "t": "sym",
+                        "name": "x"
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "3"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "9"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "4x - 3 = 9",
+                "start": 5,
+                "end": 15
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_wd_03",
+      "domain": "function2d",
+      "category": "wording",
+      "statement": "方程 x^2 - 49 = 0 的全部实数解是什么？",
+      "expected": "COMPILE_OK",
+      "challengeType": "expression-term-loss",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_wd_03",
+        "domain": "function2d",
+        "statement": "方程 x^2 - 49 = 0 的全部实数解是什么？",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "x",
+              "lhs": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "^",
+                    "args": [
+                      {
+                        "t": "sym",
+                        "name": "x"
+                      },
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "2"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "49"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "0"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "x^2 - 49 = 0",
+                "start": 3,
+                "end": 15
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_wd_04",
+      "domain": "function2d",
+      "category": "wording",
+      "statement": "x^2 + 7x + 10 = 0 有哪些实数解？",
+      "expected": "COMPILE_OK",
+      "challengeType": "expression-term-loss",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_wd_04",
+        "domain": "function2d",
+        "statement": "x^2 + 7x + 10 = 0 有哪些实数解？",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "x",
+              "lhs": {
+                "t": "app",
+                "op": "+",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "+",
+                    "args": [
+                      {
+                        "t": "app",
+                        "op": "^",
+                        "args": [
+                          {
+                            "t": "sym",
+                            "name": "x"
+                          },
+                          {
+                            "t": "num",
+                            "v": {
+                              "kind": "int",
+                              "value": "2"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "t": "app",
+                        "op": "*",
+                        "args": [
+                          {
+                            "t": "num",
+                            "v": {
+                              "kind": "int",
+                              "value": "7"
+                            }
+                          },
+                          {
+                            "t": "sym",
+                            "name": "x"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "10"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "0"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "x^2 + 7x + 10 = 0",
+                "start": 0,
+                "end": 17
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_ir_01",
+      "domain": "function2d",
+      "category": "irrelevant",
+      "statement": "小明身高 140 厘米。解方程：x + 6 = 14。",
+      "expected": "COMPILE_OK",
+      "challengeType": "irrelevant-grounded-distractor",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_ir_01",
+        "domain": "function2d",
+        "statement": "小明身高 140 厘米。解方程：x + 6 = 14。",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "x",
+              "lhs": {
+                "t": "app",
+                "op": "+",
+                "args": [
+                  {
+                    "t": "sym",
+                    "name": "x"
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "6"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "14"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "x + 6 = 14",
+                "start": 16,
+                "end": 26
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_ir_02",
+      "domain": "function2d",
+      "category": "irrelevant",
+      "statement": "教室有 22 张桌子。求函数 c(x) = x^2 - 1 的所有零点。",
+      "expected": "COMPILE_OK",
+      "challengeType": "irrelevant-grounded-distractor",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_ir_02",
+        "domain": "function2d",
+        "statement": "教室有 22 张桌子。求函数 c(x) = x^2 - 1 的所有零点。",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "x",
+              "lhs": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "^",
+                    "args": [
+                      {
+                        "t": "sym",
+                        "name": "x"
+                      },
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "2"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "1"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "0"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "教室有 22 张桌子。求函数 c(x) = x^2 - 1 的所有零点",
+                "start": 0,
+                "end": 35
+              }
+            }
+          },
+          {
+            "id": "func_c",
+            "kind": "function",
+            "label": "c",
+            "props": {
+              "capability_id": "function2d.expression_curve",
+              "variable": "x",
+              "expr": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "^",
+                    "args": [
+                      {
+                        "t": "sym",
+                        "name": "x"
+                      },
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "2"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "1"
+                    }
+                  }
+                ]
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "c(x) = x^2 - 1",
+                "start": 15,
+                "end": 29
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_ir_03",
+      "domain": "function2d",
+      "category": "irrelevant",
+      "statement": "气温为 24 摄氏度。求函数 e(z) = z^2 - 144 的所有零点。",
+      "expected": "COMPILE_OK",
+      "challengeType": "declared-entity-completeness",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_ir_03",
+        "domain": "function2d",
+        "statement": "气温为 24 摄氏度。求函数 e(z) = z^2 - 144 的所有零点。",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "z",
+              "lhs": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "^",
+                    "args": [
+                      {
+                        "t": "sym",
+                        "name": "z"
+                      },
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "2"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "144"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "0"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "气温为 24 摄氏度。求函数 e(z) = z^2 - 144 的所有零点",
+                "start": 0,
+                "end": 37
+              }
+            }
+          },
+          {
+            "id": "func_e",
+            "kind": "function",
+            "label": "e",
+            "props": {
+              "capability_id": "function2d.expression_curve",
+              "variable": "z",
+              "expr": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "^",
+                    "args": [
+                      {
+                        "t": "sym",
+                        "name": "z"
+                      },
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "2"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "144"
+                    }
+                  }
+                ]
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "e(z) = z^2 - 144",
+                "start": 15,
+                "end": 31
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_ir_04",
+      "domain": "function2d",
+      "category": "irrelevant",
+      "statement": "一本书有 210 页。求函数 d(u) = u + 3 的所有零点。",
+      "expected": "COMPILE_OK",
+      "challengeType": "declared-entity-completeness",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_ir_04",
+        "domain": "function2d",
+        "statement": "一本书有 210 页。求函数 d(u) = u + 3 的所有零点。",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "u",
+              "lhs": {
+                "t": "app",
+                "op": "+",
+                "args": [
+                  {
+                    "t": "sym",
+                    "name": "u"
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "3"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "0"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "一本书有 210 页。求函数 d(u) = u + 3 的所有零点",
+                "start": 0,
+                "end": 33
+              }
+            }
+          },
+          {
+            "id": "func_d",
+            "kind": "function",
+            "label": "d",
+            "props": {
+              "capability_id": "function2d.expression_curve",
+              "variable": "u",
+              "expr": {
+                "t": "app",
+                "op": "+",
+                "args": [
+                  {
+                    "t": "sym",
+                    "name": "u"
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "3"
+                    }
+                  }
+                ]
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "d(u) = u + 3",
+                "start": 15,
+                "end": 27
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_cp_01",
+      "domain": "function2d",
+      "category": "compositional",
+      "statement": "求函数 h(x) = 2x^2 - 18 的所有零点。",
+      "expected": "COMPILE_OK",
+      "challengeType": "declared-entity-completeness",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_cp_01",
+        "domain": "function2d",
+        "statement": "求函数 h(x) = 2x^2 - 18 的所有零点。",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "x",
+              "lhs": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "*",
+                    "args": [
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "2"
+                        }
+                      },
+                      {
+                        "t": "app",
+                        "op": "^",
+                        "args": [
+                          {
+                            "t": "sym",
+                            "name": "x"
+                          },
+                          {
+                            "t": "num",
+                            "v": {
+                              "kind": "int",
+                              "value": "2"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "18"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "0"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "求函数 h(x) = 2x^2 - 18 的所有零点",
+                "start": 0,
+                "end": 26
+              }
+            }
+          },
+          {
+            "id": "func_h",
+            "kind": "function",
+            "label": "h",
+            "props": {
+              "capability_id": "function2d.expression_curve",
+              "variable": "x",
+              "expr": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "*",
+                    "args": [
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "2"
+                        }
+                      },
+                      {
+                        "t": "app",
+                        "op": "^",
+                        "args": [
+                          {
+                            "t": "sym",
+                            "name": "x"
+                          },
+                          {
+                            "t": "num",
+                            "v": {
+                              "kind": "int",
+                              "value": "2"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "18"
+                    }
+                  }
+                ]
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "h(x) = 2x^2 - 18",
+                "start": 4,
+                "end": 20
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_cp_02",
+      "domain": "function2d",
+      "category": "compositional",
+      "statement": "求函数 k(t) = t^2 + 5*t + 6 的所有零点。",
+      "expected": "COMPILE_OK",
+      "challengeType": "declared-entity-completeness",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_cp_02",
+        "domain": "function2d",
+        "statement": "求函数 k(t) = t^2 + 5*t + 6 的所有零点。",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "t",
+              "lhs": {
+                "t": "app",
+                "op": "+",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "+",
+                    "args": [
+                      {
+                        "t": "app",
+                        "op": "^",
+                        "args": [
+                          {
+                            "t": "sym",
+                            "name": "t"
+                          },
+                          {
+                            "t": "num",
+                            "v": {
+                              "kind": "int",
+                              "value": "2"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "t": "app",
+                        "op": "*",
+                        "args": [
+                          {
+                            "t": "num",
+                            "v": {
+                              "kind": "int",
+                              "value": "5"
+                            }
+                          },
+                          {
+                            "t": "sym",
+                            "name": "t"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "6"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "0"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "求函数 k(t) = t^2 + 5*t + 6 的所有零点",
+                "start": 0,
+                "end": 30
+              }
+            }
+          },
+          {
+            "id": "func_k",
+            "kind": "function",
+            "label": "k",
+            "props": {
+              "capability_id": "function2d.expression_curve",
+              "variable": "t",
+              "expr": {
+                "t": "app",
+                "op": "+",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "+",
+                    "args": [
+                      {
+                        "t": "app",
+                        "op": "^",
+                        "args": [
+                          {
+                            "t": "sym",
+                            "name": "t"
+                          },
+                          {
+                            "t": "num",
+                            "v": {
+                              "kind": "int",
+                              "value": "2"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "t": "app",
+                        "op": "*",
+                        "args": [
+                          {
+                            "t": "num",
+                            "v": {
+                              "kind": "int",
+                              "value": "5"
+                            }
+                          },
+                          {
+                            "t": "sym",
+                            "name": "t"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "6"
+                    }
+                  }
+                ]
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "k(t) = t^2 + 5*t + 6",
+                "start": 4,
+                "end": 24
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_cp_03",
+      "domain": "function2d",
+      "category": "compositional",
+      "statement": "求函数 m(u) = u^2 - 9 的零点；另解方程 z - 4 = 0。",
+      "expected": "COMPILE_OK",
+      "challengeType": "multi-finding-one-repair",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_cp_03",
+        "domain": "function2d",
+        "statement": "求函数 m(u) = u^2 - 9 的零点；另解方程 z - 4 = 0。",
+        "entities": [
+          {
+            "id": "EQ_DECL",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "u",
+              "lhs": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "^",
+                    "args": [
+                      {
+                        "t": "sym",
+                        "name": "u"
+                      },
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "2"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "9"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "0"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "求函数 m(u) = u^2 - 9 的零点",
+                "start": 0,
+                "end": 22
+              }
+            }
+          },
+          {
+            "id": "EQ_EXPLICIT",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "z",
+              "lhs": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "sym",
+                    "name": "z"
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "4"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "0"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "z - 4 = 0",
+                "start": 28,
+                "end": 37
+              }
+            }
+          },
+          {
+            "id": "func_m",
+            "kind": "function",
+            "label": "m",
+            "props": {
+              "capability_id": "function2d.expression_curve",
+              "variable": "u",
+              "expr": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "^",
+                    "args": [
+                      {
+                        "t": "sym",
+                        "name": "u"
+                      },
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "2"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "9"
+                    }
+                  }
+                ]
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "m(u) = u^2 - 9",
+                "start": 4,
+                "end": 18
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_decl_zeros",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ_DECL"
+            ]
+          },
+          {
+            "goalId": "g_explicit_equation",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ_EXPLICIT"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_cp_04",
+      "domain": "function2d",
+      "category": "compositional",
+      "statement": "求函数 n(y) = 3*y + 6 的零点，并解方程 w + 8 = 0。",
+      "expected": "COMPILE_OK",
+      "challengeType": "multi-finding-one-repair",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_cp_04",
+        "domain": "function2d",
+        "statement": "求函数 n(y) = 3*y + 6 的零点，并解方程 w + 8 = 0。",
+        "entities": [
+          {
+            "id": "EQ_DECL",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "y",
+              "lhs": {
+                "t": "app",
+                "op": "+",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "*",
+                    "args": [
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "3"
+                        }
+                      },
+                      {
+                        "t": "sym",
+                        "name": "y"
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "6"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "0"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "求函数 n(y) = 3*y + 6 的零点",
+                "start": 0,
+                "end": 22
+              }
+            }
+          },
+          {
+            "id": "EQ_EXPLICIT",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "w",
+              "lhs": {
+                "t": "app",
+                "op": "+",
+                "args": [
+                  {
+                    "t": "sym",
+                    "name": "w"
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "8"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "0"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "w + 8 = 0",
+                "start": 28,
+                "end": 37
+              }
+            }
+          },
+          {
+            "id": "func_n",
+            "kind": "function",
+            "label": "n",
+            "props": {
+              "capability_id": "function2d.expression_curve",
+              "variable": "y",
+              "expr": {
+                "t": "app",
+                "op": "+",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "*",
+                    "args": [
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "3"
+                        }
+                      },
+                      {
+                        "t": "sym",
+                        "name": "y"
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "6"
+                    }
+                  }
+                ]
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "n(y) = 3*y + 6",
+                "start": 4,
+                "end": 18
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_decl_zeros",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ_DECL"
+            ]
+          },
+          {
+            "goalId": "g_explicit_equation",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ_EXPLICIT"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_un_01",
+      "domain": "function2d",
+      "category": "unsupported",
+      "statement": "解方程：x^2 - 11 = 0，求全部实数解。",
+      "expected": "ENGINE_UNSUPPORTED",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_un_01",
+        "domain": "function2d",
+        "statement": "解方程：x^2 - 11 = 0，求全部实数解。",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "x",
+              "lhs": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "^",
+                    "args": [
+                      {
+                        "t": "sym",
+                        "name": "x"
+                      },
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "2"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "11"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "0"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "x^2 - 11 = 0",
+                "start": 4,
+                "end": 16
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_un_02",
+      "domain": "function2d",
+      "category": "unsupported",
+      "statement": "求方程 x^2 - 19 = 0 的全部实数根。",
+      "expected": "ENGINE_UNSUPPORTED",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_un_02",
+        "domain": "function2d",
+        "statement": "求方程 x^2 - 19 = 0 的全部实数根。",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "x",
+              "lhs": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "^",
+                    "args": [
+                      {
+                        "t": "sym",
+                        "name": "x"
+                      },
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "2"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "19"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "0"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "x^2 - 19 = 0",
+                "start": 4,
+                "end": 16
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_hr_01",
+      "domain": "function2d",
+      "category": "harder_repair",
+      "statement": "解方程：x/2 + 3 = 8。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_hr_01",
+        "domain": "function2d",
+        "statement": "解方程：x/2 + 3 = 8。",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "x",
+              "lhs": {
+                "t": "app",
+                "op": "+",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "/",
+                    "args": [
+                      {
+                        "t": "sym",
+                        "name": "x"
+                      },
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "2"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "3"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "8"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "x/2 + 3 = 8",
+                "start": 4,
+                "end": 15
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "f3_hr_02",
+      "domain": "function2d",
+      "category": "harder_repair",
+      "statement": "解方程：3x/2 - 5 = 7。",
+      "expected": "COMPILE_OK",
+      "golden": {
+        "schemaVersion": "mathviz.problemspec/v1",
+        "problemId": "f3_hr_02",
+        "domain": "function2d",
+        "statement": "解方程：3x/2 - 5 = 7。",
+        "entities": [
+          {
+            "id": "EQ",
+            "kind": "equation",
+            "props": {
+              "capability_id": "function2d.solve_equation",
+              "variable": "x",
+              "lhs": {
+                "t": "app",
+                "op": "-",
+                "args": [
+                  {
+                    "t": "app",
+                    "op": "/",
+                    "args": [
+                      {
+                        "t": "app",
+                        "op": "*",
+                        "args": [
+                          {
+                            "t": "num",
+                            "v": {
+                              "kind": "int",
+                              "value": "3"
+                            }
+                          },
+                          {
+                            "t": "sym",
+                            "name": "x"
+                          }
+                        ]
+                      },
+                      {
+                        "t": "num",
+                        "v": {
+                          "kind": "int",
+                          "value": "2"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "t": "num",
+                    "v": {
+                      "kind": "int",
+                      "value": "5"
+                    }
+                  }
+                ]
+              },
+              "rhs": {
+                "t": "num",
+                "v": {
+                  "kind": "int",
+                  "value": "7"
+                }
+              }
+            },
+            "provenance": {
+              "kind": "problem_text",
+              "span": {
+                "text": "3x/2 - 5 = 7",
+                "start": 4,
+                "end": 16
+              }
+            }
+          }
+        ],
+        "source_facts": [],
+        "goals": [
+          {
+            "goalId": "g_solve",
+            "capabilityId": "function2d.solve_equation",
+            "inputs": [
+              "entity:EQ"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
