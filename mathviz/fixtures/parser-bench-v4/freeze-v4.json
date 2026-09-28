@@ -1,0 +1,147 @@
+{
+  "benchmark": "mathviz-p53-parser-benchmark",
+  "benchmark_version": 4,
+  "hash_authority": "git-blob-bytes",
+  "generated_from_commit": "29aedb25c6bbd530f58760ac838ecec4871e2ec3",
+  "generated_at_utc": "2026-09-28T23:35:30.076Z",
+  "case_count": 72,
+  "class_counts": {
+    "COMPILE_OK": 64,
+    "ENGINE_UNSUPPORTED": 6,
+    "KNOWN_LIMITATION_EXPECTED_REJECT": 2
+  },
+  "goal_capability_eligible": 70,
+  "dual_all": 15,
+  "dual_compile_ok": 11,
+  "dual_engine_unsupported": 2,
+  "dual_known_limitation": 2,
+  "bare_equation_controls": 9,
+  "prompt_policy_version": "p5.3-policy-v1",
+  "prompt_policy_base_path": "packages/parser/src/prompt.ts",
+  "prompt_v4_overlay_path": "packages/parser/src/prompt-v4.ts",
+  "max_repairs": 1,
+  "authority": {
+    "groups": [
+      {
+        "group": "DATA",
+        "files": [
+          {
+            "path": "fixtures/parser-bench-v4/cases.json",
+            "git_blob_oid": "fce7be001c72079b22b62bf6f066a3ccf35d3c56",
+            "sha256_raw_blob_bytes": "05a76cae6ecedd0fe7c4b474399d9ca301303121e4eeca2ecc32fab34e934a78",
+            "byte_size": 226233
+          }
+        ]
+      },
+      {
+        "group": "POLICY",
+        "files": [
+          {
+            "path": "docs/P5_3_V4_SCORING_POLICY.md",
+            "git_blob_oid": "f1c501d532abc513307123411915c329b210b213",
+            "sha256_raw_blob_bytes": "2f3a560392910238aa850e08ff4d1ef0f2f93bec7d93cbf173f5500cddd90f0f",
+            "byte_size": 5057
+          }
+        ]
+      },
+      {
+        "group": "SCORER",
+        "files": [
+          {
+            "path": "packages/parser-benchmark/src/run-v4-golden.ts",
+            "git_blob_oid": "5fdbab8d817bb01bde2db8973d6409b8f3a65a2a",
+            "sha256_raw_blob_bytes": "ee41568e2e51e8b41b7076d3f1da9216f9acfdc4cfafaef0f29ff1e23dd175ed",
+            "byte_size": 9446
+          },
+          {
+            "path": "packages/parser-benchmark/src/normalize-spec.ts",
+            "git_blob_oid": "8e5d02f6881f28b76f83bde2db1fd6634368d1a7",
+            "sha256_raw_blob_bytes": "2d4f25f1a373a610829defd4fd03edbaffbb0039bfc922a9aec29c4be79be020",
+            "byte_size": 9585
+          },
+          {
+            "path": "packages/parser-benchmark/src/grounding.ts",
+            "git_blob_oid": "bbe2f30a039c1328a0b478f3be01aa89bc9ab192",
+            "sha256_raw_blob_bytes": "144e3a682937bfe31332f1df642e14039b470c2944e3cf917c76ac7e45d9de33",
+            "byte_size": 406
+          }
+        ]
+      },
+      {
+        "group": "V4_PARSER",
+        "files": [
+          {
+            "path": "packages/parser/src/parse-v4.ts",
+            "git_blob_oid": "26cb7ce1ec46890ba52fae146d7f298da0011a00",
+            "sha256_raw_blob_bytes": "1e8ed9488bc17b20fef51913d7f3d629ed44a258d3d04e0485e6ba5aeb86df93",
+            "byte_size": 6133
+          },
+          {
+            "path": "packages/parser/src/prompt-v4.ts",
+            "git_blob_oid": "dde82a580bd7826ce5d65184562bc9ba116be0f9",
+            "sha256_raw_blob_bytes": "25227661589c23493208a951780a30a5f0924a07971261c39590e4bc17831abe",
+            "byte_size": 1591
+          },
+          {
+            "path": "packages/parser/src/function-zero-duality.ts",
+            "git_blob_oid": "503c37b06fe9abb846473425bacd94ad02f41a02",
+            "sha256_raw_blob_bytes": "aa74c5bca0f54217243af98ec0537ba7082bd38304642e8f180f6eceb13491c9",
+            "byte_size": 5913
+          },
+          {
+            "path": "packages/parser/src/fidelity.ts",
+            "git_blob_oid": "4b1fe969172e6d5d51e93450a1cdb13919daafd8",
+            "sha256_raw_blob_bytes": "24e1acc102fc6bb050f2a7c26dbf0e6e5e6fbc0f8e8947ab4e4d752b3bb99aad",
+            "byte_size": 23039
+          },
+          {
+            "path": "packages/parser/src/grounding.ts",
+            "git_blob_oid": "87866a6511c001be4768bf5ce407bd3350da1799",
+            "sha256_raw_blob_bytes": "dd7a183312d1f92869b992dd801694dd0b03cd7a2c2ca892a93c7577f87c26da",
+            "byte_size": 13896
+          }
+        ]
+      },
+      {
+        "group": "DETERMINISTIC_KERNEL",
+        "files": [
+          {
+            "path": "packages/spec/src/compile.ts",
+            "git_blob_oid": "0d20003984a8f318c7c98ba86da3c87d3e7aba49",
+            "sha256_raw_blob_bytes": "3ecf7d78f55134e7c9f911f0dd6731fce664a4b549bfad1987538febd0c0a0de",
+            "byte_size": 12896
+          },
+          {
+            "path": "packages/contracts/src/spec-validate.ts",
+            "git_blob_oid": "3159b680d4d03ab51b4ee2623211733c89a85413",
+            "sha256_raw_blob_bytes": "3daf1e7e864eec9b5203fed3d3d5b3820e9e14a63c10ab2452333bc7dada44e3",
+            "byte_size": 11770
+          }
+        ]
+      },
+      {
+        "group": "AUDIT",
+        "files": [
+          {
+            "path": "scripts/audit-v4-cases.ts",
+            "git_blob_oid": "ac3069973cbf2f6714db307ea73efdc660fb12b7",
+            "sha256_raw_blob_bytes": "533899012abb4a8dfc08e2503c83730043d66dee2a80ade49deaf1998ba8438a",
+            "byte_size": 5899
+          }
+        ]
+      }
+    ]
+  },
+  "construction_provenance_not_authority": {
+    "paths": [
+      "scripts/generate-v4-fixtures.mjs"
+    ],
+    "note": "generator -> cases.json (FROZEN AUTHORITY) -> audit/scorer; live never regenerates the dataset"
+  },
+  "evidence_not_authority": {
+    "paths": [
+      "runs/p53/v4-c1-audit.json",
+      "runs/p53/v4-golden-replay.json"
+    ]
+  }
+}
