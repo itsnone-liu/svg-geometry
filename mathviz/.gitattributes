@@ -1,0 +1,8 @@
+# Hygiene only — keep frozen text checkouts LF where attributes are honored.
+# P5.3 r2 freeze AUTHORITY is committed Git blob bytes (git cat-file), which is
+# invariant to core.autocrlf/core.eol; acceptance never relies on this file.
+/fixtures/parser-bench-v3/** text eol=lf
+/docs/P5_3_SCORING_POLICY.md text eol=lf
+/packages/parser/src/grounding.ts text eol=lf
+/packages/parser/src/fidelity.ts text eol=lf
+/packages/parser/src/parse.ts text eol=lf

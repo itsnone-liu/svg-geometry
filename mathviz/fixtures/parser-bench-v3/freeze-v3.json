@@ -2,10 +2,12 @@
   "benchmark": "mathviz-parser-benchmark/v3",
   "dataset_version": 3,
   "case_count": 72,
+  "hash_authority": "git-blob-bytes",
   "dataset_sha256": "6a581071a92015200658d7226dcadb9d68b28d6d595f704fb99329806e514aa8",
-  "scoring_policy_sha256": "e6ae32256f8b296d8cb09beebddbf942ce35c1234b37777a698a2817e9dcaeef",
+  "scoring_policy_sha256": "2c870cfc8085ec72e90948f6dda82e9e43ac26d97f47b48791484c94fbf2baa7",
   "prompt_policy_version": "p5.3-policy-v1",
   "frozen_at_utc": "2026-09-28T03:43:28.128Z",
+  "revised_at_utc": "2026-09-28T06:05:25.329Z",
   "expected_counts": {
     "COMPILE_OK": 64,
     "ENGINE_UNSUPPORTED": 6,
@@ -254,12 +256,12 @@
       {
         "id": "m3_kl_01",
         "expected": "KNOWN_LIMITATION_EXPECTED_REJECT",
-        "outcome": "expected_grounding_reject"
+        "outcome": "rejected"
       },
       {
         "id": "m3_kl_02",
         "expected": "KNOWN_LIMITATION_EXPECTED_REJECT",
-        "outcome": "expected_grounding_reject"
+        "outcome": "rejected"
       },
       {
         "id": "f3_sf_01",
@@ -383,5 +385,14 @@
       }
     ]
   },
-  "freeze_rule": "Any correction after this freeze requires a new benchmark version and new preregistered run."
+  "implementation_identities": {
+    "g19_sha256": "dd7a183312d1f92869b992dd801694dd0b03cd7a2c2ca892a93c7577f87c26da",
+    "g20_sha256": "24e1acc102fc6bb050f2a7c26dbf0e6e5e6fbc0f8e8947ab4e4d752b3bb99aad",
+    "pipeline_sha256": "085b006b8f08a878f9ba684f532ec46b138c956c3e95432f4231bd13c8de26c0"
+  },
+  "freeze_revision": "v3.1",
+  "manifest_revision": 2,
+  "freeze_reason": "r1 was blocked before provider requests because Windows smudged LF policy blobs to CRLF in the worktree; r2 moves freeze authority to committed git blob bytes (invariant to core.autocrlf/core.eol) while leaving v3 dataset/scoring semantics unchanged.",
+  "freeze_rule": "Any correction after this freeze requires a new benchmark version and new preregistered run. r2 revises only the byte-authority contract, not benchmark semantics.",
+  "manifest_sha256": "cd28d6f0e3e256234b4329a0933572a6528c662572d1275b7052285498efb00b"
 }

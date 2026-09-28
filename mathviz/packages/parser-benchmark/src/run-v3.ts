@@ -8,12 +8,12 @@ import { semanticEqual } from "./normalize-spec";
 import { groundProblemSpec } from "./grounding";
 import { checkSourceFidelity } from "../../parser/src/fidelity";
 import { verifyFreezeV3 } from "./freeze-v3";
+import { readGitBlob, FROZEN_PATHS } from "./git-blob";
 import { leakScan } from "../../parser/src/telemetry";
 
 type Expected = "COMPILE_OK" | "ENGINE_UNSUPPORTED" | "KNOWN_LIMITATION_EXPECTED_REJECT";
 type BenchCase = { id: string; domain: string; expected: Expected; statement: string; golden: any; category: string; challengeType?: string };
 const OUT_DIR = path.join(ROOT, "runs", "p53");
-const DATA = path.join(ROOT, "fixtures", "parser-bench-v3", "cases.json");
 const CHALLENGES = ["declared-entity-completeness", "irrelevant-grounded-distractor", "expression-term-loss", "multi-finding-one-repair"];
 
 function ratios(ok: number, total: number) { return { ok, total, rate: total ? ok / total : null }; }
@@ -37,14 +37,18 @@ function fidelityRates(spec: any, statement: string) {
 
 async function main() {
   fs.mkdirSync(OUT_DIR, { recursive: true });
-  const freeze = verifyFreezeV3();
-  const dataset = JSON.parse(fs.readFileSync(DATA, "utf8"));
+  const freezeCommitIdx = process.argv.indexOf("--freeze-commit");
+  const freezeRev = freezeCommitIdx >= 0 ? process.argv[freezeCommitIdx + 1] : undefined;
+  const requireLive = process.argv.includes("--require-live") || process.env.MATHVIZ_REQUIRE_LIVE === "1";
+  // Freeze authority and the benchmark dataset BOTH come from the same frozen
+  // git blobs — the runner never parses a smudged worktree representation.
+  const freeze = verifyFreezeV3({ rev: freezeRev, requireClean: requireLive });
+  const dataset = JSON.parse(readGitBlob(freezeRev ?? "HEAD", FROZEN_PATHS.dataset).toString("utf8"));
   const cases: BenchCase[] = dataset.cases;
   assert(cases.length === 72, "v3 requires 72 cases");
   for (const d of ["geometry2d", "motion1d", "function2d"]) assert(cases.filter((c) => c.domain === d).length === 24, `${d} must have 24 cases`);
   for (const kind of CHALLENGES) assert(cases.filter((c) => c.challengeType === kind).length === 6, `${kind} must have 6 challenges`);
 
-  const requireLive = process.argv.includes("--require-live") || process.env.MATHVIZ_REQUIRE_LIVE === "1";
   const forceReplay = process.argv.includes("--replay");
   const live = forceReplay ? null : OpenAICompatibleProvider.fromEnv();
   if (requireLive && !live) throw new Error("MATHVIZ_REQUIRE_LIVE=1 but secure credentials are unavailable; refusing replay as live evidence");
@@ -202,7 +206,7 @@ async function main() {
   ];
   const summary = {
     gate: "G20_P5_3_benchmark_v3", version: "P5.3", mode, provider: live?.id ?? "golden-replay",
-    freeze: { dataset_sha256: freeze.dataset_sha256, scoring_policy_sha256: freeze.scoring_policy_sha256 },
+    freeze: { dataset_sha256: freeze.dataset_sha256, scoring_policy_sha256: freeze.scoring_policy_sha256, authority: freeze.hash_authority, freeze_commit: freeze.verified_freeze_commit },
     cases: cases.length, token_usage: { total: tokenTotals, per_case_average: { input_tokens: Math.round(tokenTotals.input_tokens / cases.length), output_tokens: Math.round(tokenTotals.output_tokens / cases.length) } },
     metrics: {
       domain_accuracy: rate(metrics.domainCorrect, cases.length), final_schema_semantic_valid: finalSchemaValid,
