@@ -6,7 +6,8 @@ import { attemptCompileV4 } from "../packages/parser/src/parse-v4";
 import { checkFunctionZeroDuality } from "../packages/parser/src/function-zero-duality";
 
 const root = path.resolve(__dirname, "..");
-const dataset = JSON.parse(fs.readFileSync(path.join(root, "fixtures/parser-bench-v4/cases.json"), "utf8"));
+const datasetPath = process.env.V4_DATASET_PATH ?? path.join(root, "fixtures/parser-bench-v4/cases.json");
+const dataset = JSON.parse(fs.readFileSync(datasetPath, "utf8"));
 const failures: string[] = [];
 const expected = new Set(["COMPILE_OK", "ENGINE_UNSUPPORTED", "KNOWN_LIMITATION_EXPECTED_REJECT"]);
 const outcome = (r: any) => r.ok ? "COMPILE_OK" : r.engineUnsupported ? "ENGINE_UNSUPPORTED" : "KNOWN_LIMITATION_EXPECTED_REJECT";
