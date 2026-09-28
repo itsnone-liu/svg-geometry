@@ -36,6 +36,9 @@ for (const c of dual) { const r = checkFunctionZeroDuality(c.golden, c.statement
 const equationControls = dataset.cases.filter((c: any) => c.domain === "function2d" && !c.golden.entities.some((e: any) => e.kind === "function"));
 for (const c of equationControls) if (checkFunctionZeroDuality(c.golden, c.statement).applicable) failures.push(`${c.id}: bare-equation control unexpectedly triggers G20-D`);
 const counts = Object.fromEntries([...expected].map((k) => [k, dataset.cases.filter((c: any) => c.expected_class === k).length]));
-const report = { version: dataset.version, total: dataset.cases.length, counts, dual_count: dual.length, equation_control_count: equationControls.length, passed: failures.length === 0, failures, rows };
+const scoringContract = { total:72, compile_ok:64, engine_unsupported:6, known_limitation:2, goal_capability_eligible:70, dual_cases:15, bare_equation_controls:9 };
+if (scoringContract.compile_ok + scoringContract.engine_unsupported !== scoringContract.goal_capability_eligible) failures.push("goal capability denominator contract mismatch");
+if (dataset.cases.length !== scoringContract.total || counts.COMPILE_OK !== scoringContract.compile_ok || counts.ENGINE_UNSUPPORTED !== scoringContract.engine_unsupported || counts.KNOWN_LIMITATION_EXPECTED_REJECT !== scoringContract.known_limitation || dual.length !== scoringContract.dual_cases || equationControls.length !== scoringContract.bare_equation_controls) failures.push(`scoring denominator contract mismatch: ${JSON.stringify({counts,dual:dual.length,controls:equationControls.length})}`);
+const report = { version: dataset.version, total: dataset.cases.length, counts, scoring_contract:scoringContract, dual_count: dual.length, equation_control_count: equationControls.length, passed: failures.length === 0, failures, rows };
 console.log(JSON.stringify(report, null, 2));
 if (failures.length) process.exit(1);
