@@ -1,0 +1,16 @@
+{
+  "pin_version": 1,
+  "protocol": "P5.3 benchmark v3 live protocol r2 (git-blob authority)",
+  "protocol_doc": "docs/P5_3_LIVE_PROTOCOL_BLOB_R2.md",
+  "freeze_commit": "4a373e4b5967a9dc9d71d06ea0790350bd0f6a89",
+  "freeze_revision": "v3.1",
+  "manifest_revision": 2,
+  "hash_authority": "git-blob-bytes",
+  "dataset_blob_sha256": "6a581071a92015200658d7226dcadb9d68b28d6d595f704fb99329806e514aa8",
+  "scoring_policy_blob_sha256": "2c870cfc8085ec72e90948f6dda82e9e43ac26d97f47b48791484c94fbf2baa7",
+  "manifest_self_sha256": "cd28d6f0e3e256234b4329a0933572a6528c662572d1275b7052285498efb00b",
+  "prompt_policy_version": "p5.3-policy-v1",
+  "model": "deepseek-v4.1-flash",
+  "case_count": 72,
+  "note": "freeze authority = git blob bytes at freeze_commit; worktree EOL is audit-only; env flags are never rotation evidence"
+}
