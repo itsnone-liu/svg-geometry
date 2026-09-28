@@ -2,6 +2,15 @@
   "pin_version": 1,
   "protocol": "P5.3 benchmark v3 live protocol r2 (git-blob authority)",
   "protocol_doc": "docs/P5_3_LIVE_PROTOCOL_BLOB_R2.md",
+  "amendment": {
+    "id": "A1",
+    "doc": "docs/P5_3_LIVE_PROTOCOL_R2_AMENDMENT_A1_CREDENTIAL_GATE.md",
+    "scope": "credential prerequisite only",
+    "replaces_gate": "KEY_ROTATION_CONFIRMED",
+    "with_gate": "CREDENTIAL_EXPOSURE_ATTESTED",
+    "attestation_file": "runs/p53/CREDENTIAL_EXPOSURE_ATTESTATION.md",
+    "frozen_artifacts_unchanged": true
+  },
   "freeze_commit": "4a373e4b5967a9dc9d71d06ea0790350bd0f6a89",
   "freeze_revision": "v3.1",
   "manifest_revision": 2,
@@ -12,5 +21,5 @@
   "prompt_policy_version": "p5.3-policy-v1",
   "model": "deepseek-v4.1-flash",
   "case_count": 72,
-  "note": "freeze authority = git blob bytes at freeze_commit; worktree EOL is audit-only; env flags are never rotation evidence"
+  "note": "freeze authority = git blob bytes at freeze_commit; worktree EOL is audit-only; env flags are never credential evidence; under Amendment A1 the credential gate is an exposure attestation, never a rotation claim"
 }

@@ -1,9 +1,10 @@
 // P5.3 single live acceptance launcher (git-blob authority).
-// Phase order: offline freeze preflight (no network) -> human key-rotation
-// attestation -> provider auth probe (models endpoint, zero benchmark content)
-// -> deterministic G17 -> exactly ONE 72-case run from the frozen blobs.
+// Phase order: offline freeze preflight (no network) -> human credential
+// exposure attestation (Amendment A1) -> provider auth probe (models endpoint,
+// zero benchmark content) -> deterministic G17 -> exactly ONE 72-case run from
+// the frozen blobs.
 // Any gate row that is not PASS stops this launcher BEFORE G17 / A0 / A1 /
-// benchmark cases. No retries, no env-flag shortcuts for rotation evidence.
+// benchmark cases. No retries, no env-flag shortcuts for credential evidence.
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
@@ -57,27 +58,41 @@ if (freezeCommit) {
   for (const k of ["FREEZE_COMMIT_PINNED", "DATASET_BLOB_HASH", "SCORING_POLICY_BLOB_HASH", "MANIFEST_SELF_CHECK", "WORKTREE_DIRTY"]) row(k, false, "skipped: no freeze commit pin");
 }
 
-// 3) Key rotation — ONLY the human-created attestation file is evidence.
+// 3) Credential prerequisite — ONLY the human-created attestation file is
+// evidence. Per Amendment A1 (docs/P5_3_LIVE_PROTOCOL_R2_AMENDMENT_A1_CREDENTIAL_GATE.md),
+// the gate is CREDENTIAL_EXPOSURE_ATTESTED, not key rotation: the risk being
+// gated is exposure of the credential, and the attestation records the owner's
+// finding on that risk directly (never a claim that a rotation occurred).
 {
-  const attPath = path.join(root, "runs", "p53", "ROTATION_ATTESTATION.md");
-  let pass = false, detail = "attestation file runs/p53/ROTATION_ATTESTATION.md missing";
+  const attPath = path.join(root, "runs", "p53", "CREDENTIAL_EXPOSURE_ATTESTATION.md");
+  const legacyPath = path.join(root, "runs", "p53", "ROTATION_ATTESTATION.md");
+  let pass = false, detail = "attestation file runs/p53/CREDENTIAL_EXPOSURE_ATTESTATION.md missing";
   if (fs.existsSync(attPath)) {
     const text = fs.readFileSync(attPath, "utf8");
-    const hasStatement = /^provider-side rotation completed\b/im.test(text);
+    const hasStatement = /^(credential-not-exposed|exposure-bounded-accepted)\b/im.test(text);
     const hasDate = /^confirmed-at-utc:\s*\d{4}-\d{2}-\d{2}/im.test(text);
+    // Amendment A1 is an exposure attestation. A rotation claim is NOT the
+    // amended evidence and must not be silently accepted as a substitute.
+    const claimsRotation = /^provider-side rotation completed\b/im.test(text);
     pass = hasStatement && hasDate;
-    detail = pass ? "human attestation present" : `statement=${hasStatement} confirmed-at-utc=${hasDate}`;
+    detail = pass
+      ? (claimsRotation
+        ? "exposure attestation present (also contains a rotation claim; amendment A1 accepts the exposure finding)"
+        : "exposure attestation present")
+      : `statement=${hasStatement} confirmed-at-utc=${hasDate}`;
+  } else if (fs.existsSync(legacyPath)) {
+    detail = "only the superseded ROTATION_ATTESTATION.md exists; Amendment A1 requires CREDENTIAL_EXPOSURE_ATTESTATION.md";
   }
-  row("KEY_ROTATION_CONFIRMED", pass, `${detail} (env flags are never evidence)`);
+  row("CREDENTIAL_EXPOSURE_ATTESTED", pass, `${detail} (env flags are never evidence)`);
 }
 
 // 4) Provider auth probe — models endpoint only, zero benchmark content.
-// ONLY runs after rotation is confirmed: probing an unconfirmed (possibly
-// still-exposed) key would produce misleading auth evidence and is itself a
-// provider call this protocol forbids until rotation is established.
+// ONLY runs after the credential exposure attestation is confirmed: probing a
+// possibly-exposed credential would produce misleading auth evidence and is
+// itself a provider call this protocol forbids until that gate is established.
 {
-  const rotationConfirmed = rows.find((r) => r.name === "KEY_ROTATION_CONFIRMED")?.pass === true;
-  if (rotationConfirmed) {
+  const credentialAttested = rows.find((r) => r.name === "CREDENTIAL_EXPOSURE_ATTESTED")?.pass === true;
+  if (credentialAttested) {
     const code = run("provider auth probe (GET /models, no benchmark content)", process.execPath, [path.join(root, "scripts", "check-provider-auth.mjs")]);
     row("PROVIDER_AUTH", code === 0, code === 0 ? "models endpoint 2xx" : `probe exit ${code}`);
   } else {
