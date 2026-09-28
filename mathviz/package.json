@@ -24,6 +24,7 @@
     "benchmark:p53:freeze-v4": "tsx packages/parser-benchmark/src/freeze-v4.ts --generate",
     "gates:p53:freeze-preflight-v4": "tsx packages/parser-benchmark/src/preflight-v4.ts",
     "gates:p53:freeze-preflight-v4:staged": "tsx packages/parser-benchmark/src/preflight-v4.ts --staged",
+    "gates:p53:prereg-preflight-v4": "tsx packages/parser-benchmark/src/preflight-v4.ts --require-prereg",
     "p53:provider-auth-check": "node scripts/check-provider-auth.mjs",
     "benchmark:p53:replay": "tsx packages/parser-benchmark/src/run-v3.ts --replay",
     "gates:p53:live": "node scripts/run-live-v3.mjs",

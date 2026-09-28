@@ -8,8 +8,8 @@ import path from "node:path";
 import os from "node:os";
 import { spawnSync } from "node:child_process";
 import { ROOT } from "../../contracts/src/load";
-import { readGitBlob, worktreeClean, hasUnstagedChanges } from "./git-blob";
-import { verifyFreezeV4, deriveV4Denominators, V4_MANIFEST_PATH, V4_DATASET_PATH, V4_AUTHORITY_GROUPS } from "./freeze-v4";
+import { readGitBlob, worktreeClean, hasUnstagedChanges, sha256GitBlob, blobExists, resolveCommitish, isAncestorOfHead } from "./git-blob";
+import { verifyFreezeV4, deriveV4Denominators, gitBlobOid, V4_MANIFEST_PATH, V4_DATASET_PATH, V4_AUTHORITY_GROUPS, V4_PROMPT_OVERLAY_PATH } from "./freeze-v4";
 
 interface Check { pass: boolean; detail: string }
 
@@ -22,7 +22,7 @@ const TSX = path.join("node_modules", "tsx", "dist", "cli.mjs");
 const TSC = path.join("node_modules", "typescript", "bin", "tsc");
 const VITEST = path.join("node_modules", "vitest", "vitest.mjs");
 
-export function runPreflightV4(options: { rev?: string; staged?: boolean; reportFile?: string } = {}): any {
+export function runPreflightV4(options: { rev?: string; staged?: boolean; requirePrereg?: boolean; reportFile?: string } = {}): any {
   const rev = options.staged ? ":" : options.rev ?? "HEAD";
   const C: Record<string, Check> = {};
 
@@ -115,10 +115,45 @@ export function runPreflightV4(options: { rev?: string; staged?: boolean; report
   // 12 — zero provider/model requests (offline golden replay only).
   C.ZERO_PROVIDER_REQUESTS = { pass: scorerMode === "golden-replay" && auditPass, detail: `scorer mode=${scorerMode || "n/a"}; no provider, no credentials, no network calls issued` };
 
+  // 13 (live gate only) — preregistration pin + protocol doc present, every
+  // pinned hash re-verified against the FREEZE COMMIT's raw blobs (never HEAD:
+  // the freeze authority stays anchored even as HEAD advances).
+  if (options.requirePrereg) {
+    const PIN_PATH = "fixtures/parser-bench-v4/live-pin-v4.json";
+    const PROTOCOL_DOC = "docs/P5_3_V4_LIVE_PROTOCOL.md";
+    try {
+      if (!blobExists(rev, PIN_PATH)) throw new Error("live pin absent");
+      if (!blobExists(rev, PROTOCOL_DOC)) throw new Error("protocol doc absent");
+      const pin = JSON.parse(readGitBlob(rev, PIN_PATH).toString("utf8"));
+      const freeze = String(pin.freeze_commit ?? "");
+      const fc = resolveCommitish(freeze);
+      if (!fc || !isAncestorOfHead(fc)) throw new Error(`freeze_commit ${freeze} not resolvable as HEAD ancestor`);
+      const pinned: Array<[string, string | undefined, string]> = [
+        [sha256GitBlob(freeze, V4_MANIFEST_PATH), pin.manifest_blob_sha256, "manifest sha256"],
+        [gitBlobOid(freeze, V4_DATASET_PATH), pin.dataset_blob_oid, "dataset oid"],
+        [sha256GitBlob(freeze, V4_DATASET_PATH), pin.dataset_blob_sha256, "dataset sha256"],
+        [sha256GitBlob(freeze, "docs/P5_3_V4_SCORING_POLICY.md"), pin.scoring_policy_blob_sha256, "policy sha256"],
+        [gitBlobOid(freeze, "packages/parser/src/prompt.ts"), pin.v4_prompt_identity?.base_blob_oid, "prompt base oid"],
+        [sha256GitBlob(freeze, "packages/parser/src/prompt.ts"), pin.v4_prompt_identity?.base_blob_sha256, "prompt base sha256"],
+        [gitBlobOid(freeze, V4_PROMPT_OVERLAY_PATH), pin.v4_prompt_identity?.overlay_blob_oid, "prompt overlay oid"],
+        [sha256GitBlob(freeze, V4_PROMPT_OVERLAY_PATH), pin.v4_prompt_identity?.overlay_blob_sha256, "prompt overlay sha256"],
+      ];
+      for (const [actual, expected, label] of pinned) if (actual !== expected) throw new Error(`${label} mismatch: pin=${expected} freeze_blob=${actual}`);
+      if (pin.freeze_final !== true || pin.no_new_freeze_sha !== true || pin.single_live_run !== true) throw new Error("pin discipline flags mismatch");
+      if (pin.model !== "deepseek-v4.1-flash" || pin.credential_policy !== "DISPOSABLE_ACCEPTED" || pin.max_repairs !== 1) throw new Error("pin run fields mismatch");
+      if (pin.case_count !== 72 || pin.class_counts?.COMPILE_OK !== 64 || pin.class_counts?.ENGINE_UNSUPPORTED !== 6 || pin.class_counts?.KNOWN_LIMITATION_EXPECTED_REJECT !== 2
+        || pin.goal_capability_eligible !== 70 || pin.dual_all !== 15 || pin.dual_compile_ok !== 11 || pin.dual_engine_unsupported !== 2 || pin.dual_known_limitation !== 2 || pin.bare_equation_controls !== 9) throw new Error("pin denominator fields mismatch");
+      C.PREREGISTRATION_PRESENT = { pass: true, detail: `pin + protocol doc verified; 8 pinned hashes match blobs at freeze commit ${freeze.slice(0, 8)}` };
+    } catch (e: any) {
+      C.PREREGISTRATION_PRESENT = { pass: false, detail: e?.message ?? String(e) };
+    }
+  }
+
   const table = Object.fromEntries(Object.entries(C).map(([k, v]) => [k.toUpperCase(), v.pass]));
   const requiredPass = Object.values(C).every((c) => c.pass);
   const report = {
     gate: "P5_3_V4_FREEZE_PREFLIGHT_C24", mode: "offline/no-provider", authority: "git-blob-bytes", rev,
+    require_prereg: options.requirePrereg === true,
     freeze_commit: manifest?.verified_commit ?? null, checks: C, table,
     provider_model_requests: 0, dataset_blob_dump: manifest ? dumpPath : null,
     result: requiredPass ? "PASS" : "FAIL",
@@ -134,6 +169,7 @@ if (require.main === module) {
   const argv = process.argv;
   const report = runPreflightV4({
     staged: argv.includes("--staged"),
+    requirePrereg: argv.includes("--require-prereg"),
     rev: argv.includes("--rev") ? argv[argv.indexOf("--rev") + 1] : undefined,
     reportFile: argv.includes("--report-file") ? argv[argv.indexOf("--report-file") + 1] : undefined,
   });
