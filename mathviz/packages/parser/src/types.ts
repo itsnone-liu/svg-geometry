@@ -21,10 +21,11 @@ export class ProviderError extends Error {
   constructor(message: string, readonly code = "E_PROVIDER", readonly diagnostics?: ProviderDiagnostics, readonly usage?: TokenUsage) { super(message); }
 }
 export type ParserErrorCategory = "DOMAIN_ERROR" | "JSON_ERROR" | "SCHEMA_ERROR" | "PROVENANCE_ERROR" | "BINDING_ERROR" | "CAPABILITY_ERROR" | "COMPILER_UNSUPPORTED";
-export interface ParserError { code: string; category: ParserErrorCategory; path?: string; message: string }
+export interface ParserError { code: string; category: ParserErrorCategory; path?: string; message: string; repair_hint?: string }
 export function categoryForCode(code: string): ParserErrorCategory {
   switch (code) {
     case "E_PROVENANCE": return "PROVENANCE_ERROR";
+    case "E_PROVENANCE_GROUNDING": return "PROVENANCE_ERROR";
     case "E_BINDING": return "BINDING_ERROR";
     case "E_CAPABILITY_UNSUPPORTED": return "CAPABILITY_ERROR";
     case "E_SCHEMA": return "SCHEMA_ERROR";

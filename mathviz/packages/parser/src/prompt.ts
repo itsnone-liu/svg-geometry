@@ -14,7 +14,10 @@ import path from "node:path";
 import { PROBLEM_SPEC_COMPILER_SURFACE } from "../../contracts/src/spec-validate";
 
 export const PARSER_CONTRACT_VERSION = "mathviz.problemspec/v1+p5.0.1";
-export const PROMPT_POLICY_VERSION = "p5.1-policy-v1";
+// P5.2: the repair prompt now renders E_PROVENANCE_GROUNDING repair_hints and
+// the grounding anti-corruption constraints. Bumping this version invalidates
+// all pre-P5.2 validated-spec cache entries (cache key includes it).
+export const PROMPT_POLICY_VERSION = "p5.2-policy-v1";
 
 const ROOT = path.resolve(__dirname, "..", "..", "..");
 
@@ -106,8 +109,11 @@ export function specCall(statement: string, domain: string): { schema: unknown; 
 }
 
 /** Repair contract: previous full candidate + structured errors + same schema
- * and domain guide as initial generation. The model returns a COMPLETE spec. */
-export function repairCall(statement: string, domain: string, previousCandidate: any, errors: Array<{ code: string; path?: string; message: string }>, previousRawText?: string): { schema: unknown; system: string; input: string } {
+ * and domain guide as initial generation. The model returns a COMPLETE spec.
+ * P5.2: errors may carry a contract-level repair_hint (what the contract
+ * requires, never the answer); grounding errors additionally activate the
+ * frozen anti-corruption constraints below. */
+export function repairCall(statement: string, domain: string, previousCandidate: any, errors: Array<{ code: string; path?: string; message: string; repair_hint?: string }>, previousRawText?: string): { schema: unknown; system: string; input: string } {
   const fewshot = FEWSHOTS[domain];
   const input = [
     `Target domain: ${domain}`,
@@ -129,7 +135,14 @@ export function repairCall(statement: string, domain: string, previousCandidate:
     ...(previousRawText ? [``, `Previous raw model text (could not be parsed as JSON):`, previousRawText] : []),
     ``,
     `## Structured validation/compile errors`,
-    JSON.stringify(errors.map((e) => ({ code: e.code, path: e.path ?? "", message: e.message })), null, 1),
+    JSON.stringify(errors.map((e) => ({ code: e.code, path: e.path ?? "", message: e.message, ...(e.repair_hint ? { repair_hint: e.repair_hint } : {}) })), null, 1),
+    ...(errors.some((e) => e.code === "E_PROVENANCE_GROUNDING") ? [
+      ``,
+      `## Grounding repair constraints`,
+      `- Do not change a mathematical value merely to satisfy grounding.`,
+      `- Prefer correcting provenance: choose source spans that directly evidence each claim.`,
+      `- If the original text does not support the claim under the contract, do not invent supporting evidence.`
+    ] : []),
     ``,
     `Return the COMPLETE corrected ProblemSpec. Preserve every correct source fact/entity/goal from the previous candidate; make only corrections required by the errors and the original statement.`,
     `Do not solve the problem. Do not add answer fields, derived facts, or guessed facts. Every provenance span must be an exact slice of the original statement.`

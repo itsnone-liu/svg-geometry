@@ -15,6 +15,15 @@
 //      validated cache (provider call count does not grow)
 //
 // Plus the frozen invariant: repair never exceeds MAX_REPAIRS = 1.
+//
+// P5.2 grounding-aware bounded repair:
+//   S10 ungrounded span       -> E_PROVENANCE_GROUNDING (with repair_hint),
+//      repair prompt carries the frozen anti-corruption constraints,
+//      repaired span -> accepted
+//   S11 shared repair budget  -> E_SCHEMA spends the one repair; a grounding
+//      failure on the repaired candidate REJECTS (no second repair)
+//   S12 unrepairable grounding-> PARSE_FAILED after exactly one repair,
+//      no spec yielded
 
 import fs from "node:fs";
 import path from "node:path";
@@ -163,6 +172,66 @@ async function main(): Promise<void> {
     const out = await parseProblemSpec(p, ST, { noCache: true });
     row("s9_domain_error_surfaces",
       out.status === "PARSE_FAILED" && out.errors.some((e) => e.category === "DOMAIN_ERROR") && p.calls === 1);
+  }
+
+  // ---- S10 (P5.2): ungrounded segment span -> grounding repair -> accepted ----
+  {
+    const withBadSpan = () => {
+      const bad: any = structuredClone(geoGolden);
+      bad.entities.find((e: any) => e.kind === "segment").provenance.span = { text: "已知点 A(0, 0)", start: 0, end: 11 };
+      return bad;
+    };
+    const good = structuredClone(geoGolden);
+    const p = new ScriptedProvider([
+      JSON.stringify({ domain: "geometry2d" }),
+      JSON.stringify(withBadSpan()),
+      JSON.stringify(good)
+    ]);
+    const out = await parseProblemSpec(p, ST, { noCache: true });
+    const repairInput = p.requests[2]?.input ?? "";
+    row("s10_ungrounded_span_repaired_then_accepted",
+      out.status === "PARSER_ACCEPTED" &&
+      out.repairUsed === true &&
+      out.errors.some((e) => e.code === "E_PROVENANCE_GROUNDING" && e.category === "PROVENANCE_ERROR" && typeof e.repair_hint === "string" && e.repair_hint.length > 0) &&
+      repairInput.includes("## Grounding repair constraints") &&
+      repairInput.includes("Do not change a mathematical value merely to satisfy grounding.") &&
+      repairInput.includes("repair_hint") &&
+      leakScan(out.spec).length === 0,
+      { status: out.status, repairUsed: out.repairUsed });
+  }
+
+  // ---- S11 (P5.2): one shared repair budget across all gates ----
+  {
+    const schemaBad: any = structuredClone(geoGolden);
+    (schemaBad.goals[0] as any).value = { kind: "int", value: "10" }; // E_SCHEMA spends the budget
+    const groundingBad: any = structuredClone(geoGolden);
+    groundingBad.entities.find((e: any) => e.kind === "segment").provenance.span = { text: "已知点 A(0, 0)", start: 0, end: 11 };
+    const p = new ScriptedProvider([
+      JSON.stringify({ domain: "geometry2d" }),
+      JSON.stringify(schemaBad),
+      JSON.stringify(groundingBad)
+    ]);
+    const out = await parseProblemSpec(p, ST, { noCache: true });
+    row("s11_grounding_after_spent_budget_rejects",
+      out.status === "PARSE_FAILED" && out.repairUsed === true && p.calls === 3 &&
+      out.errors.some((e) => e.code === "E_SCHEMA") &&
+      out.errors.some((e) => e.code === "E_PROVENANCE_GROUNDING"),
+      { status: out.status, calls: p.calls });
+  }
+
+  // ---- S12 (P5.2): unrepairable grounding stops after exactly one repair ----
+  {
+    const groundingBad: any = structuredClone(geoGolden);
+    groundingBad.entities.find((e: any) => e.kind === "segment").provenance.span = { text: "已知点 A(0, 0)", start: 0, end: 11 };
+    const p = new ScriptedProvider([
+      JSON.stringify({ domain: "geometry2d" }),
+      JSON.stringify(groundingBad),
+      JSON.stringify(groundingBad)
+    ]);
+    const out = await parseProblemSpec(p, ST, { noCache: true });
+    row("s12_unrepairable_grounding_fails_after_one_repair",
+      out.status === "PARSE_FAILED" && out.repairUsed === true && p.calls === 3 && out.spec === null,
+      { status: out.status, calls: p.calls });
   }
 
   const ok = rows.every((r) => r.ok);

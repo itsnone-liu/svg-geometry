@@ -334,3 +334,103 @@ describe("P5.1 benchmark semantic normalizer", () => {
     expect(semanticEqual(geo, wrongCap)).toBe(false);
   });
 });
+
+describe("P5.2 grounding-aware bounded repair", () => {
+  const withUngroundedSegment = () => {
+    const bad: any = structuredClone(geo);
+    bad.entities.find((e: any) => e.kind === "segment").provenance.span = { text: "已知点 A(0, 0)", start: 0, end: 11 };
+    return bad;
+  };
+
+  it("attemptCompile grounds only when a statement is supplied (gate 4 wiring)", () => {
+    const bad = withUngroundedSegment();
+    const gated = attemptCompile(bad, ST);
+    expect(gated.ok).toBe(false);
+    expect(gated.spec).toBeNull();
+    expect(gated.errors.length).toBeGreaterThan(0);
+    expect(gated.errors.every((e) => e.code === "E_PROVENANCE_GROUNDING" && e.category === "PROVENANCE_ERROR")).toBe(true);
+    for (const e of gated.errors) {
+      expect(typeof e.repair_hint).toBe("string");
+      expect((e.path ?? "")).toMatch(/\/provenance\/span$/);
+    }
+    // Without a statement the legacy behavior is preserved (no grounding gate).
+    expect(attemptCompile(bad).ok).toBe(true);
+    // A grounded golden passes gate 4.
+    expect(attemptCompile(structuredClone(geo), ST).ok).toBe(true);
+  });
+
+  it("repair hints are contract-level and deterministic", () => {
+    const a = attemptCompile(withUngroundedSegment(), ST);
+    const b = attemptCompile(withUngroundedSegment(), ST);
+    expect(JSON.stringify(a.errors)).toBe(JSON.stringify(b.errors));
+    for (const e of a.errors) {
+      expect(e.repair_hint).not.toContain("线段 AB"); // never the golden span
+      expect(e.repair_hint!.length).toBeGreaterThan(10);
+    }
+  });
+
+  it("grounding failure repairs once and the repair prompt carries the frozen anti-corruption constraints", async () => {
+    const p = new ScriptedProvider([
+      '{"domain":"geometry2d"}',
+      JSON.stringify(withUngroundedSegment()),
+      JSON.stringify(geo)
+    ]);
+    const out = await parseProblemSpec(p, ST, { noCache: true });
+    expect(out.status).toBe("PARSER_ACCEPTED");
+    expect(out.repairUsed).toBe(true);
+    expect(p.calls).toBe(3);
+    const repairInput = p.requests[2]!.input;
+    expect(repairInput).toContain("## Grounding repair constraints");
+    expect(repairInput).toContain("Do not change a mathematical value merely to satisfy grounding.");
+    expect(repairInput).toContain("Prefer correcting provenance");
+    expect(repairInput).toContain("do not invent supporting evidence");
+    expect(repairInput).toContain("repair_hint");
+    expect(repairInput).toContain(JSON.stringify(geo, null, 1)); // full previous candidate still included
+  });
+
+  it("the single repair budget is shared across all gates: E_SCHEMA spends it, a later grounding failure rejects", async () => {
+    const schemaBad: any = structuredClone(geo);
+    (schemaBad.goals[0] as any).value = { kind: "int", value: "10" };
+    const p = new ScriptedProvider([
+      '{"domain":"geometry2d"}',
+      JSON.stringify(schemaBad),
+      JSON.stringify(withUngroundedSegment())
+    ]);
+    const out = await parseProblemSpec(p, ST, { noCache: true });
+    expect(out.status).toBe("PARSE_FAILED");
+    expect(out.repairUsed).toBe(true);
+    expect(p.calls).toBe(3); // no second repair
+    expect(out.errors.some((e) => e.code === "E_SCHEMA")).toBe(true);
+    expect(out.errors.some((e) => e.code === "E_PROVENANCE_GROUNDING")).toBe(true);
+    expect(out.spec).toBeNull();
+  });
+
+  it("unrepairable grounding fails closed after exactly one repair with no yielded spec", async () => {
+    const bad = withUngroundedSegment();
+    const p = new ScriptedProvider([
+      '{"domain":"geometry2d"}',
+      JSON.stringify(bad),
+      JSON.stringify(bad)
+    ]);
+    const out = await parseProblemSpec(p, ST, { noCache: true });
+    expect(out.status).toBe("PARSE_FAILED");
+    expect(out.repairUsed).toBe(true);
+    expect(p.calls).toBe(3);
+    expect(out.spec).toBeNull();
+    expect(out.errors.filter((e) => e.code === "E_PROVENANCE_GROUNDING").length).toBeGreaterThan(0);
+  });
+
+  it("KNOWN_GROUNDING_MODEL_LIMITATION: mo_wd_05 golden stays fail-closed under the full pipeline", async () => {
+    const dataset = JSON.parse(fs.readFileSync(path.join(ROOT, "fixtures/parser-bench/cases.json"), "utf8"));
+    const c = dataset.cases.find((x: any) => x.id === "mo_wd_05");
+    const p = new ScriptedProvider([
+      JSON.stringify({ domain: "motion1d" }),
+      JSON.stringify(c.golden),
+      JSON.stringify(c.golden)
+    ]);
+    const out = await parseProblemSpec(p, c.statement, { domain: "motion1d", noCache: true });
+    expect(out.status).toBe("PARSE_FAILED"); // relational direction -> per-body signed velocity is not groundable
+    expect(out.errors.some((e) => e.code === "E_PROVENANCE_GROUNDING")).toBe(true);
+    expect(out.spec).toBeNull();
+  });
+});
