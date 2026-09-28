@@ -120,7 +120,7 @@ export function runPreflightV3(options: PreflightOptions = {}): any {
   fs.mkdirSync(path.dirname(reportFile), { recursive: true });
   fs.writeFileSync(reportFile, JSON.stringify(report, null, 2) + "\n", "utf8");
   console.log(JSON.stringify(report, null, 2));
-  console.error(`report: ${path.relative(ROOT, reportFile)}`);
+  console.log(`report: ${path.relative(ROOT, reportFile)}`);
   return report;
 }
 

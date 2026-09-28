@@ -21,7 +21,7 @@ if (fs.existsSync(envPath)) {
   }
 }
 const rows = [];
-const row = (name, pass, detail = "") => { rows.push({ name, pass, detail }); };
+const row = (name, pass, detail = "") => { const existing = rows.find((r) => r.name === name); if (existing) { existing.pass = pass; existing.detail = detail; } else rows.push({ name, pass, detail }); };
 const git = (args) => spawnSync("git", args, { cwd: root, encoding: "utf8", maxBuffer: 64 * 1024 * 1024, windowsHide: true });
 const run = (label, cmd, args) => {
   console.log(`\n[run-live-v3] === ${label} ===`);
