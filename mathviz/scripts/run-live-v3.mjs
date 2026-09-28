@@ -72,9 +72,17 @@ if (freezeCommit) {
 }
 
 // 4) Provider auth probe — models endpoint only, zero benchmark content.
+// ONLY runs after rotation is confirmed: probing an unconfirmed (possibly
+// still-exposed) key would produce misleading auth evidence and is itself a
+// provider call this protocol forbids until rotation is established.
 {
-  const code = run("provider auth probe (GET /models, no benchmark content)", process.execPath, [path.join(root, "scripts", "check-provider-auth.mjs")]);
-  row("PROVIDER_AUTH", code === 0, code === 0 ? "models endpoint 2xx" : `probe exit ${code}`);
+  const rotationConfirmed = rows.find((r) => r.name === "KEY_ROTATION_CONFIRMED")?.pass === true;
+  if (rotationConfirmed) {
+    const code = run("provider auth probe (GET /models, no benchmark content)", process.execPath, [path.join(root, "scripts", "check-provider-auth.mjs")]);
+    row("PROVIDER_AUTH", code === 0, code === 0 ? "models endpoint 2xx" : `probe exit ${code}`);
+  } else {
+    row("PROVIDER_AUTH", false, "not attempted: rotation unconfirmed (zero provider calls)");
+  }
 }
 
 // 5) Verdict table — every row must be PASS.
