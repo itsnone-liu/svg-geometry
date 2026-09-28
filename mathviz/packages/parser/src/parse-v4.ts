@@ -36,11 +36,11 @@ export function attemptCompileV4(candidate: any, statement?: string): V4Attempt 
   }
 
   let compileError: { code: string; message: string } | null = null;
-  let engineUnsupported = false;
+  let compilerUnsupported = false;
   try { compileProblemSpec(candidate); }
   catch (e: any) {
     compileError = { code: e?.code ?? "E_SCHEMA", message: e?.message ?? String(e) };
-    engineUnsupported = e?.code === "E_CAPABILITY_UNSUPPORTED" || e?.code === "E_MATH_CONSTRAINT";
+    compilerUnsupported = e?.code === "E_CAPABILITY_UNSUPPORTED" || e?.code === "E_MATH_CONSTRAINT";
     errors.push(asError(compileError.code, compileError.message));
   }
 
@@ -52,6 +52,8 @@ export function attemptCompileV4(candidate: any, statement?: string): V4Attempt 
       errors.push(asError("E_PROVENANCE_GROUNDING", e?.message ?? String(e)));
     }
   }
+  const parserErrors = errors.filter((e) => e.code !== compileError?.code || e.message !== compileError?.message);
+  const engineUnsupported = compilerUnsupported && parserErrors.length === 0;
   return { ok: errors.length === 0, engineUnsupported, spec: errors.length === 0 ? candidate : null, errors, compileError };
 }
 

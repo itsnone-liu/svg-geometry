@@ -476,6 +476,40 @@ describe("P5.3 v4 Stage-B aggregated diagnostics", () => {
     expect(out.diagnostics[0].errors?.some((e) => e.code === "E_BINDING" && /not an equation/.test(e.message))).toBe(true);
   });
 
+  const irrationalDual = () => {
+    const s = structuredClone(dualV4);
+    s.statement = s.statement.replace("16", "13");
+    for (const e of s.entities) {
+      e.provenance.span.text = e.provenance.span.text.replace("16", "13");
+      if (e.kind === "function") e.props.expr.args[1].v.value = "13";
+      if (e.kind === "equation") e.props.lhs.args[1].v.value = "13";
+    }
+    return s;
+  };
+
+  it("mixed G20-D plus compiler unsupported is repairable, not initially engine-unsupported", async () => {
+    const goodEngineBadParser = irrationalDual();
+    const bad = structuredClone(goodEngineBadParser);
+    bad.entities = bad.entities.filter((e: any) => e.kind !== "function");
+    const provider = new ScriptedProvider([JSON.stringify(bad), JSON.stringify(goodEngineBadParser)]);
+    const out = await parseProblemSpecV4(provider, goodEngineBadParser.statement, { domain: "function2d" });
+    expect(out.repairUsed).toBe(true);
+    expect(out.diagnostics[0].errors?.some((e) => e.code === "E_FUNCTION_ZERO_FUNCTION_MISSING")).toBe(true);
+    expect(out.diagnostics[0].errors?.some((e) => e.code === "E_CAPABILITY_UNSUPPORTED" || e.code === "E_MATH_CONSTRAINT")).toBe(true);
+    expect(out.diagnostics[0].errors?.length).toBeGreaterThan(1);
+  });
+
+  it("remaining compiler unsupported becomes engine-unsupported after one repair", async () => {
+    const goodEngineBadParser = irrationalDual();
+    const bad = structuredClone(goodEngineBadParser);
+    bad.entities = bad.entities.filter((e: any) => e.kind !== "function");
+    const provider = new ScriptedProvider([JSON.stringify(bad), JSON.stringify(goodEngineBadParser)]);
+    const out = await parseProblemSpecV4(provider, goodEngineBadParser.statement, { domain: "function2d" });
+    expect(out.repairUsed).toBe(true);
+    expect(out.status).toBe("ENGINE_UNSUPPORTED");
+    expect(provider.calls).toBe(2);
+  });
+
   it("aggregates G20-D and grounding before one repair, then accepts", async () => {
     const bad = structuredClone(dualV4);
     bad.entities = bad.entities.filter((e: any) => e.kind !== "function");
