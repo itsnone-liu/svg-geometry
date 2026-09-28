@@ -175,3 +175,18 @@ mechanism-related; a pre-declared single rerun, result committed either way);
 (iii) evolve the dataset/scoring to a v3 that, e.g., tolerates goal-irrelevant
 grounded facts or excludes the known-limitation case from the core
 denominator — each requires a new frozen version and a fresh independent run.
+
+## 9. Epilogue: pre-registered replication (Run 2) and terminal verdict
+
+The user approved option (ii): one pre-registered independent replication,
+protocol committed BEFORE the run (`docs/P5_2_INDEPENDENT_REPLICATION_PROTOCOL.md`,
+commit `1e2c6ec`; all frozen surfaces byte-identical to Run 1). Run 2 verdict:
+G19 PASS again (161/161, post-repair grounding 100%, zero semantic
+regressions, grounding repair success 5/7), but **G18 FAIL with core semantic
+match 50/54 = 92.59% and validity 58/60 = 96.67%**. The pre-registered
+diagnostic question was answered: `fx_wd_01` omitted the declared function
+entity for the THIRD consecutive live run — a repeatable entity-completeness
+gap, not noise. Per the decision rule, no further sampling; P5.2 closes FAIL
+and **P5.3 Parser Precision/Completeness** opens (new prompt-policy version,
+new independent benchmark; v2 scoring untouched; parser not frozen). Full
+record: protocol document §5-6.

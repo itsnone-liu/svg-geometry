@@ -61,4 +61,40 @@ Structural: `repair_semantic_regressions = 0`; repair ≤ 1 per case.
 | Run | Date (UTC) | Commit | Verdict |
 |---|---|---|---|
 | 1 | 2026-09-28 | `0234ea2` | G19 PASS (165/165); G18 FAIL core_semantic_match 51/54 = 94.44% (misses: mo_wd_05 designed fail-closed; fx_wd_01 entity omission; mo_ir_02 grounded-irrelevant extra fact). Recorded in `docs/P5_2_GROUNDING_REPAIR.md` §8 |
-| 2 | 2026-09-28 (this run) | this commit | — |
+| 2 | 2026-09-28 | `1e2c6ec` (protocol) over `0234ea2` (code) | **G19 PASS (161/161); G18 FAIL — core_semantic_match 50/54 = 92.59% AND final_schema_semantic_valid 58/60 = 96.67% (both below bar). Terminal verdict: P5.2 frozen implementation does NOT clear G18. No further sampling.** |
+
+## 6. Run 2 outcome (recorded as-run)
+
+Tokens 279,196 in / 227,479 out; repair rate 13.33%;
+`grounding_repair_success_rate` 5/7 (71.43%);
+`repair_semantic_regressions` 0; unsupported refusals 6/6; leaks 0;
+first_pass_grounding 152/170 = 89.41% → post_repair 161/161 = 100%;
+final_acceptance 52 accepted / 6 engine-unsupported / 2 rejected
+(geo_wd_01, mo_wd_05).
+
+Four core mismatches, each attributed:
+
+1. `mo_wd_05` — designed fail-closed cost, identical to Run 1;
+2. `geo_wd_01` — grounding repair did not converge within the single
+   budget (3 ungrounded findings → 1 left after repair → PARSE_FAILED);
+   this case fully recovered in Run 1, so one-budget convergence for it is
+   sample-dependent;
+3. `fx_wd_01` — **third consecutive run omitting the declared
+   `f(x)=x²-9`-class function entity** (entity count 1 vs 2, spec otherwise
+   valid/compiled/grounded): the pre-registered suspicion is confirmed — a
+   repeatable declared-entity completeness gap, not sampling noise;
+4. `fx_ir_02` — model dropped the "- 3" from `x - 3 = 0`
+   (lhs `x`, rhs `0`): a real (rare) extraction error, new this run.
+
+Per the pre-registered decision rule, this FAIL opens **P5.3 Parser
+Precision/Completeness** with two confirmed real-gap targets:
+
+- declared source-entity completeness (`fx_wd_01` class);
+- goal-irrelevant source-semantic precision (`mo_ir_02` class, Run 1);
+- plus the observed rare extraction slips (`fx_ir_02` class) and the
+  one-budget convergence question for multi-finding grounding failures
+  (`geo_wd_01` class).
+
+P5.3 must be accepted via a NEW prompt-policy version and a NEW independent
+benchmark; the v2 scoring surface stays frozen and untouched. The P5 parser
+is NOT frozen.
