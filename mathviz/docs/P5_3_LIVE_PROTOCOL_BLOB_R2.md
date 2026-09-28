@@ -46,14 +46,22 @@ challenge-case accepted core matches.
 
 ## Credential protocol (human-owned; no env-flag shortcuts)
 
-1. The owner revokes/rotates the old key **on the provider side** (Bailian
-   console). The key is never sent through chat, committed, or printed.
-2. The owner creates the gitignored attestation file
-   `runs/p53/ROTATION_ATTESTATION.md` containing at least:
-   `provider-side rotation completed` and
-   `confirmed-at-utc: <ISO-8601 UTC timestamp>`.
-3. Only then may `npm run p53:provider-auth-check` run: a single `GET /models`
-   probe (HTTP 2xx required) sending **zero** benchmark content.
+Amendment A1 defines two operational policies: `STRICT` and
+`DISPOSABLE_ACCEPTED`. Select exactly one in the gitignored
+`runs/p53/CREDENTIAL_POLICY_ACK.md`, with `credential_risk_acknowledged: true`,
+`scope: P5.3_INDEPENDENT_LIVE_ONLY`, `accepted-loss-bound: ...`, and
+`confirmed-at-utc: ...`. `DISPOSABLE_ACCEPTED` permits a disposable/low-balance
+credential after explicit risk acceptance and does not require rotation proof;
+`STRICT` additionally requires the human rotation attestation. Credential policy
+never changes benchmark validity, scoring, thresholds, or the one-run rule.
+
+The key is never sent through chat, committed, or printed. Only after the
+selected policy, acknowledgement/rotation requirement, and credential presence
+pass may `npm run p53:provider-auth-check` run: a single `GET /models` probe
+(HTTP 2xx required) sending **zero** benchmark content. If the v3 live result
+report already exists, the one v3 authorization is consumed and policy changes
+cannot reopen it; a corrective run requires a new benchmark version and fresh
+preregistration.
 
 ## Launcher gate table (`npm run gates:p53:live`)
 
@@ -64,8 +72,11 @@ SCORING_POLICY_BLOB_HASH   PASS
 MANIFEST_SELF_CHECK        PASS
 WORKTREE_DIRTY             PASS      (PASS = clean)
 PREREGISTRATION_PRESENT    PASS
-KEY_ROTATION_CONFIRMED     PASS      (human attestation file only)
+CREDENTIAL_POLICY          DISPOSABLE_ACCEPTED or STRICT
+CREDENTIAL_RISK_ACK        PASS
+CREDENTIAL_PRESENT         PASS
 PROVIDER_AUTH              PASS      (models endpoint, zero benchmark content)
+SINGLE_RUN_AUTHORITY       PASS      (unconsumed new protocol only)
 LIVE AUTHORIZED            YES
 ```
 

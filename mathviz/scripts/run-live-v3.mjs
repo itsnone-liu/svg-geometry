@@ -1,6 +1,6 @@
 // P5.3 single live acceptance launcher (git-blob authority).
-// Phase order: offline freeze preflight (no network) -> human credential
-// exposure attestation (Amendment A1) -> provider auth probe (models endpoint,
+// Phase order: offline freeze preflight (no network) -> explicit credential
+// policy/risk acknowledgement (STRICT or DISPOSABLE_ACCEPTED) -> provider auth probe (models endpoint,
 // zero benchmark content) -> deterministic G17 -> exactly ONE 72-case run from
 // the frozen blobs.
 // Any gate row that is not PASS stops this launcher BEFORE G17 / A0 / A1 /
@@ -58,45 +58,41 @@ if (freezeCommit) {
   for (const k of ["FREEZE_COMMIT_PINNED", "DATASET_BLOB_HASH", "SCORING_POLICY_BLOB_HASH", "MANIFEST_SELF_CHECK", "WORKTREE_DIRTY"]) row(k, false, "skipped: no freeze commit pin");
 }
 
-// 3) Credential prerequisite — ONLY the human-created attestation file is
-// evidence. Per Amendment A1 (docs/P5_3_LIVE_PROTOCOL_R2_AMENDMENT_A1_CREDENTIAL_GATE.md),
-// the gate is CREDENTIAL_EXPOSURE_ATTESTED, not key rotation: the risk being
-// gated is exposure of the credential, and the attestation records the owner's
-// finding on that risk directly (never a claim that a rotation occurred).
-{
-  const attPath = path.join(root, "runs", "p53", "CREDENTIAL_EXPOSURE_ATTESTATION.md");
-  const legacyPath = path.join(root, "runs", "p53", "ROTATION_ATTESTATION.md");
-  let pass = false, detail = "attestation file runs/p53/CREDENTIAL_EXPOSURE_ATTESTATION.md missing";
-  if (fs.existsSync(attPath)) {
-    const text = fs.readFileSync(attPath, "utf8");
-    const hasStatement = /^(credential-not-exposed|exposure-bounded-accepted)\b/im.test(text);
-    const hasDate = /^confirmed-at-utc:\s*\d{4}-\d{2}-\d{2}/im.test(text);
-    // Amendment A1 is an exposure attestation. A rotation claim is NOT the
-    // amended evidence and must not be silently accepted as a substitute.
-    const claimsRotation = /^provider-side rotation completed\b/im.test(text);
-    pass = hasStatement && hasDate;
-    detail = pass
-      ? (claimsRotation
-        ? "exposure attestation present (also contains a rotation claim; amendment A1 accepts the exposure finding)"
-        : "exposure attestation present")
-      : `statement=${hasStatement} confirmed-at-utc=${hasDate}`;
-  } else if (fs.existsSync(legacyPath)) {
-    detail = "only the superseded ROTATION_ATTESTATION.md exists; Amendment A1 requires CREDENTIAL_EXPOSURE_ATTESTATION.md";
-  }
-  row("CREDENTIAL_EXPOSURE_ATTESTED", pass, `${detail} (env flags are never evidence)`);
-}
+// 3) Single-run consumption lock. Attempt 4 already completed the one v3
+// sampling batch and produced a committed FAIL report. Credential policy
+// changes cannot reopen that consumed authorization; they apply only to a new
+// benchmark version + preregistration.
+const consumedReportPath = path.join(root, "docs", "P5_3_LIVE_FAIL_REPORT.md");
+const singleRunConsumed = fs.existsSync(consumedReportPath);
+row("SINGLE_RUN_AUTHORITY", !singleRunConsumed, singleRunConsumed ? "v3 live authorization already consumed; new benchmark/prereg required" : "unconsumed");
+
+// 4) Explicit credential policy. This is operational authorization only and
+// cannot alter freeze, scoring, or live-result validity. The human-authored
+// policy file is gitignored; env flags are never accepted as acknowledgement.
+const policyPath = path.join(root, "runs", "p53", "CREDENTIAL_POLICY_ACK.md");
+const exposurePath = path.join(root, "runs", "p53", "CREDENTIAL_EXPOSURE_ATTESTATION.md");
+const rotationPath = path.join(root, "runs", "p53", "ROTATION_ATTESTATION.md");
+const credentialPolicyText = fs.existsSync(policyPath) ? fs.readFileSync(policyPath, "utf8") : "";
+const exposureText = fs.existsSync(exposurePath) ? fs.readFileSync(exposurePath, "utf8") : "";
+const rotationText = fs.existsSync(rotationPath) ? fs.readFileSync(rotationPath, "utf8") : "";
+const { evaluateCredentialGate } = await import("./credential-policy.mjs");
+const credentialGate = evaluateCredentialGate({ policyText: credentialPolicyText, rotationText, env });
+row("CREDENTIAL_POLICY", credentialGate.validPolicy && credentialGate.policyPass, `${credentialGate.policy}; STRICT requires rotation, DISPOSABLE_ACCEPTED requires explicit risk acknowledgement`);
+row("CREDENTIAL_RISK_ACK", credentialGate.policy === "DISPOSABLE_ACCEPTED" ? credentialGate.riskAck : credentialGate.rotationConfirmed, credentialGate.policy === "DISPOSABLE_ACCEPTED" ? "user risk acknowledgement" : "rotation proof");
+row("CREDENTIAL_PRESENT", credentialGate.credentialPresent, credentialGate.credentialPresent ? "runtime credential fields present" : "provider fields missing");
+if (credentialGate.policy === "STRICT") row("KEY_ROTATION_CONFIRMED", credentialGate.rotationConfirmed, "STRICT mode only; env flags are never evidence");
 
 // 4) Provider auth probe — models endpoint only, zero benchmark content.
-// ONLY runs after the credential exposure attestation is confirmed: probing a
-// possibly-exposed credential would produce misleading auth evidence and is
-// itself a provider call this protocol forbids until that gate is established.
+// It runs only after the selected credential policy, acknowledgement/rotation,
+// and credential presence all pass. DISPOSABLE_ACCEPTED deliberately does not
+// require rotation; STRICT deliberately does.
 {
-  const credentialAttested = rows.find((r) => r.name === "CREDENTIAL_EXPOSURE_ATTESTED")?.pass === true;
-  if (credentialAttested) {
+  const credentialGatePass = credentialGate.authorizedBeforeProvider && !singleRunConsumed;
+  if (credentialGatePass) {
     const code = run("provider auth probe (GET /models, no benchmark content)", process.execPath, [path.join(root, "scripts", "check-provider-auth.mjs")]);
     row("PROVIDER_AUTH", code === 0, code === 0 ? "models endpoint 2xx" : `probe exit ${code}`);
   } else {
-    row("PROVIDER_AUTH", false, "not attempted: rotation unconfirmed (zero provider calls)");
+    row("PROVIDER_AUTH", false, "not attempted: credential policy/ack/presence gate failed (zero provider calls)");
   }
 }
 

@@ -1,14 +1,11 @@
-# P5.3 Benchmark v3 — Live Protocol R2 **Amendment A1** (Credential Gate: Exposure Attestation)
+# P5.3 Benchmark v3 — Live Protocol R2 **Amendment A1** (Credential Policy)
 
 Status: **PREREGISTERED (this commit)**. This amendment revises one and only one
-clause of `docs/P5_3_LIVE_PROTOCOL_BLOB_R2.md`: the credential prerequisite.
-It is issued under the authority of that document's own change rule
-(*"Any change to the frozen artifacts after this registration requires a new
-benchmark version and a new preregistration"*) and the R2 single-run rule
-(*"Any change to the frozen artifacts"*) — both of which are satisfied here
-because **no frozen artifact is modified**. Only the credential gate is
-re-defined; dataset, scoring policy, manifest, implementation identities,
-prompt policy and acceptance thresholds are byte-identical to R2.
+operational clause of `docs/P5_3_LIVE_PROTOCOL_BLOB_R2.md`: credential
+authorization. It does not modify any frozen artifact, benchmark case, scoring
+rule, threshold, prompt policy, implementation identity, or single-run result.
+The accepted policies are `STRICT` and `DISPOSABLE_ACCEPTED`; credential policy
+never determines benchmark validity or score.
 
 ## Why this amendment exists
 
@@ -52,39 +49,67 @@ attestation file it defines must never contain the phrase
 `provider-side rotation completed`. The record is an *exposure* attestation, and
 it says so in its own text.
 
-## Amended clause — Credential protocol (replaces R2 §"Credential protocol")
+## Amended clause — Credential policy (replaces R2 credential prerequisite)
 
-1. The owner attests, in the gitignored file
-   `runs/p53/CREDENTIAL_EXPOSURE_ATTESTATION.md`, that the credential the runner
-   will use has **not** been exposed on any untrusted surface (committed blob,
-   tracked file, chat transcript, log, or shared document), **or** that any
-   exposure is bounded to an accepted allowance. The file must contain at least:
-   - `credential-not-exposed` (or `exposure-bounded-accepted`), and
-   - `confirmed-at-utc: <ISO-8601 UTC timestamp>`, and
-   - `accepted-loss-bound: <amount or "n/a">`.
-2. No env flag is evidence. The file is the only evidence, as before.
-3. Only then may `npm run p53:provider-auth-check` run: a single `GET /models`
-   probe (HTTP 2xx required) sending **zero** benchmark content.
-4. The credential value is never sent through chat, committed, or printed.
+Exactly one operational policy must be selected in the gitignored file
+`runs/p53/CREDENTIAL_POLICY_ACK.md`:
+
+```text
+credential_policy: STRICT
+credential_risk_acknowledged: true
+scope: P5.3_INDEPENDENT_LIVE_ONLY
+accepted-loss-bound: n/a
+confirmed-at-utc: <ISO-8601 UTC timestamp>
+```
+
+or:
+
+```text
+credential_policy: DISPOSABLE_ACCEPTED
+credential_risk_acknowledged: true
+scope: P5.3_INDEPENDENT_LIVE_ONLY
+accepted-loss-bound: <amount or n/a>
+confirmed-at-utc: <ISO-8601 UTC timestamp>
+```
+
+`STRICT` requires the separate human-created `ROTATION_ATTESTATION.md` proof.
+`DISPOSABLE_ACCEPTED` is for a disposable/low-balance test credential and
+requires explicit user risk acknowledgement, credential presence, and the
+provider auth probe; it **does not require rotation proof**. In both modes:
+
+- no environment flag is evidence;
+- the key value is never sent through chat, committed, or printed;
+- the policy authorizes provider access only and cannot alter benchmark validity;
+- `GET /models` runs only after policy, acknowledgement/rotation, and
+  credential-presence gates pass, and sends zero benchmark content.
+
+The already committed `CREDENTIAL_EXPOSURE_ATTESTATION.md` remains valid
+supporting evidence for the bounded-risk decision, but the selected policy
+file is the machine-checked contract. If `docs/P5_3_LIVE_FAIL_REPORT.md`
+exists, the v3 one-run authorization is already consumed and no credential
+policy can reopen it; a corrective run requires a new benchmark version and
+new preregistration.
 
 ## Amended gate table (`npm run gates:p53:live`)
 
 ```
-FREEZE_COMMIT_PINNED         PASS
-DATASET_BLOB_HASH            PASS
-SCORING_POLICY_BLOB_HASH     PASS
-MANIFEST_SELF_CHECK          PASS
-WORKTREE_DIRTY               PASS      (PASS = clean)
-PREREGISTRATION_PRESENT      PASS
-CREDENTIAL_EXPOSURE_ATTESTED PASS      (human attestation file only)
-PROVIDER_AUTH                PASS      (models endpoint, zero benchmark content)
-LIVE AUTHORIZED              YES
+FREEZE_COMMIT_PINNED       PASS
+DATASET_BLOB_HASH          PASS
+SCORING_POLICY_BLOB_HASH   PASS
+MANIFEST_SELF_CHECK        PASS
+WORKTREE_DIRTY             PASS      (PASS = clean)
+PREREGISTRATION_PRESENT    PASS
+CREDENTIAL_POLICY          DISPOSABLE_ACCEPTED or STRICT
+CREDENTIAL_RISK_ACK        PASS
+CREDENTIAL_PRESENT         PASS
+PROVIDER_AUTH              PASS (models endpoint, zero benchmark content)
+SINGLE_RUN_AUTHORITY       PASS (only for an unconsumed new protocol)
+LIVE AUTHORIZED            YES
 ```
 
-The row formerly named `KEY_ROTATION_CONFIRMED` is replaced by
-`CREDENTIAL_EXPOSURE_ATTESTED`. All other rows, their semantics, and the
-"any row not PASS stops the launcher before G17/A0/A1 and every benchmark case"
-rule are unchanged.
+For `STRICT`, `KEY_ROTATION_CONFIRMED` is additionally required. For
+`DISPOSABLE_ACCEPTED`, rotation is not a gate; explicit risk acceptance is.
+Any non-PASS row stops before G17/A0/A1 and every benchmark case.
 
 ## What is explicitly NOT changed
 
@@ -101,13 +126,12 @@ rule are unchanged.
 
 ## Prior evidence disposition
 
-The three blocked attempts recorded in `runs/p53/LIVE_BLOCKED.md` produced zero
-benchmark cases, zero A1 calls and zero repair calls. None consumed the single
-independent sampling authorization. Under R2 §"Single-run rules", failures that
-occur before the first benchmark request are recorded and not retried around;
-they remain recorded as-is. This amendment does **not** retroactively alter
-them, and does not authorize more than the **one** remaining live batch that R2
-already reserved.
+The four attempts recorded in `runs/p53/LIVE_BLOCKED.md` include three
+pre-request starts with zero benchmark cases/A1/repair calls and Attempt 4,
+which completed the one live 72-case batch and consumed its sampling
+authorization. This amendment does **not** reopen, rerun, or selectively
+resample that v3 batch. A corrective run requires a new benchmark version and
+new preregistration.
 
 ## Authority and provenance
 
@@ -123,4 +147,4 @@ already reserved.
 
 Unchanged from R2, plus: the committed result record must cite **this
 amendment's commit** as the invocation authority instead of the R2 commit, and
-must report `CREDENTIAL_EXPOSURE_ATTESTED` (not rotation) in its gate summary.
+must report the selected `CREDENTIAL_POLICY`, `CREDENTIAL_RISK_ACK`, `CREDENTIAL_PRESENT`, and `SINGLE_RUN_AUTHORITY` gate results. Legacy exposure-attestation records remain audit evidence only; they are not benchmark validity evidence.

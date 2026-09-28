@@ -5,10 +5,11 @@
   "amendment": {
     "id": "A1",
     "doc": "docs/P5_3_LIVE_PROTOCOL_R2_AMENDMENT_A1_CREDENTIAL_GATE.md",
-    "scope": "credential prerequisite only",
+    "scope": "credential policy only",
+    "policies": ["STRICT", "DISPOSABLE_ACCEPTED"],
     "replaces_gate": "KEY_ROTATION_CONFIRMED",
-    "with_gate": "CREDENTIAL_EXPOSURE_ATTESTED",
-    "attestation_file": "runs/p53/CREDENTIAL_EXPOSURE_ATTESTATION.md",
+    "with_gate": "CREDENTIAL_POLICY + CREDENTIAL_RISK_ACK + CREDENTIAL_PRESENT",
+    "ack_file": "runs/p53/CREDENTIAL_POLICY_ACK.md",
     "frozen_artifacts_unchanged": true
   },
   "freeze_commit": "4a373e4b5967a9dc9d71d06ea0790350bd0f6a89",
