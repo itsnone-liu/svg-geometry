@@ -4,7 +4,10 @@
 const REQUIRED_DISPOSABLE = {
   credential_policy: "DISPOSABLE_ACCEPTED",
   credential_risk_acknowledged: "true",
-  scope: "P5.3_INDEPENDENT_LIVE_ONLY",
+  // v3 scope (consumed run) and v4 scope (current prereg) are both valid
+  // acknowledgement scopes; a new benchmark version extends this set and
+  // never weakens the other fields.
+  scopes: ["P5.3_INDEPENDENT_LIVE_ONLY", "P5.3_V4_INDEPENDENT_LIVE_ONLY"],
 };
 
 function fields(text = "") {
@@ -22,7 +25,7 @@ export function evaluateCredentialGate({ policyText = "", rotationText = "", env
   const credentialPresent = Boolean(env.MATHVIZ_LLM_BASE_URL && env.MATHVIZ_LLM_API_KEY && env.MATHVIZ_LLM_MODEL);
   const riskAck = REQUIRED_DISPOSABLE.credential_policy === policy
     && f.credential_risk_acknowledged === REQUIRED_DISPOSABLE.credential_risk_acknowledged
-    && f.scope === REQUIRED_DISPOSABLE.scope
+    && REQUIRED_DISPOSABLE.scopes.includes(f.scope)
     && /^.+$/.test(f["accepted-loss-bound"] || "")
     && /^confirmed-at-utc:\s*\d{4}-\d{2}-\d{2}T/im.test(policyText);
   const rotationConfirmed = /^provider-side rotation completed\b/im.test(rotationText)
