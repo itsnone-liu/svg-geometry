@@ -1,0 +1,42 @@
+{
+ "version": "5.0",
+ "benchmark": "parser-bench-v5",
+ "built_from_commit": "0e6370d7ae082d4aa739f02071b67526a2a17c3e",
+ "frozen_at": "2026-09-29T14:35:13.904Z",
+ "authority": "committed git blob bytes (git cat-file blob <freeze-commit>:<path>); worktree is hygiene only",
+ "files": {
+  "fixtures/parser-bench-v5/cases.json": "171a9182be4628fed1eb2237fd8fdf4cfb00c726ab4973d1153472f6a495919b",
+  "fixtures/parser-bench-v5/challenge-registry.json": "f6b9aee666cf797148d5dd83b9d33447859917732d619ddddfb8ceff0a15002c",
+  "packages/parser-benchmark/src/run-v5-golden.ts": "50266055802be0a4341aac1c3219f97f836e1d77ae7c5ee240f48bf04973a363",
+  "packages/parser-benchmark/src/preflight-v5.ts": "77d676b4ab2785e0fac00b962d52709386e3ebad9f7544a853bd3fc566f41897",
+  "packages/parser-benchmark/src/build-v5.ts": "6576cdc702c813decdbb9a280409ebb63d143fd6e200aa0b44c693973ce4950d",
+  "packages/parser/src/parse-v5.ts": "b2bdf452a87c9e17a21da7c4f2cbef80aeaa41f7abe31b9caa8f473679b8a401",
+  "packages/parser/src/identity-v5.ts": "4d5f014c3e71bfbd449c6d4084162bdf94f8a4e81e0ad48cfd0caad01a19aef7",
+  "packages/parser/src/repair-v5.ts": "4380c889fdfd6e82d528b939eccd80ad5c3674d661e861db4cde1646d62dc791",
+  "packages/parser/src/grounding-v5.ts": "cdaceed48ad962eb04a3a3c0cc3e81c56b8e1e5bb9713d2c6e5c9518369a983d",
+  "packages/parser/src/prompt-v5.ts": "78cec32c54f7fd2b0ec49d8b72405cf0ec00993fef9f5777a1c58dca29166933"
+ },
+ "packet_hash": "b3ec5a4fdeef5baca5148f86420fe7e81da743f16c38bd87439111cdca014d01",
+ "denominators": {
+  "total": 72,
+  "compile_ok": 66,
+  "engine_unsupported": 6,
+  "known_limitation": 0,
+  "domains": {
+   "geometry2d": 24,
+   "motion1d": 24,
+   "function2d": 24
+  },
+  "dual_all": 15,
+  "dual_compile_ok": 13,
+  "dual_engine_unsupported": 2,
+  "repair_sensitive_classes": 9
+ },
+ "stage3_baseline": "02a9298",
+ "live_policy": {
+  "provider": "FORBIDDEN until new independent authorization",
+  "max_repairs": 1,
+  "repair_projection_counts_as_repair": false,
+  "v4_verdict": "FAIL @8b10a766 (never rewritten)"
+ }
+}
