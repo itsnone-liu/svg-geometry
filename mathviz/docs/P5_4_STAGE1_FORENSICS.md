@@ -1,5 +1,7 @@
 # P5.4 Stage-1 Offline Forensics — v4 Independent Live FAIL
 
+> **ERRATUM (Stage-1.1, counterfactual audit):** §2's causal attribution to the equation-span slice difference is **refuted**. The owner's remote re-audit found 10/10 A1 function entities lack `label` (golden has it); counterfactual replay shows adding ONLY the golden `function.label` clears all four fidelity/G19 errors in 10/10 (CF1), while replacing ONLY the equation span clears 0/10 (CF2). Primary cause = named-function identity omission; the span difference was a confounding correlate. See `docs/P5_4_STAGE1_1_COUNTERFACTUAL.md` for the corrected causal model and revised remediation order. All other Stage-1 findings (distribution, repair signature, f_03 H1, silent blocker) stand.
+
 **Scope:** derived ONLY from frozen evidence `8b10a766` + freeze blobs at `877bf6dd`. **Zero provider requests** — all conclusions re-derived by deterministically replaying `attemptCompileV4` (pure function, frozen pipeline) over the recorded parsed_candidates. **Integrity self-proof: 72/72 replays match the recorded live errors and statuses**, so every conclusion below is anchored to the frozen evidence.
 
 Tool: `packages/parser-benchmark/src/forensics-v4.ts`; full machine-readable output: `fixtures/parser-bench-v4/forensics/v4-forensics.json`. Nothing in this document writes back to v4; all v4 artifacts remain untouched at `8b10a766`.

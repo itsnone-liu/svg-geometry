@@ -1,0 +1,1043 @@
+{
+  "stage": "P5_4_STAGE1_1_COUNTERFACTUAL",
+  "provider_requests": 0,
+  "method": "attemptCompileV4 replay over A1 variants; CF1 adds ONLY golden function.label; CF2 replaces ONLY equation provenance.span; CF3 applies both",
+  "totals": {
+    "cf1_clear": 8,
+    "cf2_clear": 0,
+    "cf3_clear": 7,
+    "cf1_error_count_reduced": 10,
+    "cf2_error_count_reduced": 0,
+    "not_cleared_by_any": [
+      "v4_f_01",
+      "v4_f_02"
+    ]
+  },
+  "verdict": "Neither CF1 nor CF2 nor CF3 fully sufficient (CF1=8/10, CF2=0/10, CF3=7/10); third factor required: v4_f_01, v4_f_02",
+  "rows": [
+    {
+      "case_id": "v4_f_01",
+      "expected_class": "ENGINE_UNSUPPORTED",
+      "golden_fn_label": "p",
+      "a1_fn_label": null,
+      "CF0": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": "E_CAPABILITY_UNSUPPORTED",
+        "errors": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_CAPABILITY_UNSUPPORTED",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 5,
+          "fidelity": 2,
+          "function_zero": 1,
+          "grounding_ungrounded": 1
+        },
+        "fidelity_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT"
+        ],
+        "function_zero_codes": [
+          "E_FUNCTION_ZERO_FUNCTION_MISSING"
+        ],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/fn_p",
+            "reason": "function name/equality anchor absent"
+          }
+        ],
+        "core_equivalent": true
+      },
+      "CF1": {
+        "ok": false,
+        "engineUnsupported": true,
+        "compileError": "E_CAPABILITY_UNSUPPORTED",
+        "errors": [
+          "E_CAPABILITY_UNSUPPORTED"
+        ],
+        "counts": {
+          "total": 1,
+          "fidelity": 0,
+          "function_zero": 0,
+          "grounding_ungrounded": 0
+        },
+        "fidelity_codes": [],
+        "function_zero_codes": [],
+        "grounding_ungrounded": [],
+        "core_equivalent": true
+      },
+      "CF2": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": "E_CAPABILITY_UNSUPPORTED",
+        "errors": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_CAPABILITY_UNSUPPORTED",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 5,
+          "fidelity": 2,
+          "function_zero": 1,
+          "grounding_ungrounded": 1
+        },
+        "fidelity_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT"
+        ],
+        "function_zero_codes": [
+          "E_FUNCTION_ZERO_FUNCTION_MISSING"
+        ],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/fn_p",
+            "reason": "function name/equality anchor absent"
+          }
+        ],
+        "core_equivalent": true
+      },
+      "CF3": {
+        "ok": false,
+        "engineUnsupported": true,
+        "compileError": "E_CAPABILITY_UNSUPPORTED",
+        "errors": [
+          "E_CAPABILITY_UNSUPPORTED"
+        ],
+        "counts": {
+          "total": 1,
+          "fidelity": 0,
+          "function_zero": 0,
+          "grounding_ungrounded": 0
+        },
+        "fidelity_codes": [],
+        "function_zero_codes": [],
+        "grounding_ungrounded": [],
+        "core_equivalent": true
+      }
+    },
+    {
+      "case_id": "v4_f_02",
+      "expected_class": "ENGINE_UNSUPPORTED",
+      "golden_fn_label": "q",
+      "a1_fn_label": null,
+      "CF0": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": "E_CAPABILITY_UNSUPPORTED",
+        "errors": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_CAPABILITY_UNSUPPORTED",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 5,
+          "fidelity": 2,
+          "function_zero": 1,
+          "grounding_ungrounded": 1
+        },
+        "fidelity_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT"
+        ],
+        "function_zero_codes": [
+          "E_FUNCTION_ZERO_FUNCTION_MISSING"
+        ],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/fn_q",
+            "reason": "function name/equality anchor absent"
+          }
+        ],
+        "core_equivalent": true
+      },
+      "CF1": {
+        "ok": false,
+        "engineUnsupported": true,
+        "compileError": "E_CAPABILITY_UNSUPPORTED",
+        "errors": [
+          "E_CAPABILITY_UNSUPPORTED"
+        ],
+        "counts": {
+          "total": 1,
+          "fidelity": 0,
+          "function_zero": 0,
+          "grounding_ungrounded": 0
+        },
+        "fidelity_codes": [],
+        "function_zero_codes": [],
+        "grounding_ungrounded": [],
+        "core_equivalent": true
+      },
+      "CF2": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": "E_CAPABILITY_UNSUPPORTED",
+        "errors": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_CAPABILITY_UNSUPPORTED",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 5,
+          "fidelity": 2,
+          "function_zero": 1,
+          "grounding_ungrounded": 1
+        },
+        "fidelity_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT"
+        ],
+        "function_zero_codes": [
+          "E_FUNCTION_ZERO_FUNCTION_MISSING"
+        ],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/fn_q",
+            "reason": "function name/equality anchor absent"
+          }
+        ],
+        "core_equivalent": true
+      },
+      "CF3": {
+        "ok": false,
+        "engineUnsupported": true,
+        "compileError": "E_CAPABILITY_UNSUPPORTED",
+        "errors": [
+          "E_CAPABILITY_UNSUPPORTED"
+        ],
+        "counts": {
+          "total": 1,
+          "fidelity": 0,
+          "function_zero": 0,
+          "grounding_ungrounded": 0
+        },
+        "fidelity_codes": [],
+        "function_zero_codes": [],
+        "grounding_ungrounded": [],
+        "core_equivalent": true
+      }
+    },
+    {
+      "case_id": "v4_f_04",
+      "expected_class": "KNOWN_LIMITATION_EXPECTED_REJECT",
+      "golden_fn_label": "s",
+      "a1_fn_label": null,
+      "CF0": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 4,
+          "fidelity": 2,
+          "function_zero": 1,
+          "grounding_ungrounded": 1
+        },
+        "fidelity_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT"
+        ],
+        "function_zero_codes": [
+          "E_FUNCTION_ZERO_FUNCTION_MISSING"
+        ],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/fn_s",
+            "reason": "function name/equality anchor absent"
+          }
+        ],
+        "core_equivalent": true
+      },
+      "CF1": {
+        "ok": true,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [],
+        "counts": {
+          "total": 0,
+          "fidelity": 0,
+          "function_zero": 0,
+          "grounding_ungrounded": 0
+        },
+        "fidelity_codes": [],
+        "function_zero_codes": [],
+        "grounding_ungrounded": [],
+        "core_equivalent": true
+      },
+      "CF2": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 5,
+          "fidelity": 2,
+          "function_zero": 1,
+          "grounding_ungrounded": 2
+        },
+        "fidelity_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT"
+        ],
+        "function_zero_codes": [
+          "E_FUNCTION_ZERO_FUNCTION_MISSING"
+        ],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/fn_s",
+            "reason": "function name/equality anchor absent"
+          },
+          {
+            "path": "/entities/eq_s",
+            "reason": "AST token '2' absent from cited slice"
+          }
+        ],
+        "core_equivalent": true
+      },
+      "CF3": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 1,
+          "fidelity": 0,
+          "function_zero": 0,
+          "grounding_ungrounded": 1
+        },
+        "fidelity_codes": [],
+        "function_zero_codes": [],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/eq_s",
+            "reason": "AST token '2' absent from cited slice"
+          }
+        ],
+        "core_equivalent": true
+      }
+    },
+    {
+      "case_id": "v4_f_05",
+      "expected_class": "COMPILE_OK",
+      "golden_fn_label": "u",
+      "a1_fn_label": null,
+      "CF0": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 4,
+          "fidelity": 2,
+          "function_zero": 1,
+          "grounding_ungrounded": 1
+        },
+        "fidelity_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT"
+        ],
+        "function_zero_codes": [
+          "E_FUNCTION_ZERO_FUNCTION_MISSING"
+        ],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/u_func",
+            "reason": "function name/equality anchor absent"
+          }
+        ],
+        "core_equivalent": true
+      },
+      "CF1": {
+        "ok": true,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [],
+        "counts": {
+          "total": 0,
+          "fidelity": 0,
+          "function_zero": 0,
+          "grounding_ungrounded": 0
+        },
+        "fidelity_codes": [],
+        "function_zero_codes": [],
+        "grounding_ungrounded": [],
+        "core_equivalent": true
+      },
+      "CF2": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 4,
+          "fidelity": 2,
+          "function_zero": 1,
+          "grounding_ungrounded": 1
+        },
+        "fidelity_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT"
+        ],
+        "function_zero_codes": [
+          "E_FUNCTION_ZERO_FUNCTION_MISSING"
+        ],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/u_func",
+            "reason": "function name/equality anchor absent"
+          }
+        ],
+        "core_equivalent": true
+      },
+      "CF3": {
+        "ok": true,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [],
+        "counts": {
+          "total": 0,
+          "fidelity": 0,
+          "function_zero": 0,
+          "grounding_ungrounded": 0
+        },
+        "fidelity_codes": [],
+        "function_zero_codes": [],
+        "grounding_ungrounded": [],
+        "core_equivalent": true
+      }
+    },
+    {
+      "case_id": "v4_f_08",
+      "expected_class": "COMPILE_OK",
+      "golden_fn_label": "z",
+      "a1_fn_label": null,
+      "CF0": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 4,
+          "fidelity": 2,
+          "function_zero": 1,
+          "grounding_ungrounded": 1
+        },
+        "fidelity_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT"
+        ],
+        "function_zero_codes": [
+          "E_FUNCTION_ZERO_FUNCTION_MISSING"
+        ],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/func_z",
+            "reason": "function name/equality anchor absent"
+          }
+        ],
+        "core_equivalent": true
+      },
+      "CF1": {
+        "ok": true,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [],
+        "counts": {
+          "total": 0,
+          "fidelity": 0,
+          "function_zero": 0,
+          "grounding_ungrounded": 0
+        },
+        "fidelity_codes": [],
+        "function_zero_codes": [],
+        "grounding_ungrounded": [],
+        "core_equivalent": true
+      },
+      "CF2": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 4,
+          "fidelity": 2,
+          "function_zero": 1,
+          "grounding_ungrounded": 1
+        },
+        "fidelity_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT"
+        ],
+        "function_zero_codes": [
+          "E_FUNCTION_ZERO_FUNCTION_MISSING"
+        ],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/func_z",
+            "reason": "function name/equality anchor absent"
+          }
+        ],
+        "core_equivalent": true
+      },
+      "CF3": {
+        "ok": true,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [],
+        "counts": {
+          "total": 0,
+          "fidelity": 0,
+          "function_zero": 0,
+          "grounding_ungrounded": 0
+        },
+        "fidelity_codes": [],
+        "function_zero_codes": [],
+        "grounding_ungrounded": [],
+        "core_equivalent": true
+      }
+    },
+    {
+      "case_id": "v4_f_10",
+      "expected_class": "COMPILE_OK",
+      "golden_fn_label": "q",
+      "a1_fn_label": null,
+      "CF0": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 4,
+          "fidelity": 2,
+          "function_zero": 1,
+          "grounding_ungrounded": 1
+        },
+        "fidelity_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT"
+        ],
+        "function_zero_codes": [
+          "E_FUNCTION_ZERO_FUNCTION_MISSING"
+        ],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/fn_q",
+            "reason": "function name/equality anchor absent"
+          }
+        ],
+        "core_equivalent": true
+      },
+      "CF1": {
+        "ok": true,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [],
+        "counts": {
+          "total": 0,
+          "fidelity": 0,
+          "function_zero": 0,
+          "grounding_ungrounded": 0
+        },
+        "fidelity_codes": [],
+        "function_zero_codes": [],
+        "grounding_ungrounded": [],
+        "core_equivalent": true
+      },
+      "CF2": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 4,
+          "fidelity": 2,
+          "function_zero": 1,
+          "grounding_ungrounded": 1
+        },
+        "fidelity_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT"
+        ],
+        "function_zero_codes": [
+          "E_FUNCTION_ZERO_FUNCTION_MISSING"
+        ],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/fn_q",
+            "reason": "function name/equality anchor absent"
+          }
+        ],
+        "core_equivalent": true
+      },
+      "CF3": {
+        "ok": true,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [],
+        "counts": {
+          "total": 0,
+          "fidelity": 0,
+          "function_zero": 0,
+          "grounding_ungrounded": 0
+        },
+        "fidelity_codes": [],
+        "function_zero_codes": [],
+        "grounding_ungrounded": [],
+        "core_equivalent": true
+      }
+    },
+    {
+      "case_id": "v4_f_12",
+      "expected_class": "COMPILE_OK",
+      "golden_fn_label": "s",
+      "a1_fn_label": null,
+      "CF0": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 4,
+          "fidelity": 2,
+          "function_zero": 1,
+          "grounding_ungrounded": 1
+        },
+        "fidelity_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT"
+        ],
+        "function_zero_codes": [
+          "E_FUNCTION_ZERO_FUNCTION_MISSING"
+        ],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/fn_s",
+            "reason": "function name/equality anchor absent"
+          }
+        ],
+        "core_equivalent": true
+      },
+      "CF1": {
+        "ok": true,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [],
+        "counts": {
+          "total": 0,
+          "fidelity": 0,
+          "function_zero": 0,
+          "grounding_ungrounded": 0
+        },
+        "fidelity_codes": [],
+        "function_zero_codes": [],
+        "grounding_ungrounded": [],
+        "core_equivalent": true
+      },
+      "CF2": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 4,
+          "fidelity": 2,
+          "function_zero": 1,
+          "grounding_ungrounded": 1
+        },
+        "fidelity_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT"
+        ],
+        "function_zero_codes": [
+          "E_FUNCTION_ZERO_FUNCTION_MISSING"
+        ],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/fn_s",
+            "reason": "function name/equality anchor absent"
+          }
+        ],
+        "core_equivalent": true
+      },
+      "CF3": {
+        "ok": true,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [],
+        "counts": {
+          "total": 0,
+          "fidelity": 0,
+          "function_zero": 0,
+          "grounding_ungrounded": 0
+        },
+        "fidelity_codes": [],
+        "function_zero_codes": [],
+        "grounding_ungrounded": [],
+        "core_equivalent": true
+      }
+    },
+    {
+      "case_id": "v4_f_13",
+      "expected_class": "COMPILE_OK",
+      "golden_fn_label": "u",
+      "a1_fn_label": null,
+      "CF0": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 4,
+          "fidelity": 2,
+          "function_zero": 1,
+          "grounding_ungrounded": 1
+        },
+        "fidelity_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT"
+        ],
+        "function_zero_codes": [
+          "E_FUNCTION_ZERO_FUNCTION_MISSING"
+        ],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/fn_u",
+            "reason": "function name/equality anchor absent"
+          }
+        ],
+        "core_equivalent": true
+      },
+      "CF1": {
+        "ok": true,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [],
+        "counts": {
+          "total": 0,
+          "fidelity": 0,
+          "function_zero": 0,
+          "grounding_ungrounded": 0
+        },
+        "fidelity_codes": [],
+        "function_zero_codes": [],
+        "grounding_ungrounded": [],
+        "core_equivalent": true
+      },
+      "CF2": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 4,
+          "fidelity": 2,
+          "function_zero": 1,
+          "grounding_ungrounded": 1
+        },
+        "fidelity_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT"
+        ],
+        "function_zero_codes": [
+          "E_FUNCTION_ZERO_FUNCTION_MISSING"
+        ],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/fn_u",
+            "reason": "function name/equality anchor absent"
+          }
+        ],
+        "core_equivalent": true
+      },
+      "CF3": {
+        "ok": true,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [],
+        "counts": {
+          "total": 0,
+          "fidelity": 0,
+          "function_zero": 0,
+          "grounding_ungrounded": 0
+        },
+        "fidelity_codes": [],
+        "function_zero_codes": [],
+        "grounding_ungrounded": [],
+        "core_equivalent": true
+      }
+    },
+    {
+      "case_id": "v4_f_14",
+      "expected_class": "COMPILE_OK",
+      "golden_fn_label": "v",
+      "a1_fn_label": null,
+      "CF0": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 4,
+          "fidelity": 2,
+          "function_zero": 1,
+          "grounding_ungrounded": 1
+        },
+        "fidelity_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT"
+        ],
+        "function_zero_codes": [
+          "E_FUNCTION_ZERO_FUNCTION_MISSING"
+        ],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/fn_v",
+            "reason": "function name/equality anchor absent"
+          }
+        ],
+        "core_equivalent": true
+      },
+      "CF1": {
+        "ok": true,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [],
+        "counts": {
+          "total": 0,
+          "fidelity": 0,
+          "function_zero": 0,
+          "grounding_ungrounded": 0
+        },
+        "fidelity_codes": [],
+        "function_zero_codes": [],
+        "grounding_ungrounded": [],
+        "core_equivalent": true
+      },
+      "CF2": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 4,
+          "fidelity": 2,
+          "function_zero": 1,
+          "grounding_ungrounded": 1
+        },
+        "fidelity_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT"
+        ],
+        "function_zero_codes": [
+          "E_FUNCTION_ZERO_FUNCTION_MISSING"
+        ],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/fn_v",
+            "reason": "function name/equality anchor absent"
+          }
+        ],
+        "core_equivalent": true
+      },
+      "CF3": {
+        "ok": true,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [],
+        "counts": {
+          "total": 0,
+          "fidelity": 0,
+          "function_zero": 0,
+          "grounding_ungrounded": 0
+        },
+        "fidelity_codes": [],
+        "function_zero_codes": [],
+        "grounding_ungrounded": [],
+        "core_equivalent": true
+      }
+    },
+    {
+      "case_id": "v4_f_15",
+      "expected_class": "COMPILE_OK",
+      "golden_fn_label": "w",
+      "a1_fn_label": null,
+      "CF0": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 4,
+          "fidelity": 2,
+          "function_zero": 1,
+          "grounding_ungrounded": 1
+        },
+        "fidelity_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT"
+        ],
+        "function_zero_codes": [
+          "E_FUNCTION_ZERO_FUNCTION_MISSING"
+        ],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/func_w",
+            "reason": "function name/equality anchor absent"
+          }
+        ],
+        "core_equivalent": true
+      },
+      "CF1": {
+        "ok": true,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [],
+        "counts": {
+          "total": 0,
+          "fidelity": 0,
+          "function_zero": 0,
+          "grounding_ungrounded": 0
+        },
+        "fidelity_codes": [],
+        "function_zero_codes": [],
+        "grounding_ungrounded": [],
+        "core_equivalent": true
+      },
+      "CF2": {
+        "ok": false,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "counts": {
+          "total": 4,
+          "fidelity": 2,
+          "function_zero": 1,
+          "grounding_ungrounded": 1
+        },
+        "fidelity_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT"
+        ],
+        "function_zero_codes": [
+          "E_FUNCTION_ZERO_FUNCTION_MISSING"
+        ],
+        "grounding_ungrounded": [
+          {
+            "path": "/entities/func_w",
+            "reason": "function name/equality anchor absent"
+          }
+        ],
+        "core_equivalent": true
+      },
+      "CF3": {
+        "ok": true,
+        "engineUnsupported": false,
+        "compileError": null,
+        "errors": [],
+        "counts": {
+          "total": 0,
+          "fidelity": 0,
+          "function_zero": 0,
+          "grounding_ungrounded": 0
+        },
+        "fidelity_codes": [],
+        "function_zero_codes": [],
+        "grounding_ungrounded": [],
+        "core_equivalent": true
+      }
+    }
+  ]
+}
