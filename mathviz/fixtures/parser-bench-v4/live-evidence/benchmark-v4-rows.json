@@ -1,0 +1,841 @@
+[
+  {
+    "case_id": "v4_g_01",
+    "expected_class": "ENGINE_UNSUPPORTED",
+    "actual_class": "ENGINE_UNSUPPORTED",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": [
+      "E_CAPABILITY_UNSUPPORTED"
+    ]
+  },
+  {
+    "case_id": "v4_g_02",
+    "expected_class": "ENGINE_UNSUPPORTED",
+    "actual_class": "ENGINE_UNSUPPORTED",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": [
+      "E_CAPABILITY_UNSUPPORTED"
+    ]
+  },
+  {
+    "case_id": "v4_g_03",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_04",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_05",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_06",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_07",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_08",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_09",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_10",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_11",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_12",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_13",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_14",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_15",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_16",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_17",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_18",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_19",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 1,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_20",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_21",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_22",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_23",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_g_24",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_01",
+    "expected_class": "ENGINE_UNSUPPORTED",
+    "actual_class": "ENGINE_UNSUPPORTED",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": [
+      "E_MATH_CONSTRAINT"
+    ]
+  },
+  {
+    "case_id": "v4_m_02",
+    "expected_class": "ENGINE_UNSUPPORTED",
+    "actual_class": "ENGINE_UNSUPPORTED",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": [
+      "E_MATH_CONSTRAINT"
+    ]
+  },
+  {
+    "case_id": "v4_m_03",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_04",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_05",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_06",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_07",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_08",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_09",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_10",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_11",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 1,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_12",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_13",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_14",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_15",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_16",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_17",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_18",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_19",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_20",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_21",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_22",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_23",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_m_24",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_f_01",
+    "expected_class": "ENGINE_UNSUPPORTED",
+    "actual_class": "KNOWN_LIMITATION_EXPECTED_REJECT",
+    "final_candidate_used": true,
+    "repair_calls": 1,
+    "core_match": false,
+    "goal_capability_match": true,
+    "dual_group": "B_DUAL_ENGINE_UNSUPPORTED",
+    "errors": [
+      "E_SOURCE_COMPLETENESS",
+      "E_FUNCTION_ZERO_FUNCTION_MISSING",
+      "E_CAPABILITY_UNSUPPORTED",
+      "E_PROVENANCE_GROUNDING"
+    ]
+  },
+  {
+    "case_id": "v4_f_02",
+    "expected_class": "ENGINE_UNSUPPORTED",
+    "actual_class": "ENGINE_UNSUPPORTED",
+    "final_candidate_used": true,
+    "repair_calls": 1,
+    "core_match": false,
+    "goal_capability_match": true,
+    "dual_group": "B_DUAL_ENGINE_UNSUPPORTED",
+    "errors": [
+      "E_CAPABILITY_UNSUPPORTED"
+    ]
+  },
+  {
+    "case_id": "v4_f_03",
+    "expected_class": "KNOWN_LIMITATION_EXPECTED_REJECT",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": "C_DUAL_KNOWN_LIMITATION",
+    "errors": []
+  },
+  {
+    "case_id": "v4_f_04",
+    "expected_class": "KNOWN_LIMITATION_EXPECTED_REJECT",
+    "actual_class": "KNOWN_LIMITATION_EXPECTED_REJECT",
+    "final_candidate_used": true,
+    "repair_calls": 1,
+    "core_match": false,
+    "goal_capability_match": true,
+    "dual_group": "C_DUAL_KNOWN_LIMITATION",
+    "errors": [
+      "E_SOURCE_COMPLETENESS",
+      "E_FUNCTION_ZERO_FUNCTION_MISSING",
+      "E_FUNCTION_ZERO_GOAL_BINDING",
+      "E_BINDING",
+      "E_PROVENANCE_GROUNDING"
+    ]
+  },
+  {
+    "case_id": "v4_f_05",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 1,
+    "core_match": false,
+    "goal_capability_match": true,
+    "dual_group": "A_DUAL_COMPILE_OK",
+    "errors": []
+  },
+  {
+    "case_id": "v4_f_06",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": "A_DUAL_COMPILE_OK",
+    "errors": []
+  },
+  {
+    "case_id": "v4_f_07",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": "A_DUAL_COMPILE_OK",
+    "errors": []
+  },
+  {
+    "case_id": "v4_f_08",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "KNOWN_LIMITATION_EXPECTED_REJECT",
+    "final_candidate_used": true,
+    "repair_calls": 1,
+    "core_match": false,
+    "goal_capability_match": true,
+    "dual_group": "A_DUAL_COMPILE_OK",
+    "errors": [
+      "E_SOURCE_COMPLETENESS",
+      "E_FUNCTION_ZERO_FUNCTION_MISSING",
+      "E_PROVENANCE_GROUNDING"
+    ]
+  },
+  {
+    "case_id": "v4_f_09",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": "A_DUAL_COMPILE_OK",
+    "errors": []
+  },
+  {
+    "case_id": "v4_f_10",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "KNOWN_LIMITATION_EXPECTED_REJECT",
+    "final_candidate_used": true,
+    "repair_calls": 1,
+    "core_match": false,
+    "goal_capability_match": true,
+    "dual_group": "A_DUAL_COMPILE_OK",
+    "errors": [
+      "E_SOURCE_COMPLETENESS",
+      "E_FUNCTION_ZERO_FUNCTION_MISSING",
+      "E_PROVENANCE_GROUNDING"
+    ]
+  },
+  {
+    "case_id": "v4_f_11",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": "A_DUAL_COMPILE_OK",
+    "errors": []
+  },
+  {
+    "case_id": "v4_f_12",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "KNOWN_LIMITATION_EXPECTED_REJECT",
+    "final_candidate_used": true,
+    "repair_calls": 1,
+    "core_match": false,
+    "goal_capability_match": true,
+    "dual_group": "A_DUAL_COMPILE_OK",
+    "errors": [
+      "E_SOURCE_COMPLETENESS",
+      "E_FUNCTION_ZERO_FUNCTION_MISSING",
+      "E_PROVENANCE_GROUNDING"
+    ]
+  },
+  {
+    "case_id": "v4_f_13",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "KNOWN_LIMITATION_EXPECTED_REJECT",
+    "final_candidate_used": true,
+    "repair_calls": 1,
+    "core_match": false,
+    "goal_capability_match": true,
+    "dual_group": "A_DUAL_COMPILE_OK",
+    "errors": [
+      "E_SOURCE_COMPLETENESS",
+      "E_FUNCTION_ZERO_FUNCTION_MISSING",
+      "E_PROVENANCE_GROUNDING"
+    ]
+  },
+  {
+    "case_id": "v4_f_14",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "KNOWN_LIMITATION_EXPECTED_REJECT",
+    "final_candidate_used": true,
+    "repair_calls": 1,
+    "core_match": false,
+    "goal_capability_match": true,
+    "dual_group": "A_DUAL_COMPILE_OK",
+    "errors": [
+      "E_SOURCE_COMPLETENESS",
+      "E_FUNCTION_ZERO_FUNCTION_MISSING",
+      "E_FUNCTION_ZERO_GOAL_BINDING",
+      "E_BINDING",
+      "E_PROVENANCE_GROUNDING"
+    ]
+  },
+  {
+    "case_id": "v4_f_15",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "KNOWN_LIMITATION_EXPECTED_REJECT",
+    "final_candidate_used": true,
+    "repair_calls": 1,
+    "core_match": false,
+    "goal_capability_match": true,
+    "dual_group": "A_DUAL_COMPILE_OK",
+    "errors": [
+      "E_SOURCE_COMPLETENESS",
+      "E_FUNCTION_ZERO_FUNCTION_MISSING",
+      "E_PROVENANCE_GROUNDING"
+    ]
+  },
+  {
+    "case_id": "v4_f_16",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_f_17",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_f_18",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_f_19",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_f_20",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_f_21",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_f_22",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_f_23",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  },
+  {
+    "case_id": "v4_f_24",
+    "expected_class": "COMPILE_OK",
+    "actual_class": "COMPILE_OK",
+    "final_candidate_used": true,
+    "repair_calls": 0,
+    "core_match": true,
+    "goal_capability_match": true,
+    "dual_group": null,
+    "errors": []
+  }
+]

@@ -1,0 +1,160 @@
+{
+  "gate": "G20_P5_3_benchmark_v4_live",
+  "mode": "live",
+  "provider": "openai-compat:deepseek-v4.1-flash",
+  "freeze_commit": "29aedb25c6bbd530f58760ac838ecec4871e2ec3",
+  "freeze_verified_commit": "877bf6dd0ee30d4adca62d79cded0eaf657edf64",
+  "model": "deepseek-v4.1-flash",
+  "finished_at_utc": "2026-09-29T01:19:30.065Z",
+  "tokens": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+  },
+  "denominators": {
+    "total": 72,
+    "compile_ok": 64,
+    "engine_unsupported": 6,
+    "known_limitation": 2,
+    "goal_capability_eligible": 70,
+    "dual_all": 15,
+    "dual_compile_ok": 11,
+    "dual_engine_unsupported": 2,
+    "dual_known_limitation": 2,
+    "bare_equation_controls": 9
+  },
+  "metrics": {
+    "final_schema_semantic_valid": {
+      "ok": 64,
+      "total": 72,
+      "rate": 0.8888888888888888
+    },
+    "core_semantic_match": {
+      "matched": 57,
+      "total": 64,
+      "rate": 0.890625
+    },
+    "supported_compile_success": {
+      "ok": 58,
+      "total": 64,
+      "rate": 0.90625
+    },
+    "goal_capability_accuracy": {
+      "ok": 70,
+      "total": 70,
+      "rate": 1
+    },
+    "dual_detected_or_correct": {
+      "ok": 13,
+      "total": 15
+    },
+    "dual_compile_ok_accepted_core": {
+      "ok": 4,
+      "total": 11,
+      "rate": 0.36363636363636365
+    },
+    "dual_engine_unsupported_correct": {
+      "ok": 0,
+      "total": 2
+    },
+    "dual_known_limitation_correct": {
+      "ok": 0,
+      "total": 2
+    },
+    "bare_equation_overconstraint": 0,
+    "unsupported_refused_correctly": 5,
+    "known_limitation_rejected": 0,
+    "g19_final_grounding": {
+      "grounded": 247,
+      "total": 255,
+      "rate": 0.9686274509803922
+    },
+    "answer_leaks": 0,
+    "silent_fidelity_errors": 1,
+    "repair_semantic_regressions": 10,
+    "max_repair_calls": 1
+  },
+  "checks": [
+    {
+      "name": "CASE_COUNT",
+      "pass": true
+    },
+    {
+      "name": "CLASS_DISTRIBUTION",
+      "pass": true
+    },
+    {
+      "name": "EXPECTED_ACTUAL_MATRIX",
+      "pass": false
+    },
+    {
+      "name": "FINAL_SCHEMA_SEMANTIC_VALIDITY",
+      "pass": false
+    },
+    {
+      "name": "CORE_SEMANTIC_MATCH",
+      "pass": false
+    },
+    {
+      "name": "SUPPORTED_COMPILE_SUCCESS",
+      "pass": true
+    },
+    {
+      "name": "GOAL_CAPABILITY_ACCURACY",
+      "pass": true
+    },
+    {
+      "name": "DUAL_DETECTED_OR_CORRECT",
+      "pass": false
+    },
+    {
+      "name": "DUAL_SPLIT_DENOMINATORS",
+      "pass": true
+    },
+    {
+      "name": "DUAL_COMPILE_OK_ACCEPTED_CORE",
+      "pass": false
+    },
+    {
+      "name": "DUAL_ENGINE_UNSUPPORTED_CORRECT",
+      "pass": false
+    },
+    {
+      "name": "DUAL_KNOWN_LIMITATION_CORRECT",
+      "pass": false
+    },
+    {
+      "name": "BARE_EQUATION_CONTROL",
+      "pass": true
+    },
+    {
+      "name": "ENGINE_UNSUPPORTED",
+      "pass": false
+    },
+    {
+      "name": "KNOWN_LIMITATION",
+      "pass": false
+    },
+    {
+      "name": "G19_FINAL_GROUNDING",
+      "pass": false
+    },
+    {
+      "name": "ANSWER_LEAKS",
+      "pass": true
+    },
+    {
+      "name": "SILENT_FIDELITY_ERRORS",
+      "pass": false
+    },
+    {
+      "name": "REPAIR_SEMANTIC_REGRESSIONS",
+      "pass": false
+    },
+    {
+      "name": "REPAIR_BUDGET",
+      "pass": true
+    }
+  ],
+  "result": "FAIL"
+}
