@@ -1,0 +1,4587 @@
+{
+  "stage": "P5_4_STAGE1_FORENSICS",
+  "generated_from": "frozen evidence 8b10a766 + freeze blob 877bf6dd",
+  "provider_requests": 0,
+  "integrity": {
+    "cases": 72,
+    "replay_matches_evidence": 72,
+    "mismatches": []
+  },
+  "root_cause_distribution": {
+    "REPAIR_REGRESSION": 10,
+    "EXPECTATION_DISPUTE": 1
+  },
+  "matrix": [
+    {
+      "case_id": "v4_g_01",
+      "expected_class": "ENGINE_UNSUPPORTED",
+      "expected_error": "E_CAPABILITY_UNSUPPORTED",
+      "expected_stage": "compiler",
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": "E_CAPABILITY_UNSUPPORTED",
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": false,
+          "engine_unsupported": true,
+          "error_codes": [
+            "E_CAPABILITY_UNSUPPORTED"
+          ]
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "ENGINE_UNSUPPORTED",
+        "outcome": "ENGINE_UNSUPPORTED",
+        "accepted": false,
+        "engine_unsupported": true,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_02",
+      "expected_class": "ENGINE_UNSUPPORTED",
+      "expected_error": "E_CAPABILITY_UNSUPPORTED",
+      "expected_stage": "compiler",
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": "E_CAPABILITY_UNSUPPORTED",
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": false,
+          "engine_unsupported": true,
+          "error_codes": [
+            "E_CAPABILITY_UNSUPPORTED"
+          ]
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "ENGINE_UNSUPPORTED",
+        "outcome": "ENGINE_UNSUPPORTED",
+        "accepted": false,
+        "engine_unsupported": true,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_03",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_04",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_05",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_06",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_07",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_08",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_09",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_10",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_11",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_12",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_13",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_14",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_15",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_16",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_17",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_18",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_19",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 2,
+            "total": 3,
+            "ungrounded": [
+              {
+                "path": "/entities/S2",
+                "reason": "label not locally grounded to coordinate pair"
+              }
+            ]
+          },
+          "ok": false,
+          "engine_unsupported": false,
+          "error_codes": [
+            "E_PROVENANCE_GROUNDING"
+          ]
+        }
+      },
+      "repair": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_20",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_21",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_22",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_23",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_g_24",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 3,
+            "total": 3,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_01",
+      "expected_class": "ENGINE_UNSUPPORTED",
+      "expected_error": "E_MATH_CONSTRAINT",
+      "expected_stage": "compiler",
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": "E_MATH_CONSTRAINT",
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": false,
+          "engine_unsupported": true,
+          "error_codes": [
+            "E_MATH_CONSTRAINT"
+          ]
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "ENGINE_UNSUPPORTED",
+        "outcome": "ENGINE_UNSUPPORTED",
+        "accepted": false,
+        "engine_unsupported": true,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_02",
+      "expected_class": "ENGINE_UNSUPPORTED",
+      "expected_error": "E_MATH_CONSTRAINT",
+      "expected_stage": "compiler",
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": "E_MATH_CONSTRAINT",
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": false,
+          "engine_unsupported": true,
+          "error_codes": [
+            "E_MATH_CONSTRAINT"
+          ]
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "ENGINE_UNSUPPORTED",
+        "outcome": "ENGINE_UNSUPPORTED",
+        "accepted": false,
+        "engine_unsupported": true,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_03",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_04",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_05",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_06",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_07",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_08",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_09",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_10",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_11",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 1,
+            "total": 6,
+            "ungrounded": [
+              {
+                "path": "/source_facts/vA",
+                "reason": "invalid/mismatched source slice"
+              },
+              {
+                "path": "/source_facts/xB0",
+                "reason": "invalid/mismatched source slice"
+              },
+              {
+                "path": "/source_facts/vB",
+                "reason": "invalid/mismatched source slice"
+              },
+              {
+                "path": "/entities/A",
+                "reason": "invalid/mismatched source slice"
+              },
+              {
+                "path": "/entities/B",
+                "reason": "invalid/mismatched source slice"
+              }
+            ]
+          },
+          "ok": false,
+          "engine_unsupported": false,
+          "error_codes": [
+            "E_PROVENANCE",
+            "E_PROVENANCE",
+            "E_PROVENANCE",
+            "E_PROVENANCE",
+            "E_PROVENANCE"
+          ]
+        }
+      },
+      "repair": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_12",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_13",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_14",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_15",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_16",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_17",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_18",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_19",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_20",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_21",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_22",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_23",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_m_24",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 6,
+            "total": 6,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_f_01",
+      "expected_class": "ENGINE_UNSUPPORTED",
+      "expected_error": "E_CAPABILITY_UNSUPPORTED",
+      "expected_stage": "compiler",
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": false,
+          "fidelity_findings": 2,
+          "fidelity_codes": [
+            "E_SOURCE_COMPLETENESS",
+            "E_SOURCE_IRRELEVANT"
+          ],
+          "function_zero_errors": [
+            "E_FUNCTION_ZERO_FUNCTION_MISSING"
+          ],
+          "compile_error": "E_CAPABILITY_UNSUPPORTED",
+          "grounding": {
+            "grounded": 1,
+            "total": 2,
+            "ungrounded": [
+              {
+                "path": "/entities/fn_p",
+                "reason": "function name/equality anchor absent"
+              }
+            ]
+          },
+          "ok": false,
+          "engine_unsupported": false,
+          "error_codes": [
+            "E_SOURCE_COMPLETENESS",
+            "E_SOURCE_IRRELEVANT",
+            "E_FUNCTION_ZERO_FUNCTION_MISSING",
+            "E_CAPABILITY_UNSUPPORTED",
+            "E_PROVENANCE_GROUNDING"
+          ]
+        }
+      },
+      "repair": {
+        "fired": true,
+        "parsed_json": true,
+        "core": false
+      },
+      "final": {
+        "status": "PARSE_FAILED",
+        "outcome": "KNOWN_LIMITATION_EXPECTED_REJECT",
+        "accepted": false,
+        "engine_unsupported": false,
+        "core": false,
+        "goal": true,
+        "fidelity_findings": 1,
+        "grounding_ok": false,
+        "grounding_ungrounded": 1
+      },
+      "dual": {
+        "group": "B_DUAL",
+        "a_ok": null,
+        "b_ok": false,
+        "c_ok": null,
+        "duality_findings": 1,
+        "detected": true
+      },
+      "root_cause": "REPAIR_REGRESSION",
+      "secondary_causes": [
+        "EXPECTATION_DISPUTE"
+      ],
+      "rationale": "A1 candidate already core-matched; repair destroyed it"
+    },
+    {
+      "case_id": "v4_f_02",
+      "expected_class": "ENGINE_UNSUPPORTED",
+      "expected_error": "E_CAPABILITY_UNSUPPORTED",
+      "expected_stage": "compiler",
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": false,
+          "fidelity_findings": 2,
+          "fidelity_codes": [
+            "E_SOURCE_COMPLETENESS",
+            "E_SOURCE_IRRELEVANT"
+          ],
+          "function_zero_errors": [
+            "E_FUNCTION_ZERO_FUNCTION_MISSING"
+          ],
+          "compile_error": "E_CAPABILITY_UNSUPPORTED",
+          "grounding": {
+            "grounded": 1,
+            "total": 2,
+            "ungrounded": [
+              {
+                "path": "/entities/fn_q",
+                "reason": "function name/equality anchor absent"
+              }
+            ]
+          },
+          "ok": false,
+          "engine_unsupported": false,
+          "error_codes": [
+            "E_SOURCE_COMPLETENESS",
+            "E_SOURCE_IRRELEVANT",
+            "E_FUNCTION_ZERO_FUNCTION_MISSING",
+            "E_CAPABILITY_UNSUPPORTED",
+            "E_PROVENANCE_GROUNDING"
+          ]
+        }
+      },
+      "repair": {
+        "fired": true,
+        "parsed_json": true,
+        "core": false
+      },
+      "final": {
+        "status": "ENGINE_UNSUPPORTED",
+        "outcome": "ENGINE_UNSUPPORTED",
+        "accepted": false,
+        "engine_unsupported": true,
+        "core": false,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": {
+        "group": "B_DUAL",
+        "a_ok": null,
+        "b_ok": false,
+        "c_ok": null,
+        "duality_findings": 0,
+        "detected": false
+      },
+      "root_cause": "REPAIR_REGRESSION",
+      "secondary_causes": [],
+      "rationale": "A1 candidate already core-matched; repair destroyed it"
+    },
+    {
+      "case_id": "v4_f_03",
+      "expected_class": "KNOWN_LIMITATION_EXPECTED_REJECT",
+      "expected_error": "E_PROVENANCE_GROUNDING",
+      "expected_stage": "G19",
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 2,
+            "total": 2,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": {
+        "group": "C_DUAL",
+        "a_ok": null,
+        "b_ok": null,
+        "c_ok": false,
+        "duality_findings": 0,
+        "detected": true
+      },
+      "root_cause": "EXPECTATION_DISPUTE",
+      "secondary_causes": [],
+      "rationale": "expected rejection, parser accepted; adjudicated separately (H1..H4)"
+    },
+    {
+      "case_id": "v4_f_04",
+      "expected_class": "KNOWN_LIMITATION_EXPECTED_REJECT",
+      "expected_error": "E_PROVENANCE_GROUNDING",
+      "expected_stage": "G19",
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": false,
+          "fidelity_findings": 2,
+          "fidelity_codes": [
+            "E_SOURCE_COMPLETENESS",
+            "E_SOURCE_IRRELEVANT"
+          ],
+          "function_zero_errors": [
+            "E_FUNCTION_ZERO_FUNCTION_MISSING"
+          ],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 1,
+            "total": 2,
+            "ungrounded": [
+              {
+                "path": "/entities/fn_s",
+                "reason": "function name/equality anchor absent"
+              }
+            ]
+          },
+          "ok": false,
+          "engine_unsupported": false,
+          "error_codes": [
+            "E_SOURCE_COMPLETENESS",
+            "E_SOURCE_IRRELEVANT",
+            "E_FUNCTION_ZERO_FUNCTION_MISSING",
+            "E_PROVENANCE_GROUNDING"
+          ]
+        }
+      },
+      "repair": {
+        "fired": true,
+        "parsed_json": true,
+        "core": false
+      },
+      "final": {
+        "status": "PARSE_FAILED",
+        "outcome": "KNOWN_LIMITATION_EXPECTED_REJECT",
+        "accepted": false,
+        "engine_unsupported": false,
+        "core": false,
+        "goal": true,
+        "fidelity_findings": 1,
+        "grounding_ok": false,
+        "grounding_ungrounded": 1
+      },
+      "dual": {
+        "group": "C_DUAL",
+        "a_ok": null,
+        "b_ok": null,
+        "c_ok": false,
+        "duality_findings": 2,
+        "detected": true
+      },
+      "root_cause": "REPAIR_REGRESSION",
+      "secondary_causes": [],
+      "rationale": "A1 candidate already core-matched; repair destroyed it"
+    },
+    {
+      "case_id": "v4_f_05",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": false,
+          "fidelity_findings": 2,
+          "fidelity_codes": [
+            "E_SOURCE_COMPLETENESS",
+            "E_SOURCE_IRRELEVANT"
+          ],
+          "function_zero_errors": [
+            "E_FUNCTION_ZERO_FUNCTION_MISSING"
+          ],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 1,
+            "total": 2,
+            "ungrounded": [
+              {
+                "path": "/entities/u_func",
+                "reason": "function name/equality anchor absent"
+              }
+            ]
+          },
+          "ok": false,
+          "engine_unsupported": false,
+          "error_codes": [
+            "E_SOURCE_COMPLETENESS",
+            "E_SOURCE_IRRELEVANT",
+            "E_FUNCTION_ZERO_FUNCTION_MISSING",
+            "E_PROVENANCE_GROUNDING"
+          ]
+        }
+      },
+      "repair": {
+        "fired": true,
+        "parsed_json": true,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": false,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": {
+        "group": "A_DUAL",
+        "a_ok": false,
+        "b_ok": null,
+        "c_ok": null,
+        "duality_findings": 0,
+        "detected": false
+      },
+      "root_cause": "REPAIR_REGRESSION",
+      "secondary_causes": [],
+      "rationale": "A1 candidate already core-matched; repair destroyed it"
+    },
+    {
+      "case_id": "v4_f_06",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 2,
+            "total": 2,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": {
+        "group": "A_DUAL",
+        "a_ok": true,
+        "b_ok": null,
+        "c_ok": null,
+        "duality_findings": 0,
+        "detected": true
+      },
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_f_07",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 2,
+            "total": 2,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": {
+        "group": "A_DUAL",
+        "a_ok": true,
+        "b_ok": null,
+        "c_ok": null,
+        "duality_findings": 0,
+        "detected": true
+      },
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_f_08",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": false,
+          "fidelity_findings": 2,
+          "fidelity_codes": [
+            "E_SOURCE_COMPLETENESS",
+            "E_SOURCE_IRRELEVANT"
+          ],
+          "function_zero_errors": [
+            "E_FUNCTION_ZERO_FUNCTION_MISSING"
+          ],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 1,
+            "total": 2,
+            "ungrounded": [
+              {
+                "path": "/entities/func_z",
+                "reason": "function name/equality anchor absent"
+              }
+            ]
+          },
+          "ok": false,
+          "engine_unsupported": false,
+          "error_codes": [
+            "E_SOURCE_COMPLETENESS",
+            "E_SOURCE_IRRELEVANT",
+            "E_FUNCTION_ZERO_FUNCTION_MISSING",
+            "E_PROVENANCE_GROUNDING"
+          ]
+        }
+      },
+      "repair": {
+        "fired": true,
+        "parsed_json": true,
+        "core": false
+      },
+      "final": {
+        "status": "PARSE_FAILED",
+        "outcome": "KNOWN_LIMITATION_EXPECTED_REJECT",
+        "accepted": false,
+        "engine_unsupported": false,
+        "core": false,
+        "goal": true,
+        "fidelity_findings": 1,
+        "grounding_ok": false,
+        "grounding_ungrounded": 1
+      },
+      "dual": {
+        "group": "A_DUAL",
+        "a_ok": false,
+        "b_ok": null,
+        "c_ok": null,
+        "duality_findings": 1,
+        "detected": true
+      },
+      "root_cause": "REPAIR_REGRESSION",
+      "secondary_causes": [
+        "EXPECTATION_DISPUTE"
+      ],
+      "rationale": "A1 candidate already core-matched; repair destroyed it"
+    },
+    {
+      "case_id": "v4_f_09",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 2,
+            "total": 2,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": {
+        "group": "A_DUAL",
+        "a_ok": true,
+        "b_ok": null,
+        "c_ok": null,
+        "duality_findings": 0,
+        "detected": true
+      },
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_f_10",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": false,
+          "fidelity_findings": 2,
+          "fidelity_codes": [
+            "E_SOURCE_COMPLETENESS",
+            "E_SOURCE_IRRELEVANT"
+          ],
+          "function_zero_errors": [
+            "E_FUNCTION_ZERO_FUNCTION_MISSING"
+          ],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 1,
+            "total": 2,
+            "ungrounded": [
+              {
+                "path": "/entities/fn_q",
+                "reason": "function name/equality anchor absent"
+              }
+            ]
+          },
+          "ok": false,
+          "engine_unsupported": false,
+          "error_codes": [
+            "E_SOURCE_COMPLETENESS",
+            "E_SOURCE_IRRELEVANT",
+            "E_FUNCTION_ZERO_FUNCTION_MISSING",
+            "E_PROVENANCE_GROUNDING"
+          ]
+        }
+      },
+      "repair": {
+        "fired": true,
+        "parsed_json": true,
+        "core": false
+      },
+      "final": {
+        "status": "PARSE_FAILED",
+        "outcome": "KNOWN_LIMITATION_EXPECTED_REJECT",
+        "accepted": false,
+        "engine_unsupported": false,
+        "core": false,
+        "goal": true,
+        "fidelity_findings": 1,
+        "grounding_ok": false,
+        "grounding_ungrounded": 1
+      },
+      "dual": {
+        "group": "A_DUAL",
+        "a_ok": false,
+        "b_ok": null,
+        "c_ok": null,
+        "duality_findings": 1,
+        "detected": true
+      },
+      "root_cause": "REPAIR_REGRESSION",
+      "secondary_causes": [
+        "EXPECTATION_DISPUTE"
+      ],
+      "rationale": "A1 candidate already core-matched; repair destroyed it"
+    },
+    {
+      "case_id": "v4_f_11",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 2,
+            "total": 2,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": {
+        "group": "A_DUAL",
+        "a_ok": true,
+        "b_ok": null,
+        "c_ok": null,
+        "duality_findings": 0,
+        "detected": true
+      },
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_f_12",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": false,
+          "fidelity_findings": 2,
+          "fidelity_codes": [
+            "E_SOURCE_COMPLETENESS",
+            "E_SOURCE_IRRELEVANT"
+          ],
+          "function_zero_errors": [
+            "E_FUNCTION_ZERO_FUNCTION_MISSING"
+          ],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 1,
+            "total": 2,
+            "ungrounded": [
+              {
+                "path": "/entities/fn_s",
+                "reason": "function name/equality anchor absent"
+              }
+            ]
+          },
+          "ok": false,
+          "engine_unsupported": false,
+          "error_codes": [
+            "E_SOURCE_COMPLETENESS",
+            "E_SOURCE_IRRELEVANT",
+            "E_FUNCTION_ZERO_FUNCTION_MISSING",
+            "E_PROVENANCE_GROUNDING"
+          ]
+        }
+      },
+      "repair": {
+        "fired": true,
+        "parsed_json": true,
+        "core": false
+      },
+      "final": {
+        "status": "PARSE_FAILED",
+        "outcome": "KNOWN_LIMITATION_EXPECTED_REJECT",
+        "accepted": false,
+        "engine_unsupported": false,
+        "core": false,
+        "goal": true,
+        "fidelity_findings": 1,
+        "grounding_ok": false,
+        "grounding_ungrounded": 1
+      },
+      "dual": {
+        "group": "A_DUAL",
+        "a_ok": false,
+        "b_ok": null,
+        "c_ok": null,
+        "duality_findings": 1,
+        "detected": true
+      },
+      "root_cause": "REPAIR_REGRESSION",
+      "secondary_causes": [
+        "EXPECTATION_DISPUTE"
+      ],
+      "rationale": "A1 candidate already core-matched; repair destroyed it"
+    },
+    {
+      "case_id": "v4_f_13",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": false,
+          "fidelity_findings": 2,
+          "fidelity_codes": [
+            "E_SOURCE_COMPLETENESS",
+            "E_SOURCE_IRRELEVANT"
+          ],
+          "function_zero_errors": [
+            "E_FUNCTION_ZERO_FUNCTION_MISSING"
+          ],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 1,
+            "total": 2,
+            "ungrounded": [
+              {
+                "path": "/entities/fn_u",
+                "reason": "function name/equality anchor absent"
+              }
+            ]
+          },
+          "ok": false,
+          "engine_unsupported": false,
+          "error_codes": [
+            "E_SOURCE_COMPLETENESS",
+            "E_SOURCE_IRRELEVANT",
+            "E_FUNCTION_ZERO_FUNCTION_MISSING",
+            "E_PROVENANCE_GROUNDING"
+          ]
+        }
+      },
+      "repair": {
+        "fired": true,
+        "parsed_json": true,
+        "core": false
+      },
+      "final": {
+        "status": "PARSE_FAILED",
+        "outcome": "KNOWN_LIMITATION_EXPECTED_REJECT",
+        "accepted": false,
+        "engine_unsupported": false,
+        "core": false,
+        "goal": true,
+        "fidelity_findings": 1,
+        "grounding_ok": false,
+        "grounding_ungrounded": 1
+      },
+      "dual": {
+        "group": "A_DUAL",
+        "a_ok": false,
+        "b_ok": null,
+        "c_ok": null,
+        "duality_findings": 1,
+        "detected": true
+      },
+      "root_cause": "REPAIR_REGRESSION",
+      "secondary_causes": [
+        "EXPECTATION_DISPUTE"
+      ],
+      "rationale": "A1 candidate already core-matched; repair destroyed it"
+    },
+    {
+      "case_id": "v4_f_14",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": false,
+          "fidelity_findings": 2,
+          "fidelity_codes": [
+            "E_SOURCE_COMPLETENESS",
+            "E_SOURCE_IRRELEVANT"
+          ],
+          "function_zero_errors": [
+            "E_FUNCTION_ZERO_FUNCTION_MISSING"
+          ],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 1,
+            "total": 2,
+            "ungrounded": [
+              {
+                "path": "/entities/fn_v",
+                "reason": "function name/equality anchor absent"
+              }
+            ]
+          },
+          "ok": false,
+          "engine_unsupported": false,
+          "error_codes": [
+            "E_SOURCE_COMPLETENESS",
+            "E_SOURCE_IRRELEVANT",
+            "E_FUNCTION_ZERO_FUNCTION_MISSING",
+            "E_PROVENANCE_GROUNDING"
+          ]
+        }
+      },
+      "repair": {
+        "fired": true,
+        "parsed_json": true,
+        "core": false
+      },
+      "final": {
+        "status": "PARSE_FAILED",
+        "outcome": "KNOWN_LIMITATION_EXPECTED_REJECT",
+        "accepted": false,
+        "engine_unsupported": false,
+        "core": false,
+        "goal": true,
+        "fidelity_findings": 1,
+        "grounding_ok": false,
+        "grounding_ungrounded": 1
+      },
+      "dual": {
+        "group": "A_DUAL",
+        "a_ok": false,
+        "b_ok": null,
+        "c_ok": null,
+        "duality_findings": 2,
+        "detected": true
+      },
+      "root_cause": "REPAIR_REGRESSION",
+      "secondary_causes": [
+        "EXPECTATION_DISPUTE"
+      ],
+      "rationale": "A1 candidate already core-matched; repair destroyed it"
+    },
+    {
+      "case_id": "v4_f_15",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": false,
+          "fidelity_findings": 2,
+          "fidelity_codes": [
+            "E_SOURCE_COMPLETENESS",
+            "E_SOURCE_IRRELEVANT"
+          ],
+          "function_zero_errors": [
+            "E_FUNCTION_ZERO_FUNCTION_MISSING"
+          ],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 1,
+            "total": 2,
+            "ungrounded": [
+              {
+                "path": "/entities/func_w",
+                "reason": "function name/equality anchor absent"
+              }
+            ]
+          },
+          "ok": false,
+          "engine_unsupported": false,
+          "error_codes": [
+            "E_SOURCE_COMPLETENESS",
+            "E_SOURCE_IRRELEVANT",
+            "E_FUNCTION_ZERO_FUNCTION_MISSING",
+            "E_PROVENANCE_GROUNDING"
+          ]
+        }
+      },
+      "repair": {
+        "fired": true,
+        "parsed_json": true,
+        "core": false
+      },
+      "final": {
+        "status": "PARSE_FAILED",
+        "outcome": "KNOWN_LIMITATION_EXPECTED_REJECT",
+        "accepted": false,
+        "engine_unsupported": false,
+        "core": false,
+        "goal": true,
+        "fidelity_findings": 1,
+        "grounding_ok": false,
+        "grounding_ungrounded": 1
+      },
+      "dual": {
+        "group": "A_DUAL",
+        "a_ok": false,
+        "b_ok": null,
+        "c_ok": null,
+        "duality_findings": 1,
+        "detected": true
+      },
+      "root_cause": "REPAIR_REGRESSION",
+      "secondary_causes": [
+        "EXPECTATION_DISPUTE"
+      ],
+      "rationale": "A1 candidate already core-matched; repair destroyed it"
+    },
+    {
+      "case_id": "v4_f_16",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 1,
+            "total": 1,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_f_17",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 1,
+            "total": 1,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_f_18",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 1,
+            "total": 1,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_f_19",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 1,
+            "total": 1,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_f_20",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 1,
+            "total": 1,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_f_21",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 1,
+            "total": 1,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_f_22",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 1,
+            "total": 1,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_f_23",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 1,
+            "total": 1,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    },
+    {
+      "case_id": "v4_f_24",
+      "expected_class": "COMPILE_OK",
+      "expected_error": null,
+      "expected_stage": null,
+      "evidence_consistent": true,
+      "a1": {
+        "fired": true,
+        "parsed_json": true,
+        "core": true,
+        "stages": {
+          "schema_ok": true,
+          "semantic_ok": true,
+          "fidelity_findings": 0,
+          "fidelity_codes": [],
+          "function_zero_errors": [],
+          "compile_error": null,
+          "grounding": {
+            "grounded": 1,
+            "total": 1,
+            "ungrounded": []
+          },
+          "ok": true,
+          "engine_unsupported": false,
+          "error_codes": []
+        }
+      },
+      "repair": {
+        "fired": false,
+        "parsed_json": false,
+        "core": false
+      },
+      "final": {
+        "status": "PARSER_ACCEPTED",
+        "outcome": "COMPILE_OK",
+        "accepted": true,
+        "engine_unsupported": false,
+        "core": true,
+        "goal": true,
+        "fidelity_findings": 0,
+        "grounding_ok": true,
+        "grounding_ungrounded": 0
+      },
+      "dual": null,
+      "root_cause": null,
+      "secondary_causes": [],
+      "rationale": "all stages pass"
+    }
+  ],
+  "repair_regressions": [
+    {
+      "case_id": "v4_f_01",
+      "expected_class": "ENGINE_UNSUPPORTED",
+      "a1": {
+        "core": true,
+        "error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_CAPABILITY_UNSUPPORTED",
+          "E_PROVENANCE_GROUNDING"
+        ]
+      },
+      "repair": {
+        "core": false,
+        "error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_CAPABILITY_UNSUPPORTED",
+          "E_PROVENANCE_GROUNDING"
+        ]
+      },
+      "diff": {
+        "entities_added": [],
+        "entities_removed": [],
+        "entities_changed": [],
+        "goals_changed": {
+          "before": [
+            {
+              "goalId": "solve_p_zeros",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:eq_p"
+              ]
+            }
+          ],
+          "after": [
+            {
+              "goalId": "solve_p_zeros",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:eq_p",
+                "entity:fn_p"
+              ]
+            }
+          ]
+        },
+        "source_facts_delta": null,
+        "provenance_span_changes": []
+      },
+      "a1_was_ok": false,
+      "repair_ok": false
+    },
+    {
+      "case_id": "v4_f_02",
+      "expected_class": "ENGINE_UNSUPPORTED",
+      "a1": {
+        "core": true,
+        "error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_CAPABILITY_UNSUPPORTED",
+          "E_PROVENANCE_GROUNDING"
+        ]
+      },
+      "repair": {
+        "core": false,
+        "error_codes": [
+          "E_CAPABILITY_UNSUPPORTED"
+        ]
+      },
+      "diff": {
+        "entities_added": [],
+        "entities_removed": [],
+        "entities_changed": [],
+        "goals_changed": {
+          "before": [
+            {
+              "goalId": "solve_q_zeros",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:eq_q_zeros"
+              ]
+            }
+          ],
+          "after": [
+            {
+              "goalId": "solve_q_zeros",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:eq_q_zeros",
+                "entity:fn_q"
+              ]
+            }
+          ]
+        },
+        "source_facts_delta": null,
+        "provenance_span_changes": []
+      },
+      "a1_was_ok": false,
+      "repair_ok": false
+    },
+    {
+      "case_id": "v4_f_04",
+      "expected_class": "KNOWN_LIMITATION_EXPECTED_REJECT",
+      "a1": {
+        "core": true,
+        "error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ]
+      },
+      "repair": {
+        "core": false,
+        "error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_FUNCTION_ZERO_GOAL_BINDING",
+          "E_BINDING",
+          "E_PROVENANCE_GROUNDING"
+        ]
+      },
+      "diff": {
+        "entities_added": [],
+        "entities_removed": [],
+        "entities_changed": [],
+        "goals_changed": {
+          "before": [
+            {
+              "goalId": "goal_solve_s",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:eq_s"
+              ]
+            }
+          ],
+          "after": [
+            {
+              "goalId": "goal_solve_s",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:fn_s",
+                "entity:eq_s"
+              ]
+            }
+          ]
+        },
+        "source_facts_delta": null,
+        "provenance_span_changes": [
+          {
+            "id": "fn_s",
+            "before": {
+              "text": "s(m) = m^2 - 10*m + 24",
+              "start": 3,
+              "end": 25
+            },
+            "after": {
+              "text": "定义 s(m) = m^2 - 10*m + 24",
+              "start": 0,
+              "end": 25
+            }
+          }
+        ]
+      },
+      "a1_was_ok": false,
+      "repair_ok": false
+    },
+    {
+      "case_id": "v4_f_05",
+      "expected_class": "COMPILE_OK",
+      "a1": {
+        "core": true,
+        "error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ]
+      },
+      "repair": {
+        "core": false,
+        "error_codes": []
+      },
+      "diff": {
+        "entities_added": [],
+        "entities_removed": [],
+        "entities_changed": [],
+        "goals_changed": {
+          "before": [
+            {
+              "goalId": "solve_u_zero",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:eq_u_zero"
+              ]
+            }
+          ],
+          "after": [
+            {
+              "goalId": "solve_u_zero",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:eq_u_zero",
+                "entity:u_func"
+              ]
+            }
+          ]
+        },
+        "source_facts_delta": null,
+        "provenance_span_changes": []
+      },
+      "a1_was_ok": false,
+      "repair_ok": true
+    },
+    {
+      "case_id": "v4_f_08",
+      "expected_class": "COMPILE_OK",
+      "a1": {
+        "core": true,
+        "error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ]
+      },
+      "repair": {
+        "core": false,
+        "error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ]
+      },
+      "diff": {
+        "entities_added": [],
+        "entities_removed": [],
+        "entities_changed": [],
+        "goals_changed": {
+          "before": [
+            {
+              "goalId": "solve_z",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:eq_z"
+              ]
+            }
+          ],
+          "after": [
+            {
+              "goalId": "solve_z",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:eq_z",
+                "entity:func_z"
+              ]
+            }
+          ]
+        },
+        "source_facts_delta": null,
+        "provenance_span_changes": []
+      },
+      "a1_was_ok": false,
+      "repair_ok": false
+    },
+    {
+      "case_id": "v4_f_10",
+      "expected_class": "COMPILE_OK",
+      "a1": {
+        "core": true,
+        "error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ]
+      },
+      "repair": {
+        "core": false,
+        "error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ]
+      },
+      "diff": {
+        "entities_added": [],
+        "entities_removed": [],
+        "entities_changed": [],
+        "goals_changed": {
+          "before": [
+            {
+              "goalId": "solve_q",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:eq_q_zero"
+              ]
+            }
+          ],
+          "after": [
+            {
+              "goalId": "solve_q",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:eq_q_zero",
+                "entity:fn_q"
+              ]
+            }
+          ]
+        },
+        "source_facts_delta": null,
+        "provenance_span_changes": [
+          {
+            "id": "fn_q",
+            "before": {
+              "text": "q(t) = t^2 - 9*t + 14",
+              "start": 3,
+              "end": 24
+            },
+            "after": {
+              "text": "定义 q(t) = t^2 - 9*t + 14",
+              "start": 0,
+              "end": 24
+            }
+          }
+        ]
+      },
+      "a1_was_ok": false,
+      "repair_ok": false
+    },
+    {
+      "case_id": "v4_f_12",
+      "expected_class": "COMPILE_OK",
+      "a1": {
+        "core": true,
+        "error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ]
+      },
+      "repair": {
+        "core": false,
+        "error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ]
+      },
+      "diff": {
+        "entities_added": [],
+        "entities_removed": [],
+        "entities_changed": [],
+        "goals_changed": {
+          "before": [
+            {
+              "goalId": "solve_s_zeros",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:eq_s"
+              ]
+            }
+          ],
+          "after": [
+            {
+              "goalId": "solve_s_zeros",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:eq_s",
+                "entity:fn_s"
+              ]
+            }
+          ]
+        },
+        "source_facts_delta": null,
+        "provenance_span_changes": [
+          {
+            "id": "fn_s",
+            "before": {
+              "text": "s(m) = m^2 - 8*m + 16",
+              "start": 3,
+              "end": 24
+            },
+            "after": {
+              "text": "定义 s(m) = m^2 - 8*m + 16",
+              "start": 0,
+              "end": 24
+            }
+          }
+        ]
+      },
+      "a1_was_ok": false,
+      "repair_ok": false
+    },
+    {
+      "case_id": "v4_f_13",
+      "expected_class": "COMPILE_OK",
+      "a1": {
+        "core": true,
+        "error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ]
+      },
+      "repair": {
+        "core": false,
+        "error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ]
+      },
+      "diff": {
+        "entities_added": [],
+        "entities_removed": [],
+        "entities_changed": [],
+        "goals_changed": {
+          "before": [
+            {
+              "goalId": "solve_u_zero",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:eq_u"
+              ]
+            }
+          ],
+          "after": [
+            {
+              "goalId": "solve_u_zero",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:eq_u",
+                "entity:fn_u"
+              ]
+            }
+          ]
+        },
+        "source_facts_delta": null,
+        "provenance_span_changes": [
+          {
+            "id": "fn_u",
+            "before": {
+              "text": "u(x) = 14*x - 15",
+              "start": 3,
+              "end": 19
+            },
+            "after": {
+              "text": "定义 u(x) = 14*x - 15",
+              "start": 0,
+              "end": 19
+            }
+          }
+        ]
+      },
+      "a1_was_ok": false,
+      "repair_ok": false
+    },
+    {
+      "case_id": "v4_f_14",
+      "expected_class": "COMPILE_OK",
+      "a1": {
+        "core": true,
+        "error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ]
+      },
+      "repair": {
+        "core": false,
+        "error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_FUNCTION_ZERO_GOAL_BINDING",
+          "E_BINDING",
+          "E_PROVENANCE_GROUNDING"
+        ]
+      },
+      "diff": {
+        "entities_added": [],
+        "entities_removed": [],
+        "entities_changed": [],
+        "goals_changed": {
+          "before": [
+            {
+              "goalId": "solve_v_zeros",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:eq_v_zeros"
+              ]
+            }
+          ],
+          "after": [
+            {
+              "goalId": "solve_v_zeros",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:fn_v",
+                "entity:eq_v_zeros"
+              ]
+            }
+          ]
+        },
+        "source_facts_delta": null,
+        "provenance_span_changes": []
+      },
+      "a1_was_ok": false,
+      "repair_ok": false
+    },
+    {
+      "case_id": "v4_f_15",
+      "expected_class": "COMPILE_OK",
+      "a1": {
+        "core": true,
+        "error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ]
+      },
+      "repair": {
+        "core": false,
+        "error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ]
+      },
+      "diff": {
+        "entities_added": [],
+        "entities_removed": [],
+        "entities_changed": [],
+        "goals_changed": {
+          "before": [
+            {
+              "goalId": "solve_w_zeros",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:eq_w_zero"
+              ]
+            }
+          ],
+          "after": [
+            {
+              "goalId": "solve_w_zeros",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:eq_w_zero",
+                "entity:func_w"
+              ]
+            }
+          ]
+        },
+        "source_facts_delta": null,
+        "provenance_span_changes": [
+          {
+            "id": "func_w",
+            "before": {
+              "text": "w(y) = 16*y - 17",
+              "start": 3,
+              "end": 19
+            },
+            "after": {
+              "text": "定义 w(y) = 16*y - 17",
+              "start": 0,
+              "end": 19
+            }
+          }
+        ]
+      },
+      "a1_was_ok": false,
+      "repair_ok": false
+    }
+  ],
+  "semantic_invalid_replay": [
+    {
+      "case_id": "v4_f_08",
+      "replay_verdict": {
+        "a1_error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "repair_parsed_json": true,
+        "repair_schema_ok": true
+      },
+      "information_sufficient_verdict": "RAW OUTPUT STRUCTURALLY VALID — rejection came from fidelity/function-zero/grounding/compile gates, not from missing structure"
+    },
+    {
+      "case_id": "v4_f_10",
+      "replay_verdict": {
+        "a1_error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "repair_parsed_json": true,
+        "repair_schema_ok": true
+      },
+      "information_sufficient_verdict": "RAW OUTPUT STRUCTURALLY VALID — rejection came from fidelity/function-zero/grounding/compile gates, not from missing structure"
+    },
+    {
+      "case_id": "v4_f_12",
+      "replay_verdict": {
+        "a1_error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "repair_parsed_json": true,
+        "repair_schema_ok": true
+      },
+      "information_sufficient_verdict": "RAW OUTPUT STRUCTURALLY VALID — rejection came from fidelity/function-zero/grounding/compile gates, not from missing structure"
+    },
+    {
+      "case_id": "v4_f_13",
+      "replay_verdict": {
+        "a1_error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "repair_parsed_json": true,
+        "repair_schema_ok": true
+      },
+      "information_sufficient_verdict": "RAW OUTPUT STRUCTURALLY VALID — rejection came from fidelity/function-zero/grounding/compile gates, not from missing structure"
+    },
+    {
+      "case_id": "v4_f_14",
+      "replay_verdict": {
+        "a1_error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "repair_parsed_json": true,
+        "repair_schema_ok": true
+      },
+      "information_sufficient_verdict": "RAW OUTPUT STRUCTURALLY VALID — rejection came from fidelity/function-zero/grounding/compile gates, not from missing structure"
+    },
+    {
+      "case_id": "v4_f_15",
+      "replay_verdict": {
+        "a1_error_codes": [
+          "E_SOURCE_COMPLETENESS",
+          "E_SOURCE_IRRELEVANT",
+          "E_FUNCTION_ZERO_FUNCTION_MISSING",
+          "E_PROVENANCE_GROUNDING"
+        ],
+        "repair_parsed_json": true,
+        "repair_schema_ok": true
+      },
+      "information_sufficient_verdict": "RAW OUTPUT STRUCTURALLY VALID — rejection came from fidelity/function-zero/grounding/compile gates, not from missing structure"
+    }
+  ],
+  "f03_adjudication": {
+    "case_id": "v4_f_03",
+    "declaration": {
+      "expected_class": "KNOWN_LIMITATION_EXPECTED_REJECT",
+      "expected_error": "E_PROVENANCE_GROUNDING",
+      "expected_stage": "G19",
+      "expected_failure_family": "function_zero_bad_provenance"
+    },
+    "H1_engine_has_capability": {
+      "supported": true,
+      "note": "compile succeeded, core+goal matched, and the golden's ungrounded span (the designed flaw) was NOT reproduced by the model output — the engine/compiler capability itself was never missing; the expectation encodes a model-behavior assumption (would emit the bad span), not an engine limitation"
+    },
+    "H2_superficial_compile": {
+      "supported": false,
+      "note": "compile OK but core/goal mismatch"
+    },
+    "H3_limitation_detector_miss": {
+      "supported": false,
+      "note": "G19 detector fired correctly on the golden design (golden replay rejects); live output was genuinely well-grounded, nothing to detect"
+    },
+    "H4_scorer_definition_mismatch": {
+      "supported": false,
+      "note": "COMPILE_OK == PARSER_ACCEPTED per frozen policy; replayed status matches recorded status"
+    },
+    "evidence": {
+      "live_status": "PARSER_ACCEPTED",
+      "live_errors": [],
+      "final_core_match": true,
+      "final_goal_match": true,
+      "golden_grounding": {
+        "grounded": 1,
+        "total": 2,
+        "ungrounded": [
+          {
+            "path": "/entities/eq_2",
+            "reason": "AST token '4' absent from cited slice"
+          }
+        ]
+      },
+      "live_grounding": {
+        "grounded": 2,
+        "total": 2,
+        "ungrounded": []
+      },
+      "golden_provenance_spans": [
+        {
+          "id": "fn_2",
+          "span": {
+            "text": "r(y) = 4*y - 5",
+            "start": 3,
+            "end": 17
+          }
+        },
+        {
+          "id": "eq_2",
+          "span": {
+            "text": "求 r(y) 的零点。",
+            "start": 18,
+            "end": 29
+          }
+        }
+      ],
+      "live_provenance_spans": [
+        {
+          "id": "fn_r",
+          "span": {
+            "text": "r(y) = 4*y - 5",
+            "start": 3,
+            "end": 17
+          }
+        },
+        {
+          "id": "eq_r",
+          "span": {
+            "text": "r(y) = 4*y - 5，求 r(y) 的零点",
+            "start": 3,
+            "end": 28
+          }
+        }
+      ]
+    }
+  },
+  "silent_fidelity_blocker": [
+    {
+      "case_id": "v4_f_05",
+      "statement": "定义 u(x) = 6*x - 7，求 u(x) 的零点。",
+      "fidelity_findings": 0,
+      "golden_entity_ids": [
+        "fn_4:function",
+        "eq_4:equation"
+      ],
+      "live_entity_ids": [
+        "u_func:function",
+        "eq_u_zero:equation"
+      ],
+      "golden_goals": "[{\"goalId\":\"solve_4\",\"capabilityId\":\"function2d.solve_equation\",\"inputs\":[\"entity:eq_4\"]}]",
+      "live_goals": "[{\"goalId\":\"solve_u_zero\",\"capabilityId\":\"function2d.solve_equation\",\"inputs\":[\"entity:eq_u_zero\",\"entity:u_func\"]}]",
+      "structural_diff": {
+        "entities_added": [
+          "u_func",
+          "eq_u_zero"
+        ],
+        "entities_removed": [
+          "fn_4",
+          "eq_4"
+        ],
+        "entities_changed": [],
+        "goals_changed": {
+          "before": [
+            {
+              "goalId": "solve_4",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:eq_4"
+              ]
+            }
+          ],
+          "after": [
+            {
+              "goalId": "solve_u_zero",
+              "capabilityId": "function2d.solve_equation",
+              "inputs": [
+                "entity:eq_u_zero",
+                "entity:u_func"
+              ]
+            }
+          ]
+        },
+        "source_facts_delta": null,
+        "provenance_span_changes": []
+      }
+    }
+  ]
+}
