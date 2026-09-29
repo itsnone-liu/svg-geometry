@@ -40,8 +40,9 @@ export interface IdentityV5Result {
    * variable+expression but lacked the canonical label. The parse-v5 pipeline
    * uses this to suppress the derived-error cascade (same root cause). */
   labelMissing: { entityId: string; declaredName: string } | null;
-  /** Codes suppressed by parse-v5 while labelMissing is active (recorded, never silent). */
-  suppressionCodes: string[];
+  /** Stage-3.1: PATH-SCOPED suppression spec — never a global code filter,
+   * so independent errors of the same code on other entities survive. */
+  suppression: { declarationPath: string; entityPath: string; entitySpanPath: string } | null;
   /** Resolved entities for downstream checks (repair audit, gates). */
   resolved: { functionEntity: any | null; equationEntity: any | null };
 }
@@ -88,12 +89,13 @@ function refId(value: unknown): string | null {
 
 /** Stage-2A/2C identity + duality check for the v5 pipeline. */
 export function checkIdentityV5(spec: any, statement: string): IdentityV5Result {
-  if (spec?.domain !== "function2d") return { applicable: false, findings: [], labelMissing: null, suppressionCodes: [], resolved: { functionEntity: null, equationEntity: null } };
+  const empty = { applicable: false, findings: [], labelMissing: null, suppression: null, resolved: { functionEntity: null, equationEntity: null } };
+  if (spec?.domain !== "function2d") return empty as any;
   const goals = Array.isArray(spec.goals) ? spec.goals : [];
   const { declarations } = scanSourceMath(statement, "function2d");
   const zeroRequest = /(?:零点|零根|实数根|roots?\b|zeros?\b)/iu.test(statement);
   const declaration = declarations.find((d) => d.body && zeroRequest);
-  if (!declaration) return { applicable: false, findings: [], labelMissing: null, suppressionCodes: [], resolved: { functionEntity: null, equationEntity: null } };
+  if (!declaration) return empty as any;
 
   const findings: IdentityV5Finding[] = [];
   const entities = Array.isArray(spec.entities) ? spec.entities : [];
@@ -161,9 +163,16 @@ export function checkIdentityV5(spec: any, statement: string): IdentityV5Result 
 
   return {
     applicable: true, findings, labelMissing,
-    // Derived-error suppression set (same root cause as the missing label);
-    // the parse-v5 pipeline reports the suppression count, never silently.
-    suppressionCodes: ["E_SOURCE_COMPLETENESS", "E_SOURCE_IRRELEVANT", "E_FUNCTION_ZERO_FUNCTION_MISSING"],
+    // Stage-3.1 path-scoped suppression: only THIS root cause's own paths are
+    // ever suppressed — E_SOURCE_COMPLETENESS on the declaration's own span
+    // path, E_SOURCE_IRRELEVANT on the missing-label entity itself, and that
+    // same entity's provenance span grounding. Same-code errors elsewhere
+    // (other entities, other declarations) always survive.
+    suppression: labelMissing ? {
+      declarationPath: `/statement/declaration/${declaration.start}-${declaration.end}`,
+      entityPath: `/entities/${labelMissing.entityId}`,
+      entitySpanPath: `/entities/${labelMissing.entityId}/provenance/span`,
+    } : null,
     resolved: { functionEntity, equationEntity },
   };
 }

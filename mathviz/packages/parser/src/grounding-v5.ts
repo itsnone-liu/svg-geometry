@@ -1,17 +1,31 @@
-// P5.4 Stage-2D — G19 function-zero special-case bugfix (correctness debt;
-// NOT the root cause of the v4 live regressions, which Stage-1.1 pinned on
-// label omission + non-monotonic repair).
+// P5.4 Stage-2D / Stage-3.1 — G19 function-zero special-case bugfix
+// (correctness debt; NOT the root cause of the v4 live regressions, which
+// Stage-1.1 pinned on label omission + non-monotonic repair).
 //
-// The frozen grounding.ts contains a function-anchor special case whose
-// arguments are REVERSED (`functionDeclaration(f.label ?? nameOf(f), span)`)
-// and which hardcodes quadratic-specific substring evidence ("^2", "x^2").
-// That shared file is FROZEN and stays byte-identical; this v5 wrapper re-runs
-// ONLY the function-entity anchor verdict with corrected evidence:
-//   - argument order fixed (slice first, declared label second);
-//   - substring heuristics replaced by canonical AST power-form evidence and
-//     the actual declared variable/zero-request semantics;
-//   - exact-source-slice strictness is NOT relaxed in any way (the shared
-//     slice-integrity checks run untouched and are never overridden here).
+// The frozen grounding.ts semantic loop contains a quadratic zero-request
+// special case that overrules an equation entity's expressionGrounded
+// verdict. In the frozen file that special case is DEAD CODE for two reasons:
+//   (a) functionDeclaration() is called with REVERSED arguments
+//       (`functionDeclaration(f.label ?? nameOf(f), f.provenance.span.text)`)
+//       so the predicate almost always evaluates false;
+//   (b) its evidence predicates are quadratic-specific substring checks
+//       (`span.text.includes("^2")`, `s.text.includes("x^2")`) that assume
+//       variable "x".
+// The shared file is FROZEN and stays byte-identical. This v5 wrapper re-runs
+// ONLY the equation-entity semantic verdict under the corrected evidence:
+//   - argument order fixed (declared-name anchor over the function's own
+//     exact span, which must contain `name(` and `=`);
+//   - substring heuristics replaced by canonical-AST power-form evidence
+//     (any `^` node in the declared expression) — works for h(y)=y^3-…, not
+//     just quadratics in x;
+//   - equation.props.variable MUST equal function.props.variable
+//     (Stage-3.1: the "actual declared variable" claim is now enforced);
+//   - canonical AST equivalence lhs === function.expr and rhs === 0;
+//   - the equation's cited slice must be a valid exact slice that contains
+//     the function's declaration span text and a zero-request term.
+// Exact-source-slice strictness is NOT relaxed: slice validity comes from the
+// shared checker's own span validation, and only the semantic verdict of the
+// equation entity is re-adjudicated.
 import { groundProblemSpec } from "./grounding";
 
 type Ast = any;
@@ -56,43 +70,52 @@ function hasOp(ast: Ast, op: string): boolean {
 
 function esc(s: string): string { return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
 
-/** Corrected declared-function-anchor predicate: the cited slice must open a
- * call form of the DECLARED name and carry an equality sign. */
+/** Corrected declared-function anchor: the function's own exact span must
+ * open a call form of the DECLARED name and carry an equality sign. */
 function declaredFunctionAnchor(slice: string, label: string): boolean {
   if (!slice || !label) return false;
-  return new RegExp(`${esc(label)}\\s*\\(`).test(slice) && /[=＝]/u.test(slice);
+  return new RegExp(`${esc(label)}\\s*\\(`).test(slice) && /=/u.test(slice);
 }
 
-/** v5 grounding: shared verdicts, with only the function-entity anchor
- * re-adjudicated under the corrected special case. */
+const ZERO_REQUEST = /(?:零点|零根|实数根|roots?\b|zeros?\b)/iu;
+
+/** v5 grounding: shared verdicts, with only the equation-entity semantic
+ * verdict re-adjudicated under the corrected Stage-2D special case. */
 export function groundProblemSpecV5(spec: any, statement: string) {
   const base = groundProblemSpec(spec, statement);
-  const anchorAbsent = base.findings.some((f: any) => f.grounded === false && f.reason === "function name/equality anchor absent");
-  if (!anchorAbsent) return base;
+  const rejectedEquations = base.findings.filter((f: any) => f.grounded === false && /^\/entities\/[^/]+$/.test(String(f.path ?? "")));
+  if (!rejectedEquations.length) return base;
 
   const entities: any[] = Array.isArray(spec?.entities) ? spec.entities : [];
-  const zeroRequest = /(?:零点|零根|实数根|roots?\b|zeros?\b)/iu.test(statement);
   let correctedCount = 0;
   const findings = base.findings.map((f: any) => {
-    if (f.grounded !== false || f.reason !== "function name/equality anchor absent") return f;
+    if (f.grounded !== false) return f;
     const m = /^\/entities\/([^/]+)$/.exec(String(f.path ?? ""));
-    const e = entities.find((x) => x?.id === (m ? m[1] : ""));
-    if (!e || e.kind !== "function") return f;
-    // Corrected special case (Stage-2D): accept the function anchor when the
-    // zero-request is present, the span is a valid exact slice whose text
-    // anchors the declared name + equality, the expression is power-form AST
-    // evidence, and a matching zero-equation (expr === lhs, rhs = 0) exists.
-    const s = e?.provenance?.span;
+    if (!m) return f;
+    const eq = entities.find((x) => x?.id === m[1]);
+    if (!eq || eq.kind !== "equation") return f;
+
+    // the equation's cited slice must be a VALID exact slice
+    const s = eq?.provenance?.span;
     const slice = spec?.statement === statement && Number.isInteger(s?.start) && Number.isInteger(s?.end) && s.end > s.start && s.end <= statement.length && statement.slice(s.start, s.end) === s.text ? s.text : null;
     if (slice === null) return f; // exact-source-slice strictness preserved
-    const label = typeof e?.label === "string" && e.label ? e.label : (typeof e?.id === "string" ? e.id : "");
-    const zeroEq = entities.find((x: any) => x?.kind === "equation"
-      && x?.props?.capability_id === "function2d.solve_equation"
-      && canon(x?.props?.lhs) === canon(e?.props?.expr)
-      && isZeroAst(x?.props?.rhs));
-    if (zeroRequest && zeroEq && hasOp(e?.props?.expr, "^") && declaredFunctionAnchor(slice, label)) {
+    if (!ZERO_REQUEST.test(slice) || !(eq?.props?.rhs?.t === "num" && isZeroAst(eq.props.rhs))) return f;
+
+    const fn = entities.find((x: any) => {
+      if (x?.kind !== "function") return false;
+      const fs = x?.provenance?.span;
+      const fnSlice = Number.isInteger(fs?.start) && Number.isInteger(fs?.end) && fs.end > fs.start && fs.end <= statement.length && statement.slice(fs.start, fs.end) === fs.text ? fs.text : null;
+      if (fnSlice === null) return false;
+      // declared identity + canonical AST equivalence + ACTUAL DECLARED
+      // VARIABLE equality (Stage-3.1) + slice coverage of the declaration
+      return String(x?.props?.variable ?? "") === String(eq?.props?.variable ?? "")
+        && canon(x?.props?.expr) === canon(eq?.props?.lhs)
+        && declaredFunctionAnchor(fnSlice, typeof x?.label === "string" && x.label ? x.label : (typeof x?.id === "string" ? x.id : ""))
+        && slice.includes(fnSlice);
+    });
+    if (fn && hasOp(fn.props?.expr, "^")) {
       correctedCount++;
-      return { ...f, grounded: true, reason: "function anchor accepted via matching zero-equation and declared-name anchor (P5.4 Stage-2D corrected special case)" };
+      return { ...f, grounded: true, reason: "declared function expression matches equation and explicit zero-set request (P5.4 Stage-2D corrected special case)" };
     }
     return f;
   });

@@ -16,7 +16,7 @@ import { categoryForCode, type ParserError, type ParseCallDiagnostic, type Parse
 export interface V5Attempt {
   ok: boolean; engineUnsupported: boolean; spec: any | null; errors: ParserError[];
   compileError?: { code: string; message: string } | null;
-  suppressedFindings: { codes: string[]; count: number };
+  suppressedFindings: { items: Array<{ code: string; path: string }>; count: number };
 }
 
 const ZERO: TokenUsage = { input_tokens: 0, output_tokens: 0 };
@@ -29,22 +29,28 @@ function asError(code: string, message: string, path?: string, repair_hint?: str
 
 /** v5 gate aggregation with identity-aware derived-error suppression. */
 export function attemptCompileV5(candidate: any, statement?: string): V5Attempt {
-  if (!candidate || typeof candidate !== "object") return { ok: false, engineUnsupported: false, spec: null, errors: [asError("E_PROVIDER", "model output was not a JSON object")], suppressedFindings: { codes: [], count: 0 } };
+  if (!candidate || typeof candidate !== "object") return { ok: false, engineUnsupported: false, spec: null, errors: [asError("E_PROVIDER", "model output was not a JSON object")], suppressedFindings: { items: [], count: 0 } };
   const v = validatorFor("problemspec");
-  if (!v(candidate)) return { ok: false, engineUnsupported: false, spec: null, errors: (v.errors ?? []).slice(0, 20).map((e: any) => asError("E_SCHEMA", `${String(e.message ?? "")}${e.params ? ` (${JSON.stringify(e.params)})` : ""}`, String(e.instancePath ?? "") || undefined)), suppressedFindings: { codes: [], count: 0 } };
+  if (!v(candidate)) return { ok: false, engineUnsupported: false, spec: null, errors: (v.errors ?? []).slice(0, 20).map((e: any) => asError("E_SCHEMA", `${String(e.message ?? "")}${e.params ? ` (${JSON.stringify(e.params)})` : ""}`, String(e.instancePath ?? "") || undefined)), suppressedFindings: { items: [], count: 0 } };
   const semantic = validateProblemSpec(candidate);
-  if (semantic.length) return { ok: false, engineUnsupported: false, spec: null, errors: semantic.map((e) => asError(e.code, e.message, e.path)), suppressedFindings: { codes: [], count: 0 } };
+  if (semantic.length) return { ok: false, engineUnsupported: false, spec: null, errors: semantic.map((e) => asError(e.code, e.message, e.path)), suppressedFindings: { items: [], count: 0 } };
 
-  const identity = statement ? checkIdentityV5(candidate, statement) : { applicable: false, findings: [], labelMissing: null, suppressionCodes: [], resolved: { functionEntity: null, equationEntity: null } };
-  const suppressActive = !!identity.labelMissing;
-  const suppressedBy = (code: string, path?: string) => suppressActive
-    && (identity.suppressionCodes.includes(code)
-      || (code === "E_PROVENANCE_GROUNDING" && typeof path === "string" && path.startsWith(`/entities/${identity.labelMissing!.entityId}`)));
+  const identity = statement ? checkIdentityV5(candidate, statement) : { applicable: false, findings: [], labelMissing: null, suppression: null, resolved: { functionEntity: null, equationEntity: null } };
+  const suppression = identity.labelMissing ? identity.suppression : null;
+  /** Stage-3.1: PATH-SCOPED suppression only — same-code errors on other
+   * entities/declarations are independent findings and always survive. */
+  const suppressedBy = (code: string, path?: string) => {
+    if (!suppression) return false;
+    if (code === "E_SOURCE_COMPLETENESS") return path === suppression.declarationPath;
+    if (code === "E_SOURCE_IRRELEVANT") return path === suppression.entityPath;
+    if (code === "E_PROVENANCE_GROUNDING") return path === suppression.entitySpanPath;
+    return false;
+  };
 
   const errors: ParserError[] = [];
-  let suppressed = 0;
+  const suppressedItems: Array<{ code: string; path: string }> = [];
   const push = (code: string, message: string, path?: string, repair_hint?: string) => {
-    if (suppressedBy(code, path)) { suppressed++; return; }
+    if (suppressedBy(code, path)) { suppressedItems.push({ code, path: path ?? "" }); return; }
     errors.push(asError(code, message, path, repair_hint));
   };
 
@@ -62,7 +68,7 @@ export function attemptCompileV5(candidate: any, statement?: string): V5Attempt 
     compileError = { code: e?.code ?? "E_SCHEMA", message: e?.message ?? String(e) };
     compilerUnsupported = e?.code === "E_CAPABILITY_UNSUPPORTED" || e?.code === "E_MATH_CONSTRAINT";
     if (!suppressedBy(compileError.code)) errors.push(asError(compileError.code, compileError.message));
-    else suppressed++;
+    else suppressedItems.push({ code: compileError.code, path: "" });
   }
 
   if (typeof statement === "string") {
@@ -78,7 +84,7 @@ export function attemptCompileV5(candidate: any, statement?: string): V5Attempt 
   const engineUnsupported = compilerUnsupported && parserErrors.length === 0;
   return {
     ok: errors.length === 0, engineUnsupported, spec: errors.length === 0 ? candidate : null, errors, compileError,
-    suppressedFindings: { codes: suppressActive ? [...identity.suppressionCodes, "E_PROVENANCE_GROUNDING"] : [], count: suppressed },
+    suppressedFindings: { items: suppressedItems, count: suppressedItems.length },
   };
 }
 
@@ -89,6 +95,9 @@ export interface RepairAuditRecord {
   projected_candidate: any;
   protected_paths_restored: string[];
   audit_notes: string[];
+  /** Gate outcome of the projected candidate (evidence only — never a second
+   * provider call; Stage-3.1 H4 keeps 1 repair request = 1 repair diagnostic). */
+  projected_gates: { ok: boolean; engineUnsupported: boolean; errors: string[] } | null;
 }
 
 /** v5 single-pass pipeline: A1 -> gates -> (repair -> MUTATION AUDIT -> gates). */
@@ -106,7 +115,7 @@ export async function parseProblemSpecV5(provider: StructuredLLMProvider, statem
     } catch (e: any) {
       const error = asError(e?.code ?? "E_PROVIDER", e?.message ?? String(e));
       diagnostics.push({ stage, ...(e?.diagnostics ?? {}), usage: e?.usage ?? null, errors: [error] });
-      return { ok: false, engineUnsupported: false, spec: null, errors: [error], doc: candidate ?? null, raw: e?.diagnostics?.raw_text, usage: e?.usage ?? null, compileError: null, suppressedFindings: { codes: [], count: 0 } };
+      return { ok: false, engineUnsupported: false, spec: null, errors: [error], doc: candidate ?? null, raw: e?.diagnostics?.raw_text, usage: e?.usage ?? null, compileError: null, suppressedFindings: { items: [], count: 0 } };
     }
   };
 
@@ -125,14 +134,18 @@ export async function parseProblemSpecV5(provider: StructuredLLMProvider, statem
     // Stage-2B: deterministic mutation audit — the model's raw candidate is
     // never trusted wholesale; protected conforming fields are projected back
     // and the full audit is recorded.
-    repairAudit = auditRepairV5(first.doc, second.doc, first.errors);
+    const audit = auditRepairV5(first.doc, second.doc, first.errors);
     if (first.doc && second.doc) delta = diffTopLevel(first.doc, second.doc);
-    if (repairAudit.verdict === "projected") {
-      const audited = attemptCompileV5(repairAudit.projected_candidate, statement);
-      diagnostics.push({ stage: "repair", raw_text: JSON.stringify({ repair_audit: { verdict: repairAudit.verdict, protected_paths_restored: repairAudit.protected_paths_restored, notes: repairAudit.audit_notes } }), parsed_candidate: repairAudit.projected_candidate, usage: second.usage, errors: audited.errors });
-      current = { ...audited, doc: repairAudit.projected_candidate, raw: second.raw, usage: second.usage };
+    if (audit.verdict === "projected") {
+      // Stage-3.1 (H4): the audit projection is NOT a second model call — no
+      // extra "repair" diagnostic is emitted (1 provider repair request = 1
+      // repair diagnostic; the projected evidence lives in repairAudit).
+      const audited = attemptCompileV5(audit.projected_candidate, statement);
+      repairAudit = { ...audit, projected_gates: { ok: audited.ok, engineUnsupported: audited.engineUnsupported, errors: audited.errors.map((e) => e.code) } };
+      current = { ...audited, doc: audit.projected_candidate, raw: second.raw, usage: second.usage };
       suppressed.final = audited.suppressedFindings.count;
     } else {
+      repairAudit = { ...audit, projected_gates: null };
       current = second;
       suppressed.final = second.suppressedFindings.count;
     }

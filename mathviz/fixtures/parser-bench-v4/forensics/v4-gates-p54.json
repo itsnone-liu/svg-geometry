@@ -25,7 +25,7 @@
             "E_CAPABILITY_UNSUPPORTED"
           ],
           "suppressed": {
-            "codes": [],
+            "items": [],
             "count": 0
           }
         },
@@ -48,7 +48,7 @@
             "E_CAPABILITY_UNSUPPORTED"
           ],
           "suppressed": {
-            "codes": [],
+            "items": [],
             "count": 0
           }
         },
@@ -69,7 +69,7 @@
           "pass": true,
           "errors": [],
           "suppressed": {
-            "codes": [],
+            "items": [],
             "count": 0
           }
         },
@@ -90,7 +90,7 @@
           "pass": true,
           "errors": [],
           "suppressed": {
-            "codes": [],
+            "items": [],
             "count": 0
           }
         },
@@ -111,7 +111,7 @@
           "pass": true,
           "errors": [],
           "suppressed": {
-            "codes": [],
+            "items": [],
             "count": 0
           }
         },
@@ -132,7 +132,7 @@
           "pass": true,
           "errors": [],
           "suppressed": {
-            "codes": [],
+            "items": [],
             "count": 0
           }
         },
@@ -153,7 +153,7 @@
           "pass": true,
           "errors": [],
           "suppressed": {
-            "codes": [],
+            "items": [],
             "count": 0
           }
         },
@@ -174,7 +174,7 @@
           "pass": true,
           "errors": [],
           "suppressed": {
-            "codes": [],
+            "items": [],
             "count": 0
           }
         },
@@ -195,7 +195,7 @@
           "pass": true,
           "errors": [],
           "suppressed": {
-            "codes": [],
+            "items": [],
             "count": 0
           }
         },
@@ -216,7 +216,7 @@
           "pass": true,
           "errors": [],
           "suppressed": {
-            "codes": [],
+            "items": [],
             "count": 0
           }
         }
