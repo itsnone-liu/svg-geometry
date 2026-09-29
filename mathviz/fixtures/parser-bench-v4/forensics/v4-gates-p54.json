@@ -1,0 +1,925 @@
+{
+  "stage": "P5_4_STAGE3_ACCEPTANCE_GATES",
+  "provider_requests": 0,
+  "gates": {
+    "G_P54_1": {
+      "pass": true,
+      "cleared": "10/10",
+      "rows": [
+        {
+          "case_id": "v4_f_01",
+          "want": {
+            "ok": false,
+            "eu": true,
+            "parserOwned": 0,
+            "only": "E_CAPABILITY_UNSUPPORTED"
+          },
+          "got": {
+            "ok": false,
+            "eu": true,
+            "parserOwned": 0,
+            "only": "E_CAPABILITY_UNSUPPORTED"
+          },
+          "pass": true,
+          "errors": [
+            "E_CAPABILITY_UNSUPPORTED"
+          ],
+          "suppressed": {
+            "codes": [],
+            "count": 0
+          }
+        },
+        {
+          "case_id": "v4_f_02",
+          "want": {
+            "ok": false,
+            "eu": true,
+            "parserOwned": 0,
+            "only": "E_CAPABILITY_UNSUPPORTED"
+          },
+          "got": {
+            "ok": false,
+            "eu": true,
+            "parserOwned": 0,
+            "only": "E_CAPABILITY_UNSUPPORTED"
+          },
+          "pass": true,
+          "errors": [
+            "E_CAPABILITY_UNSUPPORTED"
+          ],
+          "suppressed": {
+            "codes": [],
+            "count": 0
+          }
+        },
+        {
+          "case_id": "v4_f_04",
+          "want": {
+            "ok": true,
+            "eu": false,
+            "parserOwned": 0,
+            "only": null
+          },
+          "got": {
+            "ok": true,
+            "eu": false,
+            "parserOwned": 0,
+            "only": null
+          },
+          "pass": true,
+          "errors": [],
+          "suppressed": {
+            "codes": [],
+            "count": 0
+          }
+        },
+        {
+          "case_id": "v4_f_05",
+          "want": {
+            "ok": true,
+            "eu": false,
+            "parserOwned": 0,
+            "only": null
+          },
+          "got": {
+            "ok": true,
+            "eu": false,
+            "parserOwned": 0,
+            "only": null
+          },
+          "pass": true,
+          "errors": [],
+          "suppressed": {
+            "codes": [],
+            "count": 0
+          }
+        },
+        {
+          "case_id": "v4_f_08",
+          "want": {
+            "ok": true,
+            "eu": false,
+            "parserOwned": 0,
+            "only": null
+          },
+          "got": {
+            "ok": true,
+            "eu": false,
+            "parserOwned": 0,
+            "only": null
+          },
+          "pass": true,
+          "errors": [],
+          "suppressed": {
+            "codes": [],
+            "count": 0
+          }
+        },
+        {
+          "case_id": "v4_f_10",
+          "want": {
+            "ok": true,
+            "eu": false,
+            "parserOwned": 0,
+            "only": null
+          },
+          "got": {
+            "ok": true,
+            "eu": false,
+            "parserOwned": 0,
+            "only": null
+          },
+          "pass": true,
+          "errors": [],
+          "suppressed": {
+            "codes": [],
+            "count": 0
+          }
+        },
+        {
+          "case_id": "v4_f_12",
+          "want": {
+            "ok": true,
+            "eu": false,
+            "parserOwned": 0,
+            "only": null
+          },
+          "got": {
+            "ok": true,
+            "eu": false,
+            "parserOwned": 0,
+            "only": null
+          },
+          "pass": true,
+          "errors": [],
+          "suppressed": {
+            "codes": [],
+            "count": 0
+          }
+        },
+        {
+          "case_id": "v4_f_13",
+          "want": {
+            "ok": true,
+            "eu": false,
+            "parserOwned": 0,
+            "only": null
+          },
+          "got": {
+            "ok": true,
+            "eu": false,
+            "parserOwned": 0,
+            "only": null
+          },
+          "pass": true,
+          "errors": [],
+          "suppressed": {
+            "codes": [],
+            "count": 0
+          }
+        },
+        {
+          "case_id": "v4_f_14",
+          "want": {
+            "ok": true,
+            "eu": false,
+            "parserOwned": 0,
+            "only": null
+          },
+          "got": {
+            "ok": true,
+            "eu": false,
+            "parserOwned": 0,
+            "only": null
+          },
+          "pass": true,
+          "errors": [],
+          "suppressed": {
+            "codes": [],
+            "count": 0
+          }
+        },
+        {
+          "case_id": "v4_f_15",
+          "want": {
+            "ok": true,
+            "eu": false,
+            "parserOwned": 0,
+            "only": null
+          },
+          "got": {
+            "ok": true,
+            "eu": false,
+            "parserOwned": 0,
+            "only": null
+          },
+          "pass": true,
+          "errors": [],
+          "suppressed": {
+            "codes": [],
+            "count": 0
+          }
+        }
+      ]
+    },
+    "G_P54_2": {
+      "pass": true,
+      "cleared": "10/10",
+      "rows": [
+        {
+          "case_id": "v4_f_01",
+          "verdict": "projected",
+          "protected_paths_restored": [
+            "/goals/solve_p_zeros/inputs"
+          ],
+          "pass": true,
+          "notes": [
+            "goal 'solve_p_zeros' inputs were conforming (inputs[0] -> equation 'eq_p') and not implicated by any active error; model mutation [\"entity:eq_p\",\"entity:fn_p\"] rejected, A1 value restored"
+          ]
+        },
+        {
+          "case_id": "v4_f_02",
+          "verdict": "projected",
+          "protected_paths_restored": [
+            "/goals/solve_q_zeros/inputs"
+          ],
+          "pass": true,
+          "notes": [
+            "goal 'solve_q_zeros' inputs were conforming (inputs[0] -> equation 'eq_q_zeros') and not implicated by any active error; model mutation [\"entity:eq_q_zeros\",\"entity:fn_q\"] rejected, A1 value restored"
+          ]
+        },
+        {
+          "case_id": "v4_f_04",
+          "verdict": "projected",
+          "protected_paths_restored": [
+            "/goals/goal_solve_s/inputs"
+          ],
+          "pass": true,
+          "notes": [
+            "goal 'goal_solve_s' inputs were conforming (inputs[0] -> equation 'eq_s') and not implicated by any active error; model mutation [\"entity:fn_s\",\"entity:eq_s\"] rejected, A1 value restored"
+          ]
+        },
+        {
+          "case_id": "v4_f_05",
+          "verdict": "projected",
+          "protected_paths_restored": [
+            "/goals/solve_u_zero/inputs"
+          ],
+          "pass": true,
+          "notes": [
+            "goal 'solve_u_zero' inputs were conforming (inputs[0] -> equation 'eq_u_zero') and not implicated by any active error; model mutation [\"entity:eq_u_zero\",\"entity:u_func\"] rejected, A1 value restored"
+          ]
+        },
+        {
+          "case_id": "v4_f_08",
+          "verdict": "projected",
+          "protected_paths_restored": [
+            "/goals/solve_z/inputs"
+          ],
+          "pass": true,
+          "notes": [
+            "goal 'solve_z' inputs were conforming (inputs[0] -> equation 'eq_z') and not implicated by any active error; model mutation [\"entity:eq_z\",\"entity:func_z\"] rejected, A1 value restored"
+          ]
+        },
+        {
+          "case_id": "v4_f_10",
+          "verdict": "projected",
+          "protected_paths_restored": [
+            "/goals/solve_q/inputs"
+          ],
+          "pass": true,
+          "notes": [
+            "goal 'solve_q' inputs were conforming (inputs[0] -> equation 'eq_q_zero') and not implicated by any active error; model mutation [\"entity:eq_q_zero\",\"entity:fn_q\"] rejected, A1 value restored"
+          ]
+        },
+        {
+          "case_id": "v4_f_12",
+          "verdict": "projected",
+          "protected_paths_restored": [
+            "/goals/solve_s_zeros/inputs"
+          ],
+          "pass": true,
+          "notes": [
+            "goal 'solve_s_zeros' inputs were conforming (inputs[0] -> equation 'eq_s') and not implicated by any active error; model mutation [\"entity:eq_s\",\"entity:fn_s\"] rejected, A1 value restored"
+          ]
+        },
+        {
+          "case_id": "v4_f_13",
+          "verdict": "projected",
+          "protected_paths_restored": [
+            "/goals/solve_u_zero/inputs"
+          ],
+          "pass": true,
+          "notes": [
+            "goal 'solve_u_zero' inputs were conforming (inputs[0] -> equation 'eq_u') and not implicated by any active error; model mutation [\"entity:eq_u\",\"entity:fn_u\"] rejected, A1 value restored"
+          ]
+        },
+        {
+          "case_id": "v4_f_14",
+          "verdict": "projected",
+          "protected_paths_restored": [
+            "/goals/solve_v_zeros/inputs"
+          ],
+          "pass": true,
+          "notes": [
+            "goal 'solve_v_zeros' inputs were conforming (inputs[0] -> equation 'eq_v_zeros') and not implicated by any active error; model mutation [\"entity:fn_v\",\"entity:eq_v_zeros\"] rejected, A1 value restored"
+          ]
+        },
+        {
+          "case_id": "v4_f_15",
+          "verdict": "projected",
+          "protected_paths_restored": [
+            "/goals/solve_w_zeros/inputs"
+          ],
+          "pass": true,
+          "notes": [
+            "goal 'solve_w_zeros' inputs were conforming (inputs[0] -> equation 'eq_w_zero') and not implicated by any active error; model mutation [\"entity:eq_w_zero\",\"entity:func_w\"] rejected, A1 value restored"
+          ]
+        }
+      ]
+    },
+    "G_P54_3": {
+      "pass": true,
+      "f05": {
+        "v4_silent_accepted": true,
+        "v5_ok": false,
+        "overref_detected": true,
+        "errors": [
+          "E_FUNCTION_ZERO_GOAL_OVERREFERENCE"
+        ]
+      },
+      "silent_overref_accepted": 0,
+      "rows": [
+        {
+          "case_id": "v4_f_01",
+          "v5_ok": false,
+          "overref_detected": true,
+          "errors": [
+            "E_FUNCTION_DECLARATION_LABEL_MISSING",
+            "E_FUNCTION_ZERO_GOAL_OVERREFERENCE",
+            "E_CAPABILITY_UNSUPPORTED"
+          ]
+        },
+        {
+          "case_id": "v4_f_02",
+          "v5_ok": false,
+          "overref_detected": true,
+          "errors": [
+            "E_FUNCTION_ZERO_GOAL_OVERREFERENCE",
+            "E_CAPABILITY_UNSUPPORTED"
+          ]
+        },
+        {
+          "case_id": "v4_f_04",
+          "v5_ok": false,
+          "overref_detected": true,
+          "errors": [
+            "E_FUNCTION_DECLARATION_LABEL_MISSING",
+            "E_FUNCTION_ZERO_GOAL_OVERREFERENCE",
+            "E_BINDING"
+          ]
+        },
+        {
+          "case_id": "v4_f_05",
+          "v5_ok": false,
+          "overref_detected": true,
+          "errors": [
+            "E_FUNCTION_ZERO_GOAL_OVERREFERENCE"
+          ]
+        },
+        {
+          "case_id": "v4_f_08",
+          "v5_ok": false,
+          "overref_detected": true,
+          "errors": [
+            "E_FUNCTION_DECLARATION_LABEL_MISSING",
+            "E_FUNCTION_ZERO_GOAL_OVERREFERENCE"
+          ]
+        },
+        {
+          "case_id": "v4_f_10",
+          "v5_ok": false,
+          "overref_detected": true,
+          "errors": [
+            "E_FUNCTION_DECLARATION_LABEL_MISSING",
+            "E_FUNCTION_ZERO_GOAL_OVERREFERENCE"
+          ]
+        },
+        {
+          "case_id": "v4_f_12",
+          "v5_ok": false,
+          "overref_detected": true,
+          "errors": [
+            "E_FUNCTION_DECLARATION_LABEL_MISSING",
+            "E_FUNCTION_ZERO_GOAL_OVERREFERENCE"
+          ]
+        },
+        {
+          "case_id": "v4_f_13",
+          "v5_ok": false,
+          "overref_detected": true,
+          "errors": [
+            "E_FUNCTION_DECLARATION_LABEL_MISSING",
+            "E_FUNCTION_ZERO_GOAL_OVERREFERENCE"
+          ]
+        },
+        {
+          "case_id": "v4_f_14",
+          "v5_ok": false,
+          "overref_detected": true,
+          "errors": [
+            "E_FUNCTION_DECLARATION_LABEL_MISSING",
+            "E_FUNCTION_ZERO_GOAL_OVERREFERENCE",
+            "E_BINDING"
+          ]
+        },
+        {
+          "case_id": "v4_f_15",
+          "v5_ok": false,
+          "overref_detected": true,
+          "errors": [
+            "E_FUNCTION_DECLARATION_LABEL_MISSING",
+            "E_FUNCTION_ZERO_GOAL_OVERREFERENCE"
+          ]
+        }
+      ]
+    }
+  },
+  "counterfactual_replay_72": {
+    "note": "remediation evidence ONLY — the v4 live verdict stays FAIL @8b10a76",
+    "rows": [
+      {
+        "case_id": "v4_g_01",
+        "v4_status": "ENGINE_UNSUPPORTED",
+        "v5": "ENGINE_UNSUPPORTED",
+        "v5_errors": [
+          "E_CAPABILITY_UNSUPPORTED"
+        ]
+      },
+      {
+        "case_id": "v4_g_02",
+        "v4_status": "ENGINE_UNSUPPORTED",
+        "v5": "ENGINE_UNSUPPORTED",
+        "v5_errors": [
+          "E_CAPABILITY_UNSUPPORTED"
+        ]
+      },
+      {
+        "case_id": "v4_g_03",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_04",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_05",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_06",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_07",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_08",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_09",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_10",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_11",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_12",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_13",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_14",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_15",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_16",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_17",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_18",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_19",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_20",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_21",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_22",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_23",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_g_24",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_01",
+        "v4_status": "ENGINE_UNSUPPORTED",
+        "v5": "ENGINE_UNSUPPORTED",
+        "v5_errors": [
+          "E_MATH_CONSTRAINT"
+        ]
+      },
+      {
+        "case_id": "v4_m_02",
+        "v4_status": "ENGINE_UNSUPPORTED",
+        "v5": "ENGINE_UNSUPPORTED",
+        "v5_errors": [
+          "E_MATH_CONSTRAINT"
+        ]
+      },
+      {
+        "case_id": "v4_m_03",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_04",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_05",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_06",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_07",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_08",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_09",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_10",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_11",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_12",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_13",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_14",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_15",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_16",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_17",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_18",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_19",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_20",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_21",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_22",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_23",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_m_24",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_f_01",
+        "v4_status": "PARSE_FAILED",
+        "v5": "PARSE_FAILED",
+        "v5_errors": [
+          "E_FUNCTION_DECLARATION_LABEL_MISSING",
+          "E_FUNCTION_ZERO_GOAL_OVERREFERENCE",
+          "E_CAPABILITY_UNSUPPORTED"
+        ]
+      },
+      {
+        "case_id": "v4_f_02",
+        "v4_status": "ENGINE_UNSUPPORTED",
+        "v5": "PARSE_FAILED",
+        "v5_errors": [
+          "E_FUNCTION_ZERO_GOAL_OVERREFERENCE",
+          "E_CAPABILITY_UNSUPPORTED"
+        ]
+      },
+      {
+        "case_id": "v4_f_03",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_f_04",
+        "v4_status": "PARSE_FAILED",
+        "v5": "PARSE_FAILED",
+        "v5_errors": [
+          "E_FUNCTION_DECLARATION_LABEL_MISSING",
+          "E_FUNCTION_ZERO_GOAL_OVERREFERENCE",
+          "E_BINDING"
+        ]
+      },
+      {
+        "case_id": "v4_f_05",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSE_FAILED",
+        "v5_errors": [
+          "E_FUNCTION_ZERO_GOAL_OVERREFERENCE"
+        ]
+      },
+      {
+        "case_id": "v4_f_06",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_f_07",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_f_08",
+        "v4_status": "PARSE_FAILED",
+        "v5": "PARSE_FAILED",
+        "v5_errors": [
+          "E_FUNCTION_DECLARATION_LABEL_MISSING",
+          "E_FUNCTION_ZERO_GOAL_OVERREFERENCE"
+        ]
+      },
+      {
+        "case_id": "v4_f_09",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_f_10",
+        "v4_status": "PARSE_FAILED",
+        "v5": "PARSE_FAILED",
+        "v5_errors": [
+          "E_FUNCTION_DECLARATION_LABEL_MISSING",
+          "E_FUNCTION_ZERO_GOAL_OVERREFERENCE"
+        ]
+      },
+      {
+        "case_id": "v4_f_11",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_f_12",
+        "v4_status": "PARSE_FAILED",
+        "v5": "PARSE_FAILED",
+        "v5_errors": [
+          "E_FUNCTION_DECLARATION_LABEL_MISSING",
+          "E_FUNCTION_ZERO_GOAL_OVERREFERENCE"
+        ]
+      },
+      {
+        "case_id": "v4_f_13",
+        "v4_status": "PARSE_FAILED",
+        "v5": "PARSE_FAILED",
+        "v5_errors": [
+          "E_FUNCTION_DECLARATION_LABEL_MISSING",
+          "E_FUNCTION_ZERO_GOAL_OVERREFERENCE"
+        ]
+      },
+      {
+        "case_id": "v4_f_14",
+        "v4_status": "PARSE_FAILED",
+        "v5": "PARSE_FAILED",
+        "v5_errors": [
+          "E_FUNCTION_DECLARATION_LABEL_MISSING",
+          "E_FUNCTION_ZERO_GOAL_OVERREFERENCE",
+          "E_BINDING"
+        ]
+      },
+      {
+        "case_id": "v4_f_15",
+        "v4_status": "PARSE_FAILED",
+        "v5": "PARSE_FAILED",
+        "v5_errors": [
+          "E_FUNCTION_DECLARATION_LABEL_MISSING",
+          "E_FUNCTION_ZERO_GOAL_OVERREFERENCE"
+        ]
+      },
+      {
+        "case_id": "v4_f_16",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_f_17",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_f_18",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_f_19",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_f_20",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_f_21",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_f_22",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_f_23",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      },
+      {
+        "case_id": "v4_f_24",
+        "v4_status": "PARSER_ACCEPTED",
+        "v5": "PARSER_ACCEPTED",
+        "v5_errors": []
+      }
+    ]
+  }
+}
