@@ -1,0 +1,167 @@
+{
+ "version": "5.0",
+ "dual_registry": {
+  "principle": "explicit challenge family; pre-registered IDs + expected behavior; never adjusted by live performance",
+  "counts": {
+   "total": 15,
+   "A_DUAL_COMPILE_OK": 13,
+   "B_DUAL_ENGINE_UNSUPPORTED": 2
+  },
+  "cases": [
+   {
+    "case_id": "v5_f_01",
+    "family": "B_DUAL_ENGINE_UNSUPPORTED",
+    "expected": "ENGINE_UNSUPPORTED with declared expected_error, parser-owned errors = 0, core semantic match"
+   },
+   {
+    "case_id": "v5_f_02",
+    "family": "B_DUAL_ENGINE_UNSUPPORTED",
+    "expected": "ENGINE_UNSUPPORTED with declared expected_error, parser-owned errors = 0, core semantic match"
+   },
+   {
+    "case_id": "v5_f_03",
+    "family": "A_DUAL_COMPILE_OK",
+    "expected": "PARSER_ACCEPTED with core semantic match; function entity carries canonical label; goal inputs exactly [equation]"
+   },
+   {
+    "case_id": "v5_f_04",
+    "family": "A_DUAL_COMPILE_OK",
+    "expected": "PARSER_ACCEPTED with core semantic match; function entity carries canonical label; goal inputs exactly [equation]"
+   },
+   {
+    "case_id": "v5_f_05",
+    "family": "A_DUAL_COMPILE_OK",
+    "expected": "PARSER_ACCEPTED with core semantic match; function entity carries canonical label; goal inputs exactly [equation]"
+   },
+   {
+    "case_id": "v5_f_06",
+    "family": "A_DUAL_COMPILE_OK",
+    "expected": "PARSER_ACCEPTED with core semantic match; function entity carries canonical label; goal inputs exactly [equation]"
+   },
+   {
+    "case_id": "v5_f_07",
+    "family": "A_DUAL_COMPILE_OK",
+    "expected": "PARSER_ACCEPTED with core semantic match; function entity carries canonical label; goal inputs exactly [equation]"
+   },
+   {
+    "case_id": "v5_f_08",
+    "family": "A_DUAL_COMPILE_OK",
+    "expected": "PARSER_ACCEPTED with core semantic match; function entity carries canonical label; goal inputs exactly [equation]"
+   },
+   {
+    "case_id": "v5_f_09",
+    "family": "A_DUAL_COMPILE_OK",
+    "expected": "PARSER_ACCEPTED with core semantic match; function entity carries canonical label; goal inputs exactly [equation]"
+   },
+   {
+    "case_id": "v5_f_10",
+    "family": "A_DUAL_COMPILE_OK",
+    "expected": "PARSER_ACCEPTED with core semantic match; function entity carries canonical label; goal inputs exactly [equation]"
+   },
+   {
+    "case_id": "v5_f_11",
+    "family": "A_DUAL_COMPILE_OK",
+    "expected": "PARSER_ACCEPTED with core semantic match; function entity carries canonical label; goal inputs exactly [equation]"
+   },
+   {
+    "case_id": "v5_f_12",
+    "family": "A_DUAL_COMPILE_OK",
+    "expected": "PARSER_ACCEPTED with core semantic match; function entity carries canonical label; goal inputs exactly [equation]"
+   },
+   {
+    "case_id": "v5_f_13",
+    "family": "A_DUAL_COMPILE_OK",
+    "expected": "PARSER_ACCEPTED with core semantic match; function entity carries canonical label; goal inputs exactly [equation]"
+   },
+   {
+    "case_id": "v5_f_14",
+    "family": "A_DUAL_COMPILE_OK",
+    "expected": "PARSER_ACCEPTED with core semantic match; function entity carries canonical label; goal inputs exactly [equation]"
+   },
+   {
+    "case_id": "v5_f_15",
+    "family": "A_DUAL_COMPILE_OK",
+    "expected": "PARSER_ACCEPTED with core semantic match; function entity carries canonical label; goal inputs exactly [equation]"
+   }
+  ]
+ },
+ "repair_sensitive_coverage": {
+  "principle": "every owner-listed repair-sensitive class is represented by at least one pre-registered case",
+  "classes": [
+   {
+    "class": "missing-declaration-label",
+    "cases": [
+     "v5_f_01",
+     "v5_f_02",
+     "v5_f_03",
+     "v5_f_04",
+     "v5_f_05",
+     "v5_f_06",
+     "v5_f_07",
+     "v5_f_08",
+     "v5_f_09",
+     "v5_f_10",
+     "v5_f_11",
+     "v5_f_12",
+     "v5_f_13",
+     "v5_f_14",
+     "v5_f_15"
+    ]
+   },
+   {
+    "class": "wrong-entity-label",
+    "cases": [
+     "v5_f_03"
+    ]
+   },
+   {
+    "class": "goal-local-binding",
+    "cases": [
+     "v5_f_16",
+     "v5_f_17",
+     "v5_f_23"
+    ]
+   },
+   {
+    "class": "multiple-solve-goals-partial-break",
+    "cases": [
+     "v5_f_23"
+    ]
+   },
+   {
+    "class": "equation-function-variable-mismatch",
+    "cases": [
+     "v5_f_06"
+    ]
+   },
+   {
+    "class": "non-x-variable",
+    "cases": [
+     "v5_f_02",
+     "v5_f_06",
+     "v5_f_07"
+    ]
+   },
+   {
+    "class": "ast-equivalent-surface-different",
+    "cases": [
+     "v5_f_24"
+    ]
+   },
+   {
+    "class": "provenance-span-locally-wrong",
+    "cases": [
+     "v5_f_03",
+     "v5_f_04"
+    ]
+   },
+   {
+    "class": "over-reference-irrelevant-source",
+    "cases": [
+     "v5_f_05",
+     "v5_f_08"
+    ]
+   }
+  ]
+ }
+}
